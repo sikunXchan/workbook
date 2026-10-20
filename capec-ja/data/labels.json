@@ -1,0 +1,102 @@
+{
+  "_note": "CAPECデータの決まった値(列挙値)の訳語。ここに無い値は英語のまま表示し、検証で報告する。値の一覧は公式データ取得後に実データと照合する。",
+  "abstraction": {
+    "Meta": "メタ",
+    "Standard": "標準",
+    "Detailed": "詳細"
+  },
+  "status": {
+    "Deprecated": "非推奨",
+    "Obsolete": "廃止",
+    "Incomplete": "未完成",
+    "Draft": "草案",
+    "Usable": "利用可能",
+    "Stable": "安定"
+  },
+  "level": {
+    "Very High": "非常に高い",
+    "High": "高い",
+    "Medium": "中程度",
+    "Low": "低い",
+    "Very Low": "非常に低い",
+    "Unknown": "不明"
+  },
+  "phase": {
+    "Explore": "探索",
+    "Experiment": "試行",
+    "Exploit": "悪用"
+  },
+  "phase_note": {
+    "Explore": "攻撃者が対象を調べる段階",
+    "Experiment": "弱点があるかを試す段階",
+    "Exploit": "見つけた弱点を使う段階"
+  },
+  "nature": {
+    "ChildOf": "上位の項目（ChildOf）",
+    "ParentOf": "下位の項目（ParentOf）",
+    "CanFollow": "この攻撃の前段になりうる（CanFollow）",
+    "CanPrecede": "この攻撃の後に続きうる（CanPrecede）",
+    "PeerOf": "対等な関係（PeerOf）",
+    "CanAlsoBe": "同時に該当しうる（CanAlsoBe）"
+  },
+  "scope": {
+    "Confidentiality": "機密性",
+    "Integrity": "完全性",
+    "Availability": "可用性",
+    "Access Control": "アクセス制御",
+    "Accountability": "説明責任",
+    "Authentication": "認証",
+    "Authorization": "認可",
+    "Non-Repudiation": "否認防止",
+    "Other": "その他"
+  },
+  "impact": {
+    "Modify Data": "データの改ざん",
+    "Read Data": "データの読み取り",
+    "Unreliable Execution": "動作が不安定になる",
+    "Resource Consumption": "資源の消費",
+    "Execute Unauthorized Commands": "許可されていない命令の実行",
+    "Gain Privileges": "権限の取得",
+    "Bypass Protection Mechanism": "保護の仕組みの回避",
+    "Hide Activities": "活動の隠蔽",
+    "Alter Execution Logic": "処理の流れの変更",
+    "Varies by Context": "状況により異なる",
+    "Other": "その他"
+  },
+  "note_type": {
+    "Maintenance": "保守",
+    "Relationship": "関係",
+    "Research Gap": "研究上の課題",
+    "Terminology": "用語",
+    "Theoretical": "理論",
+    "Other": "その他"
+  },
+  "view_type": {
+    "Implicit": "条件で選んだ一覧（Implicit）",
+    "Explicit": "個別に選んだ一覧（Explicit）",
+    "Graph": "階層で整理した一覧（Graph）"
+  },
+  "mapping_fit": {
+    "Exact": "完全に一致",
+    "CAPEC More Abstract": "CAPECの方が抽象的",
+    "CAPEC More Specific": "CAPECの方が具体的",
+    "Imprecise": "おおまかな対応",
+    "Perspective": "見る観点が異なる"
+  },
+  "taxonomy": {
+    "ATTACK": "MITRE ATT&CK",
+    "WASC": "WASC Threat Classification",
+    "OWASP Attacks": "OWASP Attacks"
+  },
+  "history": {
+    "Submission": "登録",
+    "Modification": "変更",
+    "Contribution": "寄稿",
+    "Previous_Entry_Name": "以前の名前"
+  },
+  "kind": {
+    "attack_pattern": "攻撃パターン",
+    "category": "カテゴリ",
+    "view": "ビュー"
+  }
+}
