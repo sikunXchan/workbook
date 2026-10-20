@@ -1,0 +1,11 @@
+{
+ "id": "346",
+ "source_sha": "cde87441a676567b",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-13 - 情報漏えい",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「情報漏えい（Information Leakage）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

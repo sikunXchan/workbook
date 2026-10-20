@@ -1,0 +1,11 @@
+{
+ "id": "378",
+ "source_sha": "10782c25ae89b57a",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-45 - フィンガープリンティング",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「フィンガープリンティング（Fingerprinting、機器やソフトウェアの特定）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

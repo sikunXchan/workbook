@@ -1,0 +1,11 @@
+{
+ "id": "374",
+ "source_sha": "8e224ac3f1a7e47a",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-41 - XML属性の肥大化",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「XML属性の肥大化（XML Attribute Blowup）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,11 @@
+{
+ "id": "335",
+ "source_sha": "9e1c867920ab7694",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-02 - 認可の不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「認可の不備（Insufficient Authorization）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

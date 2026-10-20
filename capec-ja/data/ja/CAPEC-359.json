@@ -1,0 +1,11 @@
+{
+ "id": "359",
+ "source_sha": "963c9613456b3760",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-26 - HTTPリクエストスマグリング",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「HTTPリクエストスマグリング（HTTP Request Smuggling）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

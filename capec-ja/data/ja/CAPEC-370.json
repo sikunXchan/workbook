@@ -1,0 +1,11 @@
+{
+ "id": "370",
+ "source_sha": "950ad5628eed7e1d",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-37 - セッション固定",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「セッション固定（Session Fixation）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

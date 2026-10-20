@@ -1,0 +1,11 @@
+{
+ "id": "356",
+ "source_sha": "26491ec6067027bf",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-23 - XMLインジェクション",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「XMLインジェクション（XML Injection）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

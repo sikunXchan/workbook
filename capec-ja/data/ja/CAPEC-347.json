@@ -1,0 +1,11 @@
+{
+ "id": "347",
+ "source_sha": "2aa6fb28817c5d52",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-14 - サーバーの設定不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「サーバーの設定不備（Server Misconfiguration）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

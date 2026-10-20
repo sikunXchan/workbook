@@ -2,8 +2,19 @@
 
 | 項目 | 場所 | 用語 |
 |---|---|---|
+| CAPEC-1000 | objective/0 | consequence → 影響 |
 | CAPEC-112 | execution_flow/1/techniques/3/0 | attacker → 攻撃者 |
 | CAPEC-112 | mitigations/2/0 | mitigation → 緩和策 |
+| CAPEC-172 | summary/0 | execution flow → 攻撃の流れ |
+| CAPEC-172 | summary/0 | credential → 認証情報 |
+| CAPEC-2 | execution_flow/2/description/0 | attacker → 攻撃者 |
+| CAPEC-210 | summary/0 | denial of service → サービス妨害 |
+| CAPEC-4 | name | encoding → 符号化（エンコーディング） |
+| CAPEC-4 | execution_flow/1/description/0 | encoding → 符号化（エンコーディング） |
+| CAPEC-4 | execution_flow/2/description/0 | encoding → 符号化（エンコーディング） |
+| CAPEC-6 | execution_flow/0/description/0 | injection → インジェクション |
+| CAPEC-6 | execution_flow/1/description/0 | injection → インジェクション |
+| CAPEC-6 | skills/0/text/0 | injection → インジェクション |
 | CAPEC-66 | execution_flow/1/description/0 | injection → インジェクション |
 | CAPEC-66 | execution_flow/3/description/0 | vulnerability → 脆弱性 |
 | CAPEC-66 | execution_flow/3/description/0 | denial of service → サービス妨害 |

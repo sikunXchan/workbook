@@ -1,0 +1,11 @@
+{
+ "id": "363",
+ "source_sha": "2543c69824980485",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-30 - メールコマンドインジェクション",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「メールコマンドインジェクション（Mail Command Injection）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

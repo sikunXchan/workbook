@@ -1,0 +1,11 @@
+{
+ "id": "361",
+ "source_sha": "594797db33497300",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-28 - ヌルバイトインジェクション",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「ヌルバイトインジェクション（Null Byte Injection）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

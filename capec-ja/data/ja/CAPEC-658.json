@@ -1,0 +1,11 @@
+{
+ "id": "658",
+ "source_sha": "b11a7e7d6a62f9eb",
+ "status": "done",
+ "seg": {
+  "name": "ATT&CKに関連するパターン",
+  "objective/0": "このビュー（スライス）は、ATT&CK知識ベースとの対応づけがあるパターンを対象とする。"
+ },
+ "review": [],
+ "redacted": []
+}

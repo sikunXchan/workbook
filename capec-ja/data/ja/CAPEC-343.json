@@ -1,0 +1,11 @@
+{
+ "id": "343",
+ "source_sha": "37fd915aedd4e496",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-10 - サービス妨害",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「サービス妨害（Denial of Service）」に関連する（ビュー333を参照）。"
+ },
+ "review": [],
+ "redacted": []
+}

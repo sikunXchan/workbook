@@ -1,0 +1,11 @@
+{
+ "id": "381",
+ "source_sha": "7d10d2931b714764",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-48 - 安全でないインデックス作成",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「安全でないインデックス作成（Insecure Indexing）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

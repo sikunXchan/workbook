@@ -104,7 +104,8 @@ function jaText(src) {
       if (en) depthEn--;
     }
   }
-  return text.replace(/&[a-z#0-9]+;/g, " ").replace(/https?:\/\/\S+/g, " ");
+  // 括弧内の英語（初出の英語併記）は意図したものなので除く
+  return text.replace(/&[a-z#0-9]+;/g, " ").replace(/[（(][^）)]*[A-Za-z][^）)]*[）)]/g, " ").replace(/https?:\/\/\S+/g, " ");
 }
 const englishRuns = [];
 let untranslated = 0;

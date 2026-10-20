@@ -11,6 +11,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const data = JSON.parse(fs.readFileSync(path.join(ROOT, "data/capec.en.json"), "utf8"));
 const budget = Number(process.argv[2]) || 12000;
 const maxN = Number(process.argv[3]) || 14;
+const onlyKind = process.argv[4] || "";
 const rank = { attack_pattern: 0, category: 1, view: 2 };
 const order = [...data.entries].sort((a, b) => rank[a.kind] - rank[b.kind] || Number(a.id) - Number(b.id));
 const done = (e) => {
@@ -29,7 +30,7 @@ function risky(s) {
 }
 const tm = loadTM();
 const deferred = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, "data/deferred.json"), "utf8")).ids);
-const pending = order.filter((e) => !done(e) && !deferred.has(e.id));
+const pending = order.filter((e) => !done(e) && !deferred.has(e.id) && (!onlyKind || e.kind === onlyKind));
 let used = 0, n = 0;
 for (const e of pending) {
   const s = segs(e);

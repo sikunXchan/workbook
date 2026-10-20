@@ -1,0 +1,11 @@
+{
+ "id": "364",
+ "source_sha": "024a722665b28d57",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-31 - OSコマンドの実行",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「OSコマンドの実行（OS Commanding）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

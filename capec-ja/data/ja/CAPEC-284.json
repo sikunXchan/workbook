@@ -1,0 +1,11 @@
+{
+ "id": "284",
+ "source_sha": "17b3d23d3caeb8e2",
+ "status": "done",
+ "seg": {
+  "name": "詳細抽象度",
+  "objective/0": "このビュー（スライス）は、詳細抽象度の攻撃パターンを対象とする。"
+ },
+ "review": [],
+ "redacted": []
+}

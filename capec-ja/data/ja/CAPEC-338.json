@@ -1,0 +1,11 @@
+{
+ "id": "338",
+ "source_sha": "f5674f9a16de5d59",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-05 - リモートファイルインクルージョン",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「リモートファイルインクルージョン（Remote File Inclusion）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

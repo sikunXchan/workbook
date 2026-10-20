@@ -1,0 +1,11 @@
+{
+ "id": "357",
+ "source_sha": "e75cc1a81b1d1bf7",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-24 - HTTPリクエストの分割",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「HTTPリクエストの分割（HTTP Request Splitting）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

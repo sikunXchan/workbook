@@ -1,0 +1,11 @@
+{
+ "id": "684",
+ "source_sha": "d4cf833eff41ec1c",
+ "status": "done",
+ "seg": {
+  "name": "設計",
+  "summary/0": "このカテゴリの攻撃パターンは、CISAのサプライチェーンのライフサイクルの「設計」段階にある弱点の悪用に焦点を当てる。"
+ },
+ "review": [],
+ "redacted": []
+}

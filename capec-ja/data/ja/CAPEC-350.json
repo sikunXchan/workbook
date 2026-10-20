@@ -1,0 +1,11 @@
+{
+ "id": "350",
+ "source_sha": "e40e0d8d811b7c7b",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-17 - ファイルシステムの権限の不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「ファイルシステムの権限の不備（Improper Filesystem Permissions）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,11 @@
+{
+ "id": "380",
+ "source_sha": "fa5e150b133f170d",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-47 - セッションの有効期限の不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「セッションの有効期限の不備（Insufficient Session Expiration）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}
