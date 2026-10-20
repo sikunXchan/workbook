@@ -1,0 +1,50 @@
+{
+ "id": "68",
+ "source_sha": "45a3169824cc717a",
+ "status": "done",
+ "seg": {
+  "name": "コード署名の仕組みの転覆",
+  "description/0": "多くの言語は、コードの身元を保証し、環境内でコードに割り当てられた権限と結びつけるため、コード署名の仕組みを使う。この仕組みを転覆させることは、攻撃者が権限を昇格させるのに役立ちうる。仮想マシンがコード署名を強制するやり方を転覆させるあらゆる手段が、この種の攻撃に分類される。",
+  "prerequisites/0/0": "コード署名に対応したフレームワークベースの言語（もっとも一般的にはJavaや.NET）。",
+  "prerequisites/1/0": "開発元やパートナーによって署名された、配備済みのコード。",
+  "prerequisites/2/0": "ほとんどの状況で、攻撃者は被害者のコンテナにコードを配置できる必要もある。これは、明示的に示されている場合を除き、必ずしもホストレベルのセキュリティを転覆させる必要があることを意味しない。",
+  "skills/0/text/0": "コード署名を転覆させるのは簡単な作業ではない。ほとんどのコード署名・検証の仕組みは暗号の利用にもとづいており、攻撃者はこれらの暗号の操作を詳しく理解している必要がある。加えて、コード署名を転覆させる唯一の方法が、メモリ上のコードにパッチを当てることであることが多いため、攻撃者は、コンテナによるメモリの割り当てとアクセスのされ方も把握している必要がある。最後に、署名と検証のプラットフォーム固有の仕組みについての知識が必須である。",
+  "resources/0/0": "攻撃者は、この種の攻撃を行うのに、挙げられた前提条件以外の特別な資源を必要としない。",
+  "mitigations/0/0": "あるコード署名の仕組みは、暗号の不適切な利用により、破られる可能性がある。開発者は、独自の暗号を作ってはならず、既存の基本要素を改変したり無視したりしてもならない。",
+  "mitigations/1/0": "攻撃者がこの仕組みを直接攻撃できない場合、署名と検証の過程に影響を与える環境を改変しようとすることがある。考えられる対策の1つは、利用者が制御できるフラグや環境変数への依存を避けることである。",
+  "examples/0/0": "古い版（3.0b4より前）のNetscapeブラウザでの「Magic Coat」攻撃の例。詳細は下記の原文を参照。",
+  "examples/1/0": "一部の（古い）ブラウザで、JavaScriptのようなスクリプト言語が署名付きのJavaコードを呼び出せた問題の例。詳細は下記の原文を参照。",
+  "examples/2/0": "Vistaの初期の版のカーネルに、署名のないコードを読み込んで整合性チェックを回避できたことは、この種の転覆の一例である。概念実証では、Vistaがデバイスドライバの読み込みに使う署名検証の仕組みを回避できることが示された。"
+ },
+ "quotes": {
+  "examples/0/0": "In old versions (prior to 3.0b4) of the Netscape web browser Attackers able to foist a malicious Applet into a client's browser could execute the \"Magic Coat\" attack. In this attack, the offending Applet would implement its own getSigners() method. This implementation would use the containing VM's APIs to acquire other Applet's signatures (by calling _their_ getSigners() method) and if any running Applet had privileged-enough signature, the malicious Applet would have inherited that privilege just be (metaphorically) donning the others' coats.",
+  "examples/1/0": "Some (older) web browsers allowed scripting languages, such as JavaScript, to call signed Java code. In these circumstances, the browser's VM implementation would choose not to conduct stack inspection across language boundaries (from called signed Java to calling JavaScript) and would short-circuit \"true\" at the language boundary. Doing so meant that the VM would allow any (unprivileged) script to call privileged functions within signed code with impunity, causing them to fall prey to luring attacks."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "「このコードは正規の開発元が作った」ことを保証する署名の仕組みを欺き、署名済みコードに与えられる強い権限を、悪意あるコードに横取りさせる攻撃。",
+  "terms": [
+   {
+    "term": "コード署名",
+    "en": "code signing",
+    "explain": "プログラムの作者が、本物であることを証明するために付ける、暗号を使った「印」。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "コード署名に対応したフレームワークベースの言語が前提の1つだと原典に書かれている。",
+    "source": "CAPEC-68 前提条件"
+   },
+   {
+    "text": "対策として、独自の暗号を作らないことと、環境変数への依存を避けることが挙げられている。",
+    "source": "CAPEC-68 対策"
+   }
+  ],
+  "analogy": "「社印の押された書類だけ信用する」というルールのもと、社印そのものを偽造するのではなく、社印を押す係の判断基準（環境）を欺いて、無関係の書類にも社印を押させてしまう、という状況に近い。",
+  "learn": [
+   "「署名があるから安全」という判断が、なぜ仕組みの転覆で崩れうるのか",
+   "独自の暗号を作らないことが、なぜ重要な対策なのか"
+  ]
+ }
+}
