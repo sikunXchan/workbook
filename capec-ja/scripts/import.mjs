@@ -101,7 +101,7 @@ function main() {
       for (const k of [...Object.keys(ent.seg), ...Object.keys(ent.quotes)]) if (!(k in src)) errs.push(`存在しないキー: ${k}`);
       for (const r of ent.review) if (!(r.k in src)) errs.push(`存在しないキーへの印: ${r.k}`);
       if (e.kind === "attack_pattern" && e.status !== "Deprecated" && e.status !== "Obsolete" && !ent.sup.summary) errs.push("初学者向けの補足(s.summary)が無い");
-      if (seg.name && /[A-Za-z]{5,}/.test(seg.name.replace(/[（(][^）)]*[）)]/g, "").replace(/XPath|XQuery|HTTPS|CISA|CAPEC|WASC|OWASP|JavaScript|Java|Cookie|Wi-Fi|Bluetooth|Android|Windows|Linux|Active|Directory|Office|Google|Apple|Cisco|Microsoft|REST|RESTful|Unicode|ASCII|UTF/g, "")) ) errs.push(`名前に英語が残っている疑い: ${seg.name}`);
+      if (seg.name && /[A-Za-z]{5,}/.test(seg.name.replace(/[（(][^）)]*[）)]/g, "").replace(/XPath|XQuery|HTTPS|CISA|CAPEC|WASC|OWASP|JavaScript|Java|Cookie|Wi-Fi|Bluetooth|Android|Windows|Linux|Active|Directory|Office|Google|Apple|Cisco|Microsoft|REST|RESTful|Unicode|ASCII|UTF|Flash|Adobe/g, "")) ) errs.push(`名前に英語が残っている疑い: ${seg.name}`);
       if (errs.length) { console.log(`✗ CAPEC-${ent.id}: ${errs.slice(0, 6).join(" / ")}${errs.length > 6 ? ` ほか${errs.length - 6}件` : ""}`); ng++; continue; }
       const out = { id: ent.id, source_sha: e.source_sha, status: "done", seg, ...(Object.keys(quotes).length ? { quotes } : {}), review: ent.review, redacted: [], ...(Object.keys(ent.sup).length ? { supplement: ent.sup } : {}) };
       fs.writeFileSync(path.join(jaDir, `CAPEC-${ent.id}.json`), JSON.stringify(out, null, 1) + "\n");
