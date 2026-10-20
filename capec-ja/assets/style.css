@@ -228,6 +228,12 @@ tr[hidden] { display: none; }
 .page .memo { margin: 1rem 0; max-width: 40em; }
 .entry-list { padding-left: 1.2rem; }
 .entry-list li { margin: .2rem 0; }
+.lesson-list { list-style: none; padding: 0; display: grid; gap: 14px; margin: 1.2rem 0; }
+.lesson-step { position: relative; border: 1.5px solid var(--line); border-radius: 14px; padding: 16px 18px 14px 56px; background: var(--white); }
+.lesson-step h3 { margin: 0 0 .3rem; font-size: 1.05rem; }
+.lesson-step p { margin: 0; }
+.lesson-step p.small { margin-top: .4rem; }
+.lesson-n { position: absolute; left: -2px; top: -2px; display: grid; place-items: center; min-width: 40px; height: 40px; padding: 0 8px; border-radius: 10px 0 10px 0; background: var(--shu); color: var(--paper); font-family: var(--f-head); font-weight: 900; font-size: .78rem; white-space: nowrap; }
 .kv dt { font-weight: 700; margin-top: .5rem; }
 .kv dd { margin-left: 0; }
 .glossary > div { padding: .7rem 0; border-bottom: 1px dashed var(--line); }
