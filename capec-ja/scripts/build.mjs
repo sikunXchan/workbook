@@ -8,6 +8,42 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = path.join(ROOT, "dist");
 const readJson = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), "utf8"));
 
+// 公式データをまだ取り込んでいない間は、ビルドを失敗させずに「準備中」のページだけを出す
+if (!fs.existsSync(path.join(ROOT, "data/capec.en.json"))) {
+  const lic = readJson("data/license.json");
+  const e = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const note = "AIによる日本語訳です。公式の日本語訳ではなく、MITREの公式サイトでも、MITREの承認を受けたものでもありません。誤りがありえるため、重要な点は原典（英語）で確認してください。";
+  const html = `<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>準備中 | CAPEC 攻撃パターン辞典 日本語版（非公式）</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="head"><div class="wrap head-row"><a class="brand" href="/"><span class="stamp" aria-hidden="true">攻</span><span><b>CAPEC 攻撃パターン辞典</b><small>日本語版・非公式の学習用サイト</small></span></a></div></header>
+<div class="notice" data-disclaimer-top><div class="wrap notice-row"><b>ご注意</b><span>${e(note)}</span></div></div>
+<div class="wrap"><main id="main" class="page">
+<h1 class="page-h">ただいま準備中です</h1>
+<p>MITREが公開している攻撃パターンの辞典「CAPEC」を、日本語で読めるようにするサイトです。公式データの取り込みと日本語化が済みしだい、ここに公開します。</p>
+<p>原典（英語）は <a href="https://capec.mitre.org/">capec.mitre.org</a> で読めます。</p>
+</main></div>
+<footer class="foot"><div class="wrap foot-grid"><div><h2>ご注意</h2><p data-disclaimer>${e(note)}</p><p lang="en" data-copyright>${e(lic.copyright)}</p></div><div><h2>ライセンス文（原文）</h2><p class="license pending">ライセンス文は、公式データとあわせて取り込みます。</p></div></div></footer>
+</body>
+</html>
+`;
+  const dist = path.join(ROOT, "dist");
+  fs.rmSync(dist, { recursive: true, force: true });
+  fs.mkdirSync(dist, { recursive: true });
+  fs.cpSync(path.join(ROOT, "assets"), path.join(dist, "assets"), { recursive: true });
+  fs.writeFileSync(path.join(dist, "index.html"), html);
+  fs.writeFileSync(path.join(dist, "404.html"), html);
+  console.log("公式データ(data/capec.en.json)が無いため、準備中のページだけを生成しました。");
+  process.exit(0);
+}
+
 const data = readJson("data/capec.en.json");
 const labels = readJson("data/labels.json");
 const glossary = readJson("data/glossary.json");
