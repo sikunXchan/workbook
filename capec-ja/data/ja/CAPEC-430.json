@@ -1,0 +1,11 @@
+{
+ "id": "430",
+ "source_sha": "3125034e82b36cda",
+ "status": "done",
+ "seg": {
+  "name": "廃止：マイクロ表情を通じた標的への影響",
+  "description/0": "この攻撃パターンは廃止された。"
+ },
+ "review": [],
+ "redacted": []
+}

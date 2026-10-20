@@ -1,0 +1,11 @@
+{
+ "id": "432",
+ "source_sha": "ad65415b4f57a2aa",
+ "status": "done",
+ "seg": {
+  "name": "廃止：NLPにおける声を通じた標的への影響",
+  "description/0": "この攻撃パターンは廃止された。"
+ },
+ "review": [],
+ "redacted": []
+}

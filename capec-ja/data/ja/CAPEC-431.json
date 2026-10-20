@@ -1,0 +1,11 @@
+{
+ "id": "431",
+ "source_sha": "0ea3838aebea7757",
+ "status": "done",
+ "seg": {
+  "name": "廃止：神経言語プログラミング（NLP）を通じた標的への影響",
+  "description/0": "この攻撃パターンは廃止された。"
+ },
+ "review": [],
+ "redacted": []
+}
