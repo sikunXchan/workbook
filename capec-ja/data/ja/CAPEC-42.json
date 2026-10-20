@@ -1,0 +1,73 @@
+{
+ "id": "42",
+ "source_sha": "123596ef05b63622",
+ "status": "done",
+ "seg": {
+  "name": "MIME変換",
+  "description/0": "攻撃者は、MIME変換の処理にある弱点を突いて、バッファオーバーフローを起こし、メールサーバーのマシンを制御する。MIMEの仕組みは、さまざまな情報の形式を解釈し、電子メールで送れるようにするために設計されている。データがMIME互換の形式へ変換される箇所と、元に戻される箇所の両方に、攻撃の糸口がある。",
+  "execution_flow/0/description/0": "［標的のメールサーバーの特定］攻撃者は、攻撃したい標的のメールサーバーを特定する。",
+  "execution_flow/0/techniques/0/0": "システムでNmapを使い、メールサーバーのサービスを特定する。",
+  "execution_flow/1/description/0": "［攻撃の実行可能性の判定］メールサーバーにパッチが適用されておらず、既知のMIME変換のバッファオーバーフロー（Sendmail 8.8.3や8.8.4など）の1つに脆弱である可能性があるかを判定する。",
+  "execution_flow/2/description/0": "［注入の足がかりの発見］脆弱なMIME変換の処理が使われていそうな箇所をシステム内に特定する。",
+  "execution_flow/3/description/0": "［オーバーフローの内容の作成］攻撃者は、脆弱なMIME変換処理にバッファオーバーフローを起こす、特別なヘッダーを持つ電子メールを作る（具体的な内容は下記の原文を参照）。",
+  "execution_flow/4/description/0": "［バッファのオーバーフロー］バッファオーバーフローを引き起こし、シェルコードを実行させる、特別に細工したヘッダーを持つ電子メールを、標的のシステムに送る。",
+  "prerequisites/0/0": "標的のシステムがメールサーバーを使っていること。",
+  "prerequisites/1/0": "メールサーバーの提供元が、MIME変換処理のパッチを公開していないこと、パッチ自体にセキュリティ上の穴があるか元の問題を修正していないこと、またはパッチが利用者のシステムに適用されていないこと。",
+  "skills/0/text/0": "この攻撃パターンでサービス妨害（DoS）を起こすのは容易かもしれない。",
+  "skills/1/text/0": "標的のシステムで任意のコードを実行させること。",
+  "consequences/0/note/0": "任意のコードの実行",
+  "mitigations/0/0": "サードパーティ製品のパッチを常に最新に保つ。",
+  "mitigations/1/0": "7ビットから8ビットへの変換を無効にする。これは、sendmail.cfファイル内のすべてのMailer指定から、F=9フラグを取り除くことで行える。",
+  "mitigations/1/1": "たとえば、この変更を適用したsendmail.cfファイルは、システムや設定によっては、次のような形になる。",
+  "mitigations/1/6": "「Mlocal」と「Mprog」のMailerについては、「.mc」ファイルに次の行を含めることで、この変更を実現できる。",
+  "mitigations/1/13": "そのうえで、m4(1)を使ってsendmail.cfファイルを再構築する。",
+  "mitigations/1/14": "出典は「Exploiting Software」。下記の参考文献を参照。",
+  "mitigations/2/0": "sendmailの制限付きシェルプログラム（smrsh）を使う。",
+  "mitigations/3/0": "mail.localを使う。",
+  "examples/0/0": "Sendmailのバージョン8.8.3と8.8.4に、MIME変換のバッファオーバーフローが存在する。これらの版は、MIME処理のコードにあるバッファオーバーフローに脆弱である。特別に細工したヘッダーを持つメッセージをサーバーに送ることで、リモートの攻撃者はバッファをあふれさせ、root権限で任意のコマンドを実行できる。",
+  "examples/0/1": "Sendmailは、電子メールのメッセージに対して7ビットから8ビットへの変換を行う。この脆弱性は、この変換を行う際の境界検査が不十分だったことによる。これにより攻撃者は、root権限で実行中のsendmailの内部スタックを上書きできる機会を得た。攻撃者はまず標的のシステムを調べ、どのメールサーバーがどの版で使われているかを突き止める。そのうえで、実際に使う前に、同じ版のメールサーバーを動かす自分のマシンで、時間をかけて悪用コードを試すことができる。",
+  "examples/0/2": "参考：CVE-1999-0047"
+ },
+ "quotes": {
+  "execution_flow/3/description/0": "[Craft overflow content] The adversary crafts e-mail messages with special headers that will cause a buffer overflow for the vulnerable MIME conversion routine. The intent of this attack is to leverage the overflow for execution of arbitrary code and gain access to the mail server machine, so the adversary will craft an email that not only overflows the targeted buffer but does so in such a way that the overwritten return address is replaced with one of the adversary's choosing.",
+  "execution_flow/3/techniques/0/0": "Create malicious shellcode that will execute when the program execution is returned to it.",
+  "execution_flow/3/techniques/1/0": "Use a NOP-sled in the overflow content to more easily \"slide\" into the malicious code. This is done so that the exact return address need not be correct, only in the range of all of the NOPs",
+  "mitigations/1/2": "Mlocal, P=/usr/libexec/mail.local, F=lsDFMAw5:/|@qrmn, S=10/30, R=20/40,",
+  "mitigations/1/3": "T=DNS/RFC822/X-Unix,\nA=mail -d $u",
+  "mitigations/1/4": "Mprog, P=/bin/sh, F=lsDFMoqeu, S=10/30, R=20/40,",
+  "mitigations/1/5": "D=$z:/,\nT=X-Unix,\nA=sh -c $u",
+  "mitigations/1/7": "define(`LOCAL_MAILER_FLAGS',",
+  "mitigations/1/8": "ifdef(`LOCAL_MAILER_FLAGS',",
+  "mitigations/1/9": "`translit(LOCAL_MAILER_FLAGS, `9')',\n`rmn'))",
+  "mitigations/1/10": "define(`LOCAL_SHELL_FLAGS',",
+  "mitigations/1/11": "ifdef(`LOCAL_SHELL_FLAGS',",
+  "mitigations/1/12": "`translit(LOCAL_SHELL_FLAGS, `9')',\n`eu'))"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "電子メールの形式を変換する処理の弱点を突いて、メールサーバーのメモリをあふれさせ（バッファオーバーフロー）、サーバーを乗っ取る攻撃。",
+  "terms": [
+   {
+    "term": "MIME",
+    "en": "MIME",
+    "explain": "電子メールで、文章以外の種類のデータ（添付ファイルなど）も扱えるようにする決まり。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "パッチが未公開、または未適用のメールサーバーが前提条件だと原典に書かれている。",
+    "source": "CAPEC-42 前提条件"
+   },
+   {
+    "text": "対策として、パッチの適用、7ビットから8ビットへの変換の無効化が挙げられている。",
+    "source": "CAPEC-42 対策"
+   }
+  ],
+  "analogy": "荷物の変換（規格の違う箱に詰め替える作業）をする窓口が、詰め替える荷物の大きさを確かめずに詰め替えてしまい、あふれた中身が窓口の裏側にまで侵入してしまう、という状況に近い。",
+  "learn": [
+   "データの変換処理が、なぜバッファオーバーフローの入り口になりうるのか",
+   "パッチの適用が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}
