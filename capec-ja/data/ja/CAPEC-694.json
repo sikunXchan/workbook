@@ -1,0 +1,37 @@
+{
+ "id": "694",
+ "source_sha": "affcbe3fac36224f",
+ "status": "done",
+ "seg": {
+  "name": "システムの位置情報の探索",
+  "description/0": "攻撃者は、標的システムの地理的位置を特定しようと試みるため、標的システムについての情報を収集する。",
+  "description/1": "収集される情報には、キーボードレイアウト、システム言語、タイムゾーンが含まれ得る。この情報は、攻撃者が望む標的を確認する、および／または、さらなる攻撃を調整するのに役立つ可能性がある。",
+  "execution_flow/0/description/0": "［システムロケール情報の探索］攻撃者は、レジストリやネイティブAPI関数のような様々な出所からシステム情報を調べ、収集した情報を関連付けることで、標的システムの地理的位置を推測する。",
+  "execution_flow/0/techniques/0/0": "レジストリの照会：Windows上で、システム言語を得るためレジストリキー「HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\ContentIndex\\Language\\Language_Dialect」を、現在の利用者のプリロードされたキーボードレイアウトの16進数の言語IDを得るため「Computer\\HKEY_CURRENT_USER\\Keyboard Layout\\Preload」を、システムのタイムゾーン設定を得るため「Computer\\HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation」を照会する。",
+  "execution_flow/0/techniques/1/0": "ネイティブAPIの要求：Windows APIの関数である「GetTimeZoneInformation」「GetUserDefaultUILanguage」「GetSystemDefaultUILanguage」「GetKeyboardLayoutList」「GetUserDefaultLangID」の出力を解析し、システムにインストールされている言語、キーボードレイアウト、タイムゾーンについての情報を得る。あるいは、macOSやLinuxのシステムでは、「locale」を照会して「$LANG」環境変数を取得し、キーボードレイアウトの情報を表示する、または「timeanddatectl status」を使ってシステムの時計設定を表示する。",
+  "execution_flow/0/techniques/2/0": "設定ファイルの読み取り：macOSおよびLinux系のシステムでは、キーボードマッピングとコンソールフォントについての情報を得るため、「/etc/vconsole.conf」ファイルを確認する。",
+  "prerequisites/0/0": "攻撃者は、関連する情報について適切な出所を照会するため、システムへの何らかのレベルのアクセスと、オペレーティングシステムについての基本的な理解を持っていなければならない。",
+  "skills/0/text/0": "攻撃者は、関連する情報を得るため、システムのオペレーティングシステムに応じた様々なシステム情報の出所を照会する方法を知っていなければならない。",
+  "resources/0/0": "攻撃者は、関連するシステム情報を照会するため、標的のオペレーティングシステムのツールへのアクセスを必要とする。Windowsでは、レジストリの照会は、PowerShell、WMI、regeditを介して行うことができる。LinuxやmacOSでは、照会はシェルを介して実行できる。",
+  "mitigations/0/0": "収集される情報の量を減らすため、システムの運用に必要ない、オペレーティングシステムの様々な位置情報機能を無効化することが考えられる。"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "この攻撃パターンは、キーボードレイアウト、システム言語、タイムゾーンといった情報から、標的システムの地理的な位置を推測しようとするものである。レジストリの照会やOSのネイティブAPI関数の呼び出しなど、攻撃対象のシステムに応じた様々な手段で情報が収集され、標的の確認やさらなる攻撃の調整に利用される。",
+  "terms": [
+   {
+    "term": "タイムゾーン, time zone, 地球上の地域ごとに定められた、標準時刻の基準となる区分のこと。システムのタイムゾーン設定は、利用者の地理的な位置を推測する手がかりになり得る。",
+    "en": "",
+    "explain": ""
+   }
+  ],
+  "facts": [
+   {
+    "text": "収集された情報は、攻撃者が望む標的を確認する、および／または、さらなる攻撃を調整するのに役立つ可能性がある、と原典の説明に書かれている。, CAPEC-694 説明",
+    "source": ""
+   }
+  ],
+  "analogy": "郵便受けに届いた郵便物の宛名の言語や、時計の表示形式、キーボードの配列から、その家の住人がどの国に住んでいるかを推測するのに似ている。"
+ }
+}
