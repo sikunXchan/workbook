@@ -1,0 +1,52 @@
+{
+ "id": "98",
+ "source_sha": "1bb76cef5d41bdd6",
+ "status": "done",
+ "seg": {
+  "name": "フィッシング",
+  "description/0": "フィッシング（Phishing）は、ソーシャルエンジニアリング（人の心理や習慣のすきを突く手口）の一種である。攻撃者が、被害者が取引していそうな正規の相手になりすまし、被害者に何らかの機微な情報（多くは認証情報、つまり本人確認に使う情報）を明かすよう仕向ける。その情報は、あとで攻撃者に悪用されうる。フィッシングは本質的に、情報を集める行為、いわば情報の「釣り（fishing）」である。",
+  "execution_flow/0/description/0": "［正規サイトになりすますための、ドメイン名と証明書の入手］この段階は任意で、攻撃者が正規サイトをより本物らしく装うのに使われる。正規サイトとよく似た見た目のドメイン名を使って、利用者に正規サイトだと信じ込ませることがある。ただしこの段階は必須ではなく、多くのフィッシングでは、SSL証明書もない、IPアドレスだけのURLが使われる。",
+  "execution_flow/1/description/0": "［正規サイトの調査と複製の作成］攻撃者は、なりすまそうとしている正規サイトによく似たサイトを作る（よく似たURLに置くこともある）。そのサイトにはたいてい、被害者に認証情報を入力させるためのログイン画面がある。作り方にはさまざまな変種がある。",
+  "execution_flow/2/description/0": "［機微な情報を攻撃者のサイトに入力させる］攻撃者は被害者にメールを送り、メール内のリンク（被害者を攻撃者のサイトに連れて行く）をクリックさせてログインさせるよう、何らかの行動を促す。要点は、そのメールが被害者の取引先である正規の相手から来たもので、リンク先が正規サイトだと被害者に信じ込ませることである。行動を促す内容は、本物らしく、かつ利用者がすぐ動きたくなるほど急を要するように作られることが多い。",
+  "execution_flow/3/description/0": "［盗んだ認証情報を使って正規サイトにログインする］フィッシングで機微な情報（ログイン情報、クレジットカード情報など）を手に入れた攻撃者は、それを悪用できる。たとえば、被害者のログイン情報を使って銀行口座にログインし、自分の選んだ口座に送金する、といったことが可能になる。",
+  "prerequisites/0/0": "攻撃者が、被害者との接触を始める手段を持っていること。多くはメールを通じて行われる。",
+  "prerequisites/1/0": "攻撃者が、被害者の取引先を正しく推測し、それになりすますこと。多くの場合、攻撃者は人気のある銀行やサービスを使い、「釣り針」を多数の被害者候補にばらまく。",
+  "prerequisites/2/0": "攻撃者が、利用者に行動を促すだけの、十分に説得力のある口実を持っていること。",
+  "prerequisites/3/0": "複製したサイトが本物のサイトと極めてよく似ており、そこへ誘導するURLも、その事業者の本物のURLのように見える必要があること。",
+  "skills/0/text/0": "ウェブサイトに関する基礎知識（入手、設計、構築など）。",
+  "resources/0/0": "偽のウェブサイトを立ち上げるための、いくらかのウェブ開発ツール。",
+  "indicators/0/0": "取引もしていない相手から、口座にログインするよう促すメールが届く。",
+  "indicators/1/0": "ログイン情報を入力する必要があるウェブサイトへのリンクが示されたメールが届く。",
+  "mitigations/0/0": "メールで受け取ったリンクはたどらず、そこで示された画面に絶対にログイン情報を入力しないこと。代わりに、銀行や決済サービスなどに電話で問い合わせる。安全なやり方として、銀行のURLをブラウザに直接入力してからログインするのもよい。また、機微な情報を求めるメールには、どんな種類のものにも返信しないこと。",
+  "examples/0/0": "標的のもとに、銀行からの公式に見えるメールが届く。不正利用の疑いで口座が一時的に止められたので、ロックを解除するためにメール内のリンクからログインするように、と書かれている。リンクは本物の銀行のものによく似ており、クリックするとログイン画面も本物そっくりである。標的がログイン情報を入力すると、口座のロックが解除され問題ないと知らされる。こうして攻撃者は標的のネットバンキングの情報を手に入れ、それを使って標的の口座にログインし、自分の選んだ口座に送金できてしまう。",
+  "examples/1/0": "攻撃者がBlueJacking（Bluetoothフィッシング）を使い、近くでBluetoothを待ち受けている機器に、頼んでもいない連絡先カードやメッセージ、画像を送りつけることがある。これらのメッセージにはフィッシングの内容が含まれていることがある。"
+ },
+ "quotes": {
+  "execution_flow/0/techniques/0/0": "Optionally obtain a domain name that visually looks similar to the legitimate site's domain name. An example is www.paypaI.com vs. www.paypal.com (the first one contains a capital i, instead of a lower case L)",
+  "execution_flow/0/techniques/1/0": "Optionally obtain a legitimate SSL certificate for the new domain name.",
+  "execution_flow/1/techniques/0/0": "Use spidering software to get copy of web pages on legitimate site.",
+  "execution_flow/1/techniques/1/0": "Manually save copies of required web pages from legitimate site.",
+  "execution_flow/1/techniques/2/0": "Create new web pages that have the legitimate site's look and feel, but contain completely new content.",
+  "execution_flow/2/techniques/0/0": "Send the user a message from a spoofed legitimate-looking e-mail address that asks the user to click on the included link.",
+  "execution_flow/2/techniques/1/0": "Place phishing link in post to online forum.",
+  "execution_flow/3/techniques/0/0": "Log in to the legitimate site using another user's supplied credentials"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "本物そっくりのメールやサイトで利用者をだまし、パスワードなどを自分から入力させて盗む手口。技術の穴ではなく、人の思い込みと急かされたときの判断のすきを突く。",
+  "terms": [
+   {"term": "認証情報", "en": "credential", "explain": "本人確認に使う情報。利用者IDとパスワードの組などがこれにあたる。"},
+   {"term": "なりすまし", "en": "spoofing", "explain": "別の人や組織のふりをすること。フィッシングでは、正規の銀行やサービスのふりをする。"}
+  ],
+  "facts": [
+   {"text": "攻撃者は被害者の取引先を推測し、それになりすます必要があると原典に書かれている。", "source": "CAPEC-98 前提条件"},
+   {"text": "対策として、メール内のリンクをたどらず、正規のURLを自分で入力してログインすることが挙げられている。", "source": "CAPEC-98 対策"}
+  ],
+  "analogy": "宅配業者を装った人が玄関先で「再配達の手続きに本人確認が必要です」と言い、その場で暗証番号を言わせようとするのに似ている。制服や口ぶりが本物らしく、しかも急かされると、つい応じてしまう。本物かどうかを、相手の見た目ではなく、自分から公式の連絡先に問い合わせて確かめるのが要点である。",
+  "learn": [
+   "技術の弱点ではなく、人の思い込みや急かされたときの判断が、どのように突かれるのか",
+   "「受け取った連絡からたどらず、自分から公式の窓口を確かめる」ことが、なぜ有効な対策になるのか"
+  ]
+ }
+}

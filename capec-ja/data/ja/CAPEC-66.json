@@ -1,0 +1,56 @@
+{
+ "id": "66",
+ "source_sha": "3258aba5d6d27463",
+ "status": "done",
+ "seg": {
+  "name": "SQLインジェクション",
+  "description/0": "この攻撃は、利用者の入力をもとにSQL文（データベースへの命令文）を組み立てる標的のソフトウェアを突く。攻撃者は入力を細工し、ソフトウェアがその入力からSQL文を組み立てたときに、アプリケーションが意図したのとは別の動作をするようにする。SQLインジェクション（SQL Injection、注入）は、アプリケーションが入力を適切に検証しないことから起こる。",
+  "extended_description/0": "SQLの構文を含むように特別に細工された、利用者が操作できる入力が、適切な検証を経ずにSQLの問い合わせの一部として使われると、アプリケーションの設計時に想定していなかった方法でデータベースから情報を引き出せることがある。データベースとアプリケーションの設計によっては、これを足がかりに、データベースにシステム関連の命令を実行させられる場合もある。SQLインジェクションが成立すると、攻撃者はアプリケーションを飛び越えて、データベースと直接やり取りできてしまう。成立すれば、情報が漏れるだけでなく、データベース内のデータを追加・変更される可能性もある。",
+  "execution_flow/0/description/0": "［アプリケーションの調査］攻撃者はまず、アプリケーションが外から見せている機能を一通り把握する。",
+  "execution_flow/1/description/0": "［注入できる入力箇所の特定］注入できそうな、利用者が操作できる入力箇所を見つける。攻撃者は、SQLで特別な意味を持つ文字（シングルクォート、ダブルクォート、2つのハイフン、丸かっこなど）を入力に入れてみて、構文として成立しないSQL文を作り出せるかを試す。",
+  "execution_flow/2/description/0": "［SQLインジェクションの弱点を試す］ある入力箇所に注入できると分かったら、内部で使われている問い合わせがどんな形かを推測する。そして、データベースから情報を引き出したり、データを変更・削除したりする働きを、少しずつ加えて試していく。",
+  "execution_flow/3/description/0": "［SQLインジェクションの弱点の悪用］問い合わせを調整し終えたら、標的のシステムを攻撃するための問い合わせを実際に組み立てて実行する。前の段階で得た知識をもとに、データベースのデータを読み取る・変更する・削除することを狙う。",
+  "prerequisites/0/0": "アプリケーションが、データの保存・取得・変更にSQLの問い合わせを使っていること。",
+  "prerequisites/1/0": "SQLの問い合わせの一部として使われる、利用者が操作できる入力が、アプリケーションで適切に検証されていないこと。",
+  "skills/0/text/0": "SQLの基礎知識があれば、SQLインジェクションを行うのは比較的簡単である。ただし場合によっては、使われているデータベース固有の知識が必要になることもある。",
+  "resources/0/0": "なし：この種の攻撃を行うのに、特別な資源は必要ない。",
+  "indicators/0/0": "データベースに対して、誤った問い合わせや成立しない問い合わせが多すぎること。とくに、不正な形の入力によって引き起こされたもの。",
+  "consequences/2/note/0": "任意のコードの実行",
+  "mitigations/0/0": "強力な入力検証 ── 利用者が操作できる入力はすべて、不正な文字やSQLの内容がないかを検証し、取り除く。UNION・SELECT・INSERT といったキーワードや、シングルクォート（'）・SQLのコメント（--）といった記号は、それが現れる文脈に応じて、入力から取り除く。",
+  "mitigations/1/0": "パラメータ化された問い合わせ、または格納された手続き（ストアドプロシージャ）の利用 ── パラメータ化により、入力は文字列や整数といった決まった種類に限定され、その範囲から外れた入力は不正とみなされて問い合わせが失敗する。ただし、最終的な問い合わせが動的に組み立てられる場合は、ストアドプロシージャを使っていてもSQLインジェクションは起こりうることに注意する。",
+  "mitigations/2/0": "独自のエラーページの利用 ── 攻撃者は、詳しいエラーメッセージから問い合わせの性質を推測できる。入力検証とあわせて、データベースやアプリケーションの情報を明かさずにエラーだけを知らせる、独自のエラーページを用意する。",
+  "examples/0/0": "ある掲示板システムの古い版では、SQLインジェクションによって、利用者名やパスワードのハッシュといった機微な内容を含むデータへのアクセス・変更や、アプリケーションの乗っ取りが可能だった。このシステムはSQLインジェクション対策として拒否リスト方式の入力検証を用いていたが、その拒否リストが不十分だったため、検証をすり抜けてデータベースから機微な情報を引き出せた（CVE-2006-5525 も参照）。すり抜けに使われた入力の具体例は、下記の原文を参照。"
+ },
+ "quotes": {
+  "execution_flow/0/techniques/0/0": "Spider web sites for all available links",
+  "execution_flow/0/techniques/1/0": "Sniff network communications with application using a utility such as WireShark.",
+  "execution_flow/1/techniques/0/0": "Use web browser to inject input through text fields or through HTTP GET parameters.",
+  "execution_flow/1/techniques/1/0": "Use a web application debugging tool such as Tamper Data, TamperIE, WebScarab, etc. to modify HTTP POST parameters, hidden fields, non-freeform fields, etc.",
+  "execution_flow/1/techniques/2/0": "Use network-level packet injection tools such as netcat to inject input",
+  "execution_flow/1/techniques/3/0": "Use modified client (modified by reverse engineering) to inject input.",
+  "execution_flow/2/techniques/0/0": "Use public resources such as \"SQL Injection Cheat Sheet\", and try different approaches for adding logic to SQL queries.",
+  "execution_flow/2/techniques/1/0": "Add logic to query, and use detailed error messages from the server to debug the query. For example, if adding a single quote to a query causes an error message, try : \"' OR 1=1; --\", or something else that would syntactically complete a hypothesized query. Iteratively refine the query.",
+  "execution_flow/2/techniques/2/0": "Use \"Blind SQL Injection\" techniques to extract information about the database schema.",
+  "execution_flow/2/techniques/3/0": "If a denial of service attack is the goal, try stacking queries. This does not work on all platforms (most notably, it does not work on Oracle or MySQL). Examples of inputs to try include: \"'; DROP TABLE SYSOBJECTS; --\" and \"'); DROP TABLE SYSOBJECTS; --\". These particular queries will likely not work because the SYSOBJECTS table is generally protected.",
+  "execution_flow/3/techniques/0/0": "Craft and Execute underlying SQL query",
+  "examples/0/0": "it is possible to inject content such as \"foo'/**/UNION\" or \"foo UNION/**/\" to bypass validation and glean sensitive information from the database."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "入力欄に入れた文字を、データベースへの命令の一部として解釈させてしまう攻撃。入力を「データ」として扱うべきところで「命令」として扱ってしまうすきを突く。",
+  "terms": [
+   {"term": "SQL", "en": "SQL", "explain": "データベースに「このデータを取り出して」「この行を消して」などと指示するための言葉（命令文の書き方）。", "example": "「会員表から、IDが123の人の名前を取り出す」といった指示を、決まった書き方で書く。"},
+   {"term": "データベース", "en": "database", "explain": "データを整理して貯めておく仕組み。会員情報や注文履歴などが、表の形でしまわれている。"}
+  ],
+  "facts": [
+   {"text": "この攻撃は、入力の検証不足から起こると原典に書かれている。", "source": "CAPEC-66 説明"},
+   {"text": "対策として、入力検証と、パラメータ化された問い合わせの利用が挙げられている。", "source": "CAPEC-66 対策"}
+  ],
+  "analogy": "銀行の窓口で渡す依頼票にたとえられる。本来は「名前」を書く欄なのに、そこに「ついでに隣の人の残高も教えて」という指示まで書き込み、窓口の人がそれを依頼の一部として実行してしまう、という状況に近い。欄に書かれた内容を「ただの名前」として扱わず「指示」として受け取ってしまうのが問題の芯である。",
+  "learn": [
+   "入力を「データ」と「命令」のどちらとして扱うかの境目が、なぜ攻撃の分かれ目になるのか",
+   "入力検証と、パラメータ化された問い合わせが、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

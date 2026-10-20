@@ -130,6 +130,10 @@ h1 { font-size: 2.8rem; line-height: 1.3; margin: 2px 0 4px; }
 .cond .lbl { background: var(--shu); color: var(--paper); }
 .def .lbl { border: 1.5px solid var(--link); color: var(--link); }
 .cnote h3 { margin-top: .4rem; }
+/* 具体的な手口・文字列を、訳さず原文のまま引用で示す枠 */
+.specific { margin: .6rem 0; max-inline-size: 44em; }
+.specific figcaption { font-size: .75rem; font-weight: 700; color: var(--shu); margin-bottom: .3rem; }
+.specific blockquote { margin: 0; padding: .55rem .8rem; background: var(--paper); border: 1.5px dashed var(--line); border-radius: 10px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .82rem; line-height: 1.75; overflow-x: auto; white-space: pre-wrap; word-break: break-word; max-inline-size: none; }
 .alt dt { font-weight: 700; }
 .alt dd { margin: 0 0 .8rem 1rem; }
 .inline-list { list-style: none; padding: 0 !important; display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; }

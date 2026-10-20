@@ -1,0 +1,27 @@
+{
+ "updated": "2026-10-20T03:23:41.061Z",
+ "data_version": "3.9",
+ "total": 706,
+ "done": 5,
+ "remaining": 701,
+ "attack_pattern": {
+  "total": 615,
+  "done": 5
+ },
+ "category": {
+  "total": 78,
+  "done": 0
+ },
+ "view": {
+  "total": 13,
+  "done": 0
+ },
+ "stale": [],
+ "done_ids": [
+  "66",
+  "98",
+  "112",
+  "390",
+  "416"
+ ]
+}
