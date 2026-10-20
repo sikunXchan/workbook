@@ -1,0 +1,11 @@
+{
+ "id": "171",
+ "source_sha": "c6cdad5eaa9a37f2",
+ "status": "done",
+ "seg": {
+  "name": "廃止：変数操作",
+  "description/0": "この攻撃パターンは、既存の攻撃パターン「CAPEC-77：利用者が制御できる変数の操作」と重複するため、廃止された。今後は、こちらのCAPECを参照のこと。"
+ },
+ "review": [],
+ "redacted": []
+}
