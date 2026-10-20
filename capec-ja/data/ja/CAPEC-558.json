@@ -1,0 +1,32 @@
+{
+ "id": "558",
+ "source_sha": "f083252c6f6537af",
+ "status": "done",
+ "seg": {
+  "name": "信頼された実行可能ファイルの差し替え",
+  "description/0": "攻撃者は、権限管理やアクセス制御の弱点を悪用し、信頼された実行可能ファイルを悪意あるバージョンに差し替え、その信頼された実行可能ファイルが呼び出された際に、マルウェアの実行を可能にする。",
+  "examples/0/0": "Windowsの特定のバージョンには、利用者がログインする前（例えばWindowsのログオン画面にいる間）に、特定のキーの組み合わせで起動できるアクセシビリティ機能が含まれている。Windows XPやWindows Server 2003／R2では、そのプログラム（例えば「C:\\Windows\\System32\\utilman.exe」）が、cmd.exe（あるいはバックドアアクセスを提供する他のプログラム）に差し替えられることがある。その後、キーボードの前に座っている間、あるいはRDP経由で接続している間に、ログイン画面で適切なキーの組み合わせを押すと、差し替えられたファイルがSYSTEM権限で実行されてしまう。"
+ },
+ "quotes": {
+  "examples/0/0": "Specific versions of Windows contain accessibility features that may be launched with a key combination before a user has logged in (for example when they are on the Windows Logon screen). On Windows XP and Windows Server 2003/R2, the program (e.g. \"C:\\Windows\\System32\\utilman.exe\") may be replaced with cmd.exe (or another program that provides backdoor access). Then pressing the appropriate key combination at the login screen while sitting at the keyboard or when connected over RDP will cause the replaced file to be executed with SYSTEM privileges."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "OSが標準で信頼して実行する実行可能ファイル（アクセシビリティ機能のプログラムなど）そのものを、悪意あるプログラムに差し替えてしまう攻撃。実例として、ログイン前の画面からでも起動できるアクセシビリティ機能のプログラムをcmd.exeに差し替え、ログイン画面上でそのキー操作をするだけでSYSTEM権限のコマンドシェルを得てしまう、Windowsの古いバージョンに存在した有名な手口が挙げられている。",
+  "terms": [
+   {
+    "term": "SYSTEM権限, SYSTEM privilege, Windowsにおいて、管理者よりもさらに高い、OS自体が持つ最高レベルの権限のこと。",
+    "en": "",
+    "explain": ""
+   }
+  ],
+  "facts": [
+   {
+    "text": "このキー操作により、差し替えられたファイルがSYSTEM権限で実行されてしまう、と原典の具体例に書かれている。, CAPEC-558 examples（具体例）",
+    "source": ""
+   }
+  ],
+  "analogy": "受付の呼び出しボタン（アクセシビリティ機能）の裏側の配線を、警備員を呼ぶものから、金庫室の鍵を自動で開ける仕組みにこっそりつなぎ替えてしまうのに似ている。来客は普通にボタンを押すだけで、金庫室が開いてしまう。"
+ }
+}
