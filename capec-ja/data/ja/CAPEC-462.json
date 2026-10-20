@@ -1,0 +1,45 @@
+{
+ "id": "462",
+ "source_sha": "b189936005b0b0f0",
+ "status": "done",
+ "seg": {
+  "name": "クロスドメイン検索タイミング攻撃",
+  "description/0": "攻撃者は、クロスドメインのHTTP／GETリクエストを発行し、サーバーの応答時間を計測する。これらの応答のタイミングは、サーバー上で何が行われているかについての重要な情報を漏らし得る。ブラウザの同一オリジンポリシーは、（他に弱点がない限り）攻撃者がサーバーの応答を直接読み取ることを防ぐが、攻撃者がクロスドメインで発行したリクエストへの応答時間を計測することは防がない。",
+  "extended_description/0": "GETリクエストでは「img」タグと「onload()／onerror()」というJavaScriptイベントを組み合わせて応答時間を計測でき、POSTリクエストでは「iframe」要素と「onload()」イベントを使って同様に計測できる、という具体的な実装手法。現在のブラウザのセキュリティモデルには、このような方法でクロスドメインの応答時間を計測することを防ぐ仕組みがない。この応答時間の違いから情報が漏れてしまう。例えば、被害者がWebメールに有効なログイン状態でいる場合、攻撃者は被害者のメールボックス内で検索要求を発行できる。攻撃者は応答の内容を見ることはできないが、応答時間の違いに基づいて、被害者のメールの内容や、誰にいつメールを送ったかといった事柄について、「はい・いいえ」で答えられる質問を投げかけるように情報を推測できる。これは一例に過ぎず、情報が漏れるような適切な問いを立てながら応答時間を計測することで、攻撃者がクロスドメイン要求から機微な情報を推測できる場面は他にも存在する。",
+  "execution_flow/0/description/0": "［クロスドメインリクエストの送信先となるサービスの決定］攻撃者はまず、どのサービスにリクエストを送信するかを決定する。",
+  "execution_flow/1/description/0": "［様々なクロスドメインリクエストの送信と計測］攻撃者は、標的に対して様々なクロスドメインリクエストを送信し、標的が応答するまでの時間を計測する。応答内容を読み取ることはできないが、攻撃者はその時間を使って、リクエストを受け取った際にサービスが何を行ったかを推測できる。",
+  "execution_flow/1/techniques/0/0": "GETリクエストを使い、「img」タグと「onload()／onerror()」イベントを組み合わせて応答時間を計測する具体的な手法。",
+  "execution_flow/1/techniques/1/0": "POSTリクエストを使い、「iframe」要素と「onload()」イベントを使って応答時間を計測する具体的な手法。",
+  "execution_flow/2/description/0": "［応答時間からの情報の推測］様々なリクエストへの応答時間を取得した後、攻撃者はこれらの時間を比較し、機微な情報を推測する。この例としては、サービスにランダムな利用者名についての情報を取得させる要求を行うことが考えられる。あるリクエストの処理に他より時間がかかった場合、そのユーザー名を持つ利用者が存在する可能性が高く、攻撃者にとって有用な知識となり得る。",
+  "execution_flow/2/techniques/0/0": "標的のサービスについての機微な情報を推測するため、異なるリクエストのタイミングを比較する。",
+  "prerequisites/0/0": "GET／POSTリクエストをクロスドメインで発行できること。被害者のブラウザでJavaScriptが有効になっていること。被害者が、攻撃者が情報を得たいサイトに対して有効なログイン状態（セッション）を持っていること。被害者のサイトが、検索機能をクロスサイトリクエストフォージェリ（CSRF）対策で保護していないこと。",
+  "skills/0/text/0": "JavaScriptについての多少の知識。",
+  "resources/0/0": "GET／POSTリクエストをクロスドメインで発行できる能力。",
+  "mitigations/0/0": "設計：被害者のサイトは、検索機能のような、機微になり得るすべての機能を、クロスサイトリクエストフォージェリ（CSRF）対策で保護し、偽造されたリクエストに代わって何らの処理も行わないようにできる。",
+  "mitigations/1/0": "設計：クロスドメインリクエストに対してタイミング情報を漏らさないよう、ブラウザのセキュリティモデルを修正できる。"
+ },
+ "quotes": {
+  "extended_description/0": "For GET requests an attacker could for instance leverage the \"img\" tag in conjunction with \"onload() / onerror()\" javascript events. For the POST requests, an attacker could leverage the \"iframe\" element and leverage the \"onload()\" event. There is nothing in the current browser security model that prevents an attacker to use these methods to time responses to the attackers' cross domain requests. The timing for these responses leaks information. For instance, if a victim has an active session with their online e-mail account, an attacker could issue search requests in the victim's mailbox. While the attacker is not able to view the responses, based on the timings of the responses, the attacker could ask yes / no questions as to the content of victim's e-mails, who the victim e-mailed, when, etc. This is but one example; There are other scenarios where an attacker could infer potentially sensitive information from cross domain requests by timing the responses while asking the right questions that leak information.",
+  "execution_flow/1/techniques/0/0": "Using a GET request, leverage the \"img\" tag in conjunction with \"onload() / onerror()\" javascript events to time a response",
+  "execution_flow/1/techniques/1/0": "Using a POST request, leverage the \"iframe\" element and use the \"onload()\" event to time a response"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "応答の「内容」を直接読み取れなくても、応答にかかった「時間」の違いから、機微な情報を推測してしまう攻撃。同一オリジンポリシーはレスポンスの内容を読むことを防ぐが、応答時間の計測までは防いでいない。Webメールの検索のように、応答に時間差が出る処理を標的にすることで、「はい・いいえ」式の質問を繰り返すように情報を探り出せる。",
+  "terms": [
+   {
+    "term": "同一オリジンポリシー, same-origin policy, あるWebページが、自分と異なるオリジン（ドメインなど）のリソースに自由にアクセスすることを制限する、ブラウザのセキュリティ上の基本原則のこと。",
+    "en": "",
+    "explain": ""
+   }
+  ],
+  "facts": [
+   {
+    "text": "同一オリジンポリシーは、他に弱点がない限り、攻撃者がサーバーの応答を直接読み取ることを防ぐが、攻撃者がクロスドメインで発行したリクエストへの応答時間を計測することは防がない、と原典に書かれている。, CAPEC-462 説明",
+    "source": ""
+   }
+  ],
+  "analogy": "相手に直接答えを聞くことはできないが、「はい」の場合と「いいえ」の場合で考える時間に差が出ることを利用して、間接的に答えを当てていく、推理ゲームのような手口に似ている。"
+ }
+}
