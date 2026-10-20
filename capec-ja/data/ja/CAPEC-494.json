@@ -1,0 +1,35 @@
+{
+ "id": "494",
+ "source_sha": "daaec2bb331062b0",
+ "status": "done",
+ "seg": {
+  "name": "TCPフラグメンテーション",
+  "description/0": "攻撃者は、TCPパケットのヘッダーのフラグフィールドが、通常はフィルタリングされない第二のフラグメントに押し込まれるように、パケットを断片化させることで、ネットワーク制御機器のフィルタリングルールを回避する意図を持って、標的に対してTCPフラグメンテーション攻撃を実行することがある。",
+  "extended_description/0": "比較として、IPフラグメンテーションは、IPデータグラムが、そのデータグラムが通過しなければならない経路のMTUより大きい場合に発生する。この断片化の挙動は、一部のIPSやファイアウォールのフィルタを無力化する。これは、これらが通常、最初のパケットのヘッダー内のFLAGSを確認し、このパケットを破棄することで、続くフラグメントが処理・再構成されるのを防ぐためである。",
+  "extended_description/1": "別の変種として、重複するフラグメントがある。これにより、無害な最初のセグメントがフィルタを通過し、二番目のセグメントが、本来悪意のある性質を持つ真のペイロードで、TCPヘッダーのデータを上書きする。適切に操作された悪意あるペイロードは、資源の消費やカーネルのクラッシュによるDoSを引き起こし得る。さらに、この断片化は、タイムアウトよりわずかに遅い速度でフラグメントを送信することと組み合わせて使用され得る。これにより、パケットを再構成する資源に、処理を完了するために異常に長い時間待たせることで、DoSの状況を引き起こす。また、フラグメントの識別番号は、IPv4では16ビットしかなく、わずか65536個のパケットしか必要ないため、非常に簡単に重複させることができる。",
+  "prerequisites/0/0": "この種の攻撃には、標的システムが脆弱なIPの実装を稼働させていることと、攻撃者が、作成したデータを含む任意のサイズのTCPパケットを送信できる能力が必要である。",
+  "mitigations/0/0": "RFC1858のガイダンスに従い、ルーターでルールを強制することで、この攻撃を緩和できる。このガイダンスの本質的な部分は、「もしFO=1かつPROTOCOL=TCPなら、パケットを破棄する」という具体的なルールを作成することであり、これはIPv4における微小フラグメント攻撃と重複フラグメント攻撃の両方を緩和する。IPv6の重複（RFC5722）では、パケットの深い検査（ディープパケットインスペクション）のような追加の手順が必要になる場合がある。遅延フラグメントは、最初のパケットを受信してから一定の時刻までに、すべてのパケットを受信するという伝送タイムアウトを強制することで緩和できる。RFC2460によれば、IPv6の実装は、最初に到着したフラグメントから60秒以内に、すべてのフラグメントが受信されなかった場合、すべてのフラグメントを破棄するというルールを強制すべきである。"
+ },
+ "quotes": {
+  "mitigations/0/0": "This attack may be mitigated by enforcing rules at the router following the guidance of RFC1858. The essential part of the guidance is creating the following rule \"IF FO=1 and PROTOCOL=TCP then DROP PACKET\" as this mitigated both tiny fragment and overlapping fragment attacks in IPv4. In IPv6 overlapping(RFC5722) additional steps may be required such as deep packet inspection. The delayed fragments may be mitigated by enforcing a timeout on the transmission to receive all packets by a certain time since the first packet is received. According to RFC2460 IPv6 implementations should enforce a rule to discard all fragments if the fragments are not ALL received within 60 seconds of the FIRST arriving fragment."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "TCPヘッダーの重要な部分（フラグフィールドなど）を、あえて二番目以降のフラグメントに分割して送ることで、最初のパケットしか検査しないファイアウォールやIPS（侵入防止システム）のフィルタリングを回避する攻撃。重複するフラグメントを使い、無害に見える最初のセグメントでフィルタを通過させ、後から送る悪意あるセグメントで実際の内容を上書きする変種もある。",
+  "terms": [
+   {
+    "term": "MTU, Maximum Transmission Unit, ネットワーク上で一度に送信できるデータの最大サイズのこと。これを超えるデータは分割（フラグメンテーション）される。",
+    "en": "",
+    "explain": ""
+   }
+  ],
+  "facts": [
+   {
+    "text": "フラグメントの識別番号は、IPv4では16ビットしかなく、わずか65536個のパケットしか必要ないため、非常に簡単に重複させることができる、と原典のextended_description（補足説明）に書かれている。, CAPEC-494 extended_description",
+    "source": ""
+   }
+  ],
+  "analogy": "検査員が荷物の最初の箱だけを厳重に調べる仕組みを悪用し、無害な荷物を最初の箱に入れて検査を通過させ、後から届く別の箱に本当の危険物を入れておいて、荷物全体として受け取られてしまうのに似ている。"
+ }
+}
