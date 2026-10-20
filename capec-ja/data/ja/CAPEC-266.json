@@ -1,0 +1,11 @@
+{
+ "id": "266",
+ "source_sha": "9796b597af1d8f1b",
+ "status": "done",
+ "seg": {
+  "name": "廃止：正規化の操作",
+  "description/0": "この攻撃パターンは廃止された。"
+ },
+ "review": [],
+ "redacted": []
+}
