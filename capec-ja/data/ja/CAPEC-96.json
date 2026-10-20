@@ -1,0 +1,48 @@
+{
+ "id": "96",
+ "source_sha": "f0b0084a3350c9ce",
+ "status": "done",
+ "seg": {
+  "name": "ライブラリへのアクセスの遮断",
+  "description/0": "アプリケーションは通常、アプリケーションの外部にあるライブラリの一部である関数を呼び出す。これらのライブラリは、OSの一部であることもあれば、サードパーティ製のライブラリであることもある。これらのライブラリへのアクセスが遮断された状況を、アプリケーションが適切に処理していない可能性がある。アプリケーション内のエラー処理の仕方によっては、ライブラリへのアクセスの遮断が、攻撃者に悪用されうる安全でない状態にシステムを陥れることがある。",
+  "execution_flow/0/description/0": "アプリケーションがアクセスする外部ライブラリを特定する。",
+  "execution_flow/1/description/0": "アプリケーションがアクセスする外部ライブラリへのアクセスを遮断する。",
+  "execution_flow/2/description/0": "システムの挙動を監視し、安全でない・一貫性のない状態に陥るかを確認する。",
+  "execution_flow/3/description/0": "システムが安全でない・一貫性のない状態に陥った場合、それを利用して、システムの機能やデータについての情報を得たり、アクセス制御を昇格させたりする。この攻撃の残りは、文脈と狙う目標によって決まる。",
+  "prerequisites/0/0": "アプリケーションが、外部ライブラリへのアクセスを必要としていること。",
+  "prerequisites/1/0": "攻撃者が、アプリケーションの外部ライブラリへのアクセスを遮断する権限を持っていること。",
+  "skills/0/text/0": "ライブラリへのアクセスを遮断する方法と、呼び出しが失敗した結果のアプリケーションの状態を利用する方法についての知識。",
+  "mitigations/0/0": "外部ライブラリ内のAPIへのアクセスが利用できない状況を、アプリケーションが安全に処理することを確実にする。アプリケーションが安全に実行を続けられない場合、一貫した安全な形で失敗すべきである。",
+  "examples/0/0": "マシンのハードウェアからエントロピー（乱雑さ）を得るサードパーティ製の暗号用乱数生成ライブラリを使うウェブベースのシステムの例。詳細は下記の原文を参照。"
+ },
+ "quotes": {
+  "examples/0/0": "A web-based system uses a third party cryptographic random number generation library that derives entropy from machine's hardware. This library is used in generation of user session ids used by the application. If the library is inaccessible, the application instead uses a software based weak pseudo random number generation library. An attacker of the system blocks access of the application to the third party cryptographic random number generation library (by renaming it). The application in turn uses the weak pseudo random number generation library to generate session ids that are predictable. An attacker then leverages this weakness to guess a session id of another user to perform a horizontal elevation of privilege escalation and gain access to another user's account."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "アプリケーションが頼っている外部のライブラリへのアクセスをわざと遮断し、それに対するエラー処理の甘さを突いて、安全性の低い代替の動作に陥らせる攻撃。",
+  "terms": [
+   {
+    "term": "エントロピー",
+    "en": "entropy",
+    "explain": "乱数の「予測しにくさ」の度合い。暗号で使う乱数には、高いエントロピーが必要。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "アプリケーションが外部ライブラリへのアクセスを必要としていることが前提だと原典に書かれている。",
+    "source": "CAPEC-96 前提条件"
+   },
+   {
+    "text": "対策として、外部ライブラリへのアクセスが利用できない状況を安全に処理することが挙げられている。",
+    "source": "CAPEC-96 対策"
+   }
+  ],
+  "analogy": "普段は金庫（安全な乱数生成ライブラリ）を使う店が、金庫が使えないときだけ、簡単に開けられる引き出し（弱い乱数生成）で代用してしまう、という状況に近い。代替手段も、本来と同じ水準の安全性を持つ必要がある。",
+  "learn": [
+   "「本来の仕組みが使えないときの代替動作」が、なぜ弱点になりうるのか",
+   "失敗時の安全な処理（フェイルセーフ）が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}
