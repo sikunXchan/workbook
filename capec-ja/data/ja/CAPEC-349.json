@@ -1,0 +1,11 @@
+{
+ "id": "349",
+ "source_sha": "ee44382fee3c220a",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-16 - ディレクトリの一覧表示",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「ディレクトリの一覧表示（Directory Indexing）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,11 @@
+{
+ "id": "333",
+ "source_sha": "aa508a24ebe6fd72",
+ "status": "done",
+ "seg": {
+  "name": "WASC脅威分類2.0",
+  "objective/0": "このビューは、WASC脅威分類2.0とCAPECとの対応づけを示す。"
+ },
+ "review": [],
+ "redacted": []
+}

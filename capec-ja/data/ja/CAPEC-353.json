@@ -1,0 +1,11 @@
+{
+ "id": "353",
+ "source_sha": "34760d744c04ee57",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-20 - 入力の不適切な処理",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「入力の不適切な処理（Improper Input Handling）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

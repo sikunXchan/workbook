@@ -1,0 +1,11 @@
+{
+ "id": "368",
+ "source_sha": "db2159afa0d82cbd",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-35 - SOAP配列の悪用",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「SOAP配列の悪用（SOAP Array Abuse）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

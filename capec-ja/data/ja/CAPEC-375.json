@@ -1,0 +1,11 @@
+{
+ "id": "375",
+ "source_sha": "5e47ecf0dc9f096e",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-42 - 機能の悪用",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「機能の悪用（Abuse of Functionality）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

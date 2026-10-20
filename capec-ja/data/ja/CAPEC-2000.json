@@ -1,0 +1,11 @@
+{
+ "id": "2000",
+ "source_sha": "172e505efee9bb16",
+ "status": "done",
+ "seg": {
+  "name": "CAPEC総合辞典",
+  "objective/0": "このビュー（スライス）は、CAPECのすべての要素を対象とする。"
+ },
+ "review": [],
+ "redacted": []
+}

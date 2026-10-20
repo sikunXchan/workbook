@@ -1,0 +1,11 @@
+{
+ "id": "362",
+ "source_sha": "73e581641c60253e",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-29 - LDAPインジェクション",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「LDAPインジェクション（LDAP Injection）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

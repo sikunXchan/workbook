@@ -1,0 +1,11 @@
+{
+ "id": "355",
+ "source_sha": "3ccadf05eb3276c1",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-22 - 出力の不適切な処理",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「出力の不適切な処理（Improper Output Handling）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

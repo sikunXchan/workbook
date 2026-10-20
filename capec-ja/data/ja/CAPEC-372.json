@@ -1,0 +1,11 @@
+{
+ "id": "372",
+ "source_sha": "48ae3b20f7d4139a",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-39 - XPathインジェクション",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「XPathインジェクション（XPath Injection）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

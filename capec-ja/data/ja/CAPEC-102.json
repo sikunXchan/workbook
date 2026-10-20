@@ -1,0 +1,53 @@
+{
+ "id": "102",
+ "source_sha": "9d1e479205f936c2",
+ "status": "done",
+ "seg": {
+  "name": "セッションサイドジャッキング",
+  "description/0": "セッションサイドジャッキングは、被害者と標的システムの間の、暗号化されていない通信経路を悪用する。攻撃者は、暗号化されていない通信の中にあるセッショントークンを探して、ネットワーク上の通信を盗み見る。セッショントークンを取得すると、攻撃者は、盗んだトークンを標的のアプリケーションに対して使い、被害者になりすまして悪意ある操作を行う。この攻撃は、セッションハイジャック（有効なセッショントークンを悪用して、標的システムや情報への不正なアクセスを得ること）の特定の方法の1つである。セッションハイジャックを行うほかの方法には、セッション固定、クロスサイトスクリプティング、利用者やサーバーのマシンを侵害してセッショントークンを盗むことなどがある。",
+  "execution_flow/0/description/0": "［保護されていないセッショントークンの転送の検知］攻撃者は、無線ネットワークを盗み見て、セッショントークンを含む、暗号化されていない通信を探す。",
+  "execution_flow/0/techniques/0/0": "攻撃者は、ferretやhamsterのようなネットワークスニファツールを使い、Wi-Fiホットスポットの無線通信を監視しながら、暗号化されていない、または容易に認識できる暗号化の形でセッショントークンが送信されている証拠を調べる。攻撃者は、さまざまな標的システムがセッショントークンを生成・送信する方法についての知識を活用して、セッショントークンを特定する。",
+  "execution_flow/1/description/0": "［セッショントークンの取得］攻撃者は、盗み見ツールを使って、通信からセッショントークンを取得する。",
+  "execution_flow/2/description/0": "［取得したセッショントークンの挿入］攻撃者は、取得したセッショントークンを標的のアプリケーションとの通信に挿入しようとし、悪用できるかを確認する。",
+  "execution_flow/3/description/0": "［セッショントークンの悪用］攻撃者は、取得したセッショントークンを活用して、被害者になりすまし、標的のアプリケーションと悪意ある形でやり取りする。",
+  "prerequisites/0/0": "攻撃者と被害者の両方が、同じWi-Fiネットワークを使っていること。",
+  "prerequisites/1/0": "被害者が、標的システムとの有効なセッションを持っていること。",
+  "prerequisites/2/0": "被害者が、標的システムとの通信に安全な経路（SSL、VPNなど）を使っていないこと。",
+  "prerequisites/3/0": "被害者が、セッショントークンの転送を必要とする通信を標的システムと開始していること、または標的のアプリケーションがAjaxを使っていて、セッショントークンを使って定期的に非同期でサーバーに「連絡」していること。",
+  "skills/0/text/0": "この攻撃を自動化する、使いやすいツールが存在する。",
+  "resources/0/0": "Wiresharkのようなパケット盗み見ツールを使って、セッション情報を取得できる。",
+  "mitigations/0/0": "標的システムとの通信にHTTPSが使われていることを確認する。可能であれば、代わりにVPNを使う。クライアントとサーバーの間のすべての通信が、暗号化された安全な経路を通じて行われることを確実にすることが重要である。",
+  "mitigations/1/0": "セッショントークンを送信のたびに変更し、暗号で保護する。サーバーがリプレイ攻撃を検知できる、要求の連番の仕組みを加える。",
+  "examples/0/0": "攻撃者と被害者が同じWi-Fi公衆ホットスポットを使っている状況で、HTTPSが使われるべき通信が、ホットスポットの設定により最初はHTTPSで保護されず、セッショントークンが暗号化されずに流れてしまう例。詳細は下記の原文を参照。"
+ },
+ "quotes": {
+  "examples/0/0": "The attacker and the victim are using the same WiFi public hotspot. When the victim connects to the hotspot, they has a hosted e-mail account open. This e-mail account uses AJAX on the client side which periodically asynchronously connects to the server side and transfers, amongst other things, the user's session token to the server. The communication is supposed to happen over HTTPS. However, the configuration in the public hotspot initially disallows the HTTPS connection (or any other connection) between the victim and the hosted e-mail servers because the victim first needs to register with the hotspot. The victim does so, but their e-mail client already defaulted to using a connection without HTTPS, since it was denied access the first time. Victim's session token is now flowing unencrypted between the victim's browser and the hosted e-mail servers. The attacker leverages this opportunity to capture the session token and gain access to the victim's hosted e-mail account."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "暗号化されていない無線通信からセッショントークン（ログイン状態の合言葉）を盗み見て、そのまま使って本人になりすます攻撃。公共のWi-Fiでとくに起こりやすい。CAPEC-60（セッションIDの再利用）の具体的な手口の1つ。",
+  "terms": [
+   {
+    "term": "セッションサイドジャッキング",
+    "en": "session sidejacking",
+    "explain": "無線通信を盗み見て、セッショントークンを盗む手口。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "攻撃者と被害者が同じWi-Fiネットワークを使っていることが前提だと原典に書かれている。",
+    "source": "CAPEC-102 前提条件"
+   },
+   {
+    "text": "対策として、HTTPSやVPNの使用と、セッショントークンの暗号による保護が挙げられている。",
+    "source": "CAPEC-102 対策"
+   }
+  ],
+  "analogy": "公衆の場で、封筒に入れずにはがきのまま会話の内容を回し読みしているのに近い。周りの誰もがその内容を読める。HTTPSは、はがきを封筒に入れるようなものである。",
+  "learn": [
+   "公共のWi-Fiが、なぜセッショントークンの盗み見に弱いのか",
+   "HTTPS・VPNによる暗号化が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

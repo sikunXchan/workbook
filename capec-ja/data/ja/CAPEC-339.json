@@ -1,0 +1,11 @@
+{
+ "id": "339",
+ "source_sha": "25f3db340d84f42d",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-06 - フォーマット文字列",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「フォーマット文字列（Format String）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

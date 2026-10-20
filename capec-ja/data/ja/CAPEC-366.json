@@ -1,0 +1,11 @@
+{
+ "id": "366",
+ "source_sha": "57c62c33438c0091",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-33 - パストラバーサル",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「パストラバーサル（Path Traversal）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

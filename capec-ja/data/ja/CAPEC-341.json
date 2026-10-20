@@ -1,0 +1,11 @@
+{
+ "id": "341",
+ "source_sha": "3eb9643bd72f3a36",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-08 - クロスサイトスクリプティング",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「クロスサイトスクリプティング（Cross-Site Scripting）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

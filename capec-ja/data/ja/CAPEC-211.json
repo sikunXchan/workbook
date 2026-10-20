@@ -1,0 +1,11 @@
+{
+ "id": "211",
+ "source_sha": "f06d829a859bcb8e",
+ "status": "done",
+ "seg": {
+  "name": "廃止：Webツール（例：MozillaのGreaseMonkey、Firebug）を利用してアプリケーションの挙動を変える",
+  "description/0": "この攻撃パターンは、正当な攻撃パターンとは見なされなかったため、廃止された。"
+ },
+ "review": [],
+ "redacted": []
+}

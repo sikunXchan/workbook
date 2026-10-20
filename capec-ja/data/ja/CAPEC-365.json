@@ -1,0 +1,11 @@
+{
+ "id": "365",
+ "source_sha": "f268740071b217b8",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-32 - 経路の迂回",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「経路の迂回（Routing Detour）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,11 @@
+{
+ "id": "282",
+ "source_sha": "efa09235e825a7ec",
+ "status": "done",
+ "seg": {
+  "name": "メタ抽象度",
+  "objective/0": "このビュー（スライス）は、メタ抽象度の攻撃パターンを対象とする。"
+ },
+ "review": [],
+ "redacted": []
+}

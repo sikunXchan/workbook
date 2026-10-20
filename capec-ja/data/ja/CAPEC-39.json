@@ -1,0 +1,81 @@
+{
+ "id": "39",
+ "source_sha": "58e245b2ef3b9ca4",
+ "status": "done",
+ "seg": {
+  "name": "不透明なクライアント側データトークンの操作",
+  "description/0": "アプリケーションが、重要なデータをクライアント側のトークン（Cookie、URL、データファイルなど）に保持している状況では、そのデータを操作されうる。クライアント側またはサーバー側のアプリケーション構成要素が、そのデータを認証トークンやデータ（商品の価格やウォレットの情報など）として再解釈する場合、不透明な形（中身が読めない形）で操作するだけでも、攻撃者に成果がありうる。このパターンでは、攻撃者は、クライアント側のトークンが、暗号化や難読化によって改ざんから十分に守られているという想定を覆す。",
+  "execution_flow/0/description/0": "［クライアント側に渡される情報の列挙］攻撃者は、業務やセキュリティ上の判断に使われるトークンの一部として使われるパラメータを特定する。",
+  "execution_flow/0/techniques/0/0": "ウェブの閲覧中に隠しフィールドを明らかにするツールを使う（ツール名は下記の原文を参照）。",
+  "execution_flow/0/techniques/1/0": "スニファを使ってパケットを取得する。",
+  "execution_flow/0/techniques/2/0": "ウェブページのソースを表示して、隠しフィールドを見つける。",
+  "execution_flow/0/techniques/3/0": "URLを調べて、不透明なトークンが含まれていないかを確かめる。",
+  "execution_flow/0/techniques/4/0": "クライアント側のアプリケーションを逆アセンブルまたは逆コンパイルする。",
+  "execution_flow/0/techniques/5/0": "ファイルモニタ、レジストリモニタ、デバッガなどのデバッグ用ツールを使う。",
+  "execution_flow/1/description/0": "［不透明なトークンの保護の仕組みの特定］攻撃者は、これらのデータトークンの機密性と完全性を守るために使われている保護の仕組みを突き止める。難読化されているだけのこともあれば、本格的な暗号化が使われていることもある。",
+  "execution_flow/1/techniques/0/0": "よく知られた文字の符号化の兆候を探す。",
+  "execution_flow/1/techniques/1/0": "暗号の署名を探す。",
+  "execution_flow/1/techniques/2/0": "区切り文字など、構造を示す手がかりを探す。",
+  "execution_flow/2/description/0": "［パラメータやトークンの値の改変］攻撃者は、パラメータを1つずつ試し、値を改変する。",
+  "execution_flow/2/techniques/0/0": "トークンを論理的に改変する。",
+  "execution_flow/2/techniques/1/0": "トークンを算術的に改変する。",
+  "execution_flow/2/techniques/2/0": "トークンをビット単位で改変する。",
+  "execution_flow/2/techniques/3/0": "トークンの構造の構成要素を改変する。",
+  "execution_flow/2/techniques/4/0": "パラメータやトークンの順序を入れ替える。",
+  "execution_flow/3/description/0": "［各パラメータの値を順に試す］アプリケーションの性質に応じて、攻撃者は、各パラメータの値を順に試し、サーバーが返すデータに、その改変の影響がどう現れるかを観察する。",
+  "execution_flow/3/techniques/0/0": "ネットワークレベルのパケット注入ツールを使う（ツール名は下記の原文を参照）。",
+  "execution_flow/3/techniques/1/0": "アプリケーションレベルのデータ改変ツールを使う（ツール名は下記の原文を参照）。",
+  "execution_flow/3/techniques/2/0": "リバースエンジニアリングで改変したクライアントを使う。",
+  "execution_flow/3/techniques/3/0": "デバッグ用ツールを使って、クライアント内のデータを改変する。",
+  "prerequisites/0/0": "攻撃者がすでにシステムへのアクセスをある程度持っているか、システムにアクセスできる別の利用者から、クライアント側のデータトークンを盗めること。",
+  "prerequisites/1/0": "攻撃者がこの攻撃を現実に実行するには、（のちにアプリケーションに解釈される）何らかのデータが、検知されずに操作できる形でクライアント側に保持されていなければならない。これは、そのデータやトークンが、値の一部として、あるいは別の場所のメタデータの保管を通じて、CRC（巡回冗長検査）で保護されていないことを意味する。",
+  "skills/0/text/0": "クライアント側のトークンが難読化されている場合。",
+  "skills/1/text/0": "クライアント側のトークンが暗号化されている場合。",
+  "resources/0/0": "攻撃者は、この攻撃を行うのに、特別なハードウェア資源を必要としない。Firefox用のTamper Dataのようなソフトウェアのプラグインは、URLやCookieにもとづくデータの操作に役立つことがある。",
+  "mitigations/0/0": "この問題の解決策の1つは、暗号化したデータを、何らかのCRCで保護することである。誰が最後にデータを操作したかを知ることが重要なら、暗号の「メッセージ認証コード」（またはhMAC）を使うよう規定される。ただし、この指針は万能ではない。とくに、クライアント自身が作った（したがって暗号化された）値が、それ自体が「悪意ある」値である場合、世の中のあらゆる保護の暗号をもってしても、その値を再び「正しく」することはできない。端的に言えば、値を生成し符号化する全過程をクライアントが制御しているなら、完全性を守るだけでは役に立たない。",
+  "mitigations/1/0": "クライアント側の認証トークンを、機密性（暗号化）と完全性（署名付きハッシュ）の両方について守るようにする。",
+  "mitigations/2/0": "すべてのセッショントークンが、よい乱数の源を使っていることを確認する。",
+  "mitigations/3/0": "クライアント側のデータトークンが、期待される内容と一貫していることを確かめる検証を、サーバー側で行う。",
+  "examples/0/0": "一部の価格比較サイトは、製品の販売価格を集約し、利用者は、在庫がある、価格が最も安い、あるいはそのほかの差別化要素のある販売者を通じて商品を購入できる。利用者が商品を選ぶと、サイトは、その商品の購入を販売者との間で仲介しなければならない。販売者は同じ製品を、異なる販売パートナーを通じて異なる価格で売るため、価格比較サイトと販売者の間のトークンの交換には、価格情報が含まれることが多い。一部の価格比較サイトでは、（暗号化されている）URLのデータを、不透明な形でも操作すると、商品を提供する販売者が請求する価格が変わる。操作した価格のほうが高くなった場合、攻撃者は購入を取り消せる。攻撃者がトークンの操作に成功して、価格を安くできれば、購入を進める。",
+  "examples/1/0": "暗号化された認証Cookieの、利用者のアクセスレベルを表す部分を、暗号文の一部のビットを反転して書き換え、管理者権限を得る例。詳細は下記の原文を参照。",
+  "examples/2/0": "Archangel Weblog 0.90.02では、リモートの攻撃者が、ba_adminというCookieを1に設定することで認証を回避できる。参考：CVE-2006-0944"
+ },
+ "quotes": {
+  "execution_flow/0/techniques/0/0": "Use WebScarab to reveal hidden fields while browsing.",
+  "execution_flow/3/techniques/0/0": "Use network-level packet injection tools such as netcat",
+  "execution_flow/3/techniques/1/0": "Use application-level data modification tools such as Tamper Data, WebScarab, TamperIE, etc.",
+  "examples/1/0": "Upon successful authentication user is granted an encrypted authentication cookie by the server and it is stored on the client. One piece of information stored in the authentication cookie reflects the access level of the user (e.g. \"u\" for user). The authentication cookie is encrypted using the Electronic Code Book (ECB) mode, that naively encrypts each of the plaintext blocks to each of the ciphertext blocks separately. An attacker knows the structure of the cookie and can figure out what bits (encrypted) store the information relating to the access level of the user. An attacker modifies the authentication cookie and effectively substitutes \"u\" for \"a\" by flipping some of the corresponding bits of ciphertext (trial and error). Once the correct \"flip\" is found, when the system is accessed, the attacker is granted administrative privileges in the system. Note that in this case an attacker did not have to figure out the exact encryption algorithm or find the secret key, but merely exploit the weakness inherent in using the ECB encryption mode."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "クライアント側に預けた「中身の読めないデータ（トークン）」でも、書き換えられると、価格や権限などの判断が狂ってしまう攻撃。",
+  "terms": [
+   {
+    "term": "トークン",
+    "en": "token",
+    "explain": "利用者の状態や権限などを表す、小さなデータの「引換券」。Cookieなどに入れて持たせる。"
+   },
+   {
+    "term": "CRC",
+    "en": "cyclic redundancy check",
+    "explain": "データが書き換えられたかを見つけるための、簡単な確認用の値。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "アプリケーションが重要なデータをクライアント側のトークンに保持していると、そのデータを操作されうると原典に書かれている。",
+    "source": "CAPEC-39 説明"
+   },
+   {
+    "text": "対策として、機密性と完全性の両方の保護、よい乱数、サーバー側での検証が挙げられている。",
+    "source": "CAPEC-39 対策"
+   }
+  ],
+  "analogy": "預けた引換券に、金額が暗号のように書かれていても、数字の並びを少しずつ変えて窓口に出すうちに、安くなる組み合わせが見つかってしまう、という状況に近い。窓口（サーバー）が、券の内容が正しいかを確かめることが守りになる。",
+  "learn": [
+   "「読めないから改ざんされない」という想定が、なぜ成り立たないのか",
+   "サーバー側の検証と、完全性の保護が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

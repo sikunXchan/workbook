@@ -1,0 +1,11 @@
+{
+ "id": "377",
+ "source_sha": "f5f37047081a9dc8",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-44 - XMLエンティティの展開",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「XMLエンティティの展開（XML Entity Expansion）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,11 @@
+{
+ "id": "367",
+ "source_sha": "ce52bc9c205aece2",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-34 - 予測できる資源の場所",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「予測できる資源の場所（Predictable Resource Location）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,11 @@
+{
+ "id": "283",
+ "source_sha": "e783dece2229b830",
+ "status": "done",
+ "seg": {
+  "name": "標準抽象度",
+  "objective/0": "このビュー（スライス）は、標準抽象度の攻撃パターンを対象とする。"
+ },
+ "review": [],
+ "redacted": []
+}

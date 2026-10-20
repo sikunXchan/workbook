@@ -1,0 +1,48 @@
+{
+ "id": "159",
+ "source_sha": "b1b6431085ca7ee2",
+ "status": "done",
+ "seg": {
+  "name": "ライブラリへのアクセスのリダイレクト",
+  "description/0": "攻撃者は、アプリケーションが外部ライブラリを探索する方法の弱点を悪用して、実行の流れを、攻撃者が用意したライブラリやコードベースを指すように操作する。この攻撃の型により、攻撃者は、権限のないコードの実行を通じて、アプリケーションやサーバーを危険にさらすことができる。アプリケーションは通常、アプリケーション外部のライブラリに属する関数を呼び出す。これらのライブラリは、オペレーティングシステムの一部であることもあれば、サードパーティのライブラリであることもある。攻撃者が、アプリケーションがこれらのライブラリへアクセスしようとする試みを、攻撃者が用意した別のライブラリへリダイレクトできれば、攻撃者は、標的アプリケーションに任意のコードを実行させることができる。これは、標的アプリケーションが強化された権限を持っている場合、特に危険である。アクセスは、シンボリックリンクの利用、検索パスの改変、相対パスの操作など、さまざまな手法によってリダイレクトされ得る。",
+  "execution_flow/0/description/0": "［標的の特定］攻撃者は標的アプリケーションを特定し、どのライブラリが使われているかを調べる。",
+  "execution_flow/0/techniques/0/0": "公開されているソースコードを見つけ、ライブラリの依存関係を特定する。",
+  "execution_flow/0/techniques/1/0": "アプリケーションをホストしているシステムへのアクセスを得て、よくある場所にあるライブラリを探す。",
+  "execution_flow/1/description/0": "［悪意あるライブラリを展開する］攻撃者は、悪意あるライブラリを作成し、アプリケーションが動作しているシステム上、あるいはアプリケーションが読み込める遠隔の場所に展開する。",
+  "execution_flow/2/description/0": "［ライブラリ呼び出しを悪意あるライブラリへリダイレクトする］攻撃者が作成した悪意あるライブラリが展開されると、攻撃者は、アプリケーションがそのライブラリを呼び出すように、アプリケーションの流れを操作する。これは、アプリケーションがライブラリをどのように読み込み・呼び出しているかに応じて、さまざまな方法で行われ得る。",
+  "execution_flow/2/techniques/0/0": "システムのDNSキャッシュを汚染し、正規の場所の代わりに、攻撃者がホストする遠隔の場所から悪意あるライブラリを読み込ませる。",
+  "execution_flow/2/techniques/1/0": "シンボリックリンクを作成し、悪意あるライブラリが正規のライブラリであるとアプリケーションに思い込ませる。",
+  "execution_flow/2/techniques/2/0": "DLLサイドローディングを使って、悪意あるバージョンのDLLをWindowsのディレクトリに配置する。",
+  "prerequisites/0/0": "標的が外部ライブラリを利用しており、それを使用する前にその完全性を検証できていないことが必要である。",
+  "skills/0/text/0": "設定ファイル内の、悪意あるライブラリを指す項目を改変できること",
+  "skills/1/text/0": "シンボリックリンクやタイミングの問題を悪用して、ライブラリへのアクセスをリダイレクトできること",
+  "skills/2/text/0": "ライブラリをリバースエンジニアリングし、悪意あるコードをライブラリに注入できること",
+  "consequences/0/note/0": "任意のコードの実行",
+  "mitigations/0/0": "実装：設定ファイル内の項目を改変する権限を制限する。",
+  "mitigations/1/0": "実装：動的リンクライブラリを使用する前に、その完全性を確認する。",
+  "mitigations/2/0": "実装：ライブラリのリバースエンジニアリングを防ぐため、難読化やその他の手法を用いる。",
+  "examples/0/0": "ELF（実行ファイル形式）に感染させ、実行ファイルのProcedure Linkage Table（PLT）を書き換えて、呼び出し先を感染していない実行ファイルの外部に置けるようにする手口の具体的な手順（原文のまま、防御側の学習のために引用）。"
+ },
+ "quotes": {
+  "examples/0/0": "In this example, the attacker using ELF infection that redirects the Procedure Linkage Table (PLT) of an executable allowing redirection to be resident outside of the infected executable. The algorithm at the entry point code is as follows... • mark the text segment writeable • save the PLT(GOT) entry • replace the PLT(GOT) entry with the address of the new lib call The algorithm in the new library call is as follows... • do the payload of the new lib call • restore the original PLT(GOT) entry • call the lib call • save the PLT(GOT) entry again (if its changed) • replace the PLT(GOT) entry with the address of the new lib call"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "アプリケーションが外部ライブラリを読み込むときの「どこから読み込むか」という判断を狂わせ、攻撃者が用意した偽のライブラリを本物だと思い込ませて実行させてしまう攻撃。DNSキャッシュポイズニング（CAPEC-142）やシンボリックリンク攻撃（CAPEC-132）など、他の攻撃を組み合わせの道具として使う点が特徴である。",
+  "terms": [
+   {
+    "term": "動的リンクライブラリ, dynamically linked library (DLL), プログラムの実行中に必要に応じて読み込まれる、共通の機能をまとめた部品（ライブラリ）のこと。Windowsでは拡張子「.dll」で表される。",
+    "en": "",
+    "explain": ""
+   }
+  ],
+  "facts": [
+   {
+    "text": "アクセスのリダイレクトは、シンボリックリンクの利用、検索パスの改変、相対パスの操作など、さまざまな手法によって行われ得る、と原典の説明に書かれている。, CAPEC-159 説明",
+    "source": ""
+   }
+  ],
+  "analogy": "工場が部品を注文する先の「取引先リスト」の表記をひそかに書き換えて、正規の部品メーカーの代わりに、偽の部品を作る業者から仕入れさせてしまうのに似ている。工場自身は、いつも通りの取引先から仕入れていると思い込んでいる。"
+ }
+}

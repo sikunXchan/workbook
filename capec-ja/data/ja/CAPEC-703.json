@@ -1,0 +1,12 @@
+{
+ "id": "703",
+ "source_sha": "b410fead8cfc1c96",
+ "status": "done",
+ "seg": {
+  "name": "産業用制御システム（ICS）のパターン",
+  "objective/0": "このビューは、産業用制御システム（ICS）に当てはまるCAPECの一覧を含む。これらの攻撃パターンの子の一部も当てはまる場合がある。",
+  "notes/0/text/0": "このビューは、一部にATT&CK ICSマトリックス [REF-752] を利用して作成された。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,11 @@
+{
+ "id": "376",
+ "source_sha": "bafd7bcb1ef05112",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-43 - XML外部エンティティ",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「XML外部エンティティ（XML External Entities）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

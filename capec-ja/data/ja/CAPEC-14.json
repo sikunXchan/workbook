@@ -1,0 +1,70 @@
+{
+ "id": "14",
+ "source_sha": "a68e1b807ff63426",
+ "status": "done",
+ "seg": {
+  "name": "クライアント側へのインジェクションによるバッファオーバーフロー",
+  "description/0": "この種の攻撃は、独自に作られた敵対的なサービスから悪意ある内容を注入することで、標的のクライアントソフトウェアにあるバッファオーバーフロー（buffer overflow）の脆弱性を突く。この敵対的なサービスは、クライアントソフトウェアに正しい内容を届けるように作られる。たとえば、クライアント側のアプリケーションがブラウザなら、サービスはブラウザが読み込むウェブページを提供する。",
+  "execution_flow/0/description/0": "［標的のクライアント側アプリケーションの特定］攻撃者は、バッファオーバーフローを起こす標的のクライアント側アプリケーションを特定する。もっとも一般的なのはブラウザである。既知のブラウザの脆弱性があれば、攻撃者はそれを狙える。",
+  "execution_flow/1/description/0": "［注入の足がかりの発見］攻撃者は、標的のアプリケーションのバッファへ過大な内容を届ける、注入の足がかりを特定する。",
+  "execution_flow/1/techniques/0/0": "クライアント側のアプリケーションはオープンソースであることが多く、攻撃者はソースコードを調べて、注入の足がかりになりうる箇所を見つけられる。",
+  "execution_flow/1/techniques/1/0": "クライアント側アプリケーションのAPIを調べ、バッファオーバーフローが起こりうる箇所を探す。",
+  "execution_flow/2/description/0": "［敵対的なサービスの作成］攻撃者は、クライアント側のアプリケーションに内容を届ける敵対的なサービスを作る（具体的な内容は下記の原文を参照）。",
+  "execution_flow/2/techniques/0/0": "クライアント側のアプリケーションがブラウザなら、攻撃者は、悪意あるウェブページをブラウザに届けるサービスを作る。",
+  "execution_flow/3/description/0": "［バッファのオーバーフロー］注入の足がかりを使い、攻撃者は敵対的なサービスを通じて内容をクライアント側のアプリケーションに届け、バッファをあふれさせる。",
+  "execution_flow/3/techniques/0/0": "攻撃者が手元のクライアント側アプリケーションを標的にする場合は、自分でそのサービスを使えばよい。",
+  "execution_flow/3/techniques/1/0": "攻撃者が外部の利用者のクライアント側アプリケーションにオーバーフローを起こそうとする場合は、別の手段で、利用者を自分のサービスに接続させなければならない。たとえば、利用者のブラウザを標的にするため、敵対的なウェブページを訪れさせることが考えられる。",
+  "prerequisites/0/0": "標的のクライアントソフトウェアが、外部のサーバーと通信すること。",
+  "prerequisites/1/0": "標的のクライアントソフトウェアに、バッファオーバーフローの脆弱性があること。",
+  "skills/0/text/0": "サービス妨害（DoS）を起こすだけなら、攻撃者は、攻撃者が変更できる注入の足がかりに長い文字列を入れて、バッファをあふれさせるだけでよい。",
+  "skills/1/text/0": "バッファオーバーフローを悪用して、ソフトウェアシステムのスタックやヒープに悪意あるコードを注入するには、より深い知識と高い技能が必要である。",
+  "indicators/0/0": "兆候の例は、敵対的なサーバーからダウンロードしたコードを実行したあと、クライアントソフトウェアがクラッシュすることである。",
+  "consequences/2/note/0": "サービス妨害",
+  "consequences/3/note/0": "任意のコードの実行",
+  "mitigations/0/0": "クライアントソフトウェアは、認証されていないサーバーから、信頼できないコードをインストールしてはならない。",
+  "mitigations/1/0": "クライアントソフトウェアには最新のパッチを適用し、敵対的かもしれないサーバーとの通信に使う前に、脆弱性の監査をすべきである。",
+  "mitigations/2/0": "バッファへの入力の長さについて、入力検証を行う。",
+  "mitigations/3/0": "自動の境界検査を行う言語やコンパイラを使う。",
+  "mitigations/4/0": "危険なAPIを抽象化して遠ざける、抽象化ライブラリを使う。完全な解決策ではない。",
+  "mitigations/5/0": "StackGuard、ProPolice、MicrosoftのVisual Studioの/GSフラグといった、コンパイラによるカナリア（canary）の仕組みを使う。自動の境界検査を提供するのでなければ、完全な解決策ではない。",
+  "mitigations/6/0": "すべてのバッファの使用で、一貫して境界検査が行われるようにする。",
+  "mitigations/7/0": "OSレベルの予防機能を使う。完全な解決策ではない。",
+  "examples/0/0": "HTML文書の作成者は、しばしば埋め込み用のタグ（EMBEDタグ）を使う。たとえば、",
+  "examples/0/1": "例（原文）：",
+  "examples/0/2": "Internet Explorer 4.0で、攻撃者がSRC指定に過度に長いパスを与えると、mshtml.dllコンポーネントにバッファオーバーフローが起きる。これは、ウェブページ内の内容が、システム内の欠陥のあるモジュールを突くように仕向けられる、標準的な例である。データが特定のシステムに入り込む経路は、潜在的に何千通りもあるため、この種の攻撃は今後も実際に見つかり続ける。"
+ },
+ "quotes": {
+  "execution_flow/2/description/0": "[Create hostile service] The adversary creates a hostile service that will deliver content to the client-side application. If the intent is to simply cause the software to crash, the content need only consist of an excessive quantity of random data. If the intent is to leverage the overflow for execution of arbitrary code, the adversary crafts the payload in such a way that the overwritten return address is replaced with one of the adversary's choosing.",
+  "execution_flow/2/techniques/1/0": "Create malicious shellcode that will execute when the program execution is returned to it.",
+  "execution_flow/2/techniques/2/0": "Use a NOP-sled in the overflow content to more easily \"slide\" into the malicious code. This is done so that the exact return address need not be correct, only in the range of all of the NOPs",
+  "examples/0/1": "<EMBED TYPE=\"audio/midi\" SRC=\"/path/file.mid\" AUTOSTART=\"true\">"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "攻撃者が用意した「敵対的なサービス」から、クライアント側のソフト（たとえばブラウザ）にあふれるほどのデータを送り込み、バッファオーバーフローを起こさせる攻撃。",
+  "terms": [
+   {
+    "term": "バッファオーバーフロー",
+    "en": "buffer overflow",
+    "explain": "決まった大きさのメモリの領域（バッファ）に、入りきらない量のデータを書き込んで、あふれさせてしまうこと。",
+    "example": "10文字しか入らない箱に、100文字を詰め込もうとする。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "標的のクライアントソフトウェアが外部のサーバーと通信することと、バッファオーバーフローの脆弱性があることが前提だと原典に書かれている。",
+    "source": "CAPEC-14 前提条件"
+   },
+   {
+    "text": "対策として、最新のパッチの適用、入力の長さの検証、自動の境界検査を行う言語やコンパイラの使用が挙げられている。",
+    "source": "CAPEC-14 対策"
+   }
+  ],
+  "analogy": "小さな郵便受けに、入りきらない大きさの荷物を無理やり押し込んで、郵便受けの周りの物まで壊してしまうのに近い。受け取る側が「入る量かどうか」を確かめないことが問題である。",
+  "learn": [
+   "入力の大きさを確かめないことが、なぜ攻撃の入り口になるのか",
+   "境界検査、パッチの適用、信頼できないコードをインストールしないことが、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

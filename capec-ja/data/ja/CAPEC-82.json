@@ -1,0 +1,11 @@
+{
+ "id": "82",
+ "source_sha": "2724a49317400298",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：XMLの内容に関する暗黙の前提の侵害（XMLサービス妨害、XDoS）",
+  "description/0": "この攻撃パターンは、CAPEC-230「XMLの入れ子になったペイロード」、CAPEC-231「XMLの過大なペイロード」、CAPEC-147「XML Ping of Death」を一般化したものであるため、非推奨となった。今後はこれらのCAPECを参照されたい。"
+ },
+ "review": [],
+ "redacted": []
+}

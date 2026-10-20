@@ -1,0 +1,11 @@
+{
+ "id": "280",
+ "source_sha": "4cf3ff7b4962e082",
+ "status": "done",
+ "seg": {
+  "name": "廃止：SOAPパラメータの改ざん",
+  "description/0": "この攻撃パターンは、その内容がCAPEC-279：SOAPの操作に統合されたため、廃止された。今後は、こちらのパターンを参照のこと。"
+ },
+ "review": [],
+ "redacted": []
+}

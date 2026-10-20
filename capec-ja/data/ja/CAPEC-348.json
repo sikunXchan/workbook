@@ -1,0 +1,11 @@
+{
+ "id": "348",
+ "source_sha": "b5621e3fe08bbd9c",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-15 - アプリケーションの設定不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「アプリケーションの設定不備（Application Misconfiguration）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

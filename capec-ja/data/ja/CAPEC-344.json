@@ -1,0 +1,11 @@
+{
+ "id": "344",
+ "source_sha": "7a37e4f926be1b20",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-11 - 総当たり",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「総当たり（Brute Force）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

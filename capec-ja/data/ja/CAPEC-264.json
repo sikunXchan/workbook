@@ -1,0 +1,11 @@
+{
+ "id": "264",
+ "source_sha": "9dc5fd97ed954d46",
+ "status": "done",
+ "seg": {
+  "name": "廃止：環境変数の操作",
+  "description/0": "この攻撃パターンは、既存の攻撃パターン「CAPEC-13：環境変数の値の破壊」と重複するため、廃止された。今後は、こちらのCAPECを参照のこと。"
+ },
+ "review": [],
+ "redacted": []
+}

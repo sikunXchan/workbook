@@ -1,0 +1,11 @@
+{
+ "id": "354",
+ "source_sha": "32379fba23d87100",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-21 - 自動化への対策の不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「自動化への対策の不備（Insufficient Anti-automation）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

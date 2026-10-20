@@ -1,0 +1,11 @@
+{
+ "id": "659",
+ "source_sha": "ee216ca2ee23ae0b",
+ "status": "done",
+ "seg": {
+  "name": "OWASPに関連するパターン",
+  "objective/0": "このビュー（スライス）は、OWASP Attacksとの対応づけがあるパターンを対象とする。"
+ },
+ "review": [],
+ "redacted": []
+}

@@ -1,0 +1,63 @@
+{
+ "id": "13",
+ "source_sha": "84bf9cbae109d63e",
+ "status": "done",
+ "seg": {
+  "name": "環境変数の値の改変",
+  "description/0": "攻撃者は、標的のソフトウェアが使う、またはそれを制御する環境変数を、直接または間接に変更する。攻撃者の狙いは、標的のソフトウェアを、攻撃者に都合のよい形で、期待された動作から外れさせることである。",
+  "execution_flow/0/description/0": "［標的のアプリケーションの調査］攻撃者はまず、標的のアプリケーションを調べ、標的についての重要な情報を突き止める。この情報には、使われているソフトウェアの種類、版、アプリケーションが受け取る利用者の入力などが含まれうる。もっとも重要なのは、基盤となるソフトウェア、あるいはアプリケーション自体が使っていそうな環境変数を突き止めようとすることである。",
+  "execution_flow/1/description/0": "［利用者が制御できる環境変数の発見］調査で得た情報をもとに、攻撃者は、アプリケーションが使っている、または使っていると疑われる、利用者が制御できる環境変数を操作してみて、その変更の影響を観察する。アプリケーションに大きな変化が見られれば、その環境変数がアプリケーションの挙動にとって重要で、攻撃の足がかりになりうることが分かる。",
+  "execution_flow/1/techniques/0/0": "「$PATH」「$HOSTNAME」「LD_LIBRARY_PATH」など既知の環境変数を変更し、アプリケーションの挙動が変わるかを調べる。",
+  "execution_flow/2/description/0": "［利用者が制御できる環境変数の操作］攻撃者は、見つけた環境変数を操作して、処理の通常の流れを悪用したり、特権的な資源へのアクセスを得たりする。",
+  "prerequisites/0/0": "環境変数に、利用者がアクセスできること。",
+  "prerequisites/1/0": "アプリケーションが使う環境変数が、利用者の与えたデータで汚染されうること。",
+  "prerequisites/2/0": "環境変数に使われる入力データが、適切に検証されていないこと。",
+  "prerequisites/3/0": "変数のカプセル化が適切に行われていないこと。たとえば、クラスで変数をpublicに設定すると、それが見えるようになり、攻撃者がその変数を操作しようとするかもしれない。",
+  "skills/0/text/0": "ウェブを使う状況では、クライアントはサーバーに送るデータを自分で制御する。したがって誰でも悪意あるデータを送って、認証の仕組みを回避しようとできる。",
+  "skills/1/text/0": "より高度な攻撃には、変数の制御に役立つプロトコルや探りの手法についての知識が必要なこともある。悪意ある利用者は、認証の仕組みを打ち破るため、それを理解しようとすることがある。",
+  "consequences/0/note/0": "任意のコードの実行",
+  "mitigations/0/0": "環境変数を、権限のない読み取り・書き込みのアクセスから守る。",
+  "mitigations/1/0": "環境変数を含む設定ファイルを、不正な読み取り・書き込みのアクセスから守る。",
+  "mitigations/2/0": "すべての入力が悪意あるものだと想定する。要件仕様にもとづいて、ソフトウェアシステムにとって有効なすべての入力を定める許可リストを作る。許可リストに合致しない入力は、システムに入れてはならない。",
+  "mitigations/3/0": "最小権限の原則を適用する。プロセスに環境変数を読む正当な理由がなければ、その権限を与えない。",
+  "examples/0/0": "環境変数の変更によって、プログラムが別の関数ライブラリを読み込むようになる例。詳細は下記の原文を参照。",
+  "examples/1/0": "コマンドの履歴の記録を制御する環境変数の設定を使い、操作の痕跡を残さないようにできる例。詳細は下記の原文を参照。"
+ },
+ "quotes": {
+  "examples/0/0": "Changing the LD_LIBRARY_PATH environment variable in TELNET will cause TELNET to use an alternate (possibly Trojan) version of a function library. The Trojan library must be accessible using the target file system and should include Trojan code that will allow the user to log in with a bad password. This requires that the adversary upload the Trojan library to a specific location on the target. As an alternative to uploading a Trojan file, some file systems support file paths that include remote addresses, such as \\\\172.16.2.100\\shared_files\\trojan_dll.dll. See also: Path Manipulation (CVE-1999-0073)",
+  "examples/1/0": "The HISTCONTROL environment variable keeps track of what should be saved by the history command and eventually into the ~/.bash_history file when a user logs out. This setting can be configured to ignore commands that start with a space by simply setting it to \"ignorespace\". HISTCONTROL can also be set to ignore duplicate commands by setting it to \"ignoredups\". In some Linux systems, this is set by default to \"ignoreboth\" which covers both of the previous examples. This means that \" ls\" will not be saved, but \"ls\" would be saved by history. HISTCONTROL does not exist by default on macOS, but can be set by the user and will be respected. Adversaries can use this to operate without leaving traces by simply prepending a space to all of their terminal commands."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "プログラムの動きを左右する「環境変数」を書き換えて、プログラムを、攻撃者に都合のよい動作に変えてしまう攻撃。",
+  "terms": [
+   {
+    "term": "環境変数",
+    "en": "environment variable",
+    "explain": "プログラムの動作に影響する設定値を、OSやシェルが保持しておく仕組み。",
+    "example": "コマンドを探す場所の一覧（PATH）。"
+   },
+   {
+    "term": "最小権限",
+    "en": "least privilege",
+    "explain": "必要な仕事に足りる最小限の権限だけを与えるという考え方。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "攻撃者は、標的のソフトウェアが使う、または制御する環境変数を変更すると原典に書かれている。",
+    "source": "CAPEC-13 説明"
+   },
+   {
+    "text": "対策として、環境変数の保護、許可リスト、最小権限の適用が挙げられている。",
+    "source": "CAPEC-13 対策"
+   }
+  ],
+  "analogy": "家の「設定表（照明の明るさ、鍵のかけ方など）」を、他人が勝手に書き換えて、家全体の動きを変えてしまうのに近い。設定表に誰が書き込めるかを管理するのが守りになる。",
+  "learn": [
+   "プログラムの外にある設定値が、なぜ攻撃の入り口になるのか",
+   "「許可リスト」と「最小権限」が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

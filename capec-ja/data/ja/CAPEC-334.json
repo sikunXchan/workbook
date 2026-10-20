@@ -1,0 +1,11 @@
+{
+ "id": "334",
+ "source_sha": "610d25224e790134",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-01 - 認証の不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「認証の不備（Insufficient Authentication）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

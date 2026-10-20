@@ -1,0 +1,11 @@
+{
+ "id": "342",
+ "source_sha": "c0cef14bbe026c1b",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-09 - クロスサイトリクエストフォージェリ",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「クロスサイトリクエストフォージェリ（Cross-Site Request Forgery）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

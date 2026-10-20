@@ -1,0 +1,11 @@
+{
+ "id": "358",
+ "source_sha": "cbab035440d020b8",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-25 - HTTPレスポンスの分割",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「HTTPレスポンスの分割（HTTP Response Splitting）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

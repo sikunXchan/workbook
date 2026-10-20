@@ -1,0 +1,11 @@
+{
+ "id": "340",
+ "source_sha": "722acb003cd9dfcb",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-07 - バッファオーバーフロー",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「バッファオーバーフロー（Buffer Overflow）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

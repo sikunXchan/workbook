@@ -1,0 +1,11 @@
+{
+ "id": "483",
+ "source_sha": "10027b0768d6cc97",
+ "status": "done",
+ "seg": {
+  "name": "非推奨の項目",
+  "objective/0": "このビュー（スライス）にあるCAPECのノード（項目）は、非推奨となっている。"
+ },
+ "review": [],
+ "redacted": []
+}

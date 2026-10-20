@@ -1,0 +1,51 @@
+{
+ "id": "73",
+ "source_sha": "553bda966209326e",
+ "status": "done",
+ "seg": {
+  "name": "利用者が制御できるファイル名",
+  "description/0": "この種の攻撃は、攻撃者が、悪意ある文字（XSSのリダイレクトなど）を、直接または間接にファイル名へ挿入し、そのファイル名が標的のソフトウェアによってHTMLのテキストやそのほかの実行されうる内容の生成に使われることを狙うものである。多くのウェブサイトは、利用者が生成する内容に頼っており、利用者が与えたデータから、ファイル、ファイル名、URLリンクといった資源を直接動的に組み立てる。この攻撃パターンでは、攻撃者は、クライアントのブラウザで実行できるコード、または攻撃者が所有するサイトへクライアントのブラウザをリダイレクトするコードをアップロードする。あらゆる種類のXSS攻撃のペイロードが、この脆弱性を渡し、悪用するのに使われうる。",
+  "prerequisites/0/0": "被害者が、利用者が制御できるファイル名の名前と場所を信頼していること。",
+  "skills/0/text/0": "リダイレクトを起こし、信頼性の低い情報源を使わせるため、攻撃者は、ホストがファイル名の組み立てに使うデータを単純に編集できる。",
+  "skills/1/text/0": "攻撃者が所有する、本物に見せかけた悪意あるサイト（銀行やオークションサイトを装ったサイトなど）を配備し、利用者にそこへ認証情報を入力させること。",
+  "skills/2/text/0": "クライアント側の脆弱性を悪用して、ブラウザの実行プロセスに悪意あるスクリプトを注入すること。",
+  "consequences/1/note/0": "任意のコードの実行",
+  "mitigations/0/0": "設計：クライアント側のスクリプト実行を許さないブラウザの技術を使う。",
+  "mitigations/1/0": "実装：クライアントに届けられるすべての内容を、許容できる内容の仕様に照らして無害化することを確実にする。",
+  "mitigations/2/0": "実装：外部から受け取るすべての内容に、入力検証を行う。",
+  "mitigations/3/0": "実装：すべての外部からの内容に出力検証を行う。",
+  "mitigations/4/0": "実装：ブラウザでJavaScriptなどのスクリプト言語を無効にする。",
+  "mitigations/5/0": "実装：動的に生成された内容を、検証の仕様に照らしてスキャンする。",
+  "examples/0/0": "フィッシング攻撃は、銀行やオークションサイトなど信頼できる資源を装った攻撃者から提供されたリンクを、利用者がクリックすることに頼る。詳細は下記の原文を参照。"
+ },
+ "quotes": {
+  "examples/0/0": "Phishing attacks rely on a user clicking on links on that are supplied to them by attackers masquerading as a trusted resource such as a bank or online auction site. The end user's email client hosts the supplied resource name in this case via email. The resource name, however may either 1) direct the client browser to a malicious site to steal credentials and/or 2) execute code on the client machine to probe the victim's host system and network environment."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "利用者がアップロードできるファイルの「名前」に悪意あるコードを紛れ込ませ、そのファイル名がそのままページに表示されたときに実行させてしまう攻撃。クロスサイトスクリプティング（XSS）の一種。",
+  "terms": [
+   {
+    "term": "XSS",
+    "en": "cross-site scripting",
+    "explain": "ウェブページに悪意あるスクリプトを紛れ込ませ、閲覧者のブラウザで実行させる攻撃の総称。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "被害者が、利用者が制御できるファイル名の名前と場所を信頼していることが前提だと原典に書かれている。",
+    "source": "CAPEC-73 前提条件"
+   },
+   {
+    "text": "対策として、動的に生成された内容を検証の仕様に照らしてスキャンすることが挙げられている。",
+    "source": "CAPEC-73 対策"
+   }
+  ],
+  "analogy": "荷物のラベルに書く「宛名」の欄に、わざと命令文を書き込み、ラベルをそのまま読み上げる機械にその命令を実行させてしまう、という状況に近い。ファイル名も「ただの文字列」として安全に扱わなければならない。",
+  "learn": [
+   "ファイル名のような一見無害な入力にも、悪意あるコードが紛れ込みうること",
+   "動的に生成される内容の検証が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

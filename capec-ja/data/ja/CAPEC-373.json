@@ -1,0 +1,11 @@
+{
+ "id": "373",
+ "source_sha": "ee6ace6e58ef864c",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC脅威分類2.0 - WASC-40 - 処理の検証の不備",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「処理の検証の不備（Insufficient Process Validation）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

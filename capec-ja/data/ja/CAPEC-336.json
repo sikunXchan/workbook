@@ -1,0 +1,11 @@
+{
+ "id": "336",
+ "source_sha": "b982485cf012e41f",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：WASC-03 - 整数オーバーフロー",
+  "summary/0": "このカテゴリは、WASC脅威分類2.0の項目「整数オーバーフロー（Integer Overflows）」に関連する。"
+ },
+ "review": [],
+ "redacted": []
+}

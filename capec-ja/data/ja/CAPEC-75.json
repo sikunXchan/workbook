@@ -1,0 +1,50 @@
+{
+ "id": "75",
+ "source_sha": "2070bcb04046e570",
+ "status": "done",
+ "seg": {
+  "name": "書き込み可能な設定ファイルの操作",
+  "description/0": "一般に、これらは手作業で編集され、システム管理者の目が行き届いていないファイルであり、攻撃者がこれらのファイル（CVSのリポジトリ内など）を改変できる能力があれば、正規の利用者と同じように、アプリケーションへの不正なアクセスを直接得られる。",
+  "prerequisites/0/0": "設定ファイルが、攻撃者によって改変可能であること。",
+  "skills/0/text/0": "脆弱な設定ファイルを特定し、サーバーをどう操作し、鑑識の証拠をどう消すかを理解すること。",
+  "mitigations/0/0": "設計：最小権限の原則を徹底する。",
+  "mitigations/1/0": "設計：すべての設定ファイルのバックアップの写しを取る。",
+  "mitigations/2/0": "実装：設定ファイルへの完全性監視。",
+  "mitigations/3/0": "実装：コードと設定の昇格の手順に、監査ログの記録を強制する。",
+  "mitigations/4/0": "実装：設定を、別のプロセスやメモリ空間（たとえばCDのような別の物理デバイス）から読み込む。",
+  "examples/0/0": "BEA Weblogicサーバーが設定データの保存にconfig.xmlファイルを使う例。詳細は下記の原文を参照。",
+  "examples/0/1": "カスタムレルム（CustomRealm）の設定の例。",
+  "examples/0/3": "設定ファイルの主な問題は、攻撃者が、サーバーが持つのと同じすべての機能を、悪意ある目的のために利用できてしまうことである。サーバー設定の複雑さを考えると、こうした変更は、管理者にとって検知が非常に難しいことがある。"
+ },
+ "quotes": {
+  "examples/0/0": "The BEA Weblogic server uses a config.xml file to store configuration data. If this file is not properly protected by the system access control, an attacker can write configuration information to redirect server output through system logs, database connections, malicious URLs and so on. Access to the Weblogic server may be from a so-called Custom realm which manages authentication and authorization privileges on behalf of user principals. Given write access, the attacker can insert a pointer to a custom realm jar file in the config.xml",
+  "examples/0/2": "ConfigurationData=\"java.util.Properties\"\nName=\"CustomRealm\"\nRealmClassName=\"Maliciousrealm.jar\"\n/>"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "管理者の目が届きにくい「設定ファイル」を書き換えて、サーバーの動作を乗っ取る攻撃。設定ファイルは、正規の管理操作と同じだけの力を持つため、書き換えられると被害が大きい。",
+  "terms": [
+   {
+    "term": "設定ファイル",
+    "en": "configuration file",
+    "explain": "プログラムがどう動くかを、あらかじめ書いておくファイル。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "設定ファイルが攻撃者によって改変可能であることが前提だと原典に書かれている。",
+    "source": "CAPEC-75 前提条件"
+   },
+   {
+    "text": "対策として、設定ファイルのバックアップ、完全性監視、監査ログの記録が挙げられている。",
+    "source": "CAPEC-75 対策"
+   }
+  ],
+  "analogy": "店の「営業マニュアル」を誰でも書き換えられる状態にしておくと、店員はマニュアルどおりに動くため、マニュアルを書き換えるだけで店全体の動きを乗っ取れてしまう、という状況に近い。",
+  "learn": [
+   "設定ファイルが、正規の管理操作と同じ力を持つことが、なぜ危険なのか",
+   "バックアップと完全性監視が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "id": "3",
+ "source_sha": "7a9f1cd2a208887a",
+ "status": "done",
+ "seg": {
+  "name": "先頭に「ゴースト」文字を付けた入力フィルタの回避",
+  "description/0": "一部のAPIは、パラメータの文字列の先頭にある特定の文字を取り除く。攻撃者は、先頭に「ゴースト」文字（APIの層では要求の有効性に影響しない余分な文字）をわざと付け加え、入力がフィルタを通り抜けて処理されるようにできる。これは、標的のAPIがいくつもの構文の形で入力データを受け付け、同じ意味に解釈するのに、フィルタの側が、そのAPIが受け付ける構文の形のすべてを考慮していない場合に起こる。",
+  "execution_flow/0/description/0": "［利用者が操作できる入力がないかアプリケーションを調査する］ブラウザ、自動化ツール、またはアプリケーションの検査によって、攻撃者はアプリケーションへの入り口をすべて記録する。",
+  "execution_flow/0/techniques/0/0": "リンクをたどって記録するスパイダリングのツールを使い、ウェブページを分析して入り口を探す。URLにパラメータを含むリンクはとくに注意して記録する。",
+  "execution_flow/0/techniques/1/0": "プロキシツールを使い、ウェブアプリケーションを手作業でたどる間に訪れた、利用者の入力の入り口をすべて記録する。",
+  "execution_flow/0/techniques/2/0": "ブラウザでウェブサイトを手作業で調べ、その作りを分析する。分析を助けたり探索を自動化したりするブラウザのプラグインが多数ある。",
+  "execution_flow/0/techniques/3/0": "アプリケーションを手作業で検査して、入り口を探す。",
+  "execution_flow/1/description/0": "［弱点を見つけるため、入り口を探る］攻撃者は、「探索」の段階で集めた入り口を標的の一覧として使い、さまざまな先頭の「ゴースト」文字列を入力して、アプリケーションのフィルタがどう処理するかを調べる。",
+  "execution_flow/1/techniques/0/0": "ディレクトリをさかのぼる指定のようなよくある並びに、余分な文字を付け足し、アプリケーションがそれをどうフィルタするかを調べる。",
+  "execution_flow/1/techniques/1/0": "入力の先頭に特殊文字（?、@、#、* など）を繰り返し置いてみて、アプリケーションがそれをどうフィルタで取り除くかを調べる。",
+  "execution_flow/2/description/0": "［入力フィルタの回避］攻撃者は、アプリケーションが入力データをどうフィルタするかについて得た知識をもとに、フィルタをすり抜ける特定の入力データを作る。これは、ディレクトリをさかのぼって意図しない場所に到達する攻撃、任意のシェルコマンドの実行、ファイルの破壊などにつながりうる。",
+  "prerequisites/0/0": "意味が同じになるよう、標的のAPIが、フィルタをすり抜けるために使われる先頭のゴースト文字を無視すること。",
+  "skills/0/text/0": "APIへの要求を行える能力と、入力検証によってフィルタされない「ゴースト」文字についての知識。これらの「ゴースト」文字は、要求の解釈のされ方に影響しないことが分かっている必要がある。",
+  "mitigations/0/0": "拒否リスト方式ではなく、許可リスト方式の入力検証を使う。",
+  "mitigations/1/0": "検証の前に、すべてのデータを正規化する。",
+  "mitigations/2/0": "入力検証に段階的な（多層防御の）アプローチを取る。",
+  "examples/0/0": "FTPサーバーとウェブサーバーでの、ゴースト文字による別の符号化（Alternate Encoding）",
+  "examples/0/1": "一部のウェブサーバーやFTPサーバーは、利用者が指定したパス名に、先頭の余分なドットのような余分な文字が含まれていると、禁止されている上位ディレクトリへのさかのぼりを検知できない。たとえば、あるパス名へのアクセスを禁止するプログラムが、余分なドットを足した形で指定されると、そのファイルへのアクセスを誤って許してしまうことがある。この攻撃が成功するのは、(1) 入力検証のロジックが、その形をさかのぼりの試みとして検知できず、(2) 入力処理のどこかが「余分な」ドットを取り除いて、さかのぼりの指定だけを残してしまうためである。",
+  "examples/0/2": "ファイルシステムのAPIを対象にすると、次の文字列は、多くのプログラムにとってどれも同じ意味になる。",
+  "examples/0/3": "同じ意味になる文字列の例：",
+  "examples/0/4": "このように、意味が同じ要求を出す方法は多数ある。これらの文字列はすべて、最終的に同じファイルへの要求になる。"
+ },
+ "quotes": {
+  "execution_flow/1/techniques/0/0": "Add additional characters to common sequences such as \"../\" to see how the application will filter them.",
+  "examples/0/1": "Some web and FTP servers fail to detect prohibited upward directory traversals if the user-supplied pathname contains extra characters such as an extra leading dot. For example, a program that will disallow access to the pathname \"../test.txt\" may erroneously allow access to that file if the pathname is specified as \".../test.txt\". This attack succeeds because 1) the input validation logic fails to detect the triple-dot as a directory traversal attempt (since it isn't dot-dot), 2) some part of the input processing decided to strip off the \"extra\" dot, leaving the dot-dot behind.",
+  "examples/0/3": ".../../../test.txt\n............/../../test.txt\n..?/../../test.txt\n..????????/../../test.txt\n../test.txt",
+  "examples/0/4": "As you can see, there are many ways to make a semantically equivalent request. All these strings ultimately result in a request for the file ../test.txt."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "入力フィルタが想定していない「余分な先頭の文字」を付け足し、APIはそれを無視して同じ意味に解釈するため、フィルタだけをすり抜けてしまう攻撃。",
+  "terms": [
+   {
+    "term": "正規化",
+    "en": "canonicalization",
+    "explain": "同じ意味を持つさまざまな書き方を、1つの決まった形にそろえること。",
+    "example": "「./a」と「a」を同じ「a」にそろえてから検査する。"
+   },
+   {
+    "term": "許可リスト",
+    "en": "allowlist",
+    "explain": "受け入れてよいものだけを並べた一覧。一覧に無いものはすべて拒否する。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "フィルタが、APIが受け付ける構文の形のすべてを考慮していないときに起こると原典に書かれている。",
+    "source": "CAPEC-3 説明"
+   },
+   {
+    "text": "対策として、許可リスト方式の入力検証と、検証前のデータの正規化が挙げられている。",
+    "source": "CAPEC-3 対策"
+   }
+  ],
+  "analogy": "受付が「名簿に載っている名前の人だけ通す」と決めているのに、奥の担当者は「名前の前に余計な敬称が付いていても同じ人として扱う」場合、敬称を付けるだけで受付をすり抜けられる、という状況に近い。",
+  "learn": [
+   "検査する側と処理する側で「同じ意味」の解釈がずれると、なぜフィルタが役に立たなくなるのか",
+   "正規化と許可リストが、どの前提条件を崩す対策なのか"
+  ]
+ }
+}
