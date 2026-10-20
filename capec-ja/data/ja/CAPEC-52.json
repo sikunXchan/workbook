@@ -1,0 +1,77 @@
+{
+ "id": "52",
+ "source_sha": "dadccea0c5853789",
+ "status": "done",
+ "seg": {
+  "name": "NULLバイトの埋め込み",
+  "description/0": "攻撃者は、標的のソフトウェアへの入力に、1つ以上のNULLバイトを埋め込む。この攻撃は、多くの環境でNULL値のバイトが文字列の終端として使われていることに頼る。狙いは、標的のソフトウェアの特定の構成要素が、NULLバイトに出会った時点で入力の処理を止めることである。",
+  "execution_flow/0/description/0": "［利用者が操作できる入力がないかアプリケーションを調査する］攻撃者はアプリケーションへの入り口をすべて記録する。",
+  "execution_flow/0/techniques/0/0": "スパイダリングツールを使って、入力パラメータを持ちそうな非静的なリンクをたどって記録する。",
+  "execution_flow/0/techniques/1/0": "プロキシツールを使って、手作業でたどった際に訪れたリンクを記録する。",
+  "execution_flow/0/techniques/2/0": "ブラウザで手作業でサイトを調べる。",
+  "execution_flow/0/techniques/3/0": "アプリケーションを手作業で検査する。",
+  "execution_flow/1/description/0": "［弱点を見つけるため、入り口を探る］攻撃者は、「探索」の段階で集めた入り口を標的の一覧として使い、末尾にNULLバイトを注入して、アプリケーションが入力としてどう扱うかを観察する。攻撃者は、利用者の入力が文字列の途中に置かれ、NULLバイトによってアプリケーションが利用者の入力の末尾で文字列の処理を止めてしまう箇所を探している。",
+  "execution_flow/1/techniques/0/0": "NULLのさまざまな符号化（エンコーディング）を試す。具体的な表記は下記の原文を参照。",
+  "execution_flow/2/description/0": "［NULLバイトのあとのデータの削除］攻撃者は、脆弱と判明した入り口に、自分に都合のよい形でNULLバイト以降のデータを除去するように、NULLバイトを置く。",
+  "execution_flow/2/techniques/0/0": "入力が、より長いファイルパスの一部としてのディレクトリである場合、入力の末尾にNULLバイトを加えて、指定したディレクトリへさかのぼって到達しようとする。",
+  "prerequisites/0/0": "プログラムが、末尾のNULL終端を適切に扱えないこと。",
+  "skills/0/text/0": "ディレクトリのさかのぼり（ディレクトリトラバーサル）。",
+  "skills/1/text/0": "任意のコードの実行。",
+  "consequences/3/note/0": "任意のコードの実行",
+  "mitigations/0/0": "利用者の入力の一部として与えられたNULL文字を、そのデータで何かをする前に、適切に処理する。",
+  "examples/0/0": "ディレクトリの閲覧の例。",
+  "examples/0/1": "隠しフィールドで渡されたユーザー名を使ってレポートのパスを組み立てる例。詳細は下記の原文を参照。",
+  "examples/0/2": "考慮すべきNULLのさまざまな形には、次のようなものがある。",
+  "examples/0/3": "NULLの表記の例（原文）。",
+  "examples/1/0": "Adobe SystemsのAcrobat/Acrobat Readerに同梱されるActiveXコンポーネントのバッファオーバーフローの脆弱性を悪用すると、リモートの攻撃者が任意のコードを実行できる。",
+  "examples/1/1": "この問題は具体的には、次のような形のリンクを取得したときに起こる。",
+  "examples/1/2": "リクエストの例（原文）。",
+  "examples/1/3": "説明（原文）。",
+  "examples/1/4": "該当するRTLHeapFree()からの命令は次のとおりである。",
+  "examples/1/5": "レジスタEDIには、利用者が与えた文字列へのポインタが入っている。そのため攻撃者は、このMOV命令で使われるECXレジスタとEAXレジスタの両方を制御できる。",
+  "examples/1/6": "悪用に成功すると、リモートの攻撃者は、任意のワードの上書きを使って制御の流れを乗っ取り、最終的に影響を受けるシステムを制御できる。コードの実行は、脆弱な版のAdobe Acrobatを起動した利用者の権限で行われる。",
+  "examples/1/7": "攻撃者は、悪意あるウェブサイトを立てる必要はない。悪意ある内容を既存の埋め込みリンクの末尾に加え、MicrosoftのIISやNetscape Enterpriseのウェブサーバーを参照させるだけで、悪用が可能だからである。悪意あるリンクを直接クリックさせる必要もなく、IMAGEタグ、IFRAME、自動で読み込まれるスクリプトに埋め込むこともできる。",
+  "examples/1/8": "悪用の成功には、入力の特定の部分がURIとして受け入れられる形になるよう、ペイロードを作る必要がある。これには、最初に注入する命令と、上書きする特定のアドレスの両方が含まれる。これにより、悪用を成功させる難易度は上がる。簡単ではないが、悪用は確実に現実的である [REF-445]。",
+  "examples/1/9": "参考：CVE-2004-0629",
+  "examples/2/0": "次のPHPスクリプトを考える。",
+  "examples/2/1": "スクリプトの例（原文）。",
+  "examples/2/2": "悪意ある攻撃者は、次のようなURLを開き、boot.iniファイルを漏えいさせられるかもしれない。",
+  "examples/2/3": "URLの例（原文）。"
+ },
+ "quotes": {
+  "execution_flow/1/techniques/0/0": "Try different encodings for null such as \\0 or %00",
+  "examples/0/1": "Assume a Web application allows a user to access a set of reports. The path to the reports directory may be something like web/username/reports. If the username is supplied via a hidden field, an adversary could insert a bogus username such as ../../../../../WINDOWS. If the adversary needs to remove the trailing string /reports, then they can simply insert enough characters so the string is truncated. Alternatively the adversary might apply the postfix NULL character (%00) to determine whether this terminates the string.",
+  "examples/0/3": "PATH%00\nPATH[0x00]\nPATH[alternate representation of NULL character]\n<script></script>%00",
+  "examples/1/2": "GET /any_existing_dir/any_existing_pdf.pdf%00[long string] HTTP/1.1",
+  "examples/1/3": "Where [long string] is a malicious crafted long string containing acceptable URI characters. The request must be made to a web server that truncates the request at the null byte (%00), otherwise an invalid file name is specified and a \"file not found\" page will be returned. Example web servers that truncate the requested URI include Microsoft IIS and Netscape Enterprise. Though the requested URI is truncated for the purposes of locating the file the long string is still passed to the Adobe ActiveX component responsible for rendering the page. This in turn triggers a buffer overflow within RTLHeapFree() allowing for an adversary to overwrite an arbitrary word in memory. The responsible instructions from RTLHeapFree() are shown here:",
+  "examples/2/1": "$whatever = addslashes($_REQUEST['whatever']);\ninclude(\"/path/to/program/\" . $whatever . \"/header.htm\");",
+  "examples/2/3": "http://localhost/phpscript.php?whatever=../../../../boot.ini%00"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "多くのプログラムで「文字列の終わり」を意味するNULLバイトを入力に紛れ込ませ、本来チェックされるはずの後半部分を無視させてしまう攻撃。",
+  "terms": [
+   {
+    "term": "NULLバイト",
+    "en": "NULL byte",
+    "explain": "コンピュータ内部で「値がない」「ここで終わり」を表す特別なバイト。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "プログラムが末尾のNULL終端を適切に扱えないことが前提だと原典に書かれている。",
+    "source": "CAPEC-52 前提条件"
+   },
+   {
+    "text": "対策として、利用者の入力に含まれるNULL文字を適切に処理することが挙げられている。",
+    "source": "CAPEC-52 対策"
+   }
+  ],
+  "analogy": "「ファイル名の末尾」を確認してからコピーする係が、途中に紛れ込んだ「ここで終わり」の印を信じてそこで処理をやめてしまい、印のあとに書かれた別の指示を見逃してしまう、という状況に近い。",
+  "learn": [
+   "「文字列の終わり」を示す特別な文字が、なぜ検証をすり抜ける手段になるのか",
+   "入力のNULL文字の適切な処理が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}

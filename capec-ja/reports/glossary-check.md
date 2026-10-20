@@ -30,6 +30,11 @@
 | CAPEC-42 | execution_flow/2/description/0 | injection → インジェクション |
 | CAPEC-49 | execution_flow/0/techniques/2/0 | brute force → 総当たり |
 | CAPEC-49 | resources/0/0 | brute force → 総当たり |
+| CAPEC-52 | examples/0/1 | adversary → 攻撃者 |
+| CAPEC-52 | examples/1/3 | adversary → 攻撃者 |
+| CAPEC-53 | examples/0/0 | injection → インジェクション |
+| CAPEC-55 | execution_flow/0/techniques/2/0 | brute force → 総当たり |
+| CAPEC-55 | prerequisites/2/0 | authentication → 認証 |
 | CAPEC-6 | execution_flow/0/description/0 | injection → インジェクション |
 | CAPEC-6 | execution_flow/1/description/0 | injection → インジェクション |
 | CAPEC-6 | skills/0/text/0 | injection → インジェクション |

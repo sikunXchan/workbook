@@ -62,6 +62,15 @@
 | CAPEC-51 | examples/0/9 |
 | CAPEC-51 | examples/0/10 |
 | CAPEC-51 | examples/0/11 |
+| CAPEC-52 | execution_flow/1/techniques/0/0 |
+| CAPEC-52 | examples/0/1 |
+| CAPEC-52 | examples/0/3 |
+| CAPEC-52 | examples/1/2 |
+| CAPEC-52 | examples/1/3 |
+| CAPEC-52 | examples/2/1 |
+| CAPEC-52 | examples/2/3 |
+| CAPEC-53 | execution_flow/1/techniques/0/0 |
+| CAPEC-53 | examples/0/1 |
 | CAPEC-66 | execution_flow/0/techniques/0/0 |
 | CAPEC-66 | execution_flow/0/techniques/1/0 |
 | CAPEC-66 | execution_flow/1/techniques/0/0 |
