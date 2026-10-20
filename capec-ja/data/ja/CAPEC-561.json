@@ -36,15 +36,15 @@
   "summary": "既知のドメイン認証情報の使用（CAPEC-560）の、Windows管理共有に特化した変種。管理者のみがアクセスできる隠しネットワーク共有（C$、ADMIN$など）の認証情報を盗み、ドメイン内の他のマシンへファイルをコピー・実行することで、横方向に移動していく。実例として、APT32やAPT15によるこの手法の悪用が挙げられている。",
   "terms": [
    {
-    "term": "Windows管理共有, Windows Admin Shares, Windowsのシステム管理者のみがアクセスできる、隠されたネットワーク共有（C$、ADMIN$、IPC$など）のこと。",
-    "en": "",
-    "explain": ""
+    "term": "Windows管理共有",
+    "en": "Windows Admin Shares",
+    "explain": "Windowsのシステム管理者のみがアクセスできる、隠されたネットワーク共有（C$、ADMIN$、IPC$など）のこと。"
    }
   ],
   "facts": [
    {
-    "text": "APT32は、Windows組み込みのNetユーティリティを利用して、Windows管理共有を使い、遠隔のマルウェアをコピー・実行していた、と原典の具体例に書かれている。, CAPEC-561 examples（具体例）",
-    "source": ""
+    "text": "APT32は、Windows組み込みのNetユーティリティを利用して、Windows管理共有を使い、遠隔のマルウェアをコピー・実行していた、と原典の具体例に書かれている。",
+    "source": "CAPEC-561 examples（具体例）"
    }
   ],
   "analogy": "ビルの管理人だけが使える「全室共通の鍵」を盗み出し、各部屋に自由に出入りして、荷物を置いたり持ち出したりしてしまうのに似ている。"

@@ -70,15 +70,15 @@
   "summary": "ロードバランサーやリバースプロキシのような中間のHTTPエージェントと、バックエンドのウェブサーバーが、同じHTTP要求を異なる方法で解析してしまう「相違」を悪用し、中間エージェントには見えない、2つ目の悪意あるHTTP要求を、バックエンドサーバーにひそかに密輸してしまう攻撃。特に「Content-Length」と「Transfer-Encoding」という2つのヘッダーが同時に存在する場合に、どちらを優先するかがエージェント間で異なることが典型的な原因となる。",
   "terms": [
    {
-    "term": "チャンク転送エンコーディング, chunked transfer encoding, HTTPメッセージの本文を、あらかじめ全体の長さを示さずに、小さな断片（チャンク）に分割して送信する方式のこと。「Transfer-Encoding: chunked」ヘッダーによって示される。",
-    "en": "",
-    "explain": ""
+    "term": "チャンク転送エンコーディング",
+    "en": "chunked transfer encoding",
+    "explain": "HTTPメッセージの本文を、あらかじめ全体の長さを示さずに、小さな断片（チャンク）に分割して送信する方式のこと。「Transfer-Encoding: chunked」ヘッダーによって示される。"
    }
   ],
   "facts": [
    {
-    "text": "ほとんどの最新のHTTP基盤は、複数の「Content-Length」ヘッダーを持つHTTP要求を拒否する、と原典のexecution_flow（実行の流れ）に書かれている。, CAPEC-33 execution_flow",
-    "source": ""
+    "text": "ほとんどの最新のHTTP基盤は、複数の「Content-Length」ヘッダーを持つHTTP要求を拒否する、と原典のexecution_flow（実行の流れ）に書かれている。",
+    "source": "CAPEC-33 execution_flow"
    }
   ],
   "analogy": "荷物に「重量30kg」と書かれた札が2枚貼られていて、配送業者Aは最初の札だけを見て受け付け、配送業者Bは2枚目の札だけを見て仕分けてしまうために、実際には荷物の中にもう一つの隠れた荷物が紛れ込んでいても、誰も気付かずに配送されてしまうのに似ている。"

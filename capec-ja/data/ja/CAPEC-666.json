@@ -22,15 +22,15 @@
   "summary": "Bluetoothの通信規格の一部であるL2CAPプロトコルを悪用し、通常よりも大きなパケットを大量に送り込むことで、近くにあるBluetooth対応デバイスの性能を低下・停止させてしまうサービス拒否攻撃。Linux向けの標準的なBluetoothツール（BlueZ）さえあれば、特別な機材なしで実行できる手軽さが特徴である。",
   "terms": [
    {
-    "term": "L2CAP, Logical Link Control and Adaptation Protocol, Bluetooth通信において、上位層のプロトコルにデータを配送する役割を担う、基盤となるプロトコルのこと。",
-    "en": "",
-    "explain": ""
+    "term": "L2CAP",
+    "en": "Logical Link Control and Adaptation Protocol",
+    "explain": "Bluetooth通信において、上位層のプロトコルにデータを配送する役割を担う、基盤となるプロトコルのこと。"
    }
   ],
   "facts": [
    {
-    "text": "攻撃者は、非常に一般的な、Linuxマシンと、Bluetoothアダプタのみを必要とする、と原典のskills（必要な技能）に書かれている。, CAPEC-666 skills（必要な技能）",
-    "source": ""
+    "text": "攻撃者は、非常に一般的な、Linuxマシンと、Bluetoothアダプタのみを必要とする、と原典のskills（必要な技能）に書かれている。",
+    "source": "CAPEC-666 skills（必要な技能）"
    }
   ],
   "analogy": "窓口に、普段より何倍も大きい申込書を次々と提出し続けることで、受付の処理能力を圧迫して機能停止させてしまうのに似ている。"

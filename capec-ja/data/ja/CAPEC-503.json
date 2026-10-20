@@ -14,15 +14,15 @@
   "summary": "AndroidのWebView内で、addJavascriptInterfaceというAPIを使ってJavaアプリ側の機能をJavaScriptに公開すると、そのWebView内に読み込まれるどのページ（悪意あるものも含む）からも、その機能を自由に呼び出せてしまう攻撃。アプリが悪意あるWebページをWebView内に読み込んでしまうと、そのページがアプリの機能に直接アクセスできてしまう。",
   "terms": [
    {
-    "term": "WebView, WebView, Androidアプリ内にWebページを表示するための、組み込みのブラウザ部品のこと。",
-    "en": "",
-    "explain": ""
+    "term": "WebView",
+    "en": "WebView",
+    "explain": "Androidアプリ内にWebページを表示するための、組み込みのブラウザ部品のこと。"
    }
   ],
   "facts": [
    {
-    "text": "addJavascriptInterfaceを通じてWebViewにインターフェースが登録されると、それはグローバルなものとなり、そのWebView内に読み込まれるすべてのページが、このインターフェースを呼び出せるようになる、と原典に書かれている。, CAPEC-503 説明",
-    "source": ""
+    "text": "addJavascriptInterfaceを通じてWebViewにインターフェースが登録されると、それはグローバルなものとなり、そのWebView内に読み込まれるすべてのページが、このインターフェースを呼び出せるようになる、と原典に書かれている。",
+    "source": "CAPEC-503 説明"
    }
   ],
   "analogy": "社内の内線電話を、来客が自由に使える受付の電話機にもつないでしまい、どの来客からも社内の内線機能を直接呼び出せてしまうのに似ている。"

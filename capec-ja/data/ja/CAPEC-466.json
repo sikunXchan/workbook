@@ -19,15 +19,15 @@
   "summary": "公衆Wi-Fiのような環境で能動的に通信を傍受・改変できる攻撃者が、暗号化されていないサイトへの通信に悪意あるiFrameやJavaScriptを混ぜ込むことで、同一オリジンポリシーが本来防ぐはずのクロスドメインの通信を成立させてしまう攻撃。被害者のブラウザに保存された永続的なクッキーやHTTPオンリークッキーまで盗める点が、通常のXSS攻撃より深刻である。",
   "terms": [
    {
-    "term": "通信者間攻撃（AitM）, Adversary-in-the-Middle attack, 通信を行う二者の間に割り込み、両者に気付かれないまま通信を傍受したり改変したりする攻撃のこと（CAPEC-94）。",
-    "en": "",
-    "explain": ""
+    "term": "通信者間攻撃（AitM）",
+    "en": "Adversary-in-the-Middle attack",
+    "explain": "通信を行う二者の間に割り込み、両者に気付かれないまま通信を傍受したり改変したりする攻撃のこと（CAPEC-94）。"
    }
   ],
   "facts": [
    {
-    "text": "これは、従来のXSS攻撃とは異なり、永続的なクッキーとHTTPオンリークッキーの両方に当てはまる、と原典のextended_description（補足説明）に書かれている。, CAPEC-466 extended_description",
-    "source": ""
+    "text": "これは、従来のXSS攻撃とは異なり、永続的なクッキーとHTTPオンリークッキーの両方に当てはまる、と原典のextended_description（補足説明）に書かれている。",
+    "source": "CAPEC-466 extended_description"
    }
   ],
   "analogy": "郵便配達員になりすました者が、配達中の手紙に偽の案文を差し込み、受取人に別の相手へ返信させてしまい、その返信までも横取りしてしまうのに似ている。"
