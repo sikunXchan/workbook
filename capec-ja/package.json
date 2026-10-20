@@ -1,0 +1,12 @@
+{
+  "name": "capec-ja",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs && pagefind --site dist",
+    "check": "node scripts/check.mjs"
+  },
+  "devDependencies": {
+    "pagefind": "1.5.2"
+  }
+}

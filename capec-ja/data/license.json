@@ -1,0 +1,8 @@
+{
+  "_note": "status が verified になるまで公開しない(検証スクリプトが失敗する)。text には termsofuse.html のライセンス文を一字一句そのまま入れる。",
+  "status": "pending",
+  "source_url": "https://capec.mitre.org/about/termsofuse.html",
+  "retrieved": null,
+  "copyright": "Copyright © 2007–2026, The MITRE Corporation. CAPEC and the CAPEC logo are trademarks of The MITRE Corporation.",
+  "text": ""
+}
