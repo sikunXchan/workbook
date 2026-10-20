@@ -1,0 +1,43 @@
+{
+ "id": "460",
+ "source_sha": "2ab6e9d60cf7c92d",
+ "status": "done",
+ "seg": {
+  "name": "HTTPパラメータ汚染（HPP）",
+  "description/0": "攻撃者は、クエリ文字列の区切り文字を注入することで、重複したHTTPのGET／POSTパラメータを追加する。HPPを通じて、既存のハードコードされたHTTPパラメータを上書きしたり、アプリケーションの振る舞いを変更したり、制御できない変数にアクセス・悪用したり、入力検証のチェックポイントやWAFのルールを回避したりすることが可能になり得る。",
+  "execution_flow/0/description/0": "［利用者入力の発見］攻撃者は、Webアプリケーションの中で、フォームやアクションに利用者が指定した入力が使われている箇所を探す。これは、ブラウザのナビゲーションバーにあるURL内のパラメータを確認することでも見つけられる。",
+  "execution_flow/1/description/0": "［重複パラメータ値の追加］攻撃者は、どの利用者入力がHTTPパラメータとして使われているかを特定した後、結果を観察するため、各パラメータに重複する値を一つずつ追加していく。HTTPリクエストへの応答が、重複するパラメータの値を元のパラメータの値と何らかの形で連結して示す場合、あるいは単に重複するパラメータの値だけを示す場合、HPPが可能であることになる。",
+  "execution_flow/1/techniques/0/0": "URLの中で、「&」という区切り文字を使って重複パラメータを追加する例。たとえば「par1=val1」は次のようになる。",
+  "execution_flow/1/techniques/1/0": "ページ上で利用者の入力に直接基づいてリクエストが作成される場合、エンコードされた区切り文字を入力に追加してテストする例。",
+  "execution_flow/2/description/0": "［HPPの悪用］攻撃者は、バックエンドが重複パラメータをどのように処理するかを特定した後、自分に有利になるようパラメータを汚染することでこれを悪用する。場合によっては、ハードコードされたパラメータがバックエンドによって無視される。また別の場合では、バックエンドによって連結される前のパラメータしか確認しないWAFを、攻撃者が回避でき、悪意あるクエリが通過してしまう結果となる。",
+  "prerequisites/0/0": "HTTPプロトコルが、何らかのGET／POSTパラメータの受け渡しとともに使用されていること。",
+  "resources/0/0": "HTTPリクエストの傍受と改ざんを可能にする、任意のツール。",
+  "mitigations/0/0": "設定：Webアプリケーションファイアウォール（WAF）を使用している場合、異常なHTTPリクエストを検知できるよう、フィルタを慎重に設定すべきである。",
+  "mitigations/1/0": "設計：URLエンコードを行う。",
+  "mitigations/2/0": "実装：URLの書き換えにおいて、厳密な正規表現を使用する。",
+  "mitigations/3/0": "実装：クエリ文字列内で一つのパラメータが複数回出現することに注意する。"
+ },
+ "quotes": {
+  "execution_flow/1/techniques/0/0": "In the URL, add a duplicate parameter by using the \"&\" delimiter. For example \"par1=val1\" becomes \"par1=val1&par1=val2\". Depending on the backend API, this could be treated as \"par1=val1, val2\", which could lead to par1 being set to val2, ignoring val1.",
+  "execution_flow/1/techniques/1/0": "If the request is created based on user input directly on the page, the adversary will test by adding an encoded delimiter to the input. For example, the adverary might supply \"1000%26action=withdraw\" and the backend might interpret a POST request with the paramters \"action=deposit&amount=1000&action=withdraw\""
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "同じ名前のHTTPパラメータを複数回指定することで、アプリケーションやWAFの処理の不整合を突く攻撃。バックエンドが重複パラメータをどう扱うか（最初の値を使う、最後の値を使う、連結するなど）の実装差を悪用し、ハードコードされた値の上書きや、入力検証・WAFルールの回避につなげる。",
+  "terms": [
+   {
+    "term": "WAF, Web Application Firewall, Webアプリケーションへの不正な通信を検知・遮断する、専用のファイアウォールのこと。",
+    "en": "",
+    "explain": ""
+   }
+  ],
+  "facts": [
+   {
+    "text": "HPPを通じて、既存のハードコードされたHTTPパラメータを上書きしたり、アプリケーションの振る舞いを変更したり、入力検証のチェックポイントやWAFのルールを回避したりすることが可能になり得る、と原典に書かれている。, CAPEC-460 説明",
+    "source": ""
+   }
+  ],
+  "analogy": "同じ申込書に同じ項目を二回書いて、受付の係員（バックエンド）とチェック担当（WAF）が、それぞれ別の記入内容を「正しい値」として読み取ってしまう食い違いを利用するのに似ている。"
+ }
+}
