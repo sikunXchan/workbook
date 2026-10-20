@@ -1,4 +1,4 @@
-// IDで移動、一覧の絞り込み、お気に入り
+// 番号での移動、一覧の絞り込み、お気に入り
 (function () {
   "use strict";
   var root = document.body.getAttribute("data-root") || "./";
@@ -10,24 +10,22 @@
     return idsPromise;
   }
 
-  // ---- IDで移動 ----
-  var jump = document.querySelector("[data-idjump]");
-  if (jump) {
-    jump.addEventListener("submit", function (ev) {
+  // ---- 検索欄：番号だけ(例：66、CAPEC-66、全角の６６)なら、その項目へ直接移動する ----
+  Array.prototype.forEach.call(document.querySelectorAll("[data-search]"), function (form) {
+    form.addEventListener("submit", function (ev) {
+      var input = form.querySelector("input");
+      var msg = form.querySelector("[data-search-msg]");
+      var v = (input.value || "").replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }).trim();
+      var m = v.match(/^(?:capec)?[-\s]*(\d+)$/i);
+      if (!m) return; // 番号でなければ、通常の検索ページへ
       ev.preventDefault();
-      var input = jump.querySelector("input");
-      var msg = jump.querySelector(".idjump-msg");
-      // 全角数字や「CAPEC-」付きの入力も受け付ける
-      var v = (input.value || "").replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); });
-      var m = v.match(/\d+/);
-      if (!m) { msg.textContent = "数字のIDを入力してください（例：66）"; input.focus(); return; }
-      var id = String(parseInt(m[0], 10));
+      var id = String(parseInt(m[1], 10));
       loadIds().then(function (ids) {
         if (ids[id]) { location.href = root + "capec/" + id + "/"; }
-        else { msg.textContent = "CAPEC-" + id + " はデータにありません"; input.focus(); }
-      }).catch(function () { msg.textContent = "IDの一覧を読み込めませんでした"; });
+        else if (msg) { msg.textContent = "CAPEC-" + id + " はデータにありません"; input.focus(); }
+      }).catch(function () { form.submit(); });
     });
-  }
+  });
 
   // ---- トップページの絞り込み ----
   var filters = document.querySelector("[data-filters]");
@@ -46,7 +44,7 @@
         tr.hidden = !ok;
         if (ok) shown++;
       });
-      count.textContent = shown + "件を表示";
+      count.textContent = shown + "件";
     };
     selects.forEach(function (s) { s.addEventListener("change", apply); });
     filters.addEventListener("submit", function (ev) { ev.preventDefault(); });

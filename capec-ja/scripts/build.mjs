@@ -144,53 +144,35 @@ const attackPatterns = entries.filter((e) => e.kind === "attack_pattern").sort((
 const categories = entries.filter((e) => e.kind === "category").sort((a, b) => a.id - b.id);
 const views = entries.filter((e) => e.kind === "view").sort((a, b) => a.id - b.id);
 
+
 // ---------- 共通レイアウト ----------
-const SITE_NAME = "CAPEC 日本語版（非公式）";
-const DISCLAIMER = "このサイトはAIによる日本語訳で、公式の日本語訳ではありません。MITREの公式サイトではなく、MITREの承認も受けていません。誤りがありえるので、重要な点は原典（英語）で確認してください。";
+const SITE_NAME = "CAPEC 攻撃パターン辞典 日本語版（非公式）";
+const DISCLAIMER = "AIによる日本語訳です。公式の日本語訳ではなく、MITREの公式サイトでも、MITREの承認を受けたものでもありません。誤りがありえるため、重要な点は原典（英語）で確認してください。";
+const FONTS = "https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700;900&family=Klee+One:wght@600&display=swap";
 
 function footer() {
   const lic = license.status === "verified" && license.text
     ? `<blockquote class="license" lang="en" data-license>${fmt(license.text)}</blockquote>`
     : `<p class="license pending" data-license-pending>【未取得】ライセンス文は、capec.mitre.org に接続できないため、まだ取得していません。公開前に ${esc(license.source_url)} から原文を一字一句そのまま入れます。</p>`;
-  return `<footer class="site-footer">
-  <div class="footer-inner">
-    <p class="disclaimer" data-disclaimer>${esc(DISCLAIMER)}</p>
-    <p class="copyright" lang="en" data-copyright>${esc(license.copyright)}</p>
-    <h2 class="footer-h">ライセンス文（原文）</h2>
-    ${lic}
-    <p>出典：MITRE CAPEC <a href="https://capec.mitre.org/" lang="en">https://capec.mitre.org/</a>（データ版 ${esc(meta.version)}、取得日 ${esc(meta.retrieved)}）</p>
-  </div>
+  return `<footer class="foot">
+<div class="wrap foot-grid">
+<div>
+<h2>ご注意</h2>
+<p data-disclaimer>${esc(DISCLAIMER)}</p>
+<p lang="en" data-copyright>${esc(license.copyright)}</p>
+<p>出典：MITRE CAPEC <a href="https://capec.mitre.org/" lang="en">https://capec.mitre.org/</a>（データ版 ${esc(meta.version)}、取得日 ${esc(meta.retrieved)}）</p>
+</div>
+<div>
+<h2>ライセンス文（原文）</h2>
+${lic}
+</div>
+</div>
 </footer>`;
 }
 
-function leftNav(depth, current) {
+function page({ title, depth, body, current = "", description = "" }) {
   const r = rel(depth);
   const cur = (k) => (k === current ? ' aria-current="page"' : "");
-  const cats = mechCats.map((c) => {
-    const n = catClosure(c).size;
-    const nm = nameJa(c) || byId.get(c).name.en;
-    return `<li><a href="${r}capec/${esc(c)}/"><span>${esc(nm)}</span><span class="count">${n}</span></a></li>`;
-  }).join("");
-  return `<nav class="side-nav" aria-label="サイト内の移動">
-  <ul class="nav-main">
-    <li><a href="${r}"${cur("home")}>ホーム</a></li>
-    <li><a href="${r}search/"${cur("search")}>攻撃パターンを検索</a></li>
-    <li><a href="${r}categories/"${cur("categories")}>カテゴリ一覧</a></li>
-    <li><a href="${r}#list"${cur("list")}>すべての攻撃パターン</a></li>
-    <li><a href="${r}favorites/"${cur("favorites")}>お気に入り</a></li>
-    <li><a href="${r}glossary/"${cur("glossary")}>用語集</a></li>
-  </ul>
-  ${cats ? `<h2 class="nav-h">攻撃の仕組みから探す</h2><ul class="nav-cats">${cats}</ul>` : ""}
-  <div class="nav-about">
-    <h2 class="nav-h">このサイトについて</h2>
-    <p>MITREのCAPECを、日本語で読めるようにした学習用サイトです。攻撃の仕組みを理解し、守る側の理解を深めることが目的です。攻撃の実行手順は載せていません。</p>
-    <p><a href="${r}about/">詳しく見る</a></p>
-  </div>
-</nav>`;
-}
-
-function page({ title, depth, main, right = "", current = "", description = "" }) {
-  const r = rel(depth);
   return `<!doctype html>
 <html lang="ja">
 <head>
@@ -200,42 +182,33 @@ function page({ title, depth, main, right = "", current = "", description = "" }
 ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho+B1:wght@600;800&display=swap">
+<link rel="stylesheet" href="${esc(FONTS)}">
 <link rel="stylesheet" href="${r}assets/style.css">
 <script src="${r}assets/site.js" defer></script>
 </head>
 <body data-root="${r}">
 <a class="skip" href="#main">本文へ移動</a>
-<header class="site-header">
-  <div class="header-inner">
-    <a class="site-name" href="${r}">CAPEC <span>日本語版</span><small>非公式</small></a>
-    <p class="tagline">攻撃パターン辞典 ── 攻撃の仕組みを知り、守りを強くする</p>
-    <form class="header-search" action="${r}search/" method="get" role="search">
-      <label for="q-header" class="vh">攻撃パターンを検索</label>
-      <input id="q-header" name="q" type="search" placeholder="検索（例：認証情報、SQLインジェクション）">
-      <button type="submit">検索</button>
-    </form>
-    <form class="idjump" data-idjump>
-      <label for="idjump-input">IDで移動</label>
-      <span class="idjump-prefix" aria-hidden="true">CAPEC-</span>
-      <input id="idjump-input" inputmode="numeric" autocomplete="off" size="5" aria-describedby="idjump-msg">
-      <button type="submit">移動</button>
-      <span id="idjump-msg" class="idjump-msg" role="status"></span>
-    </form>
-    <nav class="header-nav" aria-label="案内">
-      <a href="${r}guide/">はじめに</a>
-      <a href="${r}about/">このサイトについて</a>
-      <a href="${r}glossary/">用語集</a>
-    </nav>
-  </div>
-  <p class="notice-bar" data-disclaimer-top>${esc(DISCLAIMER)}</p>
+<header class="head">
+<div class="wrap head-row">
+<a class="brand" href="${r}"><span class="stamp" aria-hidden="true">攻</span><span><b>CAPEC 攻撃パターン辞典</b><small>日本語版・非公式の学習用サイト</small></span></a>
+<form class="search" action="${r}search/" method="get" role="search" data-search>
+<label for="q-head" class="vh">キーワード、または番号で探す</label>
+<input id="q-head" name="q" type="search" placeholder="キーワード、または番号（例：66）" autocomplete="off">
+<button type="submit">探す</button>
+<span class="search-msg" role="status" data-search-msg></span>
+</form>
+<nav class="links" aria-label="案内">
+<a href="${r}guide/"${cur("guide")}>はじめに</a>
+<a href="${r}categories/"${cur("categories")}>索引</a>
+<a href="${r}glossary/"${cur("glossary")}>用語集</a>
+<a href="${r}favorites/"${cur("favorites")}>お気に入り</a>
+<a href="${r}about/"${cur("about")}>このサイトについて</a>
+</nav>
+</div>
 </header>
-<div class="layout${right ? " has-right" : ""}">
-${leftNav(depth, current)}
-<main id="main" tabindex="-1">
-${main}
-</main>
-${right ? `<aside class="side-right" aria-label="関連情報">${right}</aside>` : ""}
+<div class="notice" data-disclaimer-top><div class="wrap notice-row"><b>ご注意</b><span>${esc(DISCLAIMER)}</span></div></div>
+<div class="wrap">
+${body}
 </div>
 ${footer()}
 </body>
@@ -249,21 +222,27 @@ function writePage(rp, html) {
   fs.writeFileSync(p, html);
 }
 
+const crumbs = (items) => `<nav class="crumbs" aria-label="現在位置"><ol>${items.map(([href, label]) => (href ? `<li><a href="${href}">${label}</a></li>` : `<li aria-current="page">${label}</li>`)).join("")}</ol></nav>`;
+
 // CAPEC → CWE → CVE の関係図(いま読んでいる位置を強調)
 function chain(depth, cweCount) {
-  return `<figure class="chain" aria-labelledby="chain-cap">
-  <ol>
-    <li class="here" aria-current="true"><span class="chain-code" lang="en">CAPEC</span><span>攻撃パターン（手口の型）</span><span class="chain-here">いま読んでいる位置</span></li>
-    <li><span class="chain-code" lang="en">CWE</span><span>弱点の種類</span><span class="chain-sub">${cweCount != null ? `この項目に関連：${cweCount}件` : ""}</span></li>
-    <li><span class="chain-code" lang="en">CVE</span><span>個別の製品の脆弱性</span></li>
-  </ol>
-  <figcaption id="chain-cap">攻撃パターン（CAPEC）は弱点（CWE）を突き、弱点は個々の製品の脆弱性（CVE）として見つかる。<a href="${rel(depth)}guide/#chain">図の説明</a></figcaption>
+  return `<figure class="map">
+<ol aria-label="CAPEC（攻撃パターン）、CWE（弱点の種類）、CVE（個別の脆弱性）の関係">
+<li class="here" aria-current="true"><span class="pin">いまここ</span><b lang="en">CAPEC</b>攻撃の手口の型</li>
+<li><b lang="en">CWE</b>突かれる弱点の種類${cweCount != null ? `<br>この項目では${cweCount}件` : ""}</li>
+<li><b lang="en">CVE</b>製品ごとに見つかった脆弱性</li>
+</ol>
+<figcaption>攻撃の手口（CAPEC）は弱点（CWE）を突き、弱点は製品ごとの脆弱性（CVE）として見つかります。<a href="${rel(depth)}guide/#chain">この図の説明</a></figcaption>
 </figure>`;
 }
 
-function section(id, title, body, cls = "") {
-  if (!body || !body.trim()) return "";
-  return `<section id="${id}" class="sec ${cls}" aria-labelledby="${id}-h"><h2 id="${id}-h">${title}</h2>\n${body}\n</section>`;
+function section(id, title, en, body, cls = "") {
+  if (!body || !body.trim()) return null;
+  const box = cls.includes("box");
+  const head = box
+    ? `<span class="lbl">${en}</span><h2 id="${id}-h">${title}</h2>`
+    : `<h2 id="${id}-h"><span class="mk">${title}</span>${en ? `<small>${en}</small>` : ""}</h2>`;
+  return { id, title, html: `<section id="${id}" class="sec ${cls}" aria-labelledby="${id}-h">${head}\n${body}\n</section>` };
 }
 
 function referencesHtml(entry) {
@@ -274,7 +253,7 @@ function referencesHtml(entry) {
       [x.Publication_Year, x.Publication_Month, x.Publication_Day].filter(Boolean).join("-") || null,
       r.section && `Section: ${r.section}`].filter(Boolean).map(esc).join(". ");
     const url = x.URL ? ` <a href="${esc(x.URL)}" rel="noopener">${esc(x.URL)}</a>` : "";
-    const acc = x.URL_Date ? ` <span class="ja" lang="ja">（URL確認日 ${esc(x.URL_Date)}）</span>` : "";
+    const acc = x.URL_Date ? ` <span lang="ja">（URL確認日 ${esc(x.URL_Date)}）</span>` : "";
     return `<li>[${esc(r.ref_id)}] ${parts}${url}${acc}</li>`;
   }).join("")}</ol>`;
 }
@@ -292,7 +271,7 @@ function taxonomyHtml(entry) {
 
 function notesHtml(entry) {
   if (!entry.notes?.length) return "";
-  return entry.notes.map((n) => `<div class="note"><h3>${lab("note_type", n.type)}</h3>${blocks(entry, n.text)}</div>`).join("");
+  return entry.notes.map((n) => `<div class="cnote"><h3>${lab("note_type", n.type)}</h3>${blocks(entry, n.text)}</div>`).join("");
 }
 
 function historyHtml(entry) {
@@ -310,128 +289,137 @@ function historyHtml(entry) {
 function unknownHtml(entry) {
   if (!entry.unknown?.length) return "";
   for (const u of entry.unknown) warnings.push(`未対応の欄を汎用表示: CAPEC-${entry.id} ${u.tag}`);
-  return entry.unknown.map((u) => `<div class="note"><h3 lang="en">${esc(u.tag)}</h3>${blocks(entry, u.text)}</div>`).join("");
+  return entry.unknown.map((u) => `<div class="cnote"><h3 lang="en">${esc(u.tag)}</h3>${blocks(entry, u.text)}</div>`).join("");
 }
 
+// 初学者向けの補足(AI)。罫線ノートへの手書きの「書き込み」として、原典の訳と見た目で区別する
 function supplementHtml(entry) {
   const s = tr(entry.id).supplement;
   if (!s) return "";
+  const memo = (who, inner) => `<div class="memo"><span class="who">${who}</span>${inner}</div>`;
   const parts = [];
-  if (s.summary) parts.push(`<h3>ひとことで言うと（AIの要約）</h3><p>${fmt(s.summary)}</p>`);
-  if (s.terms?.length) parts.push(`<h3>用語の説明</h3><dl class="terms">${s.terms.map((t) => `<dt>${esc(t.term)}${t.en ? `<span class="en-label" lang="en">（${esc(t.en)}）</span>` : ""}</dt><dd>${fmt(t.explain)}${t.example ? `<br><span class="ex">例：${fmt(t.example)}</span>` : ""}</dd>`).join("")}</dl>`);
-  if (s.facts?.length) parts.push(`<h3>原典から読み取れる事実</h3><ul>${s.facts.map((f) => `<li>${fmt(f.text)} <span class="src">根拠：${fmt(f.source)}</span></li>`).join("")}</ul>`);
-  if (s.analogy) parts.push(`<h3>たとえ話（AIの解釈）</h3><p>${fmt(s.analogy)}</p>`);
-  if (s.example) parts.push(`<h3>具体例（AIの解釈）</h3><p>${fmt(s.example)}</p>`);
-  if (s.interpretation?.length) parts.push(`<h3>AIの解釈</h3><ul>${s.interpretation.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`);
-  return `<section id="supplement" class="sec ai-box" aria-labelledby="supplement-h">
-<h2 id="supplement-h">初学者向けの補足<span class="ai-label">AIによる補足・原典の訳ではありません</span></h2>
-<p class="small">この欄は、原典の訳ではなく、AIが学習用に書いた補足です。「事実」には根拠となる原典の欄を示し、それ以外は「AIの解釈」として区別しています。</p>
+  if (s.summary) parts.push(memo("ひとことで（AIの要約）", `<p>${fmt(s.summary)}</p>`));
+  if (s.terms?.length) parts.push(memo("用語", `<dl>${s.terms.map((t) => `<dt>${esc(t.term)}${t.en ? `（<span lang="en">${esc(t.en)}</span>）` : ""}</dt><dd>${fmt(t.explain)}${t.example ? `<br>例：${fmt(t.example)}` : ""}</dd>`).join("")}</dl>`));
+  if (s.facts?.length) parts.push(memo("原典から読める事実", `<ul>${s.facts.map((f) => `<li>${fmt(f.text)}<span class="src">根拠：${fmt(f.source)}</span></li>`).join("")}</ul>`));
+  if (s.analogy) parts.push(memo("たとえ話（AIの解釈）", `<p>${fmt(s.analogy)}</p>`));
+  if (s.example) parts.push(memo("具体例（AIの解釈）", `<p>${fmt(s.example)}</p>`));
+  if (s.interpretation?.length) parts.push(memo("AIの解釈", `<ul>${s.interpretation.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
+  if (s.learn?.length) parts.push(memo("この項目で学べること", `<ul>${s.learn.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
+  return `<aside id="supplement" class="memos" aria-labelledby="supplement-h">
+<h2 id="supplement-h" class="memos-h">初学者向けの補足<small>AIの書き込みです。原典の訳ではありません。</small></h2>
 ${parts.join("\n")}
-</section>`;
+</aside>`;
 }
 
 function flowHtml(entry) {
   if (!entry.execution_flow?.length) return "";
   const order = ["Explore", "Experiment", "Exploit"];
   const phases = [...new Set(entry.execution_flow.map((s) => s.phase || ""))].sort((a, b) => (order.indexOf(a) + 1 || 9) - (order.indexOf(b) + 1 || 9));
-  const cols = phases.map((ph, i) => {
+  const cols = phases.map((ph) => {
     const steps = entry.execution_flow.filter((s) => (s.phase || "") === ph).map((s) => {
       const tech = s.techniques.filter((t) => t.length).map((t) => `<li>${blocks(entry, t)}</li>`).join("");
-      return `<li class="step"><span class="step-no">手順 ${esc(s.step || "")}</span>${blocks(entry, s.description)}${tech ? `<p class="tech-h">手法</p><ul class="tech">${tech}</ul>` : ""}</li>`;
+      return `<li><span class="n">手順 ${esc(s.step || "")}</span>${blocks(entry, s.description)}${tech ? `<p class="tech-h">手法</p><ul class="tech">${tech}</ul>` : ""}</li>`;
     }).join("");
     const note = labels.phase_note[ph];
-    return `<li class="phase"><h3><span class="phase-no" aria-hidden="true">${i + 1}</span>${ph ? lab("phase", ph, { both: false }) : "段階の指定なし"}</h3><p class="phase-note">${ph ? `<span lang="en">${esc(ph)}</span>${note ? "：" + esc(note) : ""}` : ""}</p><ol class="steps">${steps}</ol></li>`;
+    return `<li class="st"><h3>${ph ? lab("phase", ph, { both: false }) : "段階の指定なし"}${ph ? `<small lang="en">${esc(ph)}</small>` : ""}</h3>${note ? `<p class="q">${esc(note)}</p>` : ""}<ol class="steps">${steps}</ol></li>`;
   }).join("");
-  return `<p class="small safety">攻撃の流れは、仕組みを理解するための概念レベルで訳しています。具体的な攻撃用の文字列や、手順の再現に使える細部は訳さず「（具体的な内容は原典を参照）」としています。</p><ol class="flow">${cols}</ol>`;
+  return `<p class="small">仕組みを理解するための、概念レベルの訳です。具体的な攻撃用の文字列や、手順の再現に使える細部は「（具体的な内容は原典を参照）」としています。</p><ol class="flow">${cols}</ol>`;
 }
 
-function listOfBlocks(entry, arr, cls = "") {
+function listOfBlocks(entry, arr) {
   if (!arr?.length) return "";
-  return `<ul class="${cls}">${arr.map((b) => `<li>${blocks(entry, b)}</li>`).join("")}</ul>`;
+  return `<ul>${arr.map((b) => `<li>${blocks(entry, b)}</li>`).join("")}</ul>`;
+}
+
+// 程度(深刻度・可能性・スキル)を目盛りで示す
+const LEVEL5 = { "Very Low": 1, Low: 2, Medium: 3, High: 4, "Very High": 5 };
+const LEVEL3 = { Low: 1, Medium: 2, High: 3 };
+function meter(label, value, scale) {
+  const n = value ? scale[value] : null;
+  const max = Math.max(...Object.values(scale));
+  const dots = n ? `<span class="dots" aria-hidden="true">${"●".repeat(n)}<em>${"●".repeat(max - n)}</em></span>` : "";
+  return `<div class="meter"><span class="meter-l">${label}</span><b>${value ? lab("level", value, { both: false }) : "記載なし"}</b>${dots}</div>`;
+}
+
+function headBlock(e, kindLabel, chips, depth) {
+  const ja = nameJa(e.id);
+  return `<div class="chips">${chips}</div>
+<p class="cid">CAPEC-${esc(e.id)}<span class="kind">${kindLabel}</span></p>
+<h1 data-pagefind-meta="title">${ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span>`}</h1>
+<p class="en" lang="en">${esc(e.name.en)}</p>`;
+}
+
+const chip = (href, label) => `<a class="chip" href="${href}">${label}</a>`;
+const plainChip = (label) => `<span class="chip plain">${label}</span>`;
+const catName = (c) => esc(nameJa(c) || nameEn(c));
+
+function tocHtml(secs, extra = "") {
+  if (!secs.length) return "";
+  return `<nav class="toc" aria-label="このページの内容"><span>このページ：</span>${secs.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}${extra}</nav>`;
 }
 
 // ---------- 攻撃パターンのページ ----------
 function attackPatternPage(e) {
   const depth = 2;
-  const t = tr(e.id);
-  const ja = t.seg?.name;
+  const ja = nameJa(e.id);
   const mech = catsOf(mechCats, e.id);
   const dom = catsOf(domainCats, e.id);
-  const catName = (c) => nameJa(c) || nameEn(c);
-  const skills = e.skills.map((s) => `<li>${lab("level", s.level)}：${blocks(e, s.text)}</li>`).join("");
+  const chips = [
+    ...mech.map((c) => chip(`../${esc(c)}/`, catName(c))),
+    ...dom.map((c) => chip(`../${esc(c)}/`, catName(c))),
+    e.abstraction ? plainChip(`抽象度：${lab("abstraction", e.abstraction, { both: false })}`) : "",
+    e.status ? plainChip(`ステータス：${lab("status", e.status, { both: false })}`) : "",
+  ].join("");
+  const skillLv = e.skills.map((s) => s.level).filter((l) => LEVEL3[l]).sort((a, b) => LEVEL3[b] - LEVEL3[a])[0];
+  const skills = e.skills.map((s) => `<li><b>${lab("level", s.level)}</b>：${blocks(e, s.text)}</li>`).join("");
   const conseq = e.consequences.length ? `<div class="table-wrap"><table><thead><tr><th scope="col">影響を受ける範囲</th><th scope="col">影響</th><th scope="col">起こる可能性</th><th scope="col">補足</th></tr></thead><tbody>${e.consequences.map((c) => `<tr><td>${c.scopes.map((x) => lab("scope", x)).join("、") || "—"}</td><td>${c.impacts.map((x) => lab("impact", x)).join("、") || "—"}</td><td>${c.likelihood ? lab("level", c.likelihood) : "—"}</td><td>${blocks(e, c.note) || "—"}</td></tr>`).join("")}</tbody></table></div>` : "";
   const related = e.related_attack_patterns.length ? `<div class="table-wrap"><table><thead><tr><th scope="col">関係</th><th scope="col">項目</th></tr></thead><tbody>${e.related_attack_patterns.map((r) => `<tr><td>${lab("nature", r.nature)}</td><td>${entryLink(r.id, depth)}${r.exclude?.length ? `<br><span class="small">除外：${r.exclude.map((x) => `CAPEC-${esc(x)}`).join("、")}</span>` : ""}</td></tr>`).join("")}</tbody></table></div>` : "";
   const cwes = e.related_weaknesses.length ? `<ul class="inline-list">${e.related_weaknesses.map((c) => `<li><a href="${cweUrl(c)}" rel="noopener" lang="en">CWE-${esc(c)}</a></li>`).join("")}</ul><p class="small">リンク先はMITREのCWEサイト（英語）です。</p>` : "";
-  const alt = e.alternate_terms.length ? `<dl>${e.alternate_terms.map((a) => `<dt>${seg(e, a.term)}</dt><dd>${blocks(e, a.description)}</dd>`).join("")}</dl>` : "";
+  const alt = e.alternate_terms.length ? `<dl class="alt">${e.alternate_terms.map((a) => `<dt>${seg(e, a.term)}</dt><dd>${blocks(e, a.description)}</dd>`).join("")}</dl>` : "";
+  const source = `<p><a href="${capecUrl(e.id)}" rel="noopener" lang="en">${capecUrl(e.id)}</a><br><span class="small">データ版 ${esc(meta.version)}（${esc(meta.catalog_date)}）・取得日 ${esc(meta.retrieved)}</span></p>`;
 
-  const sections = [
-    section("description", "説明", blocks(e, e.description)),
-    section("extended", "詳細な説明", blocks(e, e.extended_description)),
-    section("alternate", "別名", alt),
-    section("flow", "攻撃の流れ", flowHtml(e)),
-    section("prerequisites", "なぜ成立するのか ── 成立するための前提条件", listOfBlocks(e, e.prerequisites), "box-warn"),
-    section("skills", "必要なスキル", skills ? `<ul>${skills}</ul>` : ""),
-    section("resources", "必要な資源", listOfBlocks(e, e.resources)),
-    section("indicators", "兆候", listOfBlocks(e, e.indicators)),
-    section("consequences", "起こりうる影響", conseq),
-    section("mitigations", "防御のポイント ── 対策（緩和策）", listOfBlocks(e, e.mitigations), "box-defense"),
-    section("examples", "攻撃の例", listOfBlocks(e, e.examples)),
-    section("related", "関連する攻撃パターン", related),
-    section("cwe", "関連するCWE（弱点の分類）", cwes),
-    section("taxonomy", "ATT&amp;CKなど他の分類との対応", taxonomyHtml(e)),
-    section("notes", "注記", notesHtml(e)),
-    section("other", "その他の欄", unknownHtml(e)),
-    section("references", "参考文献", referencesHtml(e)),
-    section("history", "更新履歴", historyHtml(e)),
+  const secs = [
+    section("extended", "詳しい説明", "Extended Description", blocks(e, e.extended_description)),
+    section("alternate", "別名", "Alternate Terms", alt),
+    section("flow", "攻撃の流れ", "Execution Flow", flowHtml(e)),
+    section("prerequisites", "なぜ成立する？", "前提条件", listOfBlocks(e, e.prerequisites), "box cond"),
+    section("skills", "必要なスキル", "Skills Required", skills ? `<ul>${skills}</ul>` : ""),
+    section("resources", "必要な資源", "Resources Required", listOfBlocks(e, e.resources)),
+    section("indicators", "兆候", "Indicators", listOfBlocks(e, e.indicators)),
+    section("consequences", "起こりうる影響", "Consequences", conseq),
+    section("mitigations", "どう守る？", "対策（緩和策）", listOfBlocks(e, e.mitigations), "box def"),
+    section("examples", "攻撃の例", "Example Instances", listOfBlocks(e, e.examples)),
+    section("related", "関連する攻撃パターン", "Related Attack Patterns", related),
+    section("cwe", "突かれる弱点（CWE）", "Related Weaknesses", cwes),
+    section("taxonomy", "ATT&amp;CKなど他の分類との対応", "Taxonomy Mappings", taxonomyHtml(e)),
+    section("notes", "注記", "Notes", notesHtml(e)),
+    section("other", "その他の欄", "", unknownHtml(e)),
+    section("references", "参考文献", "References", referencesHtml(e)),
+    section("source", "原典", "Source", source),
+    section("history", "更新履歴", "Content History", historyHtml(e)),
   ].filter(Boolean);
-  const toc = sections.map((s) => s.match(/id="([^"]+)"[^>]*><h2 id="[^"]+">(.*?)<\/h2>/)).filter(Boolean)
-    .map((m) => `<li><a href="#${m[1]}">${m[2].replace(/<[^>]+>/g, "")}</a></li>`).join("");
   const sup = supplementHtml(e);
 
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../../">ホーム</a></li>${mech[0] ? `<li><a href="../../categories/">カテゴリ一覧</a></li><li><a href="../${esc(mech[0])}/">${esc(catName(mech[0]))}</a></li>` : ""}<li aria-current="page">CAPEC-${esc(e.id)}</li></ol></nav>
+  const body = `${crumbs([["../../", "ホーム"], ...(mech[0] ? [[`../${esc(mech[0])}/`, `攻撃の仕組み：${catName(mech[0])}`]] : []), [null, `CAPEC-${esc(e.id)}`]])}
+<main id="main" class="entry${sup ? " has-memos" : ""}" tabindex="-1" data-pagefind-body>
+<div class="entry-head">
+${headBlock(e, "攻撃パターン", chips, depth)}
+<button type="button" class="fav" data-fav="${esc(e.id)}" aria-pressed="false">お気に入りに追加</button>
 ${chain(depth, e.related_weaknesses.length)}
-<div data-pagefind-body>
-<header class="entry-head">
-  ${mech.map((c) => `<a class="tag" href="../${esc(c)}/">${esc(catName(c))}</a>`).join("")}
-  <h1 data-pagefind-meta="title">CAPEC-${esc(e.id)} ${ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span>`}${ja ? `<span class="h1-en" lang="en">（${esc(e.name.en)}）</span>` : ""}</h1>
-  <button type="button" class="fav" data-fav="${esc(e.id)}" aria-pressed="false">お気に入りに追加</button>
-</header>
-<p class="zone-label">ここから原典の日本語訳（AIによる翻訳）</p>
-<div class="table-wrap"><table class="summary">
-<tr><th scope="row">ID</th><td>CAPEC-${esc(e.id)}</td></tr>
-<tr><th scope="row">英語名</th><td lang="en">${esc(e.name.en)}</td></tr>
-<tr><th scope="row">日本語名</th><td>${ja ? esc(ja) : MISSING}</td></tr>
-<tr><th scope="row">ステータス</th><td>${lab("status", e.status) || "—"}</td></tr>
-<tr><th scope="row">抽象度</th><td>${lab("abstraction", e.abstraction) || "—"}</td></tr>
-<tr><th scope="row">深刻度</th><td>${lab("level", e.severity) || "データに記載なし"}</td></tr>
-<tr><th scope="row">攻撃される可能性</th><td>${lab("level", e.likelihood) || "データに記載なし"}</td></tr>
-<tr><th scope="row">必要なスキル</th><td>${e.skills.map((s) => lab("level", s.level)).join("、") || "データに記載なし"}</td></tr>
-<tr><th scope="row">攻撃の仕組み</th><td>${mech.map((c) => `<a href="../${esc(c)}/">${esc(catName(c))}</a>`).join("、") || "—"}</td></tr>
-<tr><th scope="row">攻撃の領域</th><td>${dom.map((c) => `<a href="../${esc(c)}/">${esc(catName(c))}</a>`).join("、") || "—"}</td></tr>
-<tr><th scope="row">原典（英語）</th><td><a href="${capecUrl(e.id)}" rel="noopener" lang="en">${capecUrl(e.id)}</a></td></tr>
-</table></div>
-<nav class="toc" aria-label="このページの内容"><h2 class="toc-h">このページの内容</h2><ol>${toc}${sup ? `<li><a href="#supplement">初学者向けの補足（AI）</a></li>` : ""}</ol></nav>
-${sections.join("\n")}
+<section id="description" class="lead" aria-labelledby="description-h"><h2 id="description-h" class="vh">説明</h2>${blocks(e, e.description) || `<p class="small">データに説明の記載はありません。</p>`}</section>
+<div class="meters">
+${meter("深刻度", e.severity, LEVEL5)}
+${meter("攻撃される可能性", e.likelihood, LEVEL5)}
+${meter("必要なスキル", skillLv, LEVEL3)}
 </div>
-${sup}`;
-
-  const rel1 = e.related_attack_patterns.slice(0, 8).map((r) => `<li>${entryLink(r.id, depth)}<span class="small">${lab("nature", r.nature)}</span></li>`).join("");
-  const learn = t.supplement?.learn?.length ? `<section class="side-box ai-box"><h2>この攻撃パターンで学べること<span class="ai-label">AIによる補足</span></h2><ul class="check">${t.supplement.learn.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul></section>` : "";
-  const right = `${rel1 ? `<section class="side-box"><h2>関連するパターン</h2><ul class="rel">${rel1}</ul>${e.related_attack_patterns.length > 8 ? `<p class="small"><a href="#related">すべて見る（${e.related_attack_patterns.length}件）</a></p>` : ""}</section>` : ""}
-<section class="side-box"><h2>このパターンの出典</h2><p lang="en">MITRE CAPEC<br>Common Attack Pattern Enumeration and Classification</p><p><a href="${capecUrl(e.id)}" rel="noopener">原典（英語）を開く</a></p><p class="small">データ版 ${esc(meta.version)}（${esc(meta.catalog_date)}）</p></section>
-${learn}
-${studyBox(depth)}`;
-  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, main, right, description: `CAPEC-${e.id}（${e.name.en}）の日本語訳（非公式・AI訳）` });
-}
-
-function studyBox(depth) {
-  return `<section class="side-box"><h2>学習の進め方</h2><ol>
-<li>「説明」を読み、どんな手口かをつかむ</li>
-<li>「なぜ成立するのか（前提条件）」で、攻撃が成り立つ条件を確かめる</li>
-<li>「攻撃の流れ」で、全体の段階を見る</li>
-<li>「防御のポイント（対策）」を、前提条件のどれを崩すものかと結びつけて読む</li>
-</ol><p class="small">この学習の手順はAIによる提案です。<a href="${rel(depth)}guide/">はじめに</a></p></section>
-<section class="side-box"><h2>このサイトは学習用です</h2><p class="small">攻撃の実行手順や、具体的な攻撃用の文字列は載せていません。</p></section>`;
+${tocHtml(secs, sup ? `<a href="#supplement">補足（AI）</a>` : "")}
+</div>
+${sup}
+<div class="entry-body">
+${secs.map((s) => s.html).join("\n")}
+</div>
+</main>`;
+  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, description: `CAPEC-${e.id}（${e.name.en}）の日本語訳（非公式・AI訳）` });
 }
 
 // ---------- カテゴリ・ビューのページ ----------
@@ -444,189 +432,217 @@ function categoryPage(e) {
   const ja = nameJa(e.id);
   const all = [...catClosure(e.id)].sort((a, b) => a - b);
   const direct = e.members || [];
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../../">ホーム</a></li><li><a href="../../categories/">カテゴリ一覧</a></li><li aria-current="page">CAPEC-${esc(e.id)}</li></ol></nav>
-<div data-pagefind-body>
-<header class="entry-head"><span class="tag">カテゴリ</span>
-<h1 data-pagefind-meta="title">CAPEC-${esc(e.id)} ${ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span>`}${ja ? `<span class="h1-en" lang="en">（${esc(e.name.en)}）</span>` : ""}</h1></header>
-<p class="zone-label">ここから原典の日本語訳（AIによる翻訳）</p>
-<div class="table-wrap"><table class="summary">
-<tr><th scope="row">ID</th><td>CAPEC-${esc(e.id)}</td></tr>
-<tr><th scope="row">英語名</th><td lang="en">${esc(e.name.en)}</td></tr>
-<tr><th scope="row">種類</th><td>カテゴリ（攻撃パターンをまとめる分類）</td></tr>
-<tr><th scope="row">ステータス</th><td>${lab("status", e.status) || "—"}</td></tr>
-<tr><th scope="row">原典（英語）</th><td><a href="${capecUrl(e.id)}" rel="noopener" lang="en">${capecUrl(e.id)}</a></td></tr>
-</table></div>
-${section("summary", "概要", blocks(e, e.summary))}
-${section("members", `直接含まれる項目（${direct.length}件）`, direct.length ? memberList(direct, depth) : "")}
-${all.length !== direct.length ? section("all", `下位の項目を含むすべての攻撃パターン（${all.length}件）`, memberList(all, depth)) : ""}
-${section("taxonomy", "他の分類との対応", taxonomyHtml(e))}
-${section("notes", "注記", notesHtml(e))}
-${section("other", "その他の欄", unknownHtml(e))}
-${section("references", "参考文献", referencesHtml(e))}
-${section("history", "更新履歴", historyHtml(e))}
-</div>
-${supplementHtml(e)}`;
-  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, main, current: "categories" });
+  const chips = [plainChip("カテゴリ（攻撃パターンをまとめる分類）"), e.status ? plainChip(`ステータス：${lab("status", e.status, { both: false })}`) : ""].join("");
+  const secs = [
+    section("summary", "概要", "Summary", blocks(e, e.summary)),
+    section("members", `直接含まれる項目（${direct.length}件）`, "Members", direct.length ? memberList(direct, depth) : ""),
+    all.length !== direct.length ? section("all", `下位を含むすべての攻撃パターン（${all.length}件）`, "", memberList(all, depth)) : null,
+    section("taxonomy", "他の分類との対応", "Taxonomy Mappings", taxonomyHtml(e)),
+    section("notes", "注記", "Notes", notesHtml(e)),
+    section("other", "その他の欄", "", unknownHtml(e)),
+    section("references", "参考文献", "References", referencesHtml(e)),
+    section("source", "原典", "Source", `<p><a href="${capecUrl(e.id)}" rel="noopener" lang="en">${capecUrl(e.id)}</a></p>`),
+    section("history", "更新履歴", "Content History", historyHtml(e)),
+  ].filter(Boolean);
+  const sup = supplementHtml(e);
+  const body = `${crumbs([["../../", "ホーム"], ["../../categories/", "索引"], [null, `CAPEC-${esc(e.id)}`]])}
+<main id="main" class="entry${sup ? " has-memos" : ""}" tabindex="-1" data-pagefind-body>
+<div class="entry-head">${headBlock(e, "カテゴリ", chips, depth)}${tocHtml(secs)}</div>
+${sup}
+<div class="entry-body">${secs.map((s) => s.html).join("\n")}</div>
+</main>`;
+  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, current: "categories" });
 }
 
 function viewPage(e) {
   const depth = 2;
   const ja = nameJa(e.id);
-  const aud = e.audience?.length ? `<dl>${e.audience.map((a) => `<dt lang="en">${esc(a.type)}</dt><dd>${blocks(e, a.description)}</dd>`).join("")}</dl>` : "";
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../../">ホーム</a></li><li><a href="../../categories/">カテゴリ一覧</a></li><li aria-current="page">CAPEC-${esc(e.id)}</li></ol></nav>
-<div data-pagefind-body>
-<header class="entry-head"><span class="tag">ビュー</span>
-<h1 data-pagefind-meta="title">CAPEC-${esc(e.id)} ${ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span>`}${ja ? `<span class="h1-en" lang="en">（${esc(e.name.en)}）</span>` : ""}</h1></header>
-<p class="zone-label">ここから原典の日本語訳（AIによる翻訳）</p>
-<div class="table-wrap"><table class="summary">
-<tr><th scope="row">ID</th><td>CAPEC-${esc(e.id)}</td></tr>
-<tr><th scope="row">英語名</th><td lang="en">${esc(e.name.en)}</td></tr>
-<tr><th scope="row">種類</th><td>ビュー（ある観点で項目を選んで並べた一覧）：${lab("view_type", e.view_type) || "—"}</td></tr>
-<tr><th scope="row">ステータス</th><td>${lab("status", e.status) || "—"}</td></tr>
-<tr><th scope="row">原典（英語）</th><td><a href="${capecUrl(e.id)}" rel="noopener" lang="en">${capecUrl(e.id)}</a></td></tr>
-</table></div>
-${section("objective", "目的", blocks(e, e.objective))}
-${section("audience", "想定する読者", aud)}
-${section("filter", "選び方の条件（原文）", e.filter ? `<pre lang="en"><code>${esc(e.filter)}</code></pre>` : "")}
-${section("members", `含まれる項目（${(e.members || []).length}件）`, (e.members || []).length ? memberList(e.members, depth) : "")}
-${section("notes", "注記", notesHtml(e))}
-${section("other", "その他の欄", unknownHtml(e))}
-${section("references", "参考文献", referencesHtml(e))}
-${section("history", "更新履歴", historyHtml(e))}
-</div>`;
-  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, main, current: "categories" });
+  const aud = e.audience?.length ? `<dl class="alt">${e.audience.map((a) => `<dt lang="en">${esc(a.type)}</dt><dd>${blocks(e, a.description)}</dd>`).join("")}</dl>` : "";
+  const chips = [plainChip(`ビュー：${lab("view_type", e.view_type, { both: false }) || "—"}`), e.status ? plainChip(`ステータス：${lab("status", e.status, { both: false })}`) : ""].join("");
+  const secs = [
+    section("objective", "目的", "Objective", blocks(e, e.objective)),
+    section("audience", "想定する読者", "Audience", aud),
+    section("filter", "選び方の条件（原文）", "Filter", e.filter ? `<pre lang="en"><code>${esc(e.filter)}</code></pre>` : ""),
+    section("members", `含まれる項目（${(e.members || []).length}件）`, "Members", (e.members || []).length ? memberList(e.members, depth) : ""),
+    section("notes", "注記", "Notes", notesHtml(e)),
+    section("other", "その他の欄", "", unknownHtml(e)),
+    section("references", "参考文献", "References", referencesHtml(e)),
+    section("source", "原典", "Source", `<p><a href="${capecUrl(e.id)}" rel="noopener" lang="en">${capecUrl(e.id)}</a></p>`),
+    section("history", "更新履歴", "Content History", historyHtml(e)),
+  ].filter(Boolean);
+  const body = `${crumbs([["../../", "ホーム"], ["../../categories/", "索引"], [null, `CAPEC-${esc(e.id)}`]])}
+<main id="main" class="entry" tabindex="-1" data-pagefind-body>
+<div class="entry-head">${headBlock(e, "ビュー（ある観点で項目を選んで並べた一覧）", chips, depth)}${tocHtml(secs)}</div>
+<div class="entry-body">${secs.map((s) => s.html).join("\n")}</div>
+</main>`;
+  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, current: "categories" });
 }
 
 // ---------- トップページ ----------
+function catTabs(ids, depth) {
+  return `<ul class="tabs">${ids.map((c) => `<li><a href="${rel(depth)}capec/${esc(c)}/"><span>${catName(c)}</span><b>${catClosure(c).size}</b></a></li>`).join("")}</ul>`;
+}
+
 function indexPage() {
-  const opt = (ids) => ids.map((c) => `<option value="${esc(c)}">${esc(nameJa(c) || nameEn(c))}</option>`).join("");
+  const opt = (ids) => ids.map((c) => `<option value="${esc(c)}">${catName(c)}</option>`).join("");
   const optLab = (group, vals) => [...new Set(vals.filter(Boolean))].sort().map((v) => `<option value="${esc(v)}">${esc(labels[group]?.[v] || v)}</option>`).join("");
+  const absCls = { Meta: "m", Standard: "s", Detailed: "d" };
   const rows = attackPatterns.map((e) => {
     const ja = nameJa(e.id);
-    return `<tr data-abs="${esc(e.abstraction || "")}" data-status="${esc(e.status || "")}" data-mech="${catsOf(mechCats, e.id).join(" ")}" data-dom="${catsOf(domainCats, e.id).join(" ")}">
-<td><a href="capec/${esc(e.id)}/">CAPEC-${esc(e.id)}</a></td><td>${ja ? `<a href="capec/${esc(e.id)}/">${esc(ja)}</a>` : `<span class="small">${MISSING}</span>`}</td><td lang="en">${esc(e.name.en)}</td><td>${esc(labels.abstraction[e.abstraction] || e.abstraction || "—")}</td><td>${esc(labels.status[e.status] || e.status || "—")}</td></tr>`;
+    const dep = e.status === "Deprecated" || e.status === "Obsolete";
+    return `<tr${dep ? ' class="dep"' : ""} data-abs="${esc(e.abstraction || "")}" data-status="${esc(e.status || "")}" data-mech="${catsOf(mechCats, e.id).join(" ")}" data-dom="${catsOf(domainCats, e.id).join(" ")}">
+<td class="id">CAPEC-${esc(e.id)}</td><td class="ja"><a href="capec/${esc(e.id)}/">${ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span><span class="small">（${MISSING}）</span>`}</a></td><td class="en" lang="en">${esc(e.name.en)}</td><td>${e.abstraction ? `<span class="lv ${absCls[e.abstraction] || "d"}">${esc(labels.abstraction[e.abstraction] || e.abstraction)}</span>` : "—"}</td><td>${esc(labels.status[e.status] || e.status || "—")}</td></tr>`;
   }).join("\n");
   const done = attackPatterns.filter((e) => translations.get(e.id)?.status === "done").length;
-  const main = `<h1>CAPEC 攻撃パターン辞典 日本語版（非公式）</h1>
-<p class="lead">MITREが公開している攻撃パターンの辞典「CAPEC」を、日本語で読めるようにしたサイトです。攻撃が<strong>なぜ成立するのか</strong>という仕組みを理解し、守る側の理解に役立てることを目的にしています。攻撃の実行手引きではありません。</p>
-${chain(0, null)}
-<section class="stats" aria-labelledby="stats-h"><h2 id="stats-h">公式データの概要</h2>
-<dl>
-<div><dt>攻撃パターン</dt><dd>${meta.counts.attack_pattern}件</dd></div>
-<div><dt>カテゴリ</dt><dd>${meta.counts.category}件</dd></div>
-<div><dt>ビュー</dt><dd>${meta.counts.view}件</dd></div>
-<div><dt>データの版</dt><dd>${esc(meta.version)}</dd></div>
-<div><dt>公式データの日付</dt><dd>${esc(meta.catalog_date)}</dd></div>
-<div><dt>取得日</dt><dd>${esc(meta.retrieved)}</dd></div>
-<div><dt>日本語訳が済んだ攻撃パターン</dt><dd>${done}件</dd></div>
-</dl>
-<p class="small">件数は、MITREの公式ダウンロードデータ（XML）から数えたものです。</p></section>
-<section id="list" aria-labelledby="list-h"><h2 id="list-h">すべての攻撃パターン</h2>
+  const body = `<section class="hero">
+<div>
+<h1 class="hero-h">攻撃は、<br><span class="mk">なぜ成立する</span>のか。</h1>
+<p class="sub">MITREが公開している攻撃パターンの辞典「CAPEC」を、日本語で読めるようにしました。手口の型と、それが成り立つ条件、守るための対策を、1項目ずつ引けます。攻撃の実行手引きではありません。</p>
+</div>
+<form class="find" action="search/" method="get" role="search" data-search>
+<label for="q-top">引いてみる</label>
+<div class="find-row"><input id="q-top" name="q" type="search" placeholder="例：なりすまし、SQLインジェクション、66" autocomplete="off"><button type="submit">探す</button></div>
+<p class="small">番号だけ入れると、その項目へ直接移動します。</p>
+<span class="search-msg" role="status" data-search-msg></span>
+</form>
+</section>
+<div class="figs">
+<span class="fig">攻撃パターン<b>${meta.counts.attack_pattern}</b>件</span>
+<span class="fig">カテゴリ<b>${meta.counts.category}</b>件</span>
+<span class="fig">ビュー<b>${meta.counts.view}</b>件</span>
+<span class="fig">データの版<b>${esc(meta.version)}</b></span>
+<span class="fig">公式データの日付<b>${esc(meta.catalog_date)}</b></span>
+<span class="fig">取得日<b>${esc(meta.retrieved)}</b></span>
+<span class="fig">日本語訳が済んだ攻撃パターン<b>${done}</b>件</span>
+</div>
+<p class="small">件数は、MITREの公式ダウンロードデータ（XML）から数えたものです。</p>
+<div class="top-body">
+<nav aria-labelledby="mech-h">
+<h2 id="mech-h"><span class="mk">仕組みで引く</span></h2>
+${mechCats.length ? catTabs(mechCats, 0) : `<p class="small">分類のデータがありません。</p>`}
+<p><a href="categories/">索引をすべて見る</a></p>
+</nav>
+<main id="main" tabindex="-1">
+<section id="list" aria-labelledby="list-h">
+<h2 id="list-h"><span class="mk">すべての攻撃パターン</span></h2>
 <form class="filters" data-filters>
 <div><label for="f-abs">抽象度</label><select id="f-abs" data-key="abs"><option value="">すべて</option>${optLab("abstraction", attackPatterns.map((e) => e.abstraction))}</select></div>
 <div><label for="f-status">ステータス</label><select id="f-status" data-key="status"><option value="">すべて</option>${optLab("status", attackPatterns.map((e) => e.status))}</select></div>
 <div><label for="f-mech">攻撃の仕組み</label><select id="f-mech" data-key="mech" data-multi><option value="">すべて</option>${opt(mechCats)}</select></div>
 <div><label for="f-dom">攻撃の領域</label><select id="f-dom" data-key="dom" data-multi><option value="">すべて</option>${opt(domainCats)}</select></div>
+<p class="count" role="status" data-filter-count>${attackPatterns.length}件</p>
 </form>
-<p class="filter-count" role="status" data-filter-count>${attackPatterns.length}件を表示</p>
-<div class="table-wrap"><table class="list"><thead><tr><th scope="col">ID</th><th scope="col">日本語名</th><th scope="col">英語名</th><th scope="col">抽象度</th><th scope="col">ステータス</th></tr></thead><tbody>
+<div class="table-wrap"><table class="list"><thead><tr><th scope="col">番号</th><th scope="col">日本語名</th><th scope="col">英語名</th><th scope="col">抽象度</th><th scope="col">ステータス</th></tr></thead><tbody>
 ${rows}
 </tbody></table></div>
 <p class="small">抽象度：メタ（もっとも抽象的な手口の型）、標準（特定の技術に寄った型）、詳細（具体的な技術や手順まで絞った型）。</p>
-</section>`;
-  return page({ title: "ホーム", depth: 0, main, current: "home" });
+</section>
+</main>
+</div>`;
+  return page({ title: "ホーム", depth: 0, body, current: "home" });
 }
 
 function categoriesPage() {
   const depth = 1;
-  const block = (title, viewId, ids) => ids.length ? `<section class="sec" aria-labelledby="v${viewId}"><h2 id="v${viewId}">${title}（${entryLink(viewId, depth)}）</h2><ul class="entry-list">${ids.map((c) => `<li>${entryLink(c, depth)} <span class="small">${catClosure(c).size}件</span></li>`).join("")}</ul></section>` : "";
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../">ホーム</a></li><li aria-current="page">カテゴリ一覧</li></ol></nav>
-<h1>カテゴリ一覧</h1>
-<p>CAPECでは、攻撃パターンを「カテゴリ」でまとめ、カテゴリを「ビュー」（ある観点で選んで並べた一覧）で整理しています。件数は、下位の項目を含めた攻撃パターンの数です。</p>
-${block("攻撃の仕組みで分ける", MECH_VIEW, mechCats)}
-${block("攻撃の領域で分ける", DOMAIN_VIEW, domainCats)}
-<section class="sec" aria-labelledby="allv"><h2 id="allv">すべてのビュー（${views.length}件）</h2>${memberList(views.map((v) => v.id), depth)}</section>
-<section class="sec" aria-labelledby="allc"><h2 id="allc">すべてのカテゴリ（${categories.length}件）</h2>${memberList(categories.map((c) => c.id), depth)}</section>`;
-  return page({ title: "カテゴリ一覧", depth, main, current: "categories" });
+  const block = (title, viewId, ids) => ids.length ? `<section class="sec" aria-labelledby="v${viewId}"><h2 id="v${viewId}"><span class="mk">${title}</span><small>${entryLink(viewId, depth)}</small></h2>${catTabs(ids, depth)}</section>` : "";
+  const body = `${crumbs([["../", "ホーム"], [null, "索引"]])}
+<main id="main" class="page" tabindex="-1">
+<h1 class="page-h">索引</h1>
+<p>CAPECでは、攻撃パターンを「カテゴリ」でまとめ、カテゴリを「ビュー」（ある観点で選んで並べた一覧）で整理しています。数字は、下位の項目を含めた攻撃パターンの数です。</p>
+${block("攻撃の仕組みで引く", MECH_VIEW, mechCats)}
+${block("攻撃の領域で引く", DOMAIN_VIEW, domainCats)}
+<section class="sec" aria-labelledby="allv"><h2 id="allv"><span class="mk">すべてのビュー</span><small>${views.length}件</small></h2>${memberList(views.map((v) => v.id), depth)}</section>
+<section class="sec" aria-labelledby="allc"><h2 id="allc"><span class="mk">すべてのカテゴリ</span><small>${categories.length}件</small></h2>${memberList(categories.map((c) => c.id), depth)}</section>
+</main>`;
+  return page({ title: "索引", depth, body, current: "categories" });
 }
 
 function searchPage() {
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../">ホーム</a></li><li aria-current="page">検索</li></ol></nav>
-<h1>攻撃パターンを検索</h1>
-<form class="search-form" data-search-form role="search">
+  const body = `${crumbs([["../", "ホーム"], [null, "検索"]])}
+<main id="main" class="page" tabindex="-1">
+<h1 class="page-h">探す</h1>
+<form class="find" data-search-form role="search">
 <label for="q">キーワード</label>
-<input id="q" name="q" type="search" autocomplete="off">
-<button type="submit">検索</button>
+<div class="find-row"><input id="q" name="q" type="search" autocomplete="off"><button type="submit">探す</button></div>
+<p class="small">日本語・英語のどちらでも探せます。動詞の活用形（例：「騙して」）では見つからないことがあり、その場合は漢字やカタカナの部分だけで探し直します（例：「騙」）。</p>
 </form>
-<p class="small">日本語・英語のどちらでも検索できます。動詞の活用形（例：「騙して」）では見つからないことがあり、その場合は漢字やカタカナの部分だけで検索し直します（例：「騙」）。</p>
 <p role="status" class="search-status" data-search-status></p>
 <ol class="search-results" data-search-results></ol>
 <noscript><p>検索にはJavaScriptが必要です。<a href="../">トップページの一覧</a>から探すこともできます。</p></noscript>
+</main>
 <script src="../assets/search.js" defer></script>`;
-  return page({ title: "検索", depth: 1, main, current: "search" });
+  return page({ title: "探す", depth: 1, body, current: "search" });
 }
 
 function favoritesPage() {
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../">ホーム</a></li><li aria-current="page">お気に入り</li></ol></nav>
-<h1>お気に入り</h1>
+  const body = `${crumbs([["../", "ホーム"], [null, "お気に入り"]])}
+<main id="main" class="page" tabindex="-1">
+<h1 class="page-h">お気に入り</h1>
 <p>項目ページの「お気に入りに追加」で登録した項目です。登録は、このブラウザの中だけに保存されます（サーバーには送られません）。</p>
 <ul class="entry-list" data-fav-list></ul>
-<p data-fav-empty hidden>まだ登録された項目はありません。</p>`;
-  return page({ title: "お気に入り", depth: 1, main, current: "favorites" });
+<p data-fav-empty hidden>まだ登録された項目はありません。</p>
+</main>`;
+  return page({ title: "お気に入り", depth: 1, body, current: "favorites" });
 }
 
 function glossaryPage() {
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../">ホーム</a></li><li aria-current="page">用語集</li></ol></nav>
-<h1>用語集</h1>
-<p>このサイトで使う訳語の一覧です。訳語はサイト全体でそろえています。<strong>説明はAIによる補足で、原典の訳ではありません。</strong></p>
-<dl class="glossary" data-pagefind-body>${glossary.terms.map((t) => `<dt id="g-${esc(t.en.replace(/\s+/g, "-"))}">${esc(t.ja)}<span class="en-label" lang="en">（${esc(t.en)}）</span></dt><dd>${fmt(t.explain || "")}</dd>`).join("")}</dl>
-<section class="sec" aria-labelledby="lab-h"><h2 id="lab-h">データの決まった値の訳語</h2>
-${Object.entries(labels).filter(([k]) => !k.startsWith("_") && k !== "phase_note").map(([g, m]) => `<h3>${esc({ abstraction: "抽象度", status: "ステータス", level: "程度（深刻度・可能性・スキル）", phase: "攻撃の段階", nature: "攻撃パターン同士の関係", scope: "影響を受ける範囲", impact: "影響", note_type: "注記の種類", view_type: "ビューの種類", mapping_fit: "他の分類との対応の程度", taxonomy: "他の分類の名前", history: "更新履歴の種類", kind: "項目の種類" }[g] || g)}</h3><div class="table-wrap"><table><thead><tr><th scope="col">原文</th><th scope="col">訳語</th></tr></thead><tbody>${Object.entries(m).map(([en, ja]) => `<tr><td lang="en">${esc(en)}</td><td${/^[\x00-\x7F]+$/.test(ja) ? ' lang="en"' : ""}>${esc(ja)}</td></tr>`).join("")}</tbody></table></div>`).join("")}
-</section>`;
-  return page({ title: "用語集", depth: 1, main, current: "glossary" });
+  const groupName = { abstraction: "抽象度", status: "ステータス", level: "程度（深刻度・可能性・スキル）", phase: "攻撃の段階", nature: "攻撃パターン同士の関係", scope: "影響を受ける範囲", impact: "影響", note_type: "注記の種類", view_type: "ビューの種類", mapping_fit: "他の分類との対応の程度", taxonomy: "他の分類の名前", history: "更新履歴の種類", kind: "項目の種類" };
+  const body = `${crumbs([["../", "ホーム"], [null, "用語集"]])}
+<main id="main" class="page" tabindex="-1">
+<h1 class="page-h">用語集</h1>
+<p>このサイトで使う訳語の一覧です。訳語はサイト全体でそろえています。説明の欄は、AIの書き込み（原典の訳ではありません）です。</p>
+<dl class="glossary" data-pagefind-body>${glossary.terms.map((t) => `<div><dt id="g-${esc(t.en.replace(/\s+/g, "-"))}">${esc(t.ja)}<span class="en-label" lang="en">${esc(t.en)}</span></dt><dd class="memo-inline">${fmt(t.explain || "")}</dd></div>`).join("")}</dl>
+<section class="sec" aria-labelledby="lab-h"><h2 id="lab-h"><span class="mk">データの決まった値の訳語</span></h2>
+${Object.entries(labels).filter(([k]) => !k.startsWith("_") && k !== "phase_note").map(([g, m]) => `<h3>${esc(groupName[g] || g)}</h3><div class="table-wrap"><table><thead><tr><th scope="col">原文</th><th scope="col">訳語</th></tr></thead><tbody>${Object.entries(m).map(([en, ja]) => `<tr><td lang="en">${esc(en)}</td><td${/^[\x00-\x7F]+$/.test(ja) ? ' lang="en"' : ""}>${esc(ja)}</td></tr>`).join("")}</tbody></table></div>`).join("")}
+</section>
+</main>`;
+  return page({ title: "用語集", depth: 1, body, current: "glossary" });
 }
 
 function guidePage() {
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../">ホーム</a></li><li aria-current="page">はじめに</li></ol></nav>
-<h1>はじめに</h1>
-<p>このページは、このサイトの読み方をAIがまとめた案内です。用語の正式な定義は、各リンク先の公式サイト（英語）で確認してください。</p>
-<section id="chain" class="sec" aria-labelledby="chain-h"><h2 id="chain-h">CAPEC・CWE・CVEの関係</h2>
+  const body = `${crumbs([["../", "ホーム"], [null, "はじめに"]])}
+<main id="main" class="page" tabindex="-1">
+<h1 class="page-h">はじめに</h1>
+<p>このサイトの読み方の案内です。用語の正式な定義は、各リンク先の公式サイト（英語）で確認してください。</p>
+<section id="chain" class="sec" aria-labelledby="chain-h"><h2 id="chain-h"><span class="mk">CAPEC・CWE・CVEの関係</span></h2>
 ${chain(1, null)}
 <ul>
-<li><strong lang="en">CAPEC</strong>（攻撃パターン）：攻撃によく見られる手口を型として整理した一覧。MITREが公開しています。<a href="https://capec.mitre.org/" rel="noopener">capec.mitre.org</a></li>
-<li><strong lang="en">CWE</strong>（弱点の種類）：ソフトウェアやハードウェアの弱点の種類を整理した一覧。MITREが公開しています。<a href="https://cwe.mitre.org/" rel="noopener">cwe.mitre.org</a></li>
-<li><strong lang="en">CVE</strong>（個別の脆弱性）：公に知られた個々の脆弱性に付けられる識別番号。<a href="https://www.cve.org/" rel="noopener">www.cve.org</a></li>
+<li><b lang="en">CAPEC</b>（攻撃パターン）：攻撃によく見られる手口を、型として整理した一覧。MITREが公開しています。<a href="https://capec.mitre.org/" rel="noopener">capec.mitre.org</a></li>
+<li><b lang="en">CWE</b>（弱点の種類）：ソフトウェアやハードウェアの弱点の種類を整理した一覧。MITREが公開しています。<a href="https://cwe.mitre.org/" rel="noopener">cwe.mitre.org</a></li>
+<li><b lang="en">CVE</b>（個別の脆弱性）：公に知られた個々の脆弱性に付けられる識別番号。<a href="https://www.cve.org/" rel="noopener">www.cve.org</a></li>
 </ul>
-<p>たとえ話（AIの解釈）：CAPECが「空き巣の手口の型（例：鍵の閉め忘れを狙う）」だとすると、CWEは「家の造りの弱点の種類（例：外から開けられる窓の鍵）」、CVEは「ある会社のある型番の窓の鍵に見つかった具体的な欠陥」にあたります。</p>
+<div class="memo"><span class="who">たとえ話（AIの解釈）</span><p>CAPECが「空き巣の手口の型（例：鍵の閉め忘れを狙う）」だとすると、CWEは「家の造りの弱点の種類（例：外から開けられる窓の鍵）」、CVEは「ある会社のある型番の窓の鍵に見つかった具体的な欠陥」にあたります。</p></div>
 <p>CAPECの各項目には「関連するCWE」の欄があり、このサイトではCWEの原典ページへリンクしています。CVEは個々の製品の問題なので、このサイトでは扱いません。</p>
 </section>
-<section class="sec" aria-labelledby="read-h"><h2 id="read-h">項目ページの読み方</h2>
+<section class="sec" aria-labelledby="read-h"><h2 id="read-h"><span class="mk">項目ページの読み方</span></h2>
 <ol>
-<li><strong>説明</strong>：どんな手口かの概要。</li>
-<li><strong>攻撃の流れ</strong>：探索（調べる）→ 試行（試す）→ 悪用（使う）の段階。概念レベルで訳しています。</li>
-<li><strong>なぜ成立するのか（前提条件）</strong>：攻撃が成り立つために必要な条件。</li>
-<li><strong>防御のポイント（対策）</strong>：前提条件を崩したり、被害を小さくしたりする方法。</li>
-<li><strong>初学者向けの補足</strong>：AIが書いた補足。原典の訳とは枠と見出しで区別しています。</li>
+<li><b>説明</b>：どんな手口かの概要。</li>
+<li><b>攻撃の流れ</b>：探索（調べる）→ 試行（試す）→ 悪用（使う）の段階。概念レベルで訳しています。</li>
+<li><b>なぜ成立する？（前提条件）</b>：攻撃が成り立つために必要な条件。</li>
+<li><b>どう守る？（対策）</b>：前提条件を崩したり、被害を小さくしたりする方法。</li>
+<li><b>初学者向けの補足</b>：AIの書き込み。手書きの文字と罫線で、原典の訳と区別しています。</li>
 </ol>
 <p>本文中の「要確認」の印は、訳が不確かな箇所です。「（具体的な内容は原典を参照）」は、安全のために訳さなかった箇所です。</p>
-</section>`;
-  return page({ title: "はじめに", depth: 1, main });
+</section>
+</main>`;
+  return page({ title: "はじめに", depth: 1, body, current: "guide" });
 }
 
 function aboutPage() {
-  const main = `<nav class="crumbs" aria-label="現在位置"><ol><li><a href="../">ホーム</a></li><li aria-current="page">このサイトについて</li></ol></nav>
-<h1>このサイトについて</h1>
-<section class="sec box-warn" aria-labelledby="d-h"><h2 id="d-h">ご注意</h2><p>${esc(DISCLAIMER)}</p></section>
-<section class="sec" aria-labelledby="p-h"><h2 id="p-h">目的と方針</h2>
+  const body = `${crumbs([["../", "ホーム"], [null, "このサイトについて"]])}
+<main id="main" class="page" tabindex="-1">
+<h1 class="page-h">このサイトについて</h1>
+<section class="sec box cond" aria-labelledby="d-h"><span class="lbl">ご注意</span><h2 id="d-h">非公式のAI訳です</h2><p>${esc(DISCLAIMER)}</p></section>
+<section class="sec" aria-labelledby="p-h"><h2 id="p-h"><span class="mk">目的と方針</span></h2>
 <ul>
 <li>日本語を母語とする、プログラミングを知らない学習者が、攻撃が成立する仕組みを理解するための資料です。</li>
 <li>防御する側の理解のための資料であり、攻撃の実行手引きではありません。</li>
 <li>原典にある具体的な攻撃用の文字列、命令、手順の再現に使える細部は訳さず、「（具体的な内容は原典を参照）」としています。</li>
 <li>防御に必要な「前提条件」「影響」「対策」は省略していません。</li>
 <li>訳が不確かな箇所には「要確認」の印を付けています。</li>
-<li>「初学者向けの補足」はAIによる補足で、原典の訳ではありません。</li>
+<li>「初学者向けの補足」はAIの書き込みで、原典の訳ではありません。</li>
 </ul></section>
-<section class="sec" aria-labelledby="s-h"><h2 id="s-h">データ</h2>
+<section class="sec" aria-labelledby="s-h"><h2 id="s-h"><span class="mk">データ</span></h2>
 <dl class="kv">
 <dt>出典</dt><dd>MITRE CAPEC（<a href="https://capec.mitre.org/" lang="en">https://capec.mitre.org/</a>）の公式ダウンロードデータ（XML）</dd>
 <dt>データの版</dt><dd>${esc(meta.version)}</dd>
@@ -634,14 +650,15 @@ function aboutPage() {
 <dt>取得日</dt><dd>${esc(meta.retrieved)}</dd>
 <dt>ファイルのSHA-256</dt><dd><code>${esc(meta.source_sha256)}</code></dd>
 </dl></section>
-<section class="sec" aria-labelledby="l-h"><h2 id="l-h">著作権とライセンス</h2><p>著作権表示とライセンス文（原文）は、各ページの下部に掲載しています。原文は <a href="${esc(license.source_url)}">${esc(license.source_url)}</a> から引用しています。</p></section>`;
-  return page({ title: "このサイトについて", depth: 1, main });
+<section class="sec" aria-labelledby="l-h"><h2 id="l-h"><span class="mk">著作権とライセンス</span></h2><p>著作権表示とライセンス文（原文）は、各ページの下部に掲載しています。原文は <a href="${esc(license.source_url)}">${esc(license.source_url)}</a> から引用しています。</p></section>
+</main>`;
+  return page({ title: "このサイトについて", depth: 1, body, current: "about" });
 }
 
 function notFoundPage() {
   // 404はどの階層のURLでも表示されるため、リンクは絶対パスにする
-  return page({ title: "ページが見つかりません", depth: 0, main: `<h1>ページが見つかりません</h1><p>URLが正しいか確認してください。<a href="/">トップページへ</a></p>` })
-    .replaceAll('href="./', 'href="/').replaceAll('src="./', 'src="/').replace('data-root="./"', 'data-root="/"');
+  return page({ title: "ページが見つかりません", depth: 0, body: `<main id="main" class="page" tabindex="-1"><h1 class="page-h">ページが見つかりません</h1><p>URLが正しいか確認してください。<a href="./">トップページへ</a></p></main>` })
+    .replaceAll('href="./', 'href="/').replaceAll('src="./', 'src="/').replaceAll('action="./', 'action="/').replace('data-root="./"', 'data-root="/"');
 }
 
 // ---------- 出力 ----------
