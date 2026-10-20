@@ -1,0 +1,11 @@
+{
+ "id": "257",
+ "source_sha": "bdc5e1b0aa9284d3",
+ "status": "done",
+ "seg": {
+  "name": "廃止：取引データ構造の誤用",
+  "description/0": "この攻撃パターンは、正当な攻撃パターンとは見なされなかったため、廃止された。"
+ },
+ "review": [],
+ "redacted": []
+}
