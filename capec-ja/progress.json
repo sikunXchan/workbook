@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-20T13:54:30.620Z",
+ "updated": "2026-10-20T13:55:18.588Z",
  "data_version": "3.9",
  "total": 706,
- "done": 623,
- "remaining": 83,
+ "done": 624,
+ "remaining": 82,
  "attack_pattern": {
   "total": 615,
-  "done": 532
+  "done": 533
  },
  "category": {
   "total": 78,
@@ -139,6 +139,7 @@
   "132",
   "133",
   "134",
+  "135",
   "140",
   "141",
   "142",
