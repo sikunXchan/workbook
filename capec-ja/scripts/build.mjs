@@ -387,7 +387,7 @@ function headBlock(e, kindLabel, chips, depth) {
 
 const chip = (href, label) => `<a class="chip" href="${href}">${label}</a>`;
 const plainChip = (label) => `<span class="chip plain">${label}</span>`;
-const catName = (c) => esc(nameJa(c) || nameEn(c));
+const catName = (c) => (nameJa(c) ? esc(nameJa(c)) : `<span lang="en">${esc(nameEn(c))}</span>`);
 
 function tocHtml(secs, extra = "") {
   if (!secs.length) return "";
@@ -520,7 +520,7 @@ function catTabs(ids, depth) {
 }
 
 function indexPage() {
-  const opt = (ids) => ids.map((c) => `<option value="${esc(c)}">${catName(c)}</option>`).join("");
+  const opt = (ids) => ids.map((c) => `<option value="${esc(c)}">${esc(nameJa(c) || nameEn(c))}</option>`).join("");
   const optLab = (group, vals) => [...new Set(vals.filter(Boolean))].sort().map((v) => `<option value="${esc(v)}">${esc(labels[group]?.[v] || v)}</option>`).join("");
   const absCls = { Meta: "m", Standard: "s", Detailed: "d" };
   const rows = attackPatterns.map((e) => {

@@ -130,7 +130,7 @@ const copyrightHtml = esc(license.copyright);
 let noCopy = 0, noLic = 0, noDisc = 0;
 for (const [, src] of html) {
   if (!src.includes(copyrightHtml)) noCopy++;
-  if (license.status !== "verified" || !src.includes("data-license>") || !src.includes(esc(license.text).split("\n")[0])) noLic++;
+  if (license.status !== "verified" || !src.includes(`data-license>${esc(license.text).replace(/\n/g, "<br>")}</blockquote>`)) noLic++;
   if (!src.includes("data-disclaimer>") || !src.includes("data-disclaimer-top>")) noDisc++;
 }
 (noCopy ? fail : ok)(`著作権表示が無いページ: ${noCopy}件 / ${html.size}件`);
