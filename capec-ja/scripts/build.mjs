@@ -85,6 +85,19 @@ const attackUrl = (id) => {
 
 const MISSING = "〔未翻訳：原典を参照〕";
 
+const QUOTE_LABEL = "具体的な手口・文字列（原文のまま。防御側の学習のために引用）";
+// 具体的な攻撃の細部は訳さず、原典の原文を引用ブロックで示す。lang=en と data-pagefind-ignore で、訳・検索から除く。
+function quoteHtml(entry, k) {
+  const q = tr(entry.id).quotes?.[k];
+  if (q == null) return "";
+  return `<figure class="specific" data-pagefind-ignore><figcaption>${QUOTE_LABEL}</figcaption><blockquote lang="en">${fmt(q)}</blockquote></figure>`;
+}
+// 引用ブロックに添える、訳者による日本語の前置き(あれば)
+function jaLead(entry, k) {
+  const ja = tr(entry.id).seg?.[k];
+  return ja != null && ja !== "" ? `<p>${fmt(ja)}</p>` : "";
+}
+
 // 訳すべき文字列1つを表示する。訳が無ければ英文は出さず「未翻訳」と示す(安全側)。
 function seg(entry, obj) {
   if (!obj || obj.en == null) return "";
@@ -101,12 +114,18 @@ function seg(entry, obj) {
 function blocks(entry, list) {
   if (!list || !list.length) return "";
   return list.map((b) => {
-    if (b.type === "p") return `<p>${seg(entry, b)}</p>`;
-    if (b.type === "ul" || b.type === "ol") return `<${b.type}>${b.items.map((i) => `<li>${seg(entry, i)}</li>`).join("")}</${b.type}>`;
+    if (b.type === "p") {
+      const q = quoteHtml(entry, b.k);
+      if (q) return jaLead(entry, b.k) + q;
+      return `<p>${seg(entry, b)}</p>`;
+    }
+    if (b.type === "ul" || b.type === "ol") return `<${b.type}>${b.items.map((i) => { const q = quoteHtml(entry, i.k); return `<li>${q ? jaLead(entry, i.k) + q : seg(entry, i)}</li>`; }).join("")}</${b.type}>`;
     if (b.type === "table") {
       return `<div class="table-wrap"><table>${b.rows.map((r) => `<tr>${r.map((c) => (c.th ? `<th scope="col">${seg(entry, c)}</th>` : `<td>${seg(entry, c)}</td>`)).join("")}</tr>`).join("")}</table></div>`;
     }
     if (b.type === "code") {
+      const q = quoteHtml(entry, b.k);
+      if (q) return jaLead(entry, b.k) + q;
       const ja = tr(entry.id).seg?.[b.k];
       // 訳者が「安全で原文のまま残す」と判断したコード片だけを整形済みで表示する
       if (ja != null && ja === b.en) return `<pre lang="en"><code>${esc(b.en)}</code></pre>`;
@@ -359,7 +378,7 @@ function flowHtml(entry) {
     const note = labels.phase_note[ph];
     return `<li class="st"><h3>${ph ? lab("phase", ph, { both: false }) : "段階の指定なし"}${ph ? `<small lang="en">${esc(ph)}</small>` : ""}</h3>${note ? `<p class="q">${esc(note)}</p>` : ""}<ol class="steps">${steps}</ol></li>`;
   }).join("");
-  return `<p class="small">仕組みを理解するための、概念レベルの訳です。具体的な攻撃用の文字列や、手順の再現に使える細部は「（具体的な内容は原典を参照）」としています。</p><ol class="flow">${cols}</ol>`;
+  return `<p class="small">攻撃の流れは概念レベルで訳しています。具体的な手口や文字列は訳さず、原典の原文をそのまま引用ブロックで示します（防御側の学習のため）。</p><ol class="flow">${cols}</ol>`;
 }
 
 function listOfBlocks(entry, arr) {
@@ -387,7 +406,7 @@ function headBlock(e, kindLabel, chips, depth) {
 
 const chip = (href, label) => `<a class="chip" href="${href}">${label}</a>`;
 const plainChip = (label) => `<span class="chip plain">${label}</span>`;
-const catName = (c) => esc(nameJa(c) || nameEn(c));
+const catName = (c) => (nameJa(c) ? esc(nameJa(c)) : `<span lang="en">${esc(nameEn(c))}</span>`);
 
 function tocHtml(secs, extra = "") {
   if (!secs.length) return "";
@@ -520,7 +539,7 @@ function catTabs(ids, depth) {
 }
 
 function indexPage() {
-  const opt = (ids) => ids.map((c) => `<option value="${esc(c)}">${catName(c)}</option>`).join("");
+  const opt = (ids) => ids.map((c) => `<option value="${esc(c)}">${esc(nameJa(c) || nameEn(c))}</option>`).join("");
   const optLab = (group, vals) => [...new Set(vals.filter(Boolean))].sort().map((v) => `<option value="${esc(v)}">${esc(labels[group]?.[v] || v)}</option>`).join("");
   const absCls = { Meta: "m", Standard: "s", Detailed: "d" };
   const rows = attackPatterns.map((e) => {

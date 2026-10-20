@@ -65,8 +65,10 @@ if (cmd === "status" || !cmd) {
   const t = loadTr(arg);
   if (!e || !t) { console.error("項目または訳文がありません"); process.exit(1); }
   const keys = Object.keys(segs(e));
-  const missing = keys.filter((k) => t.seg?.[k] == null || t.seg[k] === "");
+  const quoted = new Set(Object.keys(t.quotes || {}));
+  const missing = keys.filter((k) => !quoted.has(k) && (t.seg?.[k] == null || t.seg[k] === ""));
   const extra = Object.keys(t.seg || {}).filter((k) => !keys.includes(k));
+  for (const k of quoted) if (!keys.includes(k)) extra.push("quotes:" + k);
   const problems = [];
   if (t.source_sha !== e.source_sha) problems.push("source_sha が一致しない");
   if (missing.length) problems.push(`訳の欠け: ${missing.join(", ")}`);

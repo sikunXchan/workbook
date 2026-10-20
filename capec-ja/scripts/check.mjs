@@ -130,7 +130,7 @@ const copyrightHtml = esc(license.copyright);
 let noCopy = 0, noLic = 0, noDisc = 0;
 for (const [, src] of html) {
   if (!src.includes(copyrightHtml)) noCopy++;
-  if (license.status !== "verified" || !src.includes("data-license>") || !src.includes(esc(license.text).split("\n")[0])) noLic++;
+  if (license.status !== "verified" || !src.includes(`data-license>${esc(license.text).replace(/\n/g, "<br>")}</blockquote>`)) noLic++;
   if (!src.includes("data-disclaimer>") || !src.includes("data-disclaimer-top>")) noDisc++;
 }
 (noCopy ? fail : ok)(`著作権表示が無いページ: ${noCopy}件 / ${html.size}件`);
@@ -143,7 +143,7 @@ const jaDir = path.join(ROOT, "data/ja");
 const trs = fs.existsSync(jaDir) ? fs.readdirSync(jaDir).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(fs.readFileSync(path.join(jaDir, f), "utf8"))) : [];
 const byId = new Map(data.entries.map((e) => [e.id, e]));
 const segOf = (e) => { const o = {}; (function w(x) { if (Array.isArray(x)) x.forEach(w); else if (x && typeof x === "object") { if (x.k && x.en != null) o[x.k] = x.en; Object.values(x).forEach(w); } })(e); return o; };
-const reviewLines = [], redactLines = [], glossLines = [], staleLines = [];
+const reviewLines = [], redactLines = [], glossLines = [], staleLines = [], quoteLines = [];
 for (const t of trs) {
   const e = byId.get(String(t.id));
   if (!e) continue;
@@ -151,6 +151,7 @@ for (const t of trs) {
   const segs = segOf(e);
   for (const r of t.review || []) reviewLines.push(`| CAPEC-${t.id} | ${r.k} | ${r.note || ""} |`);
   for (const r of t.redacted || []) redactLines.push(`| CAPEC-${t.id} | ${r.k} | ${r.reason || ""} |`);
+  for (const k of Object.keys(t.quotes || {})) quoteLines.push(`| CAPEC-${t.id} | ${k} |`);
   for (const [k, en] of Object.entries(segs)) {
     const ja = t.seg?.[k];
     if (!ja) continue;
@@ -163,17 +164,20 @@ const missingKeys = [];
 for (const t of trs) {
   const e = byId.get(String(t.id));
   if (!e || t.status !== "done") continue;
-  for (const k of Object.keys(segOf(e))) if (t.seg?.[k] == null || t.seg[k] === "") missingKeys.push(`CAPEC-${t.id} ${k}`);
+  const quoted = new Set(Object.keys(t.quotes || {}));
+  for (const k of Object.keys(segOf(e))) if (!quoted.has(k) && (t.seg?.[k] == null || t.seg[k] === "")) missingKeys.push(`CAPEC-${t.id} ${k}`);
 }
 (missingKeys.length ? fail : ok)(`「完了」なのに訳が欠けている箇所: ${missingKeys.length}件`);
 missingKeys.slice(0, 50).forEach((x) => info(`  ${x}`));
 (staleLines.length ? fail : ok)(`原典が更新されて再訳が必要な項目: ${staleLines.length}件 ${staleLines.join(", ")}`);
 info(`要確認の印: ${reviewLines.length}件（reports/needs-review.md）`);
 info(`安全のため訳さなかった箇所: ${redactLines.length}件（reports/redactions.md）`);
+info(`原文を引用ブロックで示した具体箇所: ${quoteLines.length}件（reports/quotes.md）`);
 info(`用語集の訳語が使われていない可能性: ${glossLines.length}件（reports/glossary-check.md、文脈上正しい場合もあるため目視で確認）`);
 fs.mkdirSync(path.join(ROOT, "reports"), { recursive: true });
 fs.writeFileSync(path.join(ROOT, "reports/needs-review.md"), `# 要確認の一覧\n\n| 項目 | 場所 | 内容 |\n|---|---|---|\n${reviewLines.join("\n")}\n`);
 fs.writeFileSync(path.join(ROOT, "reports/redactions.md"), `# 安全のため訳さなかった箇所\n\n| 項目 | 場所 | 理由 |\n|---|---|---|\n${redactLines.join("\n")}\n`);
+fs.writeFileSync(path.join(ROOT, "reports/quotes.md"), `# 原文を引用ブロックで示した具体箇所\n\n| 項目 | 場所 |\n|---|---|\n${quoteLines.join("\n")}\n`);
 fs.writeFileSync(path.join(ROOT, "reports/glossary-check.md"), `# 用語集の訳語が使われていない可能性\n\n| 項目 | 場所 | 用語 |\n|---|---|---|\n${glossLines.join("\n")}\n`);
 
 // ---- 6. 無作為抽出 ----
