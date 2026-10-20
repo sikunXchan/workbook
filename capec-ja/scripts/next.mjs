@@ -30,7 +30,8 @@ function risky(s) {
 }
 const tm = loadTM();
 const deferred = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, "data/deferred.json"), "utf8")).ids);
-const pending = order.filter((e) => !done(e) && !deferred.has(e.id) && (!onlyKind || e.kind === onlyKind));
+const holdIds = new Set(process.env.HOLD ? [] : JSON.parse(fs.readFileSync(path.join(ROOT, "data/hold.json"), "utf8")).ids);
+const pending = order.filter((e) => !done(e) && !deferred.has(e.id) && !holdIds.has(e.id) && (!onlyKind || e.kind === onlyKind));
 let used = 0, n = 0;
 for (const e of pending) {
   const s = segs(e);
