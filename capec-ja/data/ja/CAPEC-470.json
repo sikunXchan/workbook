@@ -1,0 +1,53 @@
+{
+ "id": "470",
+ "source_sha": "283ccd414426d3b7",
+ "status": "done",
+ "seg": {
+  "name": "データベースからのオペレーティングシステムに対する制御の拡大",
+  "description/0": "攻撃者は、データベースへのアクセスを獲得したことを利用して、ファイルシステムへのデータの読み書きを行い、オペレーティングシステムを侵害し、ホストマシンへアクセスするためのトンネルを作成し、このアクセスを使って、データベースマシンと同じネットワーク上にある他のマシンを攻撃できる可能性がある。従来、SQLインジェクション攻撃は、データベースに保存されたデータへの不正な読み取りアクセスを得る、データベース内のデータを改変する、データを削除するなどのための手段と見なされてきた。しかし、ほぼすべてのデータベース管理システム（DBMS）には、侵害されると、攻撃者にファイルシステム、オペレーティングシステムへの完全なアクセスと、データベースを稼働させているホストへの完全なアクセスを許してしまう機能が含まれている。攻撃者は、その後、この特権的なアクセスを使って、さらなる攻撃を仕掛けることができる。これらの機能には、コマンドシェルへの切り替え、ホストマシン上に存在するシステムレベルのライブラリを呼び出せる利用者定義関数の作成、ストアドプロシージャなどが含まれる。",
+  "execution_flow/0/description/0": "攻撃者は、制御を奪いたいマシン、あるいは水平移動したいネットワーク上で稼働している、データベース管理システムを特定する。",
+  "execution_flow/1/description/0": "攻撃者は、典型的なSQLインジェクションの手順を踏み、インジェクションが可能かどうかを判断する。",
+  "execution_flow/2/description/0": "SQLインジェクションが可能であると判断すると、攻撃者は、この攻撃に必要な条件が満たされていることを確認しなければならない。これらは、高権限のセッション利用者であることと、バッチクエリのサポートである。これは、SQLインジェクションが可能かどうかを発見する場合と似た方法で行われる。",
+  "execution_flow/3/description/0": "稼働しているデータベース管理システムの種類に応じて、DLLとして読み込めるユーザー定義関数（UDF）を見つける、あるいは作成する。該当するDLLの例を公開しているサイトへのリンクを含む。",
+  "execution_flow/4/description/0": "DLLを読み込むために、まずプラグインディレクトリへのパスを特定する必要がある。これを行うコマンドはDBMSの種類によって異なるが、MySQLの場合の具体的なコマンド例を含む。",
+  "execution_flow/5/description/0": "見つけたプラグインディレクトリにDLLを移動させ、含まれる関数を読み込めるようにする。ネットワーク共有からの読み込み、16進エンコードした文字列をプラグインディレクトリ内のファイルに書き込む、あるいはDLLをテーブルに読み込んでからファイルに書き出すなど、複数の方法があり得る。MySQLで16進文字列を読み込む場合の具体的なコマンド例を含む。",
+  "execution_flow/6/description/0": "DLLがプラグインディレクトリに置かれると、UDFを読み込むコマンドを実行する。MySQLでの具体的なコマンド例（関数名sys_evalは、上記の例のDLLに特有のもの）を含む。",
+  "execution_flow/7/description/0": "望んだ関数を読み込んだ後、これらを使って、侵害したシステム上で任意のコマンドを実行する。これは、読み込んだUDFへの単純なSELECTコマンドを通じて行われる、という具体的なコマンド例を含む。この攻撃の前提条件が、データベースのセッション利用者がスーパーユーザーであることであるため、攻撃者は高い権限でコマンドを実行できることになる。",
+  "prerequisites/0/0": "脆弱なDBMSが使用されていること。攻撃者にデータベースへのアクセスを与えるSQLインジェクションが存在すること、あるいは攻撃者が他の手段を通じてDBMSへのアクセスを持っていること。",
+  "skills/0/text/0": "ファイルシステムやオペレーティングシステムとやり取りするために、様々なDBMSシステムで利用可能な各種機能についての、低レベルの知識。",
+  "mitigations/0/0": "設計：SQLインジェクションからデータベースにアクセスするアプリケーションを保護するために必要な、防御的プログラミングの実践に従う。",
+  "mitigations/1/0": "設定：DBMSが最新のセキュリティパッチで更新されていることを確認する。",
+  "mitigations/2/0": "設計：アプリケーションが使用するDBMSのログインが、DBMS内で可能な限り最も低い権限レベルを持つことを確認する。",
+  "mitigations/3/0": "設計：DBMSがホストマシン上で可能な限り最も低い権限レベルで動作し、独立した利用者として実行されることを確認する。",
+  "mitigations/4/0": "運用：データベース専用マシンを、データベース以外の目的で使用しない。",
+  "mitigations/5/0": "運用：内部ネットワーク上のデータベースホストを信用しない。データベースホストから発信されるすべてのネットワーク活動を認証・検証する。",
+  "mitigations/6/0": "運用：データベースホスト上のネットワーク接続やログを監視するため、侵入検知システムを使用する。",
+  "mitigations/7/0": "実装：侵害された場合に攻撃者が権限を昇格させる可能性のある、DBMSシステムの不要・未使用の機能をすべて削除・無効化する。"
+ },
+ "quotes": {
+  "execution_flow/3/description/0": "If the requirements are met, based on the database management system that is running, the adversary will find or create user defined functions (UDFs) that can be loaded as DLLs. An example of a DLL can be found at https://github.com/rapid7/metasploit-framework/tree/master/data/exploits/mysql",
+  "execution_flow/4/description/0": "In order to load the DLL, the adversary must first find the path to the plugin directory. The command to achieve this is different based on the type of DBMS, but for MySQL, this can be achieved by running the command \"select @@plugin_dir\"",
+  "execution_flow/5/description/0": "The DLL is then moved into the previously found plugin directory so that the contained functions can be loaded. This can be done in a number of ways; loading from a network share, writing the entire hex encoded string to a file in the plugin directory, or loading the DLL into a table and then into a file. An example using MySQL to load the hex string is as follows. select 0x4d5a9000... into dump file \"{plugin directory}\\\\udf.dll\";",
+  "execution_flow/6/description/0": "Once the DLL is in the plugin directory, a command is then run to load the UDFs. An example of this in MySQL is \"create function sys_eval returns string soname 'udf.dll';\" The function sys_eval is specific to the example DLL listed above.",
+  "execution_flow/7/description/0": "Once the adversary has loaded the desired function(s), they will use these to execute arbitrary commands on the compromised system. This is done through a simple select command to the loaded UDF. For example: \"select sys_eval('dir');\". Because the prerequisite to this attack is that the database session user is a super user, this means that the adversary will be able to execute commands with elevated privileges."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "SQLインジェクションを「データの読み書き」で終わらせず、DBMSに組み込まれたユーザー定義関数（UDF）やストアドプロシージャの仕組みを使って、データベースサーバーのOSレベルの制御まで奪い取ってしまう攻撃。攻撃者がデータベースへの高権限アクセスを獲得できれば、そこからOSコマンドの実行や、同一ネットワーク上の他のマシンへの侵入拡大（ピボット）にまでつながる。",
+  "terms": [
+   {
+    "term": "ユーザー定義関数（UDF）, User Defined Function, データベース管理システムの標準機能に、利用者が独自に追加できる関数のこと。悪用されると、OSのシステムライブラリを呼び出す足がかりにされ得る。",
+    "en": "",
+    "explain": ""
+   }
+  ],
+  "facts": [
+   {
+    "text": "ほぼすべてのデータベース管理システム（DBMS）には、侵害されると、攻撃者にファイルシステム、オペレーティングシステム、ホストへの完全なアクセスを許してしまう機能が含まれている、と原典に書かれている。, CAPEC-470 説明",
+    "source": ""
+   }
+  ],
+  "analogy": "倉庫（データベース）の荷物を盗むだけでなく、倉庫の管理人室（OS）の鍵まで手に入れ、建物全体（同じネットワーク上の他のマシン）に自由に出入りできるようになってしまうのに似ている。"
+ }
+}
