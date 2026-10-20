@@ -1,0 +1,11 @@
+{
+ "id": "246",
+ "source_sha": "44220bb53845ecda",
+ "status": "done",
+ "seg": {
+  "name": "廃止：Flashを使ったXSS",
+  "description/0": "このパターンは、「CAPEC-174：フラッシュパラメータインジェクション」と「CAPEC-591：格納型XSS」の間の連鎖関係によって対応されているため、廃止された。今後は、これらのCAPECを参照のこと。"
+ },
+ "review": [],
+ "redacted": []
+}
