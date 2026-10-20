@@ -1,0 +1,54 @@
+{
+ "id": "57",
+ "source_sha": "16ce4fa74b114bb9",
+ "status": "done",
+ "seg": {
+  "name": "RESTのシステム資源への信頼を利用した機微なデータの取得",
+  "description/0": "この攻撃は、REST（REpresentational State Transfer）形式のアプリケーションが、システム資源や環境を信頼していることを利用し、SSLが終端したあとに機微なデータを取得する。",
+  "extended_description/0": "RESTアプリケーションの前提は、既存のインフラを活用してウェブサービスの機能を提供することである。一例は、HTTPのGETメソッドを使い、XML文書を含むHTTP応答を受け取るRESTアプリケーションである。これらのRESTスタイルのウェブサービスは、ApacheやIISのウェブサーバーなど既存のインフラ上に配置され、SOAPスタックを必要としない。",
+  "extended_description/1": "残念ながら、セキュリティの観点では、相互運用可能な身元確認（アイデンティティ）のセキュリティの仕組みが導入されていないことが多く、RESTの開発者は、セキュリティをSSLに頼りがちである。大規模なデータセンターでは、SSLは通常、ネットワークの端（ファイアウォール、ロードバランサー、ルーターなど）で終端される。SSLが終端されると、（開発者が値をハッシュ化または暗号化していない限り、ただしそれはまれだが）HTTPリクエストは平文になる。攻撃者はWiresharkのような盗み見ツール（スニファ）を使って、SSL終端後に平文で渡される利用者名やパスワードといった認証情報を記録できる。これらの認証情報を集めると、攻撃者は、正規の利用者と同じように、ウェブサービスの提供者に要求を送信できる。クライアント側では、要求自体に渡されるもの以外の認証は通常行われないため、これが破られると、一般にサービスの認証の仕組みを突破するのに十分である。",
+  "execution_flow/0/description/0": "［SSLを使うRESTスタイルのアプリケーションの発見］攻撃者はまず、標的とする、SSLを使うRESTスタイルのアプリケーションを見つけなければならない。この攻撃はサーバーのネットワーク内部から行うほうが実行しやすいため、攻撃者がサービスの動作についての内部の知識を持っている可能性が高い。",
+  "execution_flow/1/description/0": "［クライアント・サーバー間の通信を盗み見るリスナーの挿入］攻撃者は、SSLが終端する地点より先に、通信を盗み見るリスナーを挿入する。機微な情報が応答としてクライアントへ送られていると考えられる場合は、クライアント側に置かれることもあるが、多くの場合、クライアントの認証情報を聞き取るため、サーバー側に置かれる。",
+  "execution_flow/1/techniques/0/0": "ファイアウォール、ロードバランサー、ルーターの内側にある機器で、WiresharkやtcpdumpなどのツールをSSL終端後の通信に対して実行し、通信を取得する。",
+  "execution_flow/2/description/0": "［平文で渡される情報の収集］開発者が盗み見た要求に含まれるデータをハッシュ化または暗号化していなければ、攻撃者はこのデータを平文のまま読める。もっとも多いのは、正規の利用者として、ウェブサービスへ要求を送信するのに使える利用者名やパスワードを入手することである。",
+  "prerequisites/0/0": "SSLが終端する地点より先に、通信を傍受できる機会があること。",
+  "prerequisites/1/0": "攻撃者が、クライアント・サーバー間の通信経路に、能動的（通信を中継する形）または受動的（通信を盗み見る形）にリスナーを挿入できること。",
+  "skills/0/text/0": "ネットワークのスニファやそのほかのリスナーを通信の流れに挿入すること。",
+  "mitigations/0/0": "実装：HTTP通信に、HMACのようなメッセージレベルのセキュリティを実装する。",
+  "mitigations/1/0": "設計：多層防御を活用し、SSLのような単一のセキュリティの仕組みに頼らない。",
+  "mitigations/2/0": "設計：最小権限の原則を徹底する。",
+  "examples/0/0": "RESTサービスの提供者とクライアントの間の通信を、SSL終端後に盗み見る例。詳細は下記の原文を参照。"
+ },
+ "quotes": {
+  "execution_flow/1/techniques/0/0": "Run wireshark or tcpdump on a device that is on the inside of a firewall, load balancer, or router of a network and capture traffic after SSL has been terminated",
+  "prerequisites/1/0": "The adversary must be able to insert a listener actively (proxying the communication) or passively (sniffing the communication) in the client-server communication path.",
+  "examples/0/0": "The Rest service provider uses SSL to protect the communications between the service requester (client) to the service provider. In the instance where SSL is terminated before the communications reach the web server, it is very common in enterprise data centers to terminate SSL at a router, firewall, load balancer, proxy or other device, then the adversary can insert a sniffer into the communication stream and gather all the authentication tokens (such as session credentials, username/passwords combinations, and so on). The Rest service requester and service provider do not have any way to detect this attack."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "通信を暗号化するSSL/TLSが、サーバー側の機器（ロードバランサーなど）で「解除」されたあとの平文の通信を盗み見て、認証情報を盗む攻撃。",
+  "terms": [
+   {
+    "term": "SSL終端",
+    "en": "SSL termination",
+    "explain": "暗号化された通信を、ロードバランサーなどの機器でいったん復号する処理。そこから先の通信は平文になることがある。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "SSLが終端する地点より先に、通信を傍受できる機会があることが前提だと原典に書かれている。",
+    "source": "CAPEC-57 前提条件"
+   },
+   {
+    "text": "対策として、HTTP通信へのメッセージレベルのセキュリティの実装と、多層防御が挙げられている。",
+    "source": "CAPEC-57 対策"
+   }
+  ],
+  "analogy": "封筒に入れて送った手紙が、配達の途中、社内の仕分け室で封筒から出され、そこから先は中身がむき出しのまま運ばれる、という状況に近い。仕分け室から先の経路も守らなければ、封筒の意味がなくなる。",
+  "learn": [
+   "SSL/TLSで「守られている」区間が、通信の一部にすぎないことがなぜ危険なのか",
+   "メッセージレベルの保護と多層防御が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}
