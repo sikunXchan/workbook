@@ -18,12 +18,13 @@ if (!fs.existsSync(path.join(ROOT, "data/capec.en.json"))) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>準備中 | CAPEC 攻撃パターン辞典 日本語版（非公式）</title>
+<title>準備中 | Sikun Lab Cybersecurity | CAPEC 攻撃パターン辞典（日本語版・非公式）</title>
+<link rel="icon" type="image/png" href="/assets/brand/icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-<header class="head"><div class="wrap head-row"><a class="brand" href="/"><span class="stamp" aria-hidden="true">攻</span><span><b>CAPEC 攻撃パターン辞典</b><small>日本語版・非公式の学習用サイト</small></span></a></div></header>
+<header class="head"><div class="wrap head-row"><a class="brand" href="/"><img class="stamp" src="/assets/brand/icon.png" alt="" width="40" height="40"><span><b>Sikun Lab Cybersecurity</b><small>CAPEC 攻撃パターン辞典・日本語版（非公式）</small></span></a></div></header>
 <div class="notice" data-disclaimer-top><div class="wrap notice-row"><b>ご注意</b><span>${e(note)}</span></div></div>
 <div class="wrap"><main id="main" class="page">
 <h1 class="page-h">ただいま準備中です</h1>
@@ -201,7 +202,9 @@ const views = entries.filter((e) => e.kind === "view").sort((a, b) => a.id - b.i
 
 
 // ---------- 共通レイアウト ----------
-const SITE_NAME = "CAPEC 攻撃パターン辞典 日本語版（非公式）";
+const SITE_NAME = "Sikun Lab Cybersecurity | CAPEC 攻撃パターン辞典（日本語版・非公式）";
+const BRAND_NAME = "Sikun Lab Cybersecurity";
+const SITE_DESC = "CAPEC 攻撃パターン辞典・日本語版（非公式）";
 const DISCLAIMER = "AIによる日本語訳です。公式の日本語訳ではなく、MITREの公式サイトでも、MITREの承認を受けたものでもありません。誤りがありえるため、重要な点は原典（英語）で確認してください。";
 const FONTS = "https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700;900&family=Klee+One:wght@600&display=swap";
 
@@ -237,6 +240,7 @@ function page({ title, depth, body, current = "", description = "" }) {
 ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" href="${r}assets/brand/icon.png">
 <link rel="stylesheet" href="${esc(FONTS)}">
 <link rel="stylesheet" href="${r}assets/style.css">
 <script src="${r}assets/site.js" defer></script>
@@ -245,7 +249,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <a class="skip" href="#main">本文へ移動</a>
 <header class="head">
 <div class="wrap head-row">
-<a class="brand" href="${r}"><span class="stamp" aria-hidden="true">攻</span><span><b>CAPEC 攻撃パターン辞典</b><small>日本語版・非公式の学習用サイト</small></span></a>
+<a class="brand" href="${r}"><img class="stamp" src="${r}assets/brand/icon.png" alt="" width="40" height="40"><span><b>${esc(BRAND_NAME)}</b><small>${esc(SITE_DESC)}</small></span></a>
 <form class="search" action="${r}search/" method="get" role="search" data-search>
 <label for="q-head" class="vh">キーワード、または番号で探す</label>
 <input id="q-head" name="q" type="search" placeholder="キーワード、または番号（例：66）" autocomplete="off">
