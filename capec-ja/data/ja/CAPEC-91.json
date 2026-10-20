@@ -1,0 +1,11 @@
+{
+ "id": "91",
+ "source_sha": "e295e1a863ec0406",
+ "status": "done",
+ "seg": {
+  "name": "廃止：IMGタグ内のXSS",
+  "description/0": "この攻撃パターンは、既存の攻撃パターン「CAPEC-18：非スクリプト要素を標的としたXSS」に含まれるため、廃止された。今後は、このCAPECを参照のこと。"
+ },
+ "review": [],
+ "redacted": []
+}
