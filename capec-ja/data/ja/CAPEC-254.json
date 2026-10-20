@@ -1,0 +1,11 @@
+{
+ "id": "254",
+ "source_sha": "1d863f79b69ab6d5",
+ "status": "done",
+ "seg": {
+  "name": "廃止：SOAPメッセージ内のDTDインジェクション",
+  "description/0": "このパターンは、不要な抽象化の層であると判断されたため、廃止された。今後は、CAPEC-228：DTDインジェクションのパターンを参照のこと。"
+ },
+ "review": [],
+ "redacted": []
+}

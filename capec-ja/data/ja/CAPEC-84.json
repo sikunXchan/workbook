@@ -1,0 +1,52 @@
+{
+ "id": "84",
+ "source_sha": "f3a9f03c9600e586",
+ "status": "done",
+ "seg": {
+  "name": "XQueryインジェクション",
+  "description/0": "この攻撃は、サーバーのシステムを探査・攻撃するため、XQueryを利用する。SQLインジェクションが、攻撃者が、RDBMSへのSQL呼び出しを悪用することを可能にするのと類似した方法で、XQueryインジェクションは、XQueryのコマンドに渡される、適切に検証されていないデータを使って、XQueryのルーチンがアクセスできるコマンドをたどり、実行する。XQueryインジェクションは、被害者の環境内の要素を列挙する、ローカルホストにコマンドを注入する、あるいは遠隔のファイルやデータの提供元への照会を実行するために使用できる。",
+  "execution_flow/0/description/0": "［利用者が操作できる入力がないかアプリケーションを調査する］ブラウザや自動化ツールを使い、攻撃者はウェブサイト上のすべての公開リンクと操作をたどる。リンク、フォーム、アクセスされる資源、そのほかウェブアプリケーションへの潜在的な入り口をすべて記録する。",
+  "execution_flow/0/techniques/0/0": "スパイダリングツールを使ってリンクを記録する。",
+  "execution_flow/0/techniques/1/0": "プロキシツールを使って、手作業でたどった際のリンクを記録する。",
+  "execution_flow/0/techniques/2/0": "ブラウザで手作業でサイトを調べる。",
+  "execution_flow/1/description/0": "［注入に対して脆弱な、利用者が制御可能な入力の判断］注入に対して脆弱な、利用者が制御可能な入力を判断する。攻撃者がXQLインジェクションに対して脆弱であると疑う、利用者が制御可能な入力のそれぞれについて、XQLにおいて特別な意味を持つ文字を注入しようと試みる。目標は、無効な構文を持つXQLの照会を作成することである。",
+  "execution_flow/1/techniques/2/0": "XMLファイルを使って入力を注入する。",
+  "execution_flow/2/description/0": "［情報の開示］攻撃者は、XQLの照会によって処理される、XQueryのペイロードを作成・注入し、不適切な情報の開示につながる。",
+  "execution_flow/2/techniques/0/0": "実験段階で特定された脆弱な入力の一つを活用し、悪意あるXQueryのペイロードを注入する。そのペイロードは、基盤となるXMLデータベースの構造、および／またはその中のコンテンツについての情報を得ることを目指す。",
+  "execution_flow/3/description/0": "［XMLデータベース内のデータの操作］攻撃者は、XQLの照会によって処理される、XQueryのペイロードを作成・注入し、アプリケーションのデータの改変につながる。",
+  "execution_flow/3/techniques/0/0": "実験段階で特定された脆弱な入力の一つを活用し、悪意あるXQueryのペイロードを注入する。そのペイロードは、XMLデータベース内のデータを挿入、あるいは置き換えようと試みる。",
+  "prerequisites/0/0": "XQLが、検証されていないデータを実行しなければならない。",
+  "skills/0/text/0": "XQueryについての基本的な理解。",
+  "consequences/3/note/0": "任意のコードの実行",
+  "mitigations/0/0": "設計：すべてのXML入力に対して、許可リストによる入力検証を実施する。",
+  "mitigations/1/0": "実装：攻撃者がXQLから他のシステム資源を探査する能力を制限するため、最小限の権限でXML解析と照会の基盤を実行する。",
+  "examples/0/0": "攻撃者は、他の点では標準的なXML文書に埋め込まれた、XQuery式を渡すことができる。SQLインジェクション攻撃と同様に、攻撃者は、資源アクセスの層を標的にするため、アプリケーションの入り口を通り抜ける。以下の文字列は、攻撃者が「accounts.xml」にアクセスし、サービス提供元にすべての利用者名を送り返すよう要求する例である。",
+  "examples/0/2": "XQueryを通じて可能になる攻撃は、XQLを実行する前にそのデータが検証されていない場合、予測することが困難である。"
+ },
+ "quotes": {
+  "execution_flow/1/techniques/0/0": "Use web browser to inject input through text fields or through HTTP GET parameters.",
+  "execution_flow/1/techniques/1/0": "Use a web application debugging tool such as Tamper Data, TamperIE, WebScarab,etc. to modify HTTP POST parameters, hidden fields, non-freeform fields, etc.",
+  "execution_flow/1/techniques/3/0": "Use network-level packet injection tools such as netcat to inject input",
+  "execution_flow/1/techniques/4/0": "Use modified client (modified by reverse engineering) to inject input.",
+  "examples/0/1": "doc(accounts.xml)//user[Name='*']"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "XPathインジェクション（CAPEC-83）と非常に似た攻撃だが、より広範な問い合わせ言語であるXQueryを標的にする。利用者名の収集にとどまらず、基盤となるXML文書の列挙、ローカルホストへのコマンドの注入、遠隔のファイルやデータソースへの照会の実行など、より広い範囲の悪用が可能になり得る。",
+  "terms": [
+   {
+    "term": "XQuery",
+    "en": "XQuery",
+    "explain": "XMLデータから情報を取得・操作するための、XPathを拡張した、より高機能な問い合わせ言語のこと。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "XQueryを通じて可能になる攻撃は、XQLを実行する前にそのデータが検証されていない場合、予測することが困難である、と原典の具体例に書かれている。",
+    "source": "CAPEC-84 examples（具体例）"
+   }
+  ],
+  "analogy": "図書館の検索窓口に、本のタイトルを書く欄だけでなく、検索システムそのものへの操作命令を書き込める隙間があり、そこから「利用者登録情報を全部出力せよ」という命令を差し込んでしまうのに似ている。"
+ }
+}

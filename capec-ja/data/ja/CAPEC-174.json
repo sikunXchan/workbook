@@ -1,0 +1,76 @@
+{
+ "id": "174",
+ "source_sha": "5d2f36673fe30be7",
+ "status": "done",
+ "seg": {
+  "name": "フラッシュパラメータインジェクション",
+  "description/0": "攻撃者は、不適切なデータ検証を利用して、HTML文書内に埋め込まれたFlashファイルに、悪意あるグローバルパラメータを注入する。Flashファイルは、そのFlash文書を構成し、埋め込み先のHTML文書にアクセスするため、利用者が送信したデータを活用できる。",
+  "extended_description/0": "これらの「FlashVars」は、しばしば、URLの引数を介して、あるいは埋め込み先のHTML文書内のObjectタグやEmbedタグから、Flashファイルに渡される。これらのFlashVarsが適切に無害化されていない場合、攻撃者は、HTML文書に悪意あるコンテンツ（スクリプトなど）を埋め込めるようになる場合がある。",
+  "extended_description/1": "注入されたパラメータは、Flashファイル内の他のオブジェクトへの制御だけでなく、親の文書のDOMモデルへの完全な制御も、攻撃者に提供できる。したがって、これはHTTPパラメータインジェクションの一形態であるが、Flash文書に与えられている能力（関連するクッキーを含む、ページの文書モデルへのアクセスなど）が、この攻撃をより柔軟にしている。フラッシュパラメータインジェクション攻撃は、セッションハイジャック攻撃に加えて、様々な形態のクロスサイトスクリプティング（XSS）攻撃のような、さらなる攻撃の前兆にもなり得る。",
+  "execution_flow/0/description/0": "［スパイダリング］攻撃者は、ブラウザや自動化されたツールを使って、Flashファイルを埋め込んでいるHTML文書のすべての事例を記録する。埋め込まれたFlashファイルが存在する場合、彼らは、埋め込み先のオブジェクトからFlashファイルにグローバルパラメータを渡す方法を一覧化する。",
+  "execution_flow/0/techniques/0/0": "Flashファイルを埋め込んでいるURLのすべての事例を記録し、Flashファイルに渡されるパラメータを一覧化するため、自動化されたツールを使用する。",
+  "execution_flow/0/techniques/1/0": "HTML文書がFlashファイルを埋め込んでいるかどうかを確認し、Flashファイルに渡されるパラメータを一覧化するため、ウェブサイトを手動で探索するブラウザを使用する。",
+  "execution_flow/1/description/0": "［フラッシュパラメータインジェクションに対するアプリケーションの脆弱性の判断］フラッシュパラメータインジェクションに対するアプリケーションの脆弱性を判断する。探索段階で特定した各URLについて、攻撃者は、埋め込まれたFlashファイルに渡されるパラメータの種類に応じて、DOMベース、反射型、flashvars、持続型の攻撃のような、様々な手法を使用しようと試みる。",
+  "execution_flow/1/techniques/0/0": "JavaScriptの「document.location」変数がパラメータの一部として使用される場合、URL内のそのパラメータに「#」とペイロードを注入する。",
+  "execution_flow/1/techniques/1/0": "Flashファイルの名前がフォーム、あるいはURLのパラメータとして露出している場合、攻撃者は、何らかのグローバルな値を上書きするため、URL内のファイル名の後に「?」とペイロードを注入する。",
+  "execution_flow/1/techniques/2/0": "「flashvars」属性内に渡される引数の場合、攻撃者は、URL内に「&」とペイロードを注入する。",
+  "execution_flow/1/techniques/3/0": "「<object>」タグの属性のいくつかがパラメータとして受け取られる場合、そのウェブページの作成者がFlashファイルに引数を渡すことを許すつもりが一切なかったにもかかわらず、「flashvars」属性が「<object>」タグに注入される。",
+  "execution_flow/1/techniques/4/0": "利用者によって入力されたデータを保存するために共有オブジェクトが使用される場合、持続型のフラッシュパラメータインジェクションが発生する可能性があり、Flashファイルが読み込まれるたびに、悪意あるコードがそのFlashファイルに注入され、実行される。",
+  "execution_flow/2/description/0": "［フラッシュパラメータインジェクション攻撃の実行］Flashファイルにパラメータを注入する。実験段階の結果に基づいて、攻撃者は、注入されたFlashパラメータを含む、基盤となる悪意あるURLを作成し、それをウェブサーバーに送信する。ウェブサーバーがその要求を受信すると、埋め込まれたHTML文書は攻撃者によって制御可能になる。",
+  "execution_flow/2/techniques/0/0": "基盤となる悪意あるURLを作成し、埋め込まれたHTML文書の制御を得るため、それをウェブサーバーに送信する。",
+  "skills/0/text/0": "攻撃者は、Flashファイルへのグローバルパラメータに値を注入し、親のHTML文書のDOM構造を理解する必要がある。攻撃者は、被害者をだまして自分が作成したリンクをクリックさせられるほど十分に賢くなければならない。",
+  "resources/0/0": "攻撃者は、被害者をだまして自分が作成したリンクをクリックさせる必要がある。",
+  "consequences/0/note/0": "情報漏えい",
+  "consequences/1/note/0": "任意のコードの実行",
+  "mitigations/0/0": "利用者の入力は、利用者に反射される前に、文脈に応じて無害化されなければならない。JavaScriptの関数「encodeURI」は、グローバルなFlashパラメータを意図した入力の無害化には、常に十分とは限らない。利用者の入力をFlashクッキーに保存する際は、極端な注意を払うべきである。そのような場合、Flashファイル自体を修正・再コンパイルし、ローカル共有オブジェクト（Flashクッキー）の名前を変更する必要がある。",
+  "examples/0/0": "以下は、Flashファイルに渡される、様々な種類のパラメータの例である。",
+  "examples/0/1": "DOMベースのフラッシュパラメータインジェクション",
+  "examples/0/5": "埋め込まれたURI内でパラメータを渡す",
+  "examples/0/7": "flashvars内でパラメータを渡す",
+  "examples/0/9": "持続型のフラッシュパラメータインジェクション",
+  "examples/0/19": "}",
+  "examples/0/20": "}",
+  "examples/0/25": "何も疑わない利用者が、攻撃者によって、次のようなリンクをクリックするよう誘われる場合を考える：",
+  "examples/0/26": "その結果は、脆弱なFlashファイルを持つドメインの文脈で、被害者のブラウザ内でJavaScriptのコードが一度だけ実行されるというだけでは終わらない。そのFlashが、直接の参照によって、あるいは同じドメイン内に埋め込まれて読み込まれるたびに、そのJavaScriptは再び実行される。"
+ },
+ "quotes": {
+  "examples/0/2": "<object>",
+  "examples/0/3": "<embed src=\"myFlash.swf\" flashvars=\"location=http://example.com/index.htm#&globalVar=e-v-i-l\"></embed>",
+  "examples/0/4": "</object>",
+  "examples/0/6": "<object type=\"application/x-shockwave-flash\" data=\"myfile.swf?globalVar=e-v-i-l\" ></object>",
+  "examples/0/8": "<object type=\"application/x-shockwafile.swf\" ve-flash\" data=\"my flashvars=\"language=English&globalVar=e-v-i-l\"></object>",
+  "examples/0/10": "// Create a new shared object or read an existing one",
+  "examples/0/11": "mySharedObject = SharedObject.getLocal(\"flashToLoad\");\nif (_root.flashfile == undefined) {",
+  "examples/0/12": "// Check whether there is a shared object saved",
+  "examples/0/13": "if (mySharedObject.data.flash == null) {",
+  "examples/0/14": "// Set a default",
+  "examples/0/15": "value _root.flashfile = \"defaultFlash.swf\";",
+  "examples/0/16": "} else {",
+  "examples/0/17": "// Read the flash file to load from the shared object",
+  "examples/0/18": "_root.flashfile = mySharedObject.data.flash;",
+  "examples/0/21": "// Store the flash file's name in the shared object",
+  "examples/0/22": "mySharedObject.data.flash = _root.flashfile;",
+  "examples/0/23": "// Load the flash file",
+  "examples/0/24": "getURL(_root.flashfile);",
+  "examples/0/25": "If an unsuspecting user is lured by an adversary to click on link like this: http://example.com/vulnerable.swf?flashfile=javascript:alert(document.domain)"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "パラメータインジェクション（CAPEC-137）のFlash版とも言える攻撃で、HTML文書に埋め込まれたFlashファイルに渡される「FlashVars」というグローバルパラメータに、悪意あるコードを注入する。注入されたパラメータは、Flashファイル内だけでなく、埋め込み先のHTML文書のDOM全体への制御も攻撃者に与えてしまう場合があり、クロスサイトスクリプティングやセッションハイジャックにつながり得る。共有オブジェクト（Flashクッキー）に汚染されたデータを保存してしまうと、Flashファイルが読み込まれるたびに繰り返し悪意あるコードが実行される「持続型」の変種もある。",
+  "terms": [
+   {
+    "term": "FlashVars",
+    "en": "FlashVars",
+    "explain": "HTMLに埋め込まれたFlashファイルに対して、URLの引数や、ObjectタグやEmbedタグの属性を介して渡される、グローバルな初期化パラメータのこと。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "持続型のフラッシュパラメータインジェクションでは、脆弱なFlashファイルが直接参照、あるいは同じドメイン内に埋め込まれて読み込まれるたびに、注入されたJavaScriptが繰り返し実行される、と原典の具体例に書かれている。",
+    "source": "CAPEC-174 examples（具体例）"
+   }
+  ],
+  "analogy": "舞台装置（Flash）に渡す「初期設定メモ」をお客自身に書かせてしまう劇場に似ている。メモの内容を検証せずそのまま使ってしまうと、客が書き込んだ悪意ある指示が、舞台装置だけでなく、劇場全体の進行（HTML文書のDOM）まで操作してしまう。"
+ }
+}

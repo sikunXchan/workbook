@@ -1,0 +1,32 @@
+{
+ "id": "400",
+ "source_sha": "881fdc61d01fa73d",
+ "status": "done",
+ "seg": {
+  "name": "RFIDチップの機能停止・破壊",
+  "description/0": "攻撃者は、タグ、バッジ、カード、あるいはタグを含む物を応答しない状態にする目的で、受動的なRFIDタグの機能を停止させる手法を使用する。RFIDタグは、主にアクセス制御、在庫管理、あるいは盗難防止の装置として使われる。RFIDチップを攻撃する目的は、それを収めている物自体に損害を与えずに、チップを無効化または破損させることである。",
+  "extended_description/0": "正しく行われればRFIDチップは目に見える損傷を残さずに破壊できるという概要と、使い捨てカメラを改造してRFIDチップを破壊するために使われる具体的な電磁パルス（EMP）発生手法の説明（防御側の学習のために、原文のまま引用する。この攻撃は13.56MHz帯のRFIDチップに対して効果があることが実証されている）。"
+ },
+ "quotes": {
+  "extended_description/0": "When correctly performed the RFID chip can be disabled or destroyed without visible damage or marking to whatever item or device containing the chip. Attacking the chip directly allows for the security device or method to be bypassed without directly damaging the device itself, such as an alarm system or computer system. Various methods exist for damaging or deactivating RFID tags. For example, most common RFID chips can be permanently destroyed by creating a small electromagnetic pulse near the chip itself. One method employed requires the modifying a disposable camera by disconnecting the flash bulb and soldering a copper coil to the capacitor. Firing the camera in this configuration near any RFID chip-based device creates an EMP pulse sufficient to destroy the chip without leaving evidence of tampering. So far this attack has been demonstrated to work against RFID chips in the 13.56 MHz range."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "RFIDタグを内蔵したカードやバッジ、物品そのものを壊さずに、中のRFIDチップだけを狂わせたり壊したりしてしまう攻撃。警報システムなどの「センサー役」であるチップだけを無力化することで、本体の装置を傷つけずにセキュリティを回避できる。",
+  "terms": [
+   {
+    "term": "電磁パルス（EMP）",
+    "en": "electromagnetic pulse",
+    "explain": "瞬間的に発生する強い電磁波のこと。近くの電子回路（この場合RFIDチップ）を壊してしまうことがある。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "正しく行われれば、RFIDチップは、それを含んでいる物や機器に目に見える損傷や痕跡を残さずに、無効化または破壊できる、と原典のextended_description（補足説明）に書かれている。",
+    "source": "CAPEC-400 extended_description"
+   }
+  ],
+  "analogy": "金庫自体を壊すのではなく、金庫についている「開けると警報が鳴るセンサー」だけをピンポイントで壊してしまうのに似ている。金庫本体には何の痕跡も残らないため、壊されたことに気付きにくい。"
+ }
+}

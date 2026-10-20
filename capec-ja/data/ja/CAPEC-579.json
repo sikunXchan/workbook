@@ -1,0 +1,29 @@
+{
+ "id": "579",
+ "source_sha": "8c3a2bf38d2b6f9f",
+ "status": "done",
+ "seg": {
+  "name": "Winlogonヘルパー DLLの差し替え",
+  "description/0": "Winlogonは、ログオン動作を実行するWindowsの一部である。Windows Vista以前のWindowsシステムでは、Winlogonに起動時にDLLを読み込ませるよう、あるレジストリキーを改変できる。攻撃者は、この機能を利用して、起動時に悪意あるコードを読み込ませることがある。",
+  "mitigations/0/0": "「HKLM\\Software\\Microsoft\\Windows NT\\Winlogon\\Notify」内のレジストリエントリへの変更が、既知のソフトウェアやパッチの更新サイクルなどと一致しない場合、それは疑わしい。System32に書き込まれる新しいDLLが、既知の正当なソフトウェアやパッチ適用と一致しない場合も、疑わしいことがある。"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "ログオン処理を担う「Winlogon」の仕組みにある、起動時にDLLを読み込ませる設定（古いWindowsに存在した機能）を悪用し、ログオンのたびに悪意あるコードを読み込ませてしまう攻撃。新しいサービスのインストール（CAPEC-550）と同様、OSの起動・ログオン処理に食い込むことで永続性を得る。",
+  "terms": [
+   {
+    "term": "DLL",
+    "en": "Dynamic Link Library",
+    "explain": "Windowsなどで、複数のプログラムが共通して利用できる機能をまとめた、動的に読み込まれるライブラリファイルのこと。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "「HKLM\\Software\\Microsoft\\Windows NT\\Winlogon\\Notify」内のレジストリエントリへの変更が、既知のソフトウェアやパッチの更新サイクルなどと一致しない場合、それは疑わしい、と原典のmitigations（対策）に書かれている。",
+    "source": "CAPEC-579 mitigations（対策）"
+   }
+  ],
+  "analogy": "ビルの出入りのたびに必ず通る受付の手続きに、こっそり余分な手続きを一つ追加しておくのに似ている。利用者が毎回必ず通る場所だからこそ、確実に実行される。"
+ }
+}

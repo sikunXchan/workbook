@@ -1,0 +1,42 @@
+{
+ "id": "521",
+ "source_sha": "ab7eab93888be181",
+ "status": "done",
+ "seg": {
+  "name": "ハードウェア設計仕様の改ざん",
+  "description/0": "製造業者のハードウェア製造プロセス文書へのアクセスを持つ攻撃者は、設計仕様を改ざんし、システムが展開された後、攻撃者に有利な欠陥を持ち込む。",
+  "prerequisites/0/0": "製造業者の製品が持つ、ハードウェアの能力についての高度な知識。",
+  "prerequisites/1/0": "製造業者の文書へのアクセス。",
+  "skills/0/text/0": "設計仕様に誤りを引き起こすため、製造業者の文書を読み、解釈し、その後改ざんする能力。",
+  "skills/1/text/0": "遠隔からの侵害、あるいは物理的なアクセスを通じて、製造業者の文書へひそかにアクセスする能力。",
+  "mitigations/0/0": "文書をデジタル化し、真正性を検証するために暗号学的に署名する。",
+  "mitigations/1/0": "文書をパスワードで保護し、権限のない利用者には読み取り専用にする。",
+  "mitigations/2/0": "重要な文書や構成情報を電子メールで送信することを避ける。",
+  "mitigations/3/0": "削除されたファイルが実際に削除されていることを確認する。",
+  "mitigations/4/0": "復旧と検証のため、その文書のバックアップを維持する。",
+  "mitigations/5/0": "利用者に応じて、知る必要のある情報をシステム構成情報から分離する。",
+  "examples/0/0": "製造業者のネットワーク侵入検知デバイスが、パケットを検知処理から除外することなく大量のネットワークトラフィックを処理するために必要な高度なスレッド処理を可能にする、8個の「コア」を持つIntel Xeon E7-2820、あるいはAMD FX-8350のいずれかを、フルスペックで動作させるために必要とする、という具体的な事例。攻撃者は、システム設計で、わずか2コアしか持たないIntel Core DuoやAMD Phenom II X2を使用しなければならないと記載するよう文書を改ざんし、大量のネットワークトラフィックが発生する被害者の拠点に展開された際、システムが大量のパケットを破棄してしまう結果を引き起こす。"
+ },
+ "quotes": {
+  "examples/0/0": "To operate at full capability, a manufacturer's network intrusion detection device needs to have either a Intel Xeon E7-2820 or AMD FX-8350 which have 8 \"cores\" available, allowing for advanced threading needed to handle large volumes of network traffic without resorting to dropping packets from the detection process. The attacker alters the documentation to state that the system design must use the Intel Core Duo or the AMD Phenom II X2, which only have 2 cores, causing the system to drop large amounts of packets during deployment at a victim site with large amounts of network traffic."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "完成品の仕様書そのものを改ざんすることで、本来必要な高性能部品ではなく、意図的に見劣りする部品が使われるよう仕向ける攻撃。実例として、侵入検知デバイスに必要な8コアCPUの指定を、処理能力の低い2コアCPUの指定に書き換えることで、実際の現場で大量のネットワークトラフィックに対処できず、パケットを取りこぼしてしまう（検知をすり抜けてしまう）手口が挙げられている。",
+  "terms": [
+   {
+    "term": "コア",
+    "en": "core",
+    "explain": "CPU内にある、実際に処理を行う演算回路のこと。コア数が多いほど、並行して多くの処理を行える。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "攻撃者は、システム設計で、わずか2コアしか持たないCPUを使用しなければならないと記載するよう文書を改ざんし、大量のネットワークトラフィックが発生する拠点に展開された際、システムが大量のパケットを破棄してしまう結果を引き起こす、と原典の具体例に書かれている。",
+    "source": "CAPEC-521 examples（具体例）"
+   }
+  ],
+  "analogy": "消防車の仕様書に「ポンプの馬力は小型のもので十分」とひそかに書き換えておくことで、実際に大規模な火災が発生した際、水を十分に送り出せず、放水が追いつかなくなってしまうのに似ている。"
+ }
+}

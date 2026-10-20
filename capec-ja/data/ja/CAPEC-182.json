@@ -1,0 +1,59 @@
+{
+ "id": "182",
+ "source_sha": "1e6cebc43694f98f",
+ "status": "done",
+ "seg": {
+  "name": "フラッシュインジェクション",
+  "description/0": "攻撃者は、被害者をだまして、攻撃者が指定したコマンドを実行する、あるいはFlashの呼び出しを行う、悪意あるFlashコンテンツを実行させる。この攻撃の一つの例は、クロスサイトフラッシングであり、参照呼び出しへの攻撃者が制御するパラメータが、攻撃者が指定したコンテンツから読み込まれる。",
+  "execution_flow/0/description/0": "［注入の入り口の発見］攻撃者は、まず、アプリケーションの入り口の一覧を作成する。",
+  "execution_flow/0/techniques/0/0": "Flashアプリケーションを参照する、利用可能なすべてのURLについて、ウェブサイトをスパイダリングする。",
+  "execution_flow/0/techniques/1/0": "ActionScript内の未初期化のグローバル変数（「_root.*」「_global.*」「_level0.*」など）、含められたファイル内の登録されたグローバル変数、外部の動画への変数の読み込みをすべて一覧化する。",
+  "execution_flow/1/description/0": "［フラッシュインジェクションに対するアプリケーションの脆弱性の判断］フラッシュインジェクションに対するアプリケーションの脆弱性を判断する。探索段階で特定した各URLについて、攻撃者は、そのアプリケーションがフラッシュインジェクションに対して脆弱かどうかを判断するため、直接の「asfunction」の読み込み、制御された悪意あるページ／ホスト、FlashのHTMLインジェクション、DOMインジェクションのような、様々な手法を使用しようと試みる。",
+  "execution_flow/1/techniques/0/0": "直接の「asfunction」の読み込みを使って、ページをテストする例：",
+  "execution_flow/1/techniques/1/0": "制御された悪意あるページ／ホストを使って、ページをテストする例：",
+  "execution_flow/1/techniques/2/0": "FlashのHTMLインジェクションを使って、ページをテストする例：",
+  "execution_flow/1/techniques/3/0": "DOMインジェクションを使って、ページをテストする例：",
+  "execution_flow/2/description/0": "［標的への悪意あるコンテンツの注入］実験段階で特定した脆弱な注入経路を活用し、標的に悪意あるコンテンツを注入する。",
+  "prerequisites/0/0": "標的は、Flashアプリケーションを実行できなければならない。場合によっては、被害者は、攻撃者が提供したリンクをたどらなければならない。",
+  "skills/0/text/0": "攻撃者は、Flashについて、特にコマンドを実行するコンテンツを挿入する方法についての知識を持つ必要がある。",
+  "resources/0/0": "無し：この種の攻撃を実行するために、専門的な資源は必要ない。攻撃者は、注入されたFlashコンテンツを提供できる必要がある場合がある。",
+  "consequences/0/note/0": "情報漏えい",
+  "consequences/3/note/0": "任意のコードの実行",
+  "mitigations/0/0": "実装：SWFファイル内の、利用者名やパスワードのような機密情報を削除する。",
+  "mitigations/1/0": "実装：クライアント側とサーバー側の両方で検証を使用する。",
+  "mitigations/2/0": "実装：デバッグ情報を削除する。",
+  "mitigations/3/0": "実装：外部データを読み込む際、SSLを使用する。",
+  "mitigations/4/0": "実装：「crossdomain.xml」ファイルを使って、アプリケーションのドメインが何かを読み込むこと、あるいは、別のドメインによって呼び出されるSWFファイルを許可する。",
+  "examples/0/0": "以下の例では、SWFファイルが以下を含んでいる。",
+  "examples/0/2": "以下のような要求が、",
+  "examples/0/4": "以下になる。"
+ },
+ "quotes": {
+  "execution_flow/1/techniques/0/0": "Test the page using direct load asfunction, getURL,javascript:gotRoot(\"\")///d.jpg",
+  "execution_flow/1/techniques/1/0": "Test the page using controlled evil page/host, http://example.com/evil.swf",
+  "execution_flow/1/techniques/2/0": "Test the page using Flash HTML injection, \"'><img src='asfunction:getURL,javascript:gotRoot(\"\")//.jpg' >",
+  "execution_flow/1/techniques/3/0": "Test the page using DOM injection, (gotRoot(''))",
+  "examples/0/1": "getURL('javascript:SomeFunc(\"someValue\")','','GET')",
+  "examples/0/3": "http://example.com/noundef.swf?a=0:0;alert('XSS')",
+  "examples/0/5": "javascript:SomeFunc(\"someValue\")?a=0:0;alert(123)"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "クロスサイトフラッシング（CAPEC-178）やフラッシュパラメータインジェクション（CAPEC-174）を含む、Flashコンテンツに悪意あるコマンドを実行させる攻撃全般をまとめた、より広い型。「asfunction」の読み込みや、Flash内のDOMインジェクション、HTMLインジェクションなど、様々な注入経路が存在する。実例として、SWFファイルに渡されるURLパラメータの末尾を改変することで、「getURL」に渡されるJavaScriptの呼び出しに任意のコードを追加できてしまう仕組みが挙げられている。",
+  "terms": [
+   {
+    "term": "ActionScript",
+    "en": "ActionScript",
+    "explain": "Adobe Flashアプリケーションの動作を記述するために使われる、プログラミング言語のこと。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "SWFファイル内の「getURL」呼び出しに渡されるURLのパラメータを改変することで、JavaScriptの呼び出しの末尾に任意のコード（「alert('XSS')」など）を追加できてしまう、と原典の具体例に書かれている。",
+    "source": "CAPEC-182 examples（具体例）"
+   }
+  ],
+  "analogy": "舞台の進行表（SWFファイル）に書かれた「次のセリフを呼び出す」という指示そのものに、観客が後から勝手な台詞を書き加えられてしまうのに似ている。進行表を信じて動く役者（ブラウザ）は、観客が書き加えた台詞まで忠実に演じてしまう。"
+ }
+}

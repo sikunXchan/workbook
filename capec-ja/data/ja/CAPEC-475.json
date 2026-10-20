@@ -1,0 +1,38 @@
+{
+ "id": "475",
+ "source_sha": "53f178d8c78244a2",
+ "status": "done",
+ "seg": {
+  "name": "不適切な検証による署名の偽装",
+  "description/0": "攻撃者は、署名検証アルゴリズムの実装における暗号学的な弱点を悪用し、鍵を知らなくても有効な署名を生成する。",
+  "extended_description/0": "署名検証アルゴリズムは、一般的に、証明書やコードの一部（実行可能ファイル、バイナリなど）が有効な署名を持ち、信頼できるかどうかを判断するために使用される。",
+  "extended_description/1": "利用されるアルゴリズムが、有効な署名が存在することを確認すると、それは信頼の基盤を確立し、利用者がWebサイトやアプリケーションとやり取りする際に、その信頼はさらに利用者に伝わる。しかし、署名検証アルゴリズムが、署名を全く検証しない、あるいは署名の検証が不完全であるなどの理由で、署名を不適切に検証してしまう場合、攻撃者が偽装した署名を生成し、正当な主体として分類されてしまう結果につながり得る。このような弱点をうまく悪用できれば、さらに、攻撃者は、利用者を悪意あるサイトへリダイレクトする、ファイルを盗む、マイクを有効化する、キー入力やパスワードを記録する、ディスクを消去する、マルウェアをインストールする、などのことが可能になり得る。",
+  "prerequisites/0/0": "受信者が、脆弱な暗号学的署名検証アルゴリズム、あるいはその脆弱な実装を使用していること、あるいは、受信者のアプリケーションの設定が、暗号学的に脆弱な署名検証アルゴリズムを使って生成された鍵の使用を受け入れてしまうこと。",
+  "skills/0/text/0": "署名検証アルゴリズムの暗号解析。",
+  "skills/1/text/0": "署名検証アルゴリズムの実装に対する、リバースエンジニアリングと暗号解析。",
+  "mitigations/0/0": "署名検証処理の欠陥について十分にテストされた、暗号学的な要素を含むプログラムや製品を使用する。",
+  "examples/0/0": "Windows CryptoAPI（Crypt32.dll）が、楕円曲線暗号（ECC）証明書を適切に検証できていなかったことにより、署名の偽装に対して脆弱であることが示された事例。CryptoAPIの署名検証機能が、標準外の基点（G）の指定を許してしまう場合、攻撃者は、既知の信頼された認証機関の公開鍵を含む、P-256のような既知の標準曲線に一致するように見える楕円曲線（ECC）署名を持つ、独自のECDSA証明書を作成できてしまう。実際にはその認証機関によって署名されていないにもかかわらず、WindowsはECCの公開鍵や他の曲線パラメータは確認するが、実際に曲線を生成した（攻撃者が独自に用意した）基点生成元（G）パラメータの定数は確認していない［REF-562］。この脆弱性を悪用すると、攻撃者は、偽装した証明書を利用して信頼されたネットワーク接続をだまし、正当に信頼された主体であるかのように見せかけながら、悪意あるコードを配信・実行できる［REF-563］。これにより最終的に、被害者は、悪意あるWebサイトや実行可能ファイルが正当であり、適切に検証された発信元のものであると信じ込まされる。関連項目：CVE-2020-0601"
+ },
+ "quotes": {
+  "examples/0/0": "The Windows CryptoAPI (Crypt32.dll) was shown to be vulnerable to signature spoofing by failing to properly validate Elliptic Curve Cryptography (ECC) certificates. If the CryptoAPI's signature validator allows the specification of a nonstandard base point (G): \"An adversary can create a custom ECDSA certificate with an elliptic curve (ECC) signature that appears to match a known standard curve, like P-256 that includes a public key for an existing known trusted certificate authority, but which was in fact not signed by that certificate authority. Windows checks the public key and other curve parameters, but not the (bespoke adversary-supplied) base point generator (G) parameter constant which actually generated the curve\" [REF-562]. Exploiting this vulnerability allows the adversary to leverage a spoofed certificate to dupe trusted network connections and deliver/execute malicious code, while appearing as legitimately trusted entity [REF-563]. This ultimately tricks the victim into believing the malicious website or executable is legitimate and originates from a properly verified source. See also: CVE-2020-0601"
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "署名検証アルゴリズムの実装そのものに存在する暗号学的な欠陥を突き、本物の秘密鍵を知らなくても「検証に通る」署名を作り出してしまう攻撃。実例として、WindowsのCryptoAPIが楕円曲線証明書の「基点」パラメータを確認していなかったために生じた、実際の脆弱性（CVE-2020-0601、通称CurveBall）が挙げられている。",
+  "terms": [
+   {
+    "term": "楕円曲線暗号（ECC）",
+    "en": "Elliptic Curve Cryptography",
+    "explain": "楕円曲線という数学的な構造を利用した、公開鍵暗号方式の一種のこと。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "Windows CryptoAPI（Crypt32.dll）が、楕円曲線暗号（ECC）証明書を適切に検証できていなかったことにより、署名の偽装に対して脆弱であることが示された、と原典の具体例に書かれている（CVE-2020-0601）。",
+    "source": "CAPEC-475 examples（具体例）"
+   }
+  ],
+  "analogy": "本物の鍵の「形」だけを厳密に確認し、その鍵がどの金型（基点）から作られたかまでは確認しない金庫のロックに似ている。見た目の形が合っていれば、実際には正規の金型で作られていない偽の鍵でも通ってしまう。"
+ }
+}

@@ -654,11 +654,50 @@ ${Object.entries(labels).filter(([k]) => !k.startsWith("_") && k !== "phase_note
   return page({ title: "用語集", depth: 1, body, current: "glossary" });
 }
 
+// おすすめの学習順（レッスン形式）。「攻撃の仕組み」ビュー(CAPEC-1000)の
+// 直下の9分類を、初学者が無理なく進められるよう並べ替えたもの。
+// 並び順そのものは原典にはなく、このサイトが独自に付けた学習上の目安。
+const LESSON_STEPS = [
+  { id: "118", blurb: "攻撃は、まず相手を調べることから始まります。偵察・情報収集の手口を知ることが、すべての土台になります。" },
+  { id: "156", blurb: "次は、技術ではなく「人の心」を狙う手口。なりすましやフィッシングなど、だますことで始まる攻撃です。" },
+  { id: "225", blurb: "ログインや権限の仕組み（アクセス制御）を、どうやって突破・回避するかを学びます。" },
+  { id: "152", blurb: "入力欄などに「想定外のもの」を混ぜ込む手口。SQLインジェクションなどが含まれます。" },
+  { id: "255", blurb: "XMLやシリアライズされたデータなど、データの「構造」そのものを狂わせる手口です。" },
+  { id: "172", blurb: "処理の順番やタイミングのわずかな隙を突く、少し高度な手口に進みます。" },
+  { id: "223", blurb: "推測や総当たりのような、確率に頼る手口。根気と試行回数がものを言う攻撃です。" },
+  { id: "262", blurb: "メモリやCPU、ネットワーク帯域といった「資源」を使い果たさせる手口です。" },
+  { id: "210", blurb: "最後は、壊すのではなく「正規の機能をそのまま、想定外の使い方で」悪用する、応用的な手口です。" },
+];
+function lessonSection(depth) {
+  const steps = LESSON_STEPS.map((s, i) => {
+    const e = byId.get(s.id);
+    const ja = nameJa(s.id);
+    const n = e?.members?.length ?? 0;
+    return `<li class="lesson-step"><span class="lesson-n" aria-hidden="true">レッスン${i + 1}</span>
+<h3>${entryLink(s.id, depth)}</h3>
+<p>${esc(s.blurb)}</p>
+<p class="small">${ja ? "" : `<span lang="en">${esc(e?.name?.en || "")}</span>・`}含まれる項目 ${n}件</p>
+</li>`;
+  }).join("");
+  const domainChips = domainCats.map((id) => chip(`${rel(depth)}capec/${esc(id)}/`, catName(id))).join("");
+  return `<section id="lesson" class="sec" aria-labelledby="lesson-h"><h2 id="lesson-h"><span class="mk">どの順で読む？（おすすめの学習順）</span></h2>
+<p>706件は多すぎて、どれから読むか迷うと思います。まずは「攻撃の仕組み」という分け方（CAPEC-1000）に沿って、レッスン1から順に読んでいくことをおすすめします。各レッスンの分類ページには、関連する攻撃パターンが一覧になっています。</p>
+<ol class="lesson-list">${steps}</ol>
+<p>人への攻撃（ソーシャルエンジニアリング）だけを先に読みたい場合は、レッスン2（${entryLink("156", depth)}）よりも、分野別の${entryLink("403", depth)}の分類から読み始めると、まとまって学べます。</p>
+<div class="memo"><span class="who">補足（AI）</span><p>この並び順は、MITREの原典にあるものではなく、このサイトが初学者向けに独自に付けた目安です。興味のある分類から読んでも構いません。</p></div>
+</section>
+<section class="sec" aria-labelledby="domain-h"><h2 id="domain-h"><span class="mk">分野（ドメイン）別に読みたい場合</span></h2>
+<p>「ソフトウェアの攻撃だけ知りたい」「物理的な侵入だけ知りたい」というように、分野で絞って読むこともできます（CAPEC-3000）。</p>
+<div class="chips">${domainChips}</div>
+</section>`;
+}
+
 function guidePage() {
   const body = `${crumbs([["../", "ホーム"], [null, "はじめに"]])}
 <main id="main" class="page" tabindex="-1">
 <h1 class="page-h">はじめに</h1>
 <p>このサイトの読み方の案内です。用語の正式な定義は、各リンク先の公式サイト（英語）で確認してください。</p>
+${lessonSection(1)}
 <section id="chain" class="sec" aria-labelledby="chain-h"><h2 id="chain-h"><span class="mk">CAPEC・CWE・CVEの関係</span></h2>
 ${chain(1, null)}
 <ul>
