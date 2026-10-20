@@ -1,0 +1,57 @@
+{
+ "id": "81",
+ "source_sha": "400c01ebadc129d6",
+ "status": "done",
+ "seg": {
+  "name": "ウェブサーバーのログの改ざん",
+  "description/0": "ウェブログの改ざん攻撃は、攻撃者が、通常はほかの悪意ある行動を隠すために、ウェブログの内容を注入・削除・そのほかの方法で改ざんすることを指す。さらに、ログファイルに悪意あるデータを書き込むことで、そのログを非同期の攻撃パターンで処理するジョブ、フィルタ、レポート、そのほかのエージェントを標的にできる。このパターンは、「ログの注入・改ざん・偽造」と似ているが、この場合はアプリケーションではなく、ウェブサーバーのログを標的とする点が異なる。",
+  "execution_flow/0/description/0": "［アプリケーションのウェブサーバーのログ形式の判定］攻撃者はシステムを観察し、ウェブサーバーがどのログツールを使っているかの手がかりを探す。",
+  "execution_flow/0/techniques/0/0": "アプリケーションのウェブサーバーが使うログツール（log4jなど）を特定する。これは、攻撃者がアプリケーションを知っているか、アプリケーションがログツールの情報を含むエラーメッセージを返す場合にのみ可能である。",
+  "execution_flow/1/description/0": "［注入可能な内容の判定］攻撃者は、どのようなログの注入が可能かを判定するため、悪意あるデータを使ってさまざまなログに記録される操作を行う。",
+  "execution_flow/1/techniques/0/0": "攻撃者は、入力・パラメータ・引数などとして悪意ある細工をしたデータを使い、ログに記録される操作を引き起こす。",
+  "execution_flow/2/description/0": "［ログファイルの操作］攻撃者は、直接の操作や偽造によって、または、ウェブサーバーが受け取ってログに書き込む特別に細工した要求の注入を通じて間接的に、ログの内容を改変する。この種の攻撃は、通常は別の攻撃に続いて行われ、前の攻撃の痕跡を消すために使われる。",
+  "execution_flow/2/techniques/0/0": "注入を通じて間接的に、復帰文字や改行文字を使ってログファイル内に新しい行を開始し、偽のエントリを追加する。",
+  "execution_flow/2/techniques/0/1": "HTTPリクエストの例と、それがログファイルに追加される仕組みの説明（原文）。",
+  "execution_flow/2/techniques/1/0": "ログファイルやデータベースの直接の操作によって、復帰文字や改行文字を使ってログファイル内に新しい行を開始し、偽のエントリを追加する。",
+  "execution_flow/2/techniques/1/1": "HTTPリクエストの例と、それがログファイルに追加される仕組みの説明（原文）。",
+  "execution_flow/2/techniques/2/0": "ログファイルやデータベースの直接の操作によって、既存のログのエントリを改変する。",
+  "prerequisites/0/0": "標的のサーバーソフトウェアが、ウェブのログを記録するHTTPサーバーであること。",
+  "skills/0/text/0": "偽のエントリをウェブログに入力すること。",
+  "resources/0/0": "特別な形式のHTTPリクエストをウェブサーバーに送信する能力。",
+  "mitigations/0/0": "設計：ウェブログに書き込む前に入力検証を行う。",
+  "mitigations/1/0": "設計：ログのデータを出力する前に、すべて検証する。",
+  "examples/0/0": "サイトの大部分がパスワードで保護されていても公開インターフェースがある場合の、ログへの悪意あるペイロードの注入の例。詳細は下記の原文を参照。"
+ },
+ "quotes": {
+  "execution_flow/2/techniques/0/1": "For example: The HTTP request for \"/index.html%0A%0DIP_ADDRESS- - DATE_FORMAT] \"GET /forged-path HTTP/1.1\" 200 - \"-\" USER_AGENT\" may add the log line into Apache \"access_log\" (for example). Different applications may require different encodings of the carriage return and line feed characters.",
+  "execution_flow/2/techniques/1/1": "For example: The HTTP request for \"/index.html%0A%0DIP_ADDRESS- - DATE_FORMAT] \"GET /forged-path HTTP/1.1\" 200 - \"-\" USER_AGENT\" may add the log line into Apache \"access_log\" (for example). Different applications may require different encodings of the carriage return and line feed characters.",
+  "examples/0/0": "Most web servers have a public interface, even if the majority of the site is password protected, there is usually at least a login site and brochureware that is publicly available. HTTP requests to the site are also generally logged to a Web log. From an attacker point of view, standard HTTP requests containing a malicious payload can be sent to the public website (with no other access required), when those requests appear in the log (such as http://victimsite/index.html?< malicious script> if they are followed by an administrator this may be sufficient to probe the administrator's host or local network."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "サーバーが自動的に記録する「アクセスログ」に、わざと改行やでたらめな記録を紛れ込ませて、ログを改ざんしたり、ログを読む管理者側のツールを攻撃したりする手口。別の攻撃の痕跡を消すためにも使われる。",
+  "terms": [
+   {
+    "term": "アクセスログ",
+    "en": "access log",
+    "explain": "ウェブサーバーが、誰がいつどんな要求を送ったかを記録するファイル。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "標的のサーバーソフトウェアが、ウェブのログを記録するHTTPサーバーであることが前提だと原典に書かれている。",
+    "source": "CAPEC-81 前提条件"
+   },
+   {
+    "text": "対策として、ログに書き込む前の入力検証と、出力前のログデータの検証が挙げられている。",
+    "source": "CAPEC-81 対策"
+   }
+  ],
+  "analogy": "来訪者名簿に、わざと改行を混ぜた偽の記入をして、あとで名簿を見る人や集計システムを混乱させる、という状況に近い。",
+  "learn": [
+   "ログという「記録」自体が、攻撃の対象になりうること",
+   "ログに書き込む前の入力検証が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}
