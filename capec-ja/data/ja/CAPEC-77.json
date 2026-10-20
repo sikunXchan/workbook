@@ -1,0 +1,79 @@
+{
+ "id": "77",
+ "source_sha": "d01ecbe88739a620",
+ "status": "done",
+ "seg": {
+  "name": "利用者が制御できる変数の操作",
+  "description/0": "この攻撃は、利用者が制御できる変数（DEBUG=1、PHPのグローバル変数など）を標的とする。攻撃者は、データの無害化を一切行わずにアプリケーションサーバーで直接使われる、利用者が与えた信頼できない問い合わせの変数を活用し、変数を上書きできる。極端な場合、攻撃者は、アプリケーションの業務ロジックを制御する変数を変えられる。たとえばPHPのような言語では、不適切に設定された既定の設定により、利用者が変数を上書きできることがある。",
+  "execution_flow/0/description/0": "［標的のアプリケーションの調査］攻撃者はまず、標的のアプリケーションを調べ、標的についての重要な情報を突き止める。この情報には、使われているソフトウェアの種類、版、アプリケーションが受け取る利用者の入力などが含まれうる。",
+  "execution_flow/1/description/0": "［利用者が制御できる変数の発見］調査で得た情報をもとに、攻撃者は、利用者が制御できる多くの変数を操作してみて、アプリケーションへの影響を観察する。アプリケーションに大きな変化が見られれば、その変数がアプリケーションにとって有用だと分かる。",
+  "execution_flow/1/techniques/0/0": "攻撃者は、「count」「tempFile」「i」のような、よくある変数名を多数変更しようとする。内部の仕組みを知らなくても、アプリケーションの流れを変えられることを期待している。",
+  "execution_flow/1/techniques/1/0": "攻撃者は、既知の環境変数を変更しようとする。",
+  "execution_flow/2/description/0": "［利用者が制御できる変数の操作］攻撃者は、アプリケーションにとって重要な、利用者が制御できる変数を見つけたら、それを操作して、自分に都合のよい形に通常の挙動を変える。",
+  "prerequisites/0/0": "アプリケーションサーバーが使う変数が、クライアントに公開されていること。",
+  "prerequisites/1/0": "アプリケーションサーバーが使う変数が、利用者によって上書きされうること。",
+  "prerequisites/2/0": "アプリケーションサーバーが、業務ロジックの計算に、利用者が与えたデータを信頼していること。",
+  "prerequisites/3/0": "アプリケーションサーバーが、適切な入力検証を行っていないこと。",
+  "skills/0/text/0": "悪意ある利用者は、よく知られたグローバル変数をいくつか簡単に試して、一致するものを見つけられる。",
+  "skills/1/text/0": "攻撃者は、自分が制御できる変数を探るのに、自動化ツールを使える。",
+  "indicators/0/0": "ウェブサーバーを探るウェブ侵入テストツールは、ログファイルに記録される異常な活動を生じさせることがある。同じクライアントから多数の要求が来るといった異常な通信も、監視システムや侵入検知ツールからの警告を引き起こすことがある。",
+  "consequences/1/note/0": "任意のコードの実行",
+  "mitigations/0/0": "グローバル変数の上書きを許さず、グローバル変数を信頼しない。",
+  "mitigations/0/1": "register_globalsオプションが有効になっている場合、PHPは、HTTPリクエストに含まれる各GET・POST・Cookie変数について、グローバル変数を作成する。これは、悪意ある利用者が、意図しない形で変数を設定できる可能性があることを意味する。たとえば、PHPのサーバー設定で、グローバル変数が公開されないようにする。",
+  "mitigations/1/0": "ソフトウェアシステムは、信頼境界の外で初期化された変数を信頼することに消極的であるべきである。信頼境界の外からの入力に頼る際は、十分な検査を行うことを確実にする。",
+  "mitigations/2/0": "プレゼンテーション層と業務ロジック層を分離する。業務ロジック層の変数を、プレゼンテーション層に公開すべきではない。これは、利用者が制御できる入力データから、業務ロジックの計算が行われるのを防ぐためである。",
+  "mitigations/3/0": "変数を宣言するときはカプセル化を使う。これは、変数の露出を減らすためである。",
+  "mitigations/4/0": "すべての入力が悪意あるものだと想定する。要件仕様にもとづいて、ソフトウェアシステムにとって有効なすべての入力を定める許可リストを作る。許可リストに合致しない入力は、プログラムによって拒否されるべきである。",
+  "examples/0/0": "PHPは、セキュリティが不十分な例としてよく挙げられる。PHP全体に浸透している主な考え方は「使いやすさ」であり、「開発者に余計な作業をさせずに物事を終わらせる」という方針が、あらゆる場面に当てはまる。PHPはこれを、言語から形式性を取り除き、初回の使用時に変数を宣言でき、すべてを既定値で初期化し、やり取りからあらゆる意味のある変数を取り出して使えるようにすることで実現している。より技術的な何かと衝突する場合、PHPでは単純さがほぼ常に優先される。",
+  "examples/0/1": "この結果の1つとして、PHPは、ウェブアプリケーションの利用者が、利用者が与えた信頼できない問い合わせの変数で、環境変数を上書きできてしまう。そのため、CWD（カレントディレクトリ）や検索パスといった重要な値が、リモートの匿名の利用者によって上書きされ、直接制御されうる。",
+  "examples/0/2": "もう1つの似た結果として、変数が、GETやPOSTのリクエストフィールドで与えられた、利用者が制御できる値から、直接制御・代入されうる。そのため、一見普通に見える次のようなコードが、奇妙な動きをする。",
+  "examples/0/3": "コードの例（原文）。",
+  "examples/0/4": "通常、このループは本体を10回実行する。最初の反復は未定義のゼロで、以降は変数$countが増えていく。問題は、コーダーがループに入る前に変数をゼロに初期化していないことである。PHPは宣言時に変数を初期化するため、これは問題なく動くように見える。結果として、よくない点があるにもかかわらず、動いているように見えるコードができあがる。問題は、ウェブアプリケーションの利用者が、次のような要求を送れることである。",
+  "examples/0/5": "GET /login.php?count=9",
+  "examples/0/6": "これにより$countが値9から始まり、ループを1回しか通らなくなる。",
+  "examples/0/7": "PHPの環境変数の初期化に関する説明（原文）。",
+  "examples/0/8": "PHPはまた、GET/POSTのリクエストで与えられたフィールドのタグを取り込み、グローバル変数に変換することがある。これは、先の例で見た$count変数と同じ状況である。",
+  "examples/0/9": "$tempfile変数を使ったプログラムの例（原文）。",
+  "examples/0/10": "include()やrequire()が$PATHを最初に探索することについての説明（原文）。",
+  "examples/0/11": "最後に、一部の版のPHPは、利用者のデータをフォーマット文字列としてsyslogに渡すことがあり、アプリケーションをフォーマット文字列のバッファオーバーフローにさらす。",
+  "examples/0/12": "参考：隠しフォーム変数を内部の変数名に一致させることで、任意のファイル読み取りを許すファイルアップロードの問題（CVE-2000-0860）"
+ },
+ "quotes": {
+  "examples/0/3": "while($count < 10){\n// Do something\n$count++;\n}",
+  "examples/0/7": "Depending on the configuration, PHP may accept user-supplied variables in place of environment variables. PHP initializes global variables for all process environment variables, such as $PATH and $HOSTNAME. These variables are of critical importance because they may be used in file or network operations. If an adversary can supply a new $PATH variable (such as PATH='/var'), the program may be exploitable.",
+  "examples/0/9": "Consider another example of this problem in which a program defines a variable called $tempfile. An adversary can supply a new temp file such as $tempfile = \"/etc/passwd\". Then the temp file may get erased later via a call to unlink($tempfile);. Now the passwd file has been erased--a bad thing indeed on most OSs.",
+  "examples/0/10": "Also consider that the use of include() and require() first search $PATH, and that using calls to the shell may execute crucial programs such as ls. In this way, ls may be \"Trojaned\" (the adversary can modify $PATH to cause a Trojan copy of ls to be loaded). This type of attack could also apply to loadable libraries if $LD_LIBRARY_PATH is modified."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "アプリケーションが「よくある変数名」をそのまま外部からの入力で上書きさせてしまう設定の不備を突き、業務ロジックや環境変数を書き換えてしまう攻撃。PHPの一部の設定で起きやすい。",
+  "terms": [
+   {
+    "term": "グローバル変数",
+    "en": "global variable",
+    "explain": "プログラム全体のどこからでも読み書きできる変数。"
+   },
+   {
+    "term": "信頼境界",
+    "en": "trust boundary",
+    "explain": "信頼できる側と信頼できない側の境目。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "アプリケーションサーバーが使う変数がクライアントに公開され、利用者によって上書きされうることが前提だと原典に書かれている。",
+    "source": "CAPEC-77 前提条件"
+   },
+   {
+    "text": "対策として、グローバル変数を信頼しないこと、プレゼンテーション層と業務ロジック層の分離が挙げられている。",
+    "source": "CAPEC-77 対策"
+   }
+  ],
+  "analogy": "社内のどの部署からでも書き換えられる「共通の掲示板」に、重要な業務の設定値を貼り出しておくと、誰でもその設定値を勝手に書き換えられてしまう、という状況に近い。",
+  "learn": [
+   "「どこからでも書き換えられる変数」が、なぜ業務ロジックの乗っ取りにつながるのか",
+   "層の分離とカプセル化が、どの前提条件を崩す対策なのか"
+  ]
+ }
+}
