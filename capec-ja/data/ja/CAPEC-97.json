@@ -1,0 +1,61 @@
+{
+ "id": "97",
+ "source_sha": "9827c888da9a9c83",
+ "status": "done",
+ "seg": {
+  "name": "暗号解読",
+  "description/0": "暗号解読は、暗号アルゴリズムにある弱点を見つけ、その弱点を使って、秘密の鍵を知らないまま暗号文を解読する（具体的な事例で推測する）過程である。弱点が暗号アルゴリズム自体ではなく、その適用のしかたにある場合に、暗号解読が成功することもある。攻撃者は、ほかの目標を持つこともある。たとえば、完全な解読（秘密の鍵を見つける）、全体的な推測（秘密の鍵を知らなくても暗号化・復号と機能的に等価なアルゴリズムを見つける）、情報の推測（平文や暗号文について、以前は知られていなかった何らかの情報を得る）、区別アルゴリズム（攻撃者が、暗号化の出力（暗号文）を、ビットのランダムな並べ替えと区別できる）などである。",
+  "execution_flow/0/description/0": "攻撃者は、暗号アルゴリズムの弱点、または特定の平文のまとまりへの適用のしかたにある弱点を発見する。",
+  "execution_flow/1/description/0": "攻撃者は、発見した弱点を活用して、暗号化されたメッセージの内容を、復号・部分的に復号する、または何らかの情報を推測する。これらはすべて、秘密の鍵を知らないまま行われる。",
+  "prerequisites/0/0": "標的のソフトウェアが、何らかの暗号アルゴリズムを使っていること。",
+  "prerequisites/1/0": "使われている暗号アルゴリズム自体に、または特定の平文のまとまりへの適用のしかたに、根底にある弱点が存在すること。",
+  "prerequisites/2/0": "暗号化アルゴリズムが攻撃者に知られていること。",
+  "prerequisites/3/0": "攻撃者が暗号文にアクセスできること。",
+  "skills/0/text/0": "暗号解読には、一般に、数学と計算についての非常に高いレベルの理解が必要である。",
+  "resources/0/0": "必要な計算資源は、使う暗号解読の技法の複雑さによって異なる。アルゴリズムの暗号化・復号処理へのアクセスも必要である。",
+  "consequences/0/note/0": "ほとんどの場合、暗号解読が成功したとしても、攻撃者はメッセージ全体を復号できるわけではなく、平文についての何らかの情報を推測できるにとどまる。ただし、攻撃の文脈によっては、それだけで攻撃者にとって十分なことがある。",
+  "mitigations/0/0": "推奨される鍵の長さで、実証済みの暗号アルゴリズムを使う。",
+  "mitigations/1/0": "アルゴリズムが適切に使われていることを確実にする。これは次を意味する。",
+  "mitigations/1/1/items/0": "1. 独自の暗号を作らない。実証済みのアルゴリズムと実装を使う。",
+  "mitigations/1/1/items/1": "2. 初期化ベクトルを、十分にランダムな数で選ぶ。",
+  "mitigations/1/1/items/2": "3. 鍵の材料を、良い乱数の源を使って生成し、既知の弱い鍵を避ける。",
+  "mitigations/1/1/items/3": "4. 実証済みのプロトコルとその実装を使う。",
+  "mitigations/1/1/items/4": "5. 自分の用途とデータに、もっとも適した暗号アルゴリズムを選ぶ。",
+  "examples/0/0": "頻度分析と呼ばれる暗号解読の手法の例。平文の各文字を、同じアルファベット内の決まった対応文字に置き換える、単一換字式暗号に対して有効。詳細は下記の原文を参照。"
+ },
+ "quotes": {
+  "examples/0/0": "A very easy to understand example is a cryptanalysis technique called frequency analysis that can be successfully applied to the very basic classic encryption algorithms that performed mono-alphabetic substitution replacing each letter in the plaintext with its predetermined mapping letter from the same alphabet. This was considered an improvement over a more basic technique that would simply shift all of the letters of the plaintext by some constant number of positions and replace the original letters with the new letter with the resultant alphabet position. While mono-alphabetic substitution ciphers are resilient to blind brute force, they can be broken easily with nothing more than a pen and paper. Frequency analysis uses the fact that natural language is not random and mono-alphabetic substitution does not hide the statistical properties of the natural language. So if the letter \"E\" in an English language occurs with a certain known frequency (about 12.7%), whatever \"E\" was substituted with to get to the ciphertext, will occur with the similar frequency. Having this frequency information allows the cryptanalyst to quickly determine the substitutions and decipher the ciphertext. Frequency analysis techniques are not applicable to modern ciphers as they are all resilient to it (unless this is a very bad case of a homegrown encryption algorithm). This example is inapplicable to modern cryptographic ciphers but is here to illustrate a rudimentary example of cryptanalysis."
+ },
+ "review": [],
+ "redacted": [],
+ "supplement": {
+  "summary": "暗号そのものや、その使われ方にある弱点を見つけて、秘密の鍵を知らないまま暗号文の中身を推測する手法。有名な例に「頻度分析」がある。",
+  "terms": [
+   {
+    "term": "平文",
+    "en": "plaintext",
+    "explain": "暗号化される前の、元のデータ。"
+   },
+   {
+    "term": "暗号文",
+    "en": "ciphertext",
+    "explain": "暗号化されて、そのままでは読めなくなったデータ。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "暗号アルゴリズム自体、またはその適用のしかたに、根底にある弱点が存在することが前提だと原典に書かれている。",
+    "source": "CAPEC-97 前提条件"
+   },
+   {
+    "text": "対策として、実証済みのアルゴリズムの使用と、独自の暗号を作らないことが挙げられている。",
+    "source": "CAPEC-97 対策"
+   }
+  ],
+  "analogy": "暗号文の中で、もっとも頻繁に現れる記号を、日本語なら「の」や「は」のようなよく使われる言葉だろうと推測して、少しずつ解読していく、暗号クイズの解き方に近い。",
+  "learn": [
+   "「鍵を知らなくても、統計的な手がかりから解読できる」ことがあるという考え方",
+   "独自の暗号を作らないことが、なぜ重要な対策なのか"
+  ]
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "id": "99",
+ "source_sha": "38f04e6ec10dbffa",
+ "status": "done",
+ "seg": {
+  "name": "非推奨：XMLパーサー攻撃",
+  "description/0": "この攻撃パターンは、CAPEC-230「XMLの入れ子になったペイロード」とCAPEC-231「XMLの過大なペイロード」を一般化したものであるため、非推奨となった。今後はこれらのCAPECを参照されたい。"
+ },
+ "review": [],
+ "redacted": []
+}
