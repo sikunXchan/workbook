@@ -1,0 +1,11 @@
+{
+ "id": "629",
+ "source_sha": "4d5e75091d1be0b3",
+ "status": "done",
+ "seg": {
+  "name": "廃止：デバイス資源の不正使用",
+  "description/0": "この攻撃パターンは廃止された。"
+ },
+ "review": [],
+ "redacted": []
+}
