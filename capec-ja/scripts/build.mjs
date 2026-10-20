@@ -215,14 +215,14 @@ function footer() {
   return `<footer class="foot">
 <div class="wrap foot-grid">
 <div>
-<h2>ご注意</h2>
+<h2 id="disclaimer-full">ご注意</h2>
 <p data-disclaimer>${esc(DISCLAIMER)}</p>
 <p lang="en" data-copyright>${esc(license.copyright)}</p>
 <p>出典：MITRE CAPEC <a href="https://capec.mitre.org/" lang="en">https://capec.mitre.org/</a>（データ版 ${esc(meta.version)}、取得日 ${esc(meta.retrieved)}）</p>
 </div>
 <div>
 <h2>ライセンス文（原文）</h2>
-${lic}
+<details><summary>ライセンス文を表示（英語原文）</summary>${lic}</details>
 </div>
 </div>
 </footer>`;
@@ -265,7 +265,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 </nav>
 </div>
 </header>
-<div class="notice" data-disclaimer-top><div class="wrap notice-row"><b>ご注意</b><span>${esc(DISCLAIMER)}</span></div></div>
+<div class="notice" data-disclaimer-top><div class="wrap notice-row"><b>ご注意</b><span>AIによる非公式の日本語訳です。<a href="#disclaimer-full">詳しくはページ下部</a>をご覧ください。</span></div></div>
 <div class="wrap">
 ${body}
 </div>
