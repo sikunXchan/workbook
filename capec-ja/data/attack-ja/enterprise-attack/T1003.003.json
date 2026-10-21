@@ -1,0 +1,49 @@
+{
+ "id": "T1003.003",
+ "source_sha": "b99dc8fb0ccff087",
+ "status": "done",
+ "seg": {
+  "name": "NTDS",
+  "description/0": "攻撃者は、認証情報を盗むため、またはデバイス・利用者・アクセス権といったドメインメンバーに関する他の情報を得るために、Active Directoryのドメインデータベースへのアクセスやコピーの作成を試みることがある。初期設定では、NTDSファイル（NTDS.dit）はドメインコントローラーの`%SystemRoot%\\NTDS\\Ntds.dit`に置かれている。",
+  "description/1": "稼働中のドメインコントローラー上のNTDSファイルを探すだけでなく、攻撃者は同じ、あるいは似た情報を含むバックアップも探すことがある。",
+  "description/2": "NTDSファイルを列挙し、Active Directoryのハッシュ全体の内容を取得するには、次のようなツールや手法が使われる。",
+  "description/3": "* ボリュームシャドウコピー（Volume Shadow Copy）\n* secretsdump.py\n* Windows標準のツールであるntdsutil.exe\n* Invoke-NinjaCopy",
+  "mitigation/M1017/0": "複数のアカウントで同じパスワードを使わないよう、利用者と管理者を教育することで、アカウント・システム間の認証情報の重複を減らす。",
+  "mitigation/M1026/0": "厳密に管理されている場合を除き、利用者や管理者のドメインアカウントを、複数システムのローカル管理者グループに入れない。これは多くの場合、全システムで同じパスワードを持つローカル管理者アカウントを作ってしまうことと同じである。管理の階層をまたいだ特権アカウントの使用を制限するため、エンタープライズネットワークの設計・管理のベストプラクティスに従うこと。",
+  "mitigation/M1027/0": "ネットワーク上の全システムで、ローカル管理者アカウントが複雑で一意のパスワードを持つようにする。",
+  "mitigation/M1041/0": "ドメインコントローラーのバックアップが適切に保護されていることを確認する。",
+  "procedure/G0004/0": "Ke3changは、NTDSDumpや他のパスワードダンプツールを使って認証情報を集めている。",
+  "procedure/G0007/0": "APT28は、認証情報アクセスのためntdsutil.exeユーティリティを使ってActive Directoryデータベースを書き出している。",
+  "procedure/G0034/0": "Sandworm Teamは、おそらく認証情報アクセスのため、`ntdsutil.exe`を使ってActive Directoryデータベースをバックアップしている。",
+  "procedure/G0035/0": "Dragonflyは、パスワードハッシュをダンプするためSecretsDumpを投下・実行した。また、ドメインコントローラーからntds.ditも入手した。",
+  "procedure/G0037/0": "FIN6は、被害者のActive Directoryデータベースのコピーを入手するため、MetasploitのPsExec NTDSGRABモジュールを使っている。",
+  "procedure/G0045/0": "menuPassは、認証情報をダンプするためNtdsutilを使っている。",
+  "procedure/G0096/0": "APT41は、被害環境の`ntds.dit`ファイルのコピーを取得するためntdsutilを使った。",
+  "procedure/G0102/0": "Wizard Spiderは、ntds.dit Active Directoryデータベースの書き出しコピーを通じて認証情報へのアクセスを得た。Wizard Spiderはまた、ボリュームシャドウコピーを作成し、Windowsユーティリティのntdsutilを使うバッチスクリプトファイルでNTDS.ditを収集した。",
+  "procedure/G0114/0": "Chimeraは、標的システムからSYSTEMレジストリとntds.ditファイルを集めている。Chimeraは特に、NtdsAuditツールを使い、`msadcs.exe \"NTDS.dit\" -s \"SYSTEM\" -p RecordedTV_pdmp.txt --users-csv RecordedTV_users.csv`でドメイン利用者のパスワードハッシュをダンプし、ntdsutilを使ってActive Directoryデータベースをコピーした。",
+  "procedure/G0117/0": "Fox Kittenは、NTDSから認証情報をアクセスするためボリュームシャドウコピーを使っている。",
+  "procedure/G0125/0": "HAFNIUMは、Active Directoryデータベース（NTDS.DIT）のコピーを盗んだ。",
+  "procedure/G0129/0": "Mustang Pandaは、vssadminを使ってボリュームシャドウコピーを作成し、NTDS.ditファイルを取得した。Mustang Pandaはまた、SYSTEMファイルのレジストリ位置に対して`reg save`を使い、NTDS.ditファイルの抽出を助けた。",
+  "procedure/G1004/0": "LAPSUS$は、Windows標準ツールの`ntdsutil`を使ってActive Directory（AD）データベースを抜き出している。",
+  "procedure/G1015/0": "Scattered Spiderは、仮想ドメインコントローラーのディスクのボリュームシャドウコピーを作成することで`NTDS.dit`ファイルを抽出している。",
+  "procedure/G1016/0": "FIN13は、NTDS.DITファイルを収集し、侵害したドメインコントローラー上でImpacketツールを使ってローカルで復号した。",
+  "procedure/G1017/0": "Volt Typhoonは、ntds.utilを使って、利用者名とパスワードハッシュを含むドメインコントローラーのインストールメディアを作成している。",
+  "procedure/G1051/0": "Medusa Groupは、認証情報ダンプのためntds.ditファイルにアクセスしている。",
+  "procedure/G1054/0": "MirrorFaceは、ボリュームシャドウコピーを通じてNTDS.ditをダンプしている。",
+  "procedure/S0250/0": "Koadicは、NTDSからドメインコントローラーのハッシュを集めることで、ハッシュ化されたパスワードを収集できる。",
+  "procedure/S0357/0": "Impacket内のSecretsDumpとMimikatzモジュールは、NTDS.ditからアカウントとパスワード情報を取得する認証情報ダンプを行える。",
+  "procedure/S0404/0": "esentutlは、ボリュームシャドウコピーサービスを使って`ntds.dit`をコピーできる。",
+  "procedure/S0488/0": "CrackMapExecは、WindowsのDirectory Replication Services API（DRSUAPI）やボリュームシャドウコピーを使って、Active Directoryに関連するハッシュ化されたパスワードをダンプできる。"
+ },
+ "supplement": {
+  "summary": "Active Directoryのドメイン全体の認証情報が格納されたNTDS.ditファイルを、稼働中のドメインコントローラーやそのバックアップから直接盗み出す技術。一度の成功でドメイン内のほぼ全利用者のパスワードハッシュをまとめて得られてしまう、影響の大きい手口。",
+  "analogy": "会社の人事部が持つ、全社員の身分証と暗証番号の控えが入った台帳そのものを丸ごと持ち出すようなもので、1人分の鍵を盗むより遥かに大きな被害につながる。",
+  "learn": [
+   "NTDS.ditがドメイン内の全利用者のパスワードハッシュを含む、ドメインコントローラー上で最も重要なファイルの1つであること",
+   "ボリュームシャドウコピーやntdsutil.exeのような、OS標準機能がこの情報の持ち出しに使われること"
+  ],
+  "interpretation": [
+   "対策として挙げられている4つ（利用者教育・特権アカウント管理・パスワード方針・バックアップの暗号化）が、いずれも『NTDS.ditを直接守る』技術的対策ではなく、NTDS.dit流出後の被害を小さくする、あるいは流出の前提条件を減らす間接的な対策である点は重要である。これは、NTDS.ditそのものへのアクセスを完全に防ぐことの難しさを踏まえ、流出を前提にした多層防御の必要性を示している。"
+  ]
+ }
+}

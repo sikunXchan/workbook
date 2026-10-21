@@ -1,0 +1,32 @@
+{
+ "id": "T1055.004",
+ "source_sha": "751e233dae987990",
+ "status": "done",
+ "seg": {
+  "name": "非同期プロシージャコール（APC）",
+  "description/0": "攻撃者は、プロセスベースの防御を回避し、権限を昇格させることを目的に、非同期プロシージャコール（APC）キューを介してプロセスに悪意あるコードを注入することがある。APCインジェクションは、別の実行中プロセスのアドレス空間で任意のコードを実行する手法である。",
+  "description/1": "APCインジェクションは、通常、プロセスのスレッドのAPCキューに悪意あるコードを付加することで行われる。キューに入れられたAPC関数は、そのスレッドが変更可能な状態に入ったときに実行される。まず<code>OpenThread</code>のようなWindowsのネイティブAPI呼び出しで標的の既存プロセスへのハンドルを取得する。この時点で<code>QueueUserAPC</code>を使い、（悪意あるDLLを指す<code>LoadLibrayA</code>のような）関数を呼び出せる。",
+  "description/2": "APCインジェクションの変種に「Early Bird injection」と呼ばれる手法があり、一時停止状態のプロセスを作成し、そのプロセスの（場合によってはその後のアンチマルウェアのフック処理が走る前の）エントリポイントに到達する前に、APC経由で悪意あるコードを書き込み・実行する。AtomBombingはもう1つの変種で、グローバルアトムテーブルに事前に書き込んだ悪意あるコードをAPCで呼び出すものである。",
+  "description/3": "別のプロセスの文脈でコードを実行することで、そのプロセスのメモリ、システム・ネットワークリソース、場合によっては昇格した権限へのアクセスが可能になることがある。APCインジェクションによる実行は、正規のプロセスを装うことで、セキュリティ製品による検知を回避することもある。",
+  "mitigation/M1040/0": "一部のエンドポイント・セキュリティ製品は、インジェクション過程で見られる一般的な振る舞いの連鎖に基づいて、いくつかの種類のプロセス・インジェクションを阻止できるよう設定できる。",
+  "procedure/G0061/0": "FIN8は、新しく生成したsvchost.exeプロセスに悪意あるコードを注入している。",
+  "procedure/S0199/0": "TURNEDUPは、「Early Bird injection」の一環として、生成したRundll32プロセスのAPCキューにコードを注入できる。",
+  "procedure/S0260/0": "InvisiMoleは、APCキューを介して信頼されたプロセスに自身のコードを注入できる。",
+  "procedure/S0438/0": "Attorは、NtQueueApcThread APIを使ってAPCキューに自身のコードを付加することで注入を行う。",
+  "procedure/S0483/0": "IcedIDは、<code>ZwQueueApcThread</code>を使って遠隔プロセスに自身を注入している。",
+  "procedure/S0484/0": "Carberpは、ZwQueueApcThreadを呼び出してexplorer.exeにAPCルーチンをキューイングしている。",
+  "procedure/S0517/0": "Pillowmintは、NtQueueApcThreadシステムコールを使ってsvchost.exeにコードを注入している。",
+  "procedure/S1018/0": "Saint Botは、`ZwWriteVirtualMemory`を使って新規作成した`EhStorAuthn.exe`プロセスにペイロードを書き込み、`NtQueueApcThread`と`ZwAlertResumeThread`を使ってそれを実行している。",
+  "procedure/S1039/0": "Bumblebeeは、非同期プロシージャコール（APC）インジェクションを使って、C2から受け取ったコマンドを実行できる。",
+  "procedure/S1081/0": "BADHATCHは、非同期プロシージャコール（APC）キューを使って、新規作成した`svchost.exe -k netsvcs`プロセスに自身を注入できる。",
+  "procedure/S1085/0": "Sardonicは、`QueueUserAPC` APIを使って、侵害済みマシン上でシェルコードを実行できる。",
+  "procedure/S1207/0": "XLoaderは、`NtQueueApcThread` APIを使ってAPCキューにコードを注入する。",
+  "procedure/S9018/0": "HeartCryptは、プロセス・インジェクションの別手法として`NtQueueApcThread`を使う機能を持つ。"
+ },
+ "supplement": {
+  "summary": "Windowsのスレッドが持つ「あとで実行する関数の待ち行列（APCキュー）」に悪意あるコードを紛れ込ませ、スレッドがその行列を処理するタイミングで実行させる手法。Early Bird injectionやAtomBombingといった、検知をさらに避けるための変種も知られている。",
+  "analogy": "受付の「後で対応する用件リスト」に、本来の業務とは関係ない不審な依頼を1件だけ紛れ込ませておき、受付係が順番にリストを処理する際に、気づかれないままその依頼も実行されてしまうような状況に近い。",
+  "learn": ["APCインジェクションには「Early Bird injection」「AtomBombing」のような、検知回避をさらに強化する変種が複数存在すること"],
+  "interpretation": ["procedure例の多くが`QueueUserAPC`や`NtQueueApcThread`といった具体的なAPI名を伴って記録されているのは、これらのAPI呼び出し自体が監視対象になり得ることを示しており、対策M1040の『インジェクション過程の一般的な振る舞いの連鎖』という表現は、こうした特定API呼び出しの組み合わせパターンを指していると解釈できる。"]
+ }
+}

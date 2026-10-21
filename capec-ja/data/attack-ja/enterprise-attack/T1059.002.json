@@ -1,0 +1,27 @@
+{
+ "id": "T1059.002",
+ "source_sha": "f667c66795a295b4",
+ "status": "done",
+ "seg": {
+  "name": "AppleScript",
+  "description/0": "攻撃者は、実行のためにAppleScriptを悪用することがある。AppleScriptは、AppleEventsと呼ばれるアプリケーション間メッセージを介して、アプリケーションやOSの各部を制御するために設計されたmacOSのスクリプト言語である。これらのAppleEventメッセージは単独で送信することもできれば、AppleScriptで簡単にスクリプト化することもできる。これらのイベントは、開いているウィンドウを特定し、キー入力を送り、ローカルまたは遠隔のほぼすべての実行中アプリケーションと対話できる。",
+  "description/1": "スクリプトは、コマンドラインから<code>osascript /path/to/script</code>や<code>osascript -e \"script here\"</code>として実行できる。コマンドライン以外にも、Mailのルール、Calendar.appのアラーム、Automatorのワークフローなど、数多くの方法でスクリプトを実行できる。AppleScriptは、スクリプトファイルの先頭に<code>#!/usr/bin/osascript</code>を加えることで、プレーンテキストのシェルスクリプトとして実行することもできる。",
+  "description/2": "AppleScriptは実行に<code>osascript</code>を呼ぶ必要はない。macOSのネイティブAPIである<code>NSAppleScript</code>や<code>OSAScript</code>を使うことで、mach-Oバイナリの内部から実行することもでき、どちらも<code>/usr/bin/osascript</code>コマンドラインユーティリティとは独立してコードを実行する。",
+  "description/3": "攻撃者は、開いているSSH接続との対話、遠隔マシンへの移動、さらには利用者に偽のダイアログボックスを提示することなど、さまざまな振る舞いを行うためにAppleScriptを悪用することがある。これらのイベントはアプリケーションを遠隔から起動することはできない（ローカルでは起動できる）が、すでに遠隔で動作しているアプリケーションとは対話できる。macOS 10.10 Yosemite以降では、AppleScriptはネイティブAPIを実行する能力を持ち、本来であればmach-Oバイナリ形式でのコンパイル・実行が必要な処理を行える。スクリプト言語であるため、Pythonによる逆シェルのような、より一般的な技術を起動する目的にも使われる。",
+  "mitigation/M1038/0": "適切な場面でアプリケーション制御を使用する。",
+  "mitigation/M1045/0": "すべてのAppleScriptが実行される前に、信頼できる開発者IDによる署名を必須とする。これにより無作為なAppleScriptコードの実行を防げる。この措置により、AppleScriptコードはGatekeeperを通過する他の.appファイルと同じ審査を受けることになる。",
+  "procedure/G0082/0": "APT38は、悪意あるダウンロードを引き起こすために.scptファイルをMac利用者に送信した。APT38は、悪意あるペイロードにつながるネイティブのスクリプトステージャーでmacOS利用者を標的にした。APT38はまた、AppleScriptベースの認証情報収集用の構成要素も使用した。",
+  "procedure/S0281/0": "Dokは、永続化のためにログイン項目を作成するためにAppleScriptを使用する。",
+  "procedure/S0482/0": "Bundloreは、悪意あるJavaScriptをブラウザに注入するためにAppleScriptを使用できる。",
+  "procedure/S0595/0": "ThiefQuestは、Launch AgentとLaunch Daemonを介した永続化を起動するために、AppleScriptの<code>osascript -e</code>コマンドを使用する。",
+  "procedure/S1048/0": "macOS.OSAMinerは、Launch Agentの`.plist`ファイル内の`do shell script`コマンドを介して自分自身を呼び出すために`osascript`を使用した。",
+  "procedure/S1153/0": "Cuckoo Stealerは、パスワードを盗むプロンプトの生成、ファイル・フォルダの複製、環境変数の設定のためにosascriptを使用できる。",
+  "procedure/S9010/0": "GlassWormは、macOSのキーチェーンからパスワードを取得するシェルコマンドを実行する`set keychainPassword to do shell script`を含む形でAppleScriptを活用した。"
+ },
+ "supplement": {
+  "summary": "macOSに標準で備わるスクリプト言語AppleScriptを悪用する技術。アプリケーション間メッセージ（AppleEvents）を介して、開いているアプリケーションの操作やダイアログ表示などができ、osascriptを使わず直接ネイティブAPIから実行することもできる。",
+  "analogy": "家の中のすべての家電が、共通の赤外線リモコン信号に応答するよう作られているため、一つの万能リモコン（AppleScript）さえ手に入れれば、テレビもエアコンも照明も、部屋をまたいで自由に操作できてしまう状況に近い。",
+  "learn": ["AppleScriptのコードは`osascript`を経由せず、ネイティブAPI（NSAppleScriptなど）を使ってバイナリの内部から直接実行できるため、コマンドラインの監視だけでは見落とされる可能性があること"],
+  "interpretation": ["対策がM1038（アプリケーション制御）とM1045（署名の必須化）の2つに絞られている点は、WindowsのPowerShell（T1059.001）に比べて、macOSのAppleScriptに対する緩和策の選択肢がまだ少ないことを示唆している。署名要件を正しく運用できなければ、防御側に残る手段は限られる。"]
+ }
+}

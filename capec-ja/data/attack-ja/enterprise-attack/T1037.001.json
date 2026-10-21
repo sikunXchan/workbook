@@ -1,0 +1,27 @@
+{
+ "id": "T1037.001",
+ "source_sha": "682c8daa7efa5ced",
+ "status": "done",
+ "seg": {
+  "name": "ログオンスクリプト（Windows）",
+  "description/0": "攻撃者は、ログオン初期化時に自動的に実行されるWindowsのログオンスクリプトを使って永続化を確立することがある。Windowsでは、特定の利用者やグループがシステムにログオンするたびに、ログオンスクリプトを実行できる。これは、スクリプトへのパスを<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーに追加することで行われる。",
+  "description/1": "攻撃者は、これらのスクリプトを使って単一のシステム上で永続化を維持することがある。ログオンスクリプトのアクセス設定によっては、ローカルの認証情報、または管理者アカウントが必要になることがある。",
+  "mitigation/M1024/0": "レジストリハイブに適切な権限が設定されていることを確かめ、利用者がログオンスクリプトのキーを変更して永続化につながることを防ぐ。",
+  "procedure/G0007/0": "APT28のローダー型トロイの木馬は、永続化を確立するために<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーを追加する。",
+  "procedure/G0080/0": "Cobalt Groupは、<code>HKCU\\Environment\\UserInitMprLogonScript</code>に次段のマルウェアのファイル名を登録することで永続化を追加した。",
+  "procedure/S0044/0": "JHUHUGITは、永続化を確立するために<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーにWindowsのシェルスクリプトを登録した。",
+  "procedure/S0251/0": "Zebrocyは、<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーに追加するログオンスクリプトによって永続化を行う。",
+  "procedure/S0438/0": "Attorのディスパッチャーは、ログオンスクリプトを持つレジストリキー<code>HKEY_CURRENT_USER\\Environment \"UserInitMprLogonScript\" </code>を追加することで永続化を確立できる。",
+  "procedure/S0526/0": "KGH_SPYは、ログオンスクリプトを実行するために<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーを設定する機能を持つ。"
+ },
+ "supplement": {
+  "summary": "Windowsのレジストリキー`HKCU\\Environment\\UserInitMprLogonScript`に悪意あるスクリプトへのパスを登録することで、利用者のログオンごとに自動実行させる、起動・ログオン初期化スクリプト(T1037)のWindows向けサブ技術。",
+  "analogy": "社員証をタッチすると自動的に鳴る『入館音』の設定を書き換えて、入館音と同時に別の処理（例えば、その社員の入退室記録を別の場所にも密かに転送する処理）も一緒に実行させるようにするのに似ている。利用者が普段意識しない、ログオンという『当たり前の動作』に便乗する点が特徴である。",
+  "learn": [
+   "`UserInitMprLogonScript`という1つのレジストリキーが、7件もの実在するマルウェア・攻撃グループの事例で共通して悪用されていること（手口として非常に定着している）"
+  ],
+  "interpretation": [
+   "この手口が7件という比較的多くの実例を持つ理由は、レジストリキー1つを書き換えるだけで済むという実装の単純さにあると考えられる。親技術のページで述べられている対策（レジストリ権限の制限）が、このサブ技術にもそのまま直接効くという点で、親子の技術関係が防御策の面でも一貫していることがわかる。"
+  ]
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "id": "T1001.003",
+ "source_sha": "f79c5dc29719597e",
+ "status": "done",
+ "seg": {
+  "name": "プロトコルまたはサービスのなりすまし",
+  "description/0": "攻撃者は、遠隔操作(C2)活動を偽装し、解析の取り組みを阻むため、正規のプロトコルやWebサービスの通信になりすます場合がある。正規のプロトコルやWebサービスになりすますことで、攻撃者は自分の遠隔操作(C2)通信を正規のネットワーク通信に紛れ込ませることができる。",
+  "description/1": "攻撃者は、偽のSSL/TLSハンドシェイクになりすまして、それ以降の通信がSSL/TLSで暗号化されているかのように見せかけ、一部のセキュリティツールの解析を妨げたり、信頼された相手との通信であるかのように見せたりすることがある。",
+  "description/2": "攻撃者は、正規のプロトコルを利用して、想定されるWeb通信や信頼されたサービスになりすますこともある。例えば、攻撃者はHTTPヘッダー、URIエンドポイント、SSL証明書、送信されるデータを操作して、C2通信を偽装したり、Gmail、Google Drive、Yahoo Messengerのような正規のサービスを模倣したりすることがある。",
+  "mitigation/M1031/0": "特定の攻撃者のマルウェアに関する通信を識別するネットワーク上の特徴（シグネチャ）を使う、ネットワーク侵入検知・防止システムは、ネットワークレベルで一部の難読化活動を緩和するために使える。",
+  "procedure/G0032/0": "Lazarus Groupのマルウェアはまた、TLSを模倣しつつ異なる暗号化方式を使う「FakeTLS」と呼ばれる独自の通信暗号化手法を使用し、SSL通信の検査・復号を回避する可能性がある。",
+  "procedure/G0126/0": "Higaisaは、C2通信のためにFakeTLSセッションを使用した。",
+  "procedure/G0129/0": "Mustang Pandaは、正規のネットワーク通信に紛れ込ませるため、ネットワークパケット内のTLSレコードヘッダーを利用して各種バージョンのTLSプロトコルになりすました。Mustang Pandaは、C2サーバーとの通信にFakeTLSを使用した。",
+  "procedure/S0022/0": "Uroburosは、正常なネットワーク通信に紛れ込むため、TCP・UDP・HTTP・SMTP・DNSを含む一般的なプロトコルの上に乗る独自の通信方式を使用できる。",
+  "procedure/S0076/0": "FakeMのC2通信は、MSNやYahoo!メッセンジャーのような正規のメッセンジャーアプリケーションが生成するデータに似せることで検知を回避しようとする。さらに、FakeMの一部の変種は、C2サーバーへの通信に改変されたSSLコードを使用し、SSL復号を無効化する。",
+  "procedure/S0154/0": "Cobalt Strikeは、C2通信にHTTPプロトコルを利用でき、実際のデータをHTTPヘッダー・URIパラメータ・トランザクション本体のいずれかに隠すか、URIに付加して隠す。Cobalt Strikeはまた、オンライン証明書状態プロトコル(OCSP)の通信を模倣するため、HTTPヘッダーに「Host: ocsp.verisign.com」を追加することもある。",
+  "procedure/S0181/0": "FALLCHILLは、C2サーバーとの通信に偽のトランスポート層セキュリティ(TLS)を使用する。",
+  "procedure/S0239/0": "Bankshotは、公開証明書を使って偽のTLSハンドシェイクを生成し、C2のネットワーク通信を偽装する。",
+  "procedure/S0245/0": "BADCALLは、C2の際にFakeTLS手法を使用する。",
+  "procedure/S0246/0": "HARDRAINは、C2サーバーとの通信にFakeTLSを使用する。",
+  "procedure/S0260/0": "InvisiMoleは、独自のHTTP「動詞」であるHIDE・ZVVP・NOPを使って、HTTPプロトコルを模倣できる。",
+  "procedure/S0387/0": "KeyBoyは、C2通信でSSLになりすますため、独自のSSLライブラリを使用する。",
+  "procedure/S0439/0": "Okrumは、C2通信にHTTPプロトコルを利用する一方で、実際のメッセージをHTTPリクエストのCookieおよびSet-Cookieヘッダーに隠す。",
+  "procedure/S0559/0": "SUNBURSTは、そのネットワーク通信をOrion Improvement Program(OIP)プロトコルに偽装した。",
+  "procedure/S0586/0": "TAINTEDSCRIBEは、セッション認証にFakeTLSを使用した。",
+  "procedure/S1100/0": "Ninjaは、カスタマイズされたHTTP URLパスとヘッダーを使って正規のサービスを模倣し、悪意ある通信を隠す機能を持つ。",
+  "procedure/S1120/0": "FRAMESTINGは、Ivanti Connect Secureアプライアンスが VPNセッションの維持に使用するCookieの名称を模倣するため、`DSID`という名前のCookieを使用する。",
+  "procedure/S1226/0": "BOOKWORMは、HTTP POSTリクエストを変更し、正規の通信に似せかけた。",
+  "procedure/S1227/0": "StarProxyは、正規のネットワーク通信に紛れ込ませるため、ネットワークパケット内のTLSレコードヘッダーを利用して各種バージョンのTLSプロトコルになりすました。StarProxyは、C2サーバーとの通信にFakeTLSを使用した。",
+  "procedure/S1228/0": "PUBLOADは、HTTP POSTリクエストを変更し、正規の通信に似せかけた。PUBLOADは、正規のネットワーク通信に紛れ込ませるため、ネットワークパケット内にFakeTLSヘッダーを使って各種バージョンのTLSプロトコルになりすました。PUBLOADは、バイト列「17 03 03」を使ったFakeTLSヘッダーを使用した。",
+  "procedure/S1239/0": "TONESHELLは、正規のネットワーク通信に紛れ込ませるため、ネットワークパケット内にFakeTLSヘッダーを使って各種バージョンのTLSプロトコルになりすました。TONESHELLの変種は、TLSv1.2を表す`0x17 0x03 0x03`、TLSv1.3を表す`0x17 0x03 0x04`というバイト列を使ったFakeTLSヘッダーを利用した。",
+  "procedure/S9061/0": "LIGHTRAILは、通信に紛れ込むため、「Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136」を含む、ハードコードされたUser Agent文字列を利用した。"
+ },
+ "supplement": {
+  "summary": "SSL/TLSハンドシェイクや、Gmail・Google Driveのような正規のWebサービスの通信を模倣することで、C2通信を正規の通信に紛れ込ませる、データ難読化の中の一つのサブ技術。",
+  "terms": [
+   { "term": "FakeTLS", "en": "FakeTLS", "explain": "TLSハンドシェイクの見た目だけを模倣しつつ、実際には標準のTLSとは異なる独自の暗号化方式で通信する手法。正規のTLS通信として検査されると判定を誤らせる。" }
+  ],
+  "analogy": "本物の宅配業者の制服とロゴ入りの車を用意して、荷物の中身を怪しまれずに建物のセキュリティを通過してしまう手口に近い。見た目（プロトコルの体裁）を本物に似せることで、内容（実際の通信内容）の検査を省かれやすくする。",
+  "learn": ["SSL/TLSのハンドシェイクという、通常は「暗号化されている＝安全」と見なされがちな仕組み自体が、見た目だけを模倣される対象になり得ること"],
+  "interpretation": ["多数の攻撃グループ・マルウェアがFakeTLSという同じ名前の手法を使っている事実は、この手口が攻撃者コミュニティの中で広く知られ、再利用されている確立された技術であることを示している。SSL/TLS通信を『暗号化されているから検査不要』と一律に除外する監視の運用は、この種のなりすましに対して特に脆弱になる。"]
+ }
+}

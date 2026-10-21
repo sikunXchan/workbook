@@ -1,0 +1,31 @@
+{
+ "id": "T1070.007",
+ "source_sha": "c90d158def22ecaa",
+ "status": "done",
+ "seg": {
+  "name": "ネットワーク接続履歴・設定の消去",
+  "description/0": "攻撃者は、自分の作戦の痕跡を消し去るため、悪意あるネットワーク接続の証拠を消去・削除することがある。リモートサービスや外部リモートサービスのような、ネットワーク接続を必要とする振る舞いからは、設定情報や、接続履歴を示すさまざまな痕跡が、システム上やアプリケーションのログに作られることがある。防御側は、これらの痕跡を使って、攻撃者が作ったネットワーク接続を監視・分析できる。",
+  "description/1": "ネットワーク接続の履歴は、さまざまな場所に保存されうる。例えば、RDP接続の履歴は、次のようなWindowsレジストリの値の下に保存されることがある。",
+  "description/2": "* <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Default</code>\n* <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Servers</code>",
+  "description/3": "Windowsはまた、最近のRDP接続についての情報を、`C:\\Users\\%username%\\Documents\\Default.rdp`や`C:\\Users\\%username%\\AppData\\Local\\Microsoft\\Terminal\nServer Client\\Cache\\`のようなファイルに保存することがある。同様に、macOSやLinuxのホストも、接続履歴を示す情報をシステムログ（`/Library/Logs`や`/var/log/`に保存されるものなど）に保存することがある。",
+  "description/4": "悪意あるネットワーク接続には、サードパーティ製アプリケーションやネットワーク設定の変更（システムファイアウォールの無効化・改変や、プロキシを有効にする改ざんなど）が必要になることもある。攻撃者は、痕跡を隠す、または防御側の分析を妨げるために、このデータを削除・改変することがある。",
+  "mitigation/M1024/0": "生成されたイベントファイルやログを、適切な権限と認証で保護し、権限昇格の機会を防ぐことで、攻撃者が権限を昇格させる機会を限定する。",
+  "mitigation/M1029/0": "イベントをログサーバーやデータ保管庫へ自動的に転送し、攻撃者がローカルシステム上のデータを見つけて操作できる状況を防ぐ。可能であれば、イベント報告の時間差を最小化し、ローカルシステムへの長期間の保存を避ける。",
+  "procedure/G1017/0": "Volt Typhoonは、サーバーログを調べて自分のIPアドレスを削除した。",
+  "procedure/G1045/0": "Salt Typhoonは、活動の痕跡を消すためにネットワーク設定ファイルを元に戻したり改変したりした。",
+  "procedure/G1048/0": "UNC3886は、複数のログソースから、脅威アクターのIPアドレスを含む特定のイベントを消去した。",
+  "procedure/G1059/0": "NIMBUS MANTICOREは、`HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Default`や`HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Servers`を含む、RDP接続履歴のレジストリキーを消去した。",
+  "procedure/S0559/0": "SUNBURSTはまた、実行中に作成したファイアウォールのルールを削除した。",
+  "procedure/S9051/0": "The Gentlemen Ransomwareは、`del /f /q %SystemRoot%\\System32\\LogFiles\\RDP*\\*\\*.*`というコマンドを使って、RDPのログを削除した。"
+ },
+ "supplement": {
+  "summary": "RDP接続履歴のレジストリキーやシステムログなど、ネットワーク接続の跡が残る場所を、攻撃者が自ら消して回る、防御回避のための後片付け技術。",
+  "analogy": "訪問者記録簿に自分の名前を書いた後、帰り際にそのページを丸ごと破って持ち去るのに似ている。訪問した事実そのものは残らないが、記録簿がなぜ1ページ欠けているかに気づけば、何かが隠されたと分かる。",
+  "learn": [
+   "RDP接続履歴がレジストリの決まった場所（`Terminal Server Client\\Default`等）に残ることと、OSごとに記録の場所（Windowsのレジストリ・ファイル、macOS/Linuxのシステムログ）が異なること"
+  ],
+  "interpretation": [
+   "この技術はステルス（TA0005）に分類されている。接続の記録を消す行為そのものは監視のしくみに干渉するように見えるが、ATT&CKでは「痕跡を残さない振る舞い」の一種として扱われており、セキュリティ製品本体を無効化する防御機構の無効化（TA0112）とは別の戦術に位置づけられている点に注意したい。"
+  ]
+ }
+}

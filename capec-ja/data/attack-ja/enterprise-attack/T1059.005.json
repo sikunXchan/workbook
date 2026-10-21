@@ -1,0 +1,42 @@
+{
+ "id": "T1059.005",
+ "source_sha": "9d8f7a209a39b9a7",
+ "status": "done",
+ "seg": {
+  "name": "Visual Basic",
+  "description/0": "攻撃者は、実行のためにVisual Basic（VB）を悪用することがある。VBはMicrosoftが開発したプログラミング言語で、Component Object ModelやWindows API経由のネイティブAPIなど、多くのWindows技術と相互運用性を持つ。レガシーと位置づけられ今後の新機能追加は予定されていないものの、VBは.NET Frameworkやクロスプラットフォームの.NET Coreにも統合・サポートされている。",
+  "description/1": "VBをもとにした派生言語として、Visual Basic for Applications（VBA）やVBScriptも作られている。VBAはMicrosoft Officeや複数のサードパーティ製アプリケーションに組み込まれた、イベント駆動型のプログラミング言語であり、文書にマクロを持たせてホスト上での作業や機能の実行を自動化できるようにする。VBScriptはWindowsホストの標準のスクリプト言語であり、Internet Explorerに配信されるHTMLアプリケーション（HTA）のWebページで、JavaScriptの代わりに使われることもある（ただし、最近のほとんどのブラウザはVBScriptをサポートしていない）。",
+  "description/2": "攻撃者は、悪意あるコマンドを実行するためにVBのペイロードを使うことがある。よくある悪意ある使われ方には、VBScriptによる挙動の実行の自動化や、スピアフィッシングの添付ファイルのペイロードにVBAの内容を埋め込むこと（Mark-of-the-Webバイパスを併用して実行を可能にする場合もある）が含まれる。",
+  "mitigation/M1021/0": "スクリプトブロック用の拡張機能は、悪用の過程でよく使われるスクリプトやHTAファイルの実行を防ぐのに役立つ。広告を通じて配信される悪意あるコードについては、広告ブロッカーがそのコードの実行そのものを未然に防ぐのに役立つ。",
+  "mitigation/M1038/0": "適切な場面でアプリケーション制御を使う。インターネットから取得されたVBAマクロは、ファイルのMark of the Web（MOTW）属性に基づき、Windowsバージョン2203以降、既定でOfficeアプリケーション（Access、Excel、PowerPoint、Visio、Wordなど）での実行をブロックされる場合がある。",
+  "mitigation/M1040/0": "Windows 10では、攻撃面の減少（ASR）ルールを有効にして、Visual Basicのスクリプトが悪意あるダウンロード済みコンテンツを実行するのを防ぐことができる。",
+  "mitigation/M1042/0": "不要なVBの構成要素を無効化、またはアクセスを制限する。",
+  "mitigation/M1049/0": "アンチウイルスを使って、疑わしいファイルを自動的に検疫することができる。",
+  "procedure/G0010/0": "Turlaは、その活動全体を通じてVBSスクリプトを使用している。",
+  "procedure/G0021/0": "Molerats は、標的のマシン上でVBScriptで構築されたものを含む、さまざまなインプラントを使用した。",
+  "procedure/G0032/0": "Lazarus Groupは、悪意あるコードを実行するために、Word文書にVBAと埋め込みマクロを使用した。",
+  "procedure/G0034/0": "Sandworm Teamは、SSHサーバーを動かすVBScriptを作成した。",
+  "procedure/G0040/0": "Patchworkは、被害者のマシン上でVisual Basic Scripts（VBS）を使用した。",
+  "procedure/G0046/0": "FIN7は、被害者のマシン上でタスクを実行する手助けとしてVBSスクリプトを使用した。",
+  "procedure/G0047/0": "Gamaredon Groupは、文書テンプレートに悪意あるマクロを埋め込み、VBScriptを実行させた。Gamaredon Groupはまた、埋め込みマクロ付きのMicrosoft Outlook VBAプロジェクトも配送した。さらに、Gamaredon Groupはwscript.exeを使ってVBScriptファイルを実行した。",
+  "procedure/G0049/0": "OilRigは、侵害したホスト上での実行にVBScriptマクロを使用した。",
+  "procedure/G0050/0": "APT32は、マクロ・COMスクリプトレット・VBSスクリプトを使用した。",
+  "procedure/G0059/0": "Magic Houndのマルウェアは、実行のためにVBSスクリプトを使用した。",
+  "procedure/G0060/0": "BRONZE BUTLERは、実行のためにVBSおよびVBEスクリプトを使用した。",
+  "procedure/G0062/0": "TA459は、実行用のVBScriptを持つ。",
+  "procedure/G0064/0": "APT33は、ペイロードの配送を開始するためにVBScriptを使用した。",
+  "procedure/G0065/0": "Leviathanは、VBScriptを使用した。",
+  "procedure/G0067/0": "APT37は、シェルコードとVBAスクリプトを実行し、Base64文字列を復号する。"
+ },
+ "supplement": {
+  "summary": "Microsoft Officeに組み込まれたVBAマクロや、Windowsの標準スクリプト言語であるVBScriptを悪用して、悪意あるコードを実行する技術。スピアフィッシングの添付ファイルに仕込まれたマクロの実行が代表的な侵入経路になる。",
+  "analogy": "Officeの文書に自動化マクロを仕込む手口は、年賀状の自動返信機能を悪用して、開封しただけで知らない宛先に勝手に返信が送られてしまうような状態に近い。文書を開くというごく普通の操作の裏で、仕込まれた自動処理が静かに動き出す。",
+  "learn": [
+   "VBAマクロが「文書を開くだけで実行される」ことがあるため、スピアフィッシングの添付ファイルと組み合わされやすいこと",
+   "MOTW（Mark of the Web）属性によるマクロの既定ブロックが、Windows 2203以降の重要な対策として導入されたこと"
+  ],
+  "interpretation": [
+   "この技術には5種類の対策（Web由来コンテンツの制限、アプリケーション制御、ASRルール、機能の無効化、アンチウイルス）が並んでいることから、VBA/VBScriptの悪用が単一の対策では防ぎきれない、文書の受信からマクロの実行、ペイロードの起動までの複数段階にわたる問題であることがわかる。実際、MOTW属性によるマクロブロックが比較的新しい既定の防御であるという事実は、長年この技術が有効な侵入経路であり続けた理由を物語っている。"
+  ]
+ }
+}

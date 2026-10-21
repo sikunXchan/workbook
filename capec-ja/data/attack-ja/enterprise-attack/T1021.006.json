@@ -1,0 +1,32 @@
+{
+ "id": "T1021.006",
+ "source_sha": "4dcbbfee862bf008",
+ "status": "done",
+ "seg": {
+  "name": "Windows Remote Management",
+  "description/0": "攻撃者は、有効なアカウントを使って、Windows Remote Management（WinRM）で遠隔システムと対話することがある。攻撃者はその後、ログインした利用者として操作を行うことができる。",
+  "description/1": "WinRMは、Windowsのサービス名であり、かつ利用者が遠隔システムと対話（実行可能ファイルの実行、レジストリの変更、サービスの変更など）できるようにするプロトコルの名前でもある。`winrm`コマンドや、PowerShellなどの多くのプログラムから呼び出すことができる。WinRMは、Windows Management Instrumentationと遠隔で対話する手段として使用できる。",
+  "mitigation/M1026/0": "サービスが必要な場合は、専用のWinRMアカウントと権限で重要な区画を厳重に管理する。",
+  "mitigation/M1030/0": "サービスが必要な場合は、専用のWinRM基盤で重要な区画を厳重に管理し、特定のデバイス間のみ通信を許可するようホストファイアウォールでWinRMアクセスを制限する、WinRMのベストプラクティスに従う。",
+  "mitigation/M1042/0": "WinRMサービスを無効化する。",
+  "procedure/G0027/0": "Threat Group-3390は、遠隔実行を可能にするためにWinRMを使用した。",
+  "procedure/G0102/0": "Wizard Spiderは、被害者のネットワーク内を横展開するためにWindows Remote Managementを使用した。",
+  "procedure/G0114/0": "Chimeraは、横展開のためにWinRMを使用した。",
+  "procedure/G1016/0": "FIN13は、侵害したネットワーク内をアプリケーションサーバーやSQLサーバー経由で横展開するために`WMI`を利用した。",
+  "procedure/G1053/0": "Storm-0501は、PowerShellをWindows Remote Management（WinRM）経由で遠隔コード実行に使う、侵害後利用ツールとして知られるEvil-WinRMを利用した。",
+  "procedure/S0154/0": "Cobalt Strikeは、遠隔のホストでペイロードを実行するために`WinRM`を使用できる。",
+  "procedure/S0692/0": "SILENTTRINITYは、`TrustedHosts`を追跡し、WinRM経由でこれらの標的へ横展開できる。",
+  "procedure/S1063/0": "Brute Ratel C4は、ピボットのためにWinRMを使用できる。"
+ },
+ "supplement": {
+  "summary": "Windows標準の遠隔管理プロトコルWinRMを使って、実行可能ファイルの実行やレジストリ変更など、遠隔システムへの管理操作を行う横展開の技術。`winrm`コマンドだけでなくPowerShellからも呼び出せるため、管理者の日常業務との境界が曖昧になりやすい。",
+  "analogy": "工場の各機械に設置された、遠隔から操作パネルを操作できる保守用のインターフェースを、保守担当者以外の誰かが使って機械を勝手に動かしてしまうようなもの。インターフェース自体は正規の保守のために存在する。",
+  "learn": [
+   "WinRMがWindows Management Instrumentation（WMI）とも連携して遠隔操作に使われること（FIN13の例）",
+   "Evil-WinRMのような侵害後利用ツールが、WinRM経由のPowerShell実行を専用に自動化していること"
+  ],
+  "interpretation": [
+   "対策として挙げられている『専用のWinRMアカウントと権限で重要な区画を管理する』という考え方は、WinRMを完全に無効化できない環境（遠隔管理が業務上必要な環境）でも、管理用アカウントとWinRMアクセスの範囲を業務ネットワークの他の部分から分離することで、侵害された一般アカウントからの悪用を防げることを示している。"
+  ]
+ }
+}

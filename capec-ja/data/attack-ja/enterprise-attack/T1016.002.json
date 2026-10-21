@@ -1,0 +1,28 @@
+{
+ "id": "T1016.002",
+ "source_sha": "c719a7bd929b0f79",
+ "status": "done",
+ "seg": {
+  "name": "Wi-Fiの探索",
+  "description/0": "攻撃者は、侵害したシステム上で、ネットワーク名やパスワードなどのWi-Fiネットワークについての情報を探すことがある。攻撃者は、現在および将来のキャンペーンを支えるため、アカウントの探索・リモートシステムの探索・その他の探索や認証情報アクセスの活動の一部として、Wi-Fiの情報を利用することがある。",
+  "description/1": "攻撃者は、ホストからさまざまな種類のWi-Fiネットワーク情報を収集することがある。例えばWindowsでは、デバイスがこれまでに接続したすべてのWi-Fiネットワークの名前とパスワードが、`netsh wlan show profiles`でWi-Fi名を列挙した後、`netsh wlan show profile “Wi-Fi name” key=clear`でそのWi-Fiネットワークに対応するパスワードを表示するという形で取得できる場合がある。さらに、ローカルで到達可能なWi-Fiネットワークの名前やその他の詳細は、`wlanAPI.dll`のネイティブAPI関数の呼び出しによって調べることもできる。",
+  "description/2": "Linuxでは、デバイスがこれまでに接続したすべてのWi-Fiネットワークの名前とパスワードが、`/etc/NetworkManager/system-connections/`配下のファイルにあることがある。macOSでは、既知のWi-Fiのパスワードが`security find-generic-password -wa wifiname`（管理者のユーザー名・パスワードが必要）で特定できることがある。",
+  "procedure/G0059/0": "Magic Houndは、デバイスがこれまでに接続したすべてのWi-Fiネットワークの名前とパスワードを収集した。",
+  "procedure/S0331/0": "Agent Teslaは、デバイスがこれまでに接続したすべてのWi-Fiネットワークの名前とパスワードを収集できる。",
+  "procedure/S0367/0": "Emotetは、ローカルで到達可能なすべてのWi-Fiネットワークの名前を抽出し、新しいネットワークへ広がるために総当たり攻撃を行うことができる。",
+  "procedure/S0409/0": "Macheteは、`netsh wlan show networks mode=bssid`と`netsh wlan show interfaces`コマンドを使って、近くのすべてのWiFiネットワークと接続済みインターフェースを一覧表示する。",
+  "procedure/S0674/0": "CharmPowerは、特定のWi-Fiプロファイルの詳細を一覧表示するために`netsh wlan show profiles`を使用できる。",
+  "procedure/S1228/0": "PUBLOADは、`netsh wlan show profiles`、`netsh wlan show interface`、`netsh wlan show`を利用して、被害者のホストからWi-Fiネットワークの情報を収集した。"
+ },
+ "supplement": {
+  "summary": "侵害したデバイスが過去に接続したWi-Fiネットワークの名前とパスワードを探す技術。Windows・Linux・macOSそれぞれにOS標準の保存場所・コマンドがあり、見つけたパスワードは別のネットワークへの侵入の足がかりとして使われることがある。",
+  "analogy": "持ち主のスマートフォンを一時的に手に入れた人が、設定アプリを開いて「過去に接続したWi-Fi」の一覧とその保存済みパスワードを確認し、持ち主の自宅や勤務先のネットワークに後から接続できるようにしてしまう行為に相当する。",
+  "learn": [
+   "WindowsではWi-Fiのパスワードが平文で取り出せるコマンド（`netsh wlan show profile ... key=clear`）が標準で用意されていること",
+   "Wi-Fi探索が単独の目的ではなく、認証情報アクセスやリモートシステムの探索など、他の探索活動を支えるための手段としても使われること"
+  ],
+  "interpretation": [
+   "1台のノートPCに保存されたWi-Fiの認証情報が、オフィスのネットワークだけでなく、従業員の自宅や過去に訪れた取引先のネットワークへの足がかりにもなり得るという点は見過ごされがちである。1つのデバイスの侵害が、組織の境界を越えて、個人や提携先のネットワークにまで影響を広げる可能性があることを示している。"
+  ]
+ }
+}

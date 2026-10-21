@@ -1,0 +1,45 @@
+{
+ "id": "T1036.005",
+ "source_sha": "5d35249bb9e4f123",
+ "status": "done",
+ "seg": {
+  "name": "正規のリソースの名前・場所への偽装",
+  "description/0": "攻撃者は、ファイル・レジストリキー・その他のリソースに名前を付けたり配置したりする際、正規のものの名前や場所に一致させる、または近づけることがある。これは防御・観測を回避するために行われる。",
+  "description/1": "この手口は、実行ファイルを一般に信頼されるディレクトリ（例：System32配下）に置く、または正規の信頼されたプログラムの名前（例：`svchost.exe`）を与えることで行われる。あるいは、Windowsのレジストリキーに、正規のプログラムが使うキーに近いものを与える場合もある。コンテナ化された環境では、脅威アクターが信頼された名前空間や、コンテナのポッド・クラスタの命名規則に一致するリソースを作成することがある。",
+  "mitigation/M1022/0": "`C:\\Windows\\System32` のようなフォルダを保護するため、ファイルシステムのアクセス制御を使用する。",
+  "mitigation/M1038/0": "よく使われるOS標準のユーティリティについて、ファイル名以外の属性によってプログラムの実行を制限するアプリケーション制御ツールを使用する。",
+  "mitigation/M1045/0": "署名済みのバイナリ・イメージを必須とする。",
+  "procedure/G0004/0": "Ke3changは、マルウェアを正規のインストール済みソフトウェアのパス（`C:\\ProgramFiles\\Realtek\\Audio\\HDA\\AERTSr.exe`、`C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitRdr64.exe`、`C:\\Program Files (x86)\\Adobe\\Flash Player\\AddIns\\airappinstaller\\airappinstall.exe`、`C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd64.exe`）に配置している。",
+  "procedure/G0006/0": "Adobe Acrobat Readerの正規のプロセス名であるAcroRD32.exeというファイル名が、APT1によってマルウェアの名前として使われた。",
+  "procedure/G0007/0": "APT28は、持ち出したデータを含むファイルの拡張子を変更して無害に見せかけたほか、Webシェルのインスタンスの名前を正規のOWAページのように変更した。",
+  "procedure/G0008/0": "Carbanakは、Windowsの共有サービスホストプログラムの名前である「svchost.exe」という名前をマルウェアに付けた。",
+  "procedure/G0010/0": "Turlaは、LunarWebの構成要素にZabbixエージェントのログを模した名前を付けた。",
+  "procedure/G0012/0": "Darkhotelは、SSH（Secure Shell）ツールに偽装したマルウェアを使用した。",
+  "procedure/G0016/0": "APT29は、悪意あるDLLに正規の名前を付け直して無害に見せかけた。また、侵害したサービスプリンシパルの表示名に一致する共通名（Common Name）を持つAzure AD証明書を作成した。",
+  "procedure/G0018/0": "admin@338のアクターは、次のコマンドを使ってツールの1つを無害なファイル名に変更した：<code>ren \"%temp%\\upload\" audiodg.exe</code>",
+  "procedure/G0019/0": "Naikonは、悪意あるプログラムをGoogle Chrome、Adobe、VMwareの実行ファイルに偽装した。",
+  "procedure/G0032/0": "Lazarus Groupは、悪意あるコードの名前を変更し、Microsoftのナレーターなどの正規のファイルに偽装した。",
+  "procedure/G0033/0": "Poseidon Groupのツールは、自己防衛の手段としてアンチウイルスのプロセスを装おうとする。",
+  "procedure/G0034/0": "Sandworm Teamは、悪意あるバイナリにexplorer.exeという名前を付けることで検知を回避した。",
+  "procedure/G0040/0": "Patchworkは、ペイロードをスタートアッププログラムのフォルダに「Baidu Software Update」としてインストールした。また、第2段階のペイロードを「Net Monitor」としてスタートアップに追加した。さらに、QuasarRATのバイナリをmicrosoft_network.exeやcrome.exeという名前のファイルとして配置した。",
+  "procedure/G0045/0": "menuPassは、悪意あるファイルを正規のものに見えるように変更する様子が確認されている。",
+  "procedure/G0046/0": "FIN7は、Darksideランサムウェアをsleep.exeというファイル名で実行しようとした。また、Wondershareソフトウェアスイートに関連するWsTaskLoad.exeを模倣し、同じ名前の悪意ある実行ファイルを使用した。",
+  "procedure/G0047/0": "Gamaredon Groupは、<code>svchosst</code>などの正規のプロセス名を使ってマルウェアを隠した。また、侵攻に関連するOffice文書に偽装した悪意あるZIPアーカイブを使用した。",
+  "procedure/G0049/0": "OilRigは、ダウンロードしたPlinkトンネリングユーティリティのコピーに\\ProgramData\\Adobe.exeという名前を付けた。",
+  "procedure/G0050/0": "APT32は、NetCatバイナリの名前をkb-10233.exeに変更してWindowsの更新プログラムに偽装した。また、Cobalt Strikeビーコンのペイロードをinstall_flashplayers.exeという名前に変更した。",
+  "procedure/G0054/0": "Sowbugは、自身のツールをWindowsやAdobe Readerのソフトウェアに偽装する名前を付けた。例としてadobecms.exeというファイル名と<code>CSIDL_APPDATA\\microsoft\\security</code>というディレクトリを使用した。",
+  "procedure/G0056/0": "PROMETHIUMは、悪意あるインストーラーファイルを正規のソフトウェアインストーラーと束ねることで偽装した。",
+  "procedure/G0059/0": "Magic Houndは、`dllhost.exe`を使ってFast Reverse Proxy（FRP）を、`MicrosoftOutLookUpdater.exe`を使ってPlinkを隠した。",
+  "procedure/G0060/0": "BRONZE BUTLERは、ファイル共有サーバー上の既存ファイルと同じ名前をマルウェアに付け、利用者が意図せず他のシステムでマルウェアを起動・インストールしてしまうようにした。"
+ },
+ "supplement": {
+  "summary": "ファイルやレジストリキーなどのリソースに、正規のもの（信頼されたフォルダ名・プログラム名）とそっくりの名前・場所を与えることで、偽装(T1036)の中でも「よく似た本物になりすます」ことに特化したサブ技術。",
+  "analogy": "偽の警備員が、本物の警備会社と似たロゴ・名札・制服を身につけて正門に立ち、誰も疑わずに通過させてしまうのに似ている。『そこにあって当然のもの』に見せかけることが、このサブ技術の核心である。",
+  "learn": [
+   "`svchost.exe`やSystem32フォルダのような、OSにとって『見慣れた』名前・場所が、攻撃者にとって絶好の偽装先になること"
+  ],
+  "interpretation": [
+   "200件を超える実際の攻撃グループ・マルウェアの事例数は、この手口が特定の高度な攻撃者だけのものではなく、ほぼすべての攻撃者にとって標準的な手口になっていることを示している。ファイル名だけでなくファイルのハッシュ値・署名・振る舞いも併せて検証する多層的な防御の必要性がここから読み取れる。"
+  ]
+ }
+}
