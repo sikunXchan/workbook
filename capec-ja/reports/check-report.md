@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-21T23:46:15.276Z
+実行日時: 2026-10-21T23:48:35.360Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -8,12 +8,12 @@
 - ✅ View: 公式XML 13件 / ページ 13件
 
 ## 2. 内部リンク切れ
-- ✅ 内部リンク切れ 0件（全38452件を確認）
+- ✅ 内部リンク切れ 0件（全38453件を確認）
 
 ## 3. 英語のまま残っている本文
-- ❌ 未翻訳の箇所: 17323件
+- ❌ 未翻訳の箇所: 17299件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 230件
+- ❌ 本文に残る英語（4語以上連続）: 231件
 -   attack/enterprise-attack/index.html: ATT CK 
 MITRE ATT CK
 -   attack/enterprise-attack/techniques/T1001.003/index.html: Host: ocsp.verisign.com
@@ -186,6 +186,7 @@ T
 -   attack/enterprise-attack/techniques/T1078.001/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
 -   attack/enterprise-attack/techniques/T1078.001/index.html: powershell.exe  /c net user DefaultAccount /active:yes
 -   attack/enterprise-attack/techniques/T1078.004/index.html: Azure AD Graph API
+-   attack/enterprise-attack/techniques/T1082/index.html: download /code   code systeminfo
 -   attack/enterprise-attack/techniques/T1087/index.html: ESXiIaaSIdentity ProviderLinuxmacOSOffice SuiteSaaSWindows
 T
 -   attack/enterprise-attack/techniques/T1098/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
@@ -240,8 +241,6 @@ www.evil.com
 -   capec/279/index.html: Simple Object Access Protocol
 -   capec/29/index.html: Example Instances
 Nortel Application Switch
--   capec/298/index.html: Resources Required
-UDP Ping
 - ※ 英語名、参考文献、更新履歴、他の分類の名前など、lang="en" を付けて意図的に原文のまま載せている部分は対象外。
 
 ## 4. 全ページのフッター
