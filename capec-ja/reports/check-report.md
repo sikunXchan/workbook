@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-20T22:58:56.332Z
+実行日時: 2026-10-21T11:24:20.223Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -13,7 +13,7 @@
 ## 3. 英語のまま残っている本文
 - ✅ 未翻訳の箇所: 0件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 50件
+- ❌ 本文に残る英語（4語以上連続）: 49件
 -   capec/1/index.html: Example Instances
 Java EE
 -   capec/105/index.html: Example Instances
@@ -50,7 +50,6 @@ Windows CryptoAPI
 -   capec/561/index.html: Extended Description
 Windows NT
 -   capec/562/index.html: Microsoft Enhanced Mitigation Experience Toolkit
--   capec/577/index.html: dir /A ntuser.dat
 -   capec/577/index.html: dir /A ntuser.dat
 -   capec/600/index.html: J.P. Morgan Chase
 -   capec/645/index.html: Example Instances
