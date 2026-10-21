@@ -8,8 +8,11 @@ MITREの攻撃パターン辞典「CAPEC」を、日本語で読める静的サ�
 | 場所 | 中身 |
 |---|---|
 | `source/` | capec.mitre.org から取得した公式XML（取得したまま） |
+| `source/attack/` | MITRE ATT&CKの公式STIXデータ（取得したまま。50MB超のためコミットしない） |
 | `data/capec.en.json` | XMLから取り出した英語データ（`scripts/extract.py` が作る） |
 | `data/ja/CAPEC-<ID>.json` | 1項目ごとの日本語訳 |
+| `data/attack.<domain>.json` | ATT&CKのSTIXデータから取り出した英語データ（`scripts/attack-extract.mjs` が作る。domainは`enterprise-attack`など） |
+| `data/attack-ja/<domain>/<ID>.json` | ATT&CKの戦術・技術1件ごとの日本語訳（IDは`TA0001`や`T1566`など） |
 | `data/glossary.json` | 用語集（訳語の統一） |
 | `data/labels.json` | データの決まった値（抽象度・ステータスなど）の訳語 |
 | `data/license.json` | 著作権表示とライセンス文（原文） |
@@ -19,11 +22,22 @@ MITREの攻撃パターン辞典「CAPEC」を、日本語で読める静的サ�
 | `reports/` | 要確認の一覧、訳さなかった箇所の一覧、品質チェックの結果 |
 | `dist/` | 生成されたサイト（コミットしない。Vercelがビルド時に作る） |
 
+### MITRE ATT&CKについて
+
+CAPECが「攻撃パターンの種類」の辞典であるのに対し、ATT&CKは「攻撃者が実際にどう行動するか」（戦術・技術・手口の実例）を記録した辞典。既存のCAPECサイトに統合する形で、同じビルドパイプライン・デザイン・AI補足の方針で日本語化する。
+
+- 対象は**Enterprise行列の戦術(Tactic)・技術・サブ技術(Technique)のみ**（まずここから。Mobile・ICS行列は今後の段階）。技術ページには、その技術に効く対策（Mitigation）の適用ノートと、実際の攻撃グループ・ソフトウェアによる使用例（Procedure Example）も訳す。
+- 攻撃グループ・ソフトウェア（Group/Software、合計2,800件超）は、CAPECにおけるCWE・CVEと同じ扱いとし、**専用の訳文ページは作らず、公式サイト（attack.mitre.org）へのリンクのみ**とする。
+- 原文の`(Citation: ...)`インライン引用は除き、出典は項目ごとのReferences欄にまとめる。`[語](url)`形式のMarkdownリンクは語だけを残す（Phase 1の簡略化。関連情報は戦術・サブ技術・対策・使用例など、構造化されたデータとして別途保持されている）。
+
 ## 手順
 
 ```sh
 # 1. 公式XMLから英語データを作る（取得日を指定）
 python3 -I scripts/extract.py source/<ファイル名>.xml data/capec.en.json YYYY-MM-DD
+
+# 1'. ATT&CKの場合：公式STIXデータから英語データを作る
+node scripts/attack-extract.mjs source/attack/<domain>.json <domain> YYYY-MM-DD
 
 # 2. 日本語化の進み具合・次に訳す項目
 node scripts/work.mjs status

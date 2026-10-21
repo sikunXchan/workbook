@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-21T19:01:37.628Z
+実行日時: 2026-10-21T21:26:43.503Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -8,12 +8,58 @@
 - ✅ View: 公式XML 13件 / ページ 13件
 
 ## 2. 内部リンク切れ
-- ✅ 内部リンク切れ 0件（全22153件を確認）
+- ✅ 内部リンク切れ 0件（全38292件を確認）
 
 ## 3. 英語のまま残っている本文
-- ✅ 未翻訳の箇所: 0件
+- ❌ 未翻訳の箇所: 20217件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 42件
+- ❌ 本文に残る英語（4語以上連続）: 70件
+-   attack/enterprise-attack/index.html: ATT CK 
+MITRE ATT CK
+-   attack/enterprise-attack/techniques/T1048/index.html: ESXiIaaSLinuxmacOSNetwork DevicesOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1059/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1069/index.html: ContainersIaaSIdentity ProviderLinuxmacOSOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1070/index.html: ContainersESXiLinuxmacOSNetwork DevicesOffice SuiteWindows
+T
+-   attack/enterprise-attack/techniques/T1078/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1078.001/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1087/index.html: ESXiIaaSIdentity ProviderLinuxmacOSOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1098/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1110/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1110.001/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1110.002/index.html: Identity ProviderLinuxmacOSNetwork DevicesOffice SuiteWindows
+-   attack/enterprise-attack/techniques/T1110.003/index.html: ContainersESXiIaaSIdentity ProviderLinuxNetwork DevicesOffice SuiteSaaSWindowsma
+-   attack/enterprise-attack/techniques/T1110.004/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1136/index.html: WindowsIaaSLinuxmacOSNetwork DevicesContainersSaaSOffice SuiteIdentity ProviderE
+-   attack/enterprise-attack/techniques/T1199/index.html: IaaSIdentity ProviderLinuxmacOSOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1201/index.html: WindowsLinuxmacOSIaaSNetwork DevicesIdentity ProviderSaaSOffice Suite
+T
+-   attack/enterprise-attack/techniques/T1526/index.html: IaaSIdentity ProviderOffice SuiteSaaS
+T
+-   attack/enterprise-attack/techniques/T1528/index.html: ContainersIaaSIdentity ProviderOffice SuiteSaaS
+T
+-   attack/enterprise-attack/techniques/T1538/index.html: IaaSSaaSOffice SuiteIdentity Provider
+T
+-   attack/enterprise-attack/techniques/T1548/index.html: LinuxmacOSWindowsIaaSOffice SuiteIdentity Provider
+T
+-   attack/enterprise-attack/techniques/T1550/index.html: ContainersIaaSIdentity ProviderLinuxOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1552/index.html: WindowsSaaSIaaSLinuxmacOSContainersNetwork DevicesOffice SuiteIdentity Provider
+
+-   attack/enterprise-attack/techniques/T1556/index.html: IaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1566/index.html: Identity ProviderLinuxmacOSOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1606/index.html: SaaSWindowsmacOSLinuxIaaSOffice SuiteIdentity Provider
+T
+-   attack/enterprise-attack/techniques/T1621/index.html: WindowsLinuxmacOSIaaSSaaSOffice SuiteIdentity Provider
+T
+-   attack/enterprise-attack/techniques/T1697/index.html: Office SuiteIdentity ProviderSaaS
+T
 -   capec/1/index.html: Example Instances
 Java EE
 -   capec/105/index.html: Example Instances
@@ -78,9 +124,9 @@ Dave Nielsen
 - ※ 英語名、参考文献、更新履歴、他の分類の名前など、lang="en" を付けて意図的に原文のまま載せている部分は対象外。
 
 ## 4. 全ページのフッター
-- ✅ 著作権表示が無いページ: 0件 / 714件
-- ✅ ライセンス文（原文）が無いページ: 0件 / 714件
-- ✅ 「AIによる非公式の訳」の注意書きが無いページ: 0件 / 714件
+- ✅ 著作権表示が無いページ: 0件 / 1437件
+- ✅ ライセンス文（原文）が無いページ: 0件 / 1437件
+- ✅ 「AIによる非公式の訳」の注意書きが無いページ: 0件 / 1437件
 
 ## 5. 要確認・伏せた箇所・用語の統一
 - ✅ 「完了」なのに訳が欠けている箇所: 0件
@@ -89,3 +135,6 @@ Dave Nielsen
 - 安全のため訳さなかった箇所: 0件（reports/redactions.md）
 - 原文を引用ブロックで示した具体箇所: 472件（reports/quotes.md）
 - 用語集の訳語が使われていない可能性: 448件（reports/glossary-check.md、文脈上正しい場合もあるため目視で確認）
+
+## 6. 読み直し用の無作為抽出（5件）
+- CAPEC-131, CAPEC-91, CAPEC-330, CAPEC-596, CAPEC-509
