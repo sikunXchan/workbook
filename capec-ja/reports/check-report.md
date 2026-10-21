@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-21T18:57:15.961Z
+実行日時: 2026-10-21T19:01:37.628Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -13,7 +13,7 @@
 ## 3. 英語のまま残っている本文
 - ✅ 未翻訳の箇所: 0件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 48件
+- ❌ 本文に残る英語（4語以上連続）: 42件
 -   capec/1/index.html: Example Instances
 Java EE
 -   capec/105/index.html: Example Instances
@@ -60,12 +60,6 @@ Bronze Butler
 -   capec/665/index.html: Input-Output Memory Management Units
 -   capec/70/index.html: Microsoft Security Response Center
 -   capec/700/index.html: Smart Install Exploitation Tool
--   capec/700/index.html: Smart Install Exploitation Tool
--   capec/701/index.html: Man in the Middle
--   capec/701/index.html: Adversary in the Browser
--   capec/701/index.html: Adversary in the Browser
--   capec/701/index.html: Browser in the Middle
--   capec/701/index.html: Browser in the Middle
 -   capec/701/index.html: Adversary in the Browser
 -   capec/701/index.html: Browser in the Middle
 -   capec/701/index.html: Browser in the Middle
