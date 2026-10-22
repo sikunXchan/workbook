@@ -1,0 +1,24 @@
+{
+ "id": "T1675",
+ "source_sha": "22e4f8d90ad6e2eb",
+ "status": "done",
+ "seg": {
+  "name": "ESXi管理コマンド",
+  "description/0": "攻撃者は、ESXi仮想環境でホストされているゲストマシン上でコマンドを実行するために、ESXiの管理サービスを悪用することがある。VMware Tools Daemon Serviceのような、ESXiでホストされたVM上で動く常駐のバックグラウンドサービスは、ESXiサーバーからの遠隔管理を可能にする。このツールデーモンサービスは、WindowsのゲストOSでは`vmtoolsd.exe`、macOSでは`vmware-tools-daemon`、Linuxでは`vmtoolsd`として動作する。",
+  "description/1": "攻撃者は、ESXiでホストされたVM上でコマンドを実行するために、さまざまなツールを使うことがある。例えば、vSphere Web Services SDKを使って、`StartProgramInGuest`、`ListProcessesInGuest`、`ListFileInGuest`、`InitiateFileTransferFromGuest`といったAPIを通じて、コマンドやスクリプトをプログラム的に実行する。これにより、ゲストVM上でのファイル・ディレクトリの探索、ローカルシステムからのデータ収集、OS認証情報のダンプといった、後続の行動が可能になることがある。",
+  "mitigation/M1018/0": "必要でなければ、ESXiでホストされたVMに対してゲストオペレーションを実行する利用者の権限を制限する。",
+  "procedure/G1048/0": "UNC3886は、侵害したESXiホストから`vmtoolsd.exe`を使って、ゲスト仮想マシン上でコマンドを実行した。",
+  "procedure/S1217/0": "VIRTUALPITAは、侵害したESXiハイパーバイザーから、ゲスト仮想マシン上でコマンドを実行できる。",
+  "procedure/S9051/0": "The Gentlemen Ransomwareは、侵害したシステムを改変するために、`vmkfstools`を含むESXi管理コマンドを利用した。"
+ },
+ "supplement": {
+  "summary": "ESXiのゲスト管理機能（VMware Tools Daemon Serviceなど）を悪用し、ハイパーバイザー側からゲストVM内でコマンドを実行させる技術。ゲストOS自体に侵入せずに、仮想化基盤の管理機能を足がかりにする点が特徴。",
+  "analogy": "マンションの管理人室から、各部屋のインターホンを使って住人のふりをして指示を出すようなもの。部屋（ゲストVM）の鍵をピッキングする必要はなく、建物全体を管理する立場（ESXiホスト）を乗っ取れば、すべての部屋に正規の手段で干渉できてしまう。",
+  "learn": [
+   "仮想化基盤（ハイパーバイザー）の管理機能が侵害されると、そこでホストされているすべてのゲストVMに連鎖的に影響が及ぶ可能性があること"
+  ],
+  "interpretation": [
+   "この技術は、単一のサーバーではなく仮想化基盤そのものを狙うことで、1回の侵害で複数のゲストVMに影響を及ぼせるという、攻撃の効率性に着目した手口だと解釈できる。これは企業がESXiのような仮想化基盤の管理アクセスに、個々のサーバー以上に厳重な権限管理を適用すべき理由を示している。"
+  ]
+ }
+}
