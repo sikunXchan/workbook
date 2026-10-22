@@ -95,4 +95,28 @@
       });
     }
   }
+
+  // ---- 既読マーク(このブラウザの中だけに保存。開いたページを自動で記録する) ----
+  var READ_KEY = "capec-ja-read";
+  function getRead() {
+    try { var v = JSON.parse(localStorage.getItem(READ_KEY) || "[]"); return Array.isArray(v) ? v : []; }
+    catch (e) { return []; }
+  }
+  function setRead(list) {
+    try { localStorage.setItem(READ_KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
+  }
+  var thisPageReadId = document.body.getAttribute("data-read-id");
+  if (thisPageReadId) {
+    var readList = getRead();
+    if (readList.indexOf(thisPageReadId) < 0) {
+      readList.push(thisPageReadId);
+      setRead(readList);
+    }
+  }
+  var readSet = getRead();
+  if (readSet.length) {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-read-tag]"), function (el) {
+      if (readSet.indexOf(el.getAttribute("data-read-tag")) >= 0) { el.hidden = false; }
+    });
+  }
 })();
