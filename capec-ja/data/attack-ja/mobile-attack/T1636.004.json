@@ -1,0 +1,43 @@
+{
+ "id": "T1636.004",
+ "source_sha": "331474bd97ac1100",
+ "status": "done",
+ "seg": {
+  "name": "SMSメッセージ",
+  "description/0": "攻撃者は、SMSメッセージを収集するために、標準的なオペレーティングシステムのAPIを利用することがある。Androidでは、これはSMS Content Providerを使って実現できる。iOSには、SMSメッセージにアクセスするための標準APIは用意されていない。",
+  "description/1": "端末がジェイルブレイクまたはroot化されている場合、攻撃者は利用者の認知や承認なしにSMSメッセージへアクセスできる可能性がある。",
+  "mitigation/M1011/0": "SMSメッセージへのアクセスは、普段必要とされることの少ない権限であるため、利用者はSMSメッセージへのアクセスを許可する際に、特に注意深く確認するよう指示されるべきである。",
+  "procedure/S0182/0": "FinFisherは、SMSメッセージを取得し持ち出す。",
+  "procedure/S0289/0": "Pegasus for iOSは、被害者が送受信するSMSメッセージを取得する。",
+  "procedure/S0292/0": "AndroRATは、SMSメッセージを取得する。",
+  "procedure/S0295/0": "RCSAndroidは、SMS・MMS・Gmailのメッセージを収集できる。",
+  "procedure/S0303/0": "MazarBOTは、オンラインバンキングアプリが送信する2段階認証コードを傍受できる。",
+  "procedure/S0320/0": "DroidJackは、SMSデータを取得する。",
+  "procedure/S0324/0": "SpyDealerは、被害者のSMSおよびMMSメッセージを収集する。",
+  "procedure/S0328/0": "Stealth Mangoは、SMSメッセージをアップロードする。",
+  "procedure/S0399/0": "Pallasは、以後受信するものも含め、すべてのSMSメッセージを取得し持ち出す。",
+  "procedure/S0403/0": "Riltokは、受信したSMSメッセージを傍受できる。",
+  "procedure/S0406/0": "Gustuffは、SMSで送られてくる2段階認証コードを傍受できる。",
+  "procedure/S0424/0": "Triadaの各変種は、SMSを使ったアプリ内購入の取引データを取得する。",
+  "procedure/S0432/0": "Breadは、キャリア課金詐欺を完了させるために、SMSメッセージにアクセスできる。",
+  "procedure/S0463/0": "INSOMNIAは、SMSメッセージとiMessageを取得できる。",
+  "procedure/S0480/0": "Cerberusは、端末からSMSメッセージを収集できる。",
+  "procedure/S0489/0": "WolfRATは、SMSメッセージを収集できる。",
+  "procedure/S0506/0": "ViperRATは、SMSメッセージを収集できる。",
+  "procedure/S0544/0": "HenBoxは、SMSメッセージを傍受できる。",
+  "procedure/S0549/0": "SilkBeanは、SMSメッセージにアクセスできる。",
+  "procedure/S0550/0": "DoubleAgentは、SMSおよびMMSメッセージを取得していた。",
+  "procedure/S1054/0": "Drinikは、利用者のSMSメッセージを収集できる。",
+  "procedure/S1055/0": "SharkBotは、SMSメッセージを傍受できる。",
+  "procedure/S1067/0": "FluBotは、SMSメッセージおよび通信事業者からのUSSDメッセージを傍受できる。",
+  "procedure/S1231/0": "GodFatherは、SMSメッセージにアクセスするために`Read_SMS`権限を要求していた。",
+  "procedure/S1241/0": "RatMiladは、受信箱・送信済み・下書き・送信ボックス・失敗・送信待ちに含まれるメッセージを含め、端末のSMSメッセージにアクセスしていた。"
+ },
+ "supplement": {
+  "summary": "端末上のSMSメッセージを、標準APIやroot権限の悪用によって取得・傍受する技術。2段階認証コードの傍受によって、金融系アプリなどの不正利用に直結することが多い点が特徴。",
+  "learn": [
+   "SMSで届く2段階認証コードを傍受することが、単なる情報収集ではなく、不正送金などの直接的な被害につながる手口であること",
+   "iOSには標準でSMSにアクセスするAPIがなく、この技術は主にAndroidで見られること"
+  ]
+ }
+}
