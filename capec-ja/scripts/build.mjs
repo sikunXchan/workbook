@@ -47,7 +47,6 @@ if (!fs.existsSync(path.join(ROOT, "data/capec.en.json"))) {
 
 const data = readJson("data/capec.en.json");
 const labels = readJson("data/labels.json");
-const glossary = readJson("data/glossary.json");
 const license = readJson("data/license.json");
 const meta = data.meta;
 const entries = data.entries;
@@ -263,7 +262,6 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <a href="${r}guide/"${cur("guide")}>はじめに</a>
 <a href="${r}categories/"${cur("categories")}>索引</a>
 <a href="${r}attack/"${cur("attack")}>ATT&amp;CK</a>
-<a href="${r}glossary/"${cur("glossary")}>用語集</a>
 <a href="${r}favorites/"${cur("favorites")}>お気に入り</a>
 <a href="${r}about/"${cur("about")}>このサイトについて</a>
 </nav>
@@ -613,6 +611,14 @@ ${rows}
 function categoriesPage() {
   const depth = 1;
   const block = (title, viewId, ids) => ids.length ? `<section class="sec" aria-labelledby="v${viewId}"><h2 id="v${viewId}"><span class="mk">${title}</span><small>${entryLink(viewId, depth)}</small></h2>${catTabs(ids, depth)}</section>` : "";
+  const attackBlock = attackDomains.length ? `<section class="sec" aria-labelledby="attack-idx-h"><h2 id="attack-idx-h"><span class="mk">MITRE ATT&amp;CKを戦術（Tactic）で引く</span><small>攻撃者の目的ごとの技術一覧</small></h2>
+<p>ATT&amp;CKでは、攻撃者が実際に使う技術を、その目的（戦術）ごとにまとめています。数字は、含まれる技術の件数です。<a href="${rel(depth)}attack/">ATT&amp;CKの一覧はこちら</a>。</p>
+${attackDomains.map((d) => `<h3>${esc(d.label)}マトリクス</h3><ul class="tabs">${d.raw.tactics.map((t) => {
+    const ja = d.trMap.get(String(t.id))?.seg?.name || "";
+    const n = d.raw.techniques.filter((e) => !e.is_subtechnique && e.tactics.includes(t.shortname)).length;
+    return `<li><a href="${rel(depth)}attack/${esc(d.domain)}/tactics/${esc(t.id)}/"><span>${ja ? esc(ja) : `<span lang="en">${esc(t.name)}</span>`}</span><b>${n}</b></a></li>`;
+  }).join("")}</ul>`).join("")}
+</section>` : "";
   const body = `${crumbs([["../", "ホーム"], [null, "索引"]])}
 <main id="main" class="page" tabindex="-1">
 <h1 class="page-h">索引</h1>
@@ -621,6 +627,7 @@ ${block("攻撃の仕組みで引く", MECH_VIEW, mechCats)}
 ${block("攻撃の領域で引く", DOMAIN_VIEW, domainCats)}
 <section class="sec" aria-labelledby="allv"><h2 id="allv"><span class="mk">すべてのビュー</span><small>${views.length}件</small></h2>${memberList(views.map((v) => v.id), depth)}</section>
 <section class="sec" aria-labelledby="allc"><h2 id="allc"><span class="mk">すべてのカテゴリ</span><small>${categories.length}件</small></h2>${memberList(categories.map((c) => c.id), depth)}</section>
+${attackBlock}
 </main>`;
   return page({ title: "索引", depth, body, current: "categories" });
 }
@@ -651,20 +658,6 @@ function favoritesPage() {
 <p data-fav-empty hidden>まだ登録された項目はありません。</p>
 </main>`;
   return page({ title: "お気に入り", depth: 1, body, current: "favorites" });
-}
-
-function glossaryPage() {
-  const groupName = { abstraction: "抽象度", status: "ステータス", level: "程度（深刻度・可能性・スキル）", phase: "攻撃の段階", nature: "攻撃パターン同士の関係", scope: "影響を受ける範囲", impact: "影響", note_type: "注記の種類", view_type: "ビューの種類", mapping_fit: "他の分類との対応の程度", taxonomy: "他の分類の名前", history: "更新履歴の種類", kind: "項目の種類" };
-  const body = `${crumbs([["../", "ホーム"], [null, "用語集"]])}
-<main id="main" class="page" tabindex="-1">
-<h1 class="page-h">用語集</h1>
-<p>このサイトで使う訳語の一覧です。訳語はサイト全体でそろえています。説明の欄は、AIの書き込み（原典の訳ではありません）です。</p>
-<dl class="glossary" data-pagefind-body>${glossary.terms.map((t) => `<div><dt id="g-${esc(t.en.replace(/\s+/g, "-"))}">${esc(t.ja)}<span class="en-label" lang="en">${esc(t.en)}</span></dt><dd class="memo-inline">${fmt(t.explain || "")}</dd></div>`).join("")}</dl>
-<section class="sec" aria-labelledby="lab-h"><h2 id="lab-h"><span class="mk">データの決まった値の訳語</span></h2>
-${Object.entries(labels).filter(([k]) => !k.startsWith("_") && k !== "phase_note").map(([g, m]) => `<h3>${esc(groupName[g] || g)}</h3><div class="table-wrap"><table><thead><tr><th scope="col">原文</th><th scope="col">訳語</th></tr></thead><tbody>${Object.entries(m).map(([en, ja]) => `<tr><td lang="en">${esc(en)}</td><td${/^[\x00-\x7F]+$/.test(ja) ? ' lang="en"' : ""}>${esc(ja)}</td></tr>`).join("")}</tbody></table></div>`).join("")}
-</section>
-</main>`;
-  return page({ title: "用語集", depth: 1, body, current: "glossary" });
 }
 
 // おすすめの学習順（レッスン形式）。「攻撃の仕組み」ビュー(CAPEC-1000)の
@@ -705,12 +698,40 @@ function lessonSection(depth) {
 </section>`;
 }
 
+// ATT&CKのレッスン：戦術(Tactic)の原典データ内の並びはID順で、キルチェーン順ではないため
+// (例：偵察TA0043・リソース開発TA0042はIDが大きく後ろに来てしまう)、読む順として使えるよう
+// キルチェーンに沿って並べ替える。一覧に無い戦術(他ドメイン分)は末尾にそのまま残す。
+const KILL_CHAIN_ORDER = ["reconnaissance", "resource-development", "initial-access", "execution", "persistence", "privilege-escalation", "stealth", "defense-impairment", "defense-evasion", "credential-access", "discovery", "lateral-movement", "collection", "command-and-control", "exfiltration", "impact"];
+function attackLessonSection(depth) {
+  const dom = attackDomains.find((d) => d.domain === "enterprise-attack");
+  if (!dom) return "";
+  const { raw, trMap } = dom;
+  const orderedTactics = [...raw.tactics].sort((a, b) => {
+    const ia = KILL_CHAIN_ORDER.indexOf(a.shortname), ib = KILL_CHAIN_ORDER.indexOf(b.shortname);
+    return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib);
+  });
+  const steps = orderedTactics.map((t, i) => {
+    const ja = trMap.get(String(t.id))?.seg?.name || "";
+    const n = raw.techniques.filter((e) => !e.is_subtechnique && e.tactics.includes(t.shortname)).length;
+    return `<li class="lesson-step"><span class="lesson-n" aria-hidden="true">${i + 1}</span>
+<h3><a href="${rel(depth)}attack/${esc(dom.domain)}/tactics/${esc(t.id)}/">${ja ? esc(ja) : `<span lang="en">${esc(t.name)}</span>`}</a></h3>
+<p class="small">${ja ? "" : `<span lang="en">${esc(t.name)}</span>・`}含まれる技術 ${n}件</p>
+</li>`;
+  }).join("");
+  return `<section id="attack-lesson" class="sec" aria-labelledby="attack-lesson-h"><h2 id="attack-lesson-h"><span class="mk">ATT&amp;CKはどの順で読む？</span></h2>
+<p>ATT&amp;CKの戦術（Tactic）は、原典データの時点で、攻撃者が実際に攻撃を進める順番（キルチェーン）に近い並びになっています。上から順に読むと、偵察から始まり、最終的な影響に至るまでの流れがつかめます。</p>
+<ol class="lesson-list">${steps}</ol>
+<div class="memo"><span class="who">補足（AI）</span><p>実際の攻撃は必ずしもこの順に一直線に進むわけではなく、段階を省略したり繰り返したりします。あくまで全体像をつかむための順番です。現在はEnterpriseマトリクスのみ収録しています。</p></div>
+</section>`;
+}
+
 function guidePage() {
   const body = `${crumbs([["../", "ホーム"], [null, "はじめに"]])}
 <main id="main" class="page" tabindex="-1">
 <h1 class="page-h">はじめに</h1>
 <p>このサイトの読み方の案内です。用語の正式な定義は、各リンク先の公式サイト（英語）で確認してください。</p>
 ${lessonSection(1)}
+${attackLessonSection(1)}
 <section id="chain" class="sec" aria-labelledby="chain-h"><h2 id="chain-h"><span class="mk">CAPEC・CWE・CVEの関係</span></h2>
 ${chain(1, null)}
 <ul>
@@ -966,7 +987,6 @@ writePage("index.html", indexPage());
 writePage("categories/index.html", categoriesPage());
 writePage("search/index.html", searchPage());
 writePage("favorites/index.html", favoritesPage());
-writePage("glossary/index.html", glossaryPage());
 writePage("guide/index.html", guidePage());
 writePage("about/index.html", aboutPage());
 writePage("404.html", notFoundPage());

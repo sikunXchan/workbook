@@ -247,9 +247,6 @@ tr[hidden] { display: none; }
 .lesson-n { position: absolute; left: -2px; top: -2px; display: grid; place-items: center; min-width: 40px; height: 40px; padding: 0 8px; border-radius: 10px 0 10px 0; background: var(--shu); color: var(--paper); font-family: var(--f-head); font-weight: 900; font-size: .78rem; white-space: nowrap; }
 .kv dt { font-weight: 700; margin-top: .5rem; }
 .kv dd { margin-left: 0; }
-.glossary > div { padding: .7rem 0; border-bottom: 1px dashed var(--line); }
-.glossary dt { font-family: var(--f-head); font-weight: 900; font-size: 1.1rem; }
-.glossary dd { margin: .2rem 0 0; }
 .search-results { padding-left: 1.4rem; }
 .search-results li { margin: 1rem 0; }
 .search-results a { font-family: var(--f-head); font-weight: 900; font-size: 1.1rem; }
