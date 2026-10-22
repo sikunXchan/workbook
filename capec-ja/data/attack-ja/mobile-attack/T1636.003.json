@@ -1,0 +1,39 @@
+{
+ "id": "T1636.003",
+ "source_sha": "10f2682d82ac7067",
+ "status": "done",
+ "seg": {
+  "name": "連絡先リスト",
+  "description/0": "攻撃者は、連絡先リストのデータを収集するために、標準的なオペレーティングシステムのAPIを利用することがある。Androidでは、これはContacts Content Providerを使って実現できる。iOSでは、これは`Contacts`フレームワークを使って実現できる。",
+  "description/1": "端末がジェイルブレイクまたはroot化されている場合、攻撃者は利用者の認知や承認なしに連絡先リストへアクセスできる可能性がある。",
+  "mitigation/M1011/0": "連絡先リストへのアクセスは、普段必要とされることの少ない権限であるため、利用者は連絡先リストへのアクセスを許可する際に、特に注意深く確認するよう指示されるべきである。",
+  "procedure/S0289/0": "Pegasus for iOSは、被害者のアドレス帳をダンプすることで、システムから連絡先を収集する。",
+  "procedure/S0292/0": "AndroRATは、連絡先リストの情報を収集する。",
+  "procedure/S0316/0": "Pegasus for Androidは、連絡先リストの情報にアクセスする。",
+  "procedure/S0323/0": "Chargerは、被害者の端末から連絡先を盗み取る。",
+  "procedure/S0324/0": "SpyDealerは、被害者の連絡先リストを収集する。",
+  "procedure/S0328/0": "Stealth Mangoは、Yahoo、AIM、GoogleTalk、Skype、QQなど、さまざまなサードパーティアプリケーションの連絡先リストをアップロードする。",
+  "procedure/S0399/0": "Pallasは、端末の連絡先リストにアクセスする。",
+  "procedure/S0403/0": "Riltokは、端末の連絡先リストにアクセスし、C2サーバーにアップロードできる。",
+  "procedure/S0406/0": "Gustuffは、連絡先リストを収集できる。",
+  "procedure/S0407/0": "Monokleは、端末の連絡先リストを取得できる。",
+  "procedure/S0408/0": "FlexiSpyは、端末の連絡先を収集できる。",
+  "procedure/S0422/0": "Anubisは、端末の連絡先リストを盗み取ることができる。",
+  "procedure/S0423/0": "Ginpは、端末の連絡先リストをダウンロードできる。",
+  "procedure/S0463/0": "INSOMNIAは、端末の連絡先リストを収集できる。",
+  "procedure/S0480/0": "Cerberusは、端末の連絡先リストを取得できる。",
+  "procedure/S0485/0": "Mandrakeは、端末の連絡先リストにアクセスできる。",
+  "procedure/S0489/0": "WolfRATは、端末の連絡先リストを収集できる。",
+  "procedure/S0506/0": "ViperRATは、端末の連絡先リストを収集できる。",
+  "procedure/S0544/0": "HenBoxは、端末の連絡先リストにアクセスできる。",
+  "procedure/S0549/0": "SilkBeanは、端末の連絡先にアクセスできる。",
+  "procedure/S0550/0": "DoubleAgentは、連絡先リストにアクセスしていた。",
+  "procedure/S1067/0": "FluBotは、連絡先リストを使って他の端末に感染を広げていた。",
+  "procedure/S1231/0": "GodFatherは、端末の連絡先リストにアクセスしていた。",
+  "procedure/S1241/0": "RatMiladは、端末の連絡先リストにアクセスしていた。"
+ },
+ "supplement": {
+  "summary": "端末の連絡先リストを、標準APIやroot権限の悪用によって収集する技術。収集した連絡先は、さらなる感染拡大やフィッシングの標的選定にも使われることがある。",
+  "learn": ["盗まれた連絡先リストが、情報収集だけでなく『次にばらまく相手のリスト』として悪用される場合があること（FluBotなど）"]
+ }
+}
