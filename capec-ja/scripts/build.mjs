@@ -261,7 +261,6 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <nav class="links" aria-label="案内">
 <a href="${r}guide/"${cur("guide")}>はじめに</a>
 <a href="${r}categories/"${cur("categories")}>索引</a>
-<a href="${r}attack/"${cur("attack")}>ATT&amp;CK</a>
 <a href="${r}favorites/"${cur("favorites")}>お気に入り</a>
 <a href="${r}about/"${cur("about")}>このサイトについて</a>
 </nav>
@@ -912,7 +911,7 @@ ${sup}
 <section id="source" class="sec" aria-labelledby="source-h"><h2 id="source-h"><span class="mk">原典</span><small>Source</small></h2>${source}</section>
 </div>
 </main>`;
-    return page({ title: `${e.id} ${ja || e.name}`, depth, body, description: `MITRE ATT&CK ${e.id}（${e.name}）の日本語訳（非公式・AI訳）`, current: "attack", readId: `attack:${domain}:${e.id}` });
+    return page({ title: `${e.id} ${ja || e.name}`, depth, body, description: `MITRE ATT&CK ${e.id}（${e.name}）の日本語訳（非公式・AI訳）`, current: "categories", readId: `attack:${domain}:${e.id}` });
   }
 
   function tacticPage(t) {
@@ -937,7 +936,7 @@ ${sup}
 <section id="source" class="sec" aria-labelledby="source-h"><h2 id="source-h"><span class="mk">原典</span><small>Source</small></h2><p><a href="${tacticUrl(t.id)}" rel="noopener" lang="en">${tacticUrl(t.id)}</a></p></section>
 </div>
 </main>`;
-    return page({ title: `${t.id} ${ja || t.name}`, depth, body, current: "attack", readId: `attack:${domain}:${t.id}` });
+    return page({ title: `${t.id} ${ja || t.name}`, depth, body, current: "categories", readId: `attack:${domain}:${t.id}` });
   }
 
   function domainIndexPage() {
@@ -960,7 +959,7 @@ ${sup}
 </div>
 <ul class="tabs">${rows}</ul>
 </main>`;
-    return page({ title: `ATT&CK（${label}）`, depth, body, current: "attack" });
+    return page({ title: `ATT&CK（${label}）`, depth, body, current: "categories" });
   }
 
   return { domainIndexPage, tacticPage, techniquePage };
@@ -976,7 +975,7 @@ ${attackDomains.map((d) => `<li><a href="${esc(d.domain)}/">${esc(d.label)}</a>�
 </ul>
 <div class="memo"><span class="who">補足（AI）</span><p>攻撃グループ・マルウェア・ツールそのものの解説ページは作らず、各技術ページの「実際に使われた例」から、MITREの原典サイト（英語）へ直接リンクしています。</p></div>
 </main>`;
-  return page({ title: "ATT&CK", depth: 1, body, current: "attack" });
+  return page({ title: "ATT&CK", depth: 1, body, current: "categories" });
 }
 
 // ---------- 出力 ----------
