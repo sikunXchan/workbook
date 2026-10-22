@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-22T06:49:51.457Z
+実行日時: 2026-10-22T06:51:10.146Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -8,12 +8,12 @@
 - ✅ View: 公式XML 13件 / ページ 13件
 
 ## 2. 内部リンク切れ
-- ✅ 内部リンク切れ 0件（全38769件を確認）
+- ✅ 内部リンク切れ 0件（全38773件を確認）
 
 ## 3. 英語のまま残っている本文
-- ❌ 未翻訳の箇所: 12677件
+- ❌ 未翻訳の箇所: 12626件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 427件
+- ❌ 本文に残る英語（4語以上連続）: 429件
 -   attack/enterprise-attack/index.html: ATT CK 
 MITRE ATT CK
 -   attack/enterprise-attack/tactics/TA0112/index.html: File and Directory Permissions Modification
