@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-22T21:39:14.786Z
+実行日時: 2026-10-22T22:37:58.402Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -8,17 +8,16 @@
 - ✅ View: 公式XML 13件 / ページ 13件
 
 ## 2. 内部リンク切れ
-- ✅ 内部リンク切れ 0件（全41872件を確認）
+- ✅ 内部リンク切れ 0件（全41874件を確認）
 
 ## 3. 英語のまま残っている本文
 - ❌ 未翻訳の箇所: 10217件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 491件
+- ❌ 本文に残る英語（4語以上連続）: 486件
 -   attack/enterprise-attack/index.html: ATT CK 
 MITRE ATT CK
 -   attack/enterprise-attack/tactics/TA0112/index.html: File and Directory Permissions Modification
 -   attack/enterprise-attack/techniques/T1001.003/index.html: Host: ocsp.verisign.com
--   attack/enterprise-attack/techniques/T1003/index.html: Security Account Manager T
 -   attack/enterprise-attack/techniques/T1003/index.html: Lightweight Directory Access Protocol
 -   attack/enterprise-attack/techniques/T1003.001/index.html: Local Security Authority Subsystem Service
 -   attack/enterprise-attack/techniques/T1003.001/index.html: ma lsass.exe lsass
@@ -223,6 +222,7 @@ URL
 -   attack/enterprise-attack/techniques/T1218.013/index.html: Microsoft Application Virtualization Injector
 -   attack/enterprise-attack/techniques/T1218.013/index.html: Microsoft Application Virtualization Injector
 -   attack/enterprise-attack/techniques/T1218.014/index.html: mmc wbadmin.msc delete catalog
+-   attack/enterprise-attack/techniques/T1218.014/index.html: mmc.exe compmgmt.msc /computer
 - ※ 英語名、参考文献、更新履歴、他の分類の名前など、lang="en" を付けて意図的に原文のまま載せている部分は対象外。
 
 ## 4. 全ページのフッター

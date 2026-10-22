@@ -154,7 +154,7 @@ const entryLink = (id, depth) => {
   if (!e) return `<span>CAPEC-${esc(id)}（データに無い項目）</span>`;
   const ja = nameJa(id);
   const nm = ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span>`;
-  return `<a href="${rel(depth)}capec/${esc(id)}/">CAPEC-${esc(id)} ${nm}</a>`;
+  return `<a href="${rel(depth)}capec/${esc(id)}/">CAPEC-${esc(id)} ${nm}</a><span class="read-tag" data-read-tag="capec:${esc(id)}" hidden>済</span>`;
 };
 
 // ---------- 分類(カテゴリ・ビュー)の計算 ----------
@@ -202,9 +202,9 @@ const views = entries.filter((e) => e.kind === "view").sort((a, b) => a.id - b.i
 
 
 // ---------- 共通レイアウト ----------
-const SITE_NAME = "Sikun Lab Cybersecurity | CAPEC 攻撃パターン辞典（日本語版・非公式）";
+const SITE_NAME = "Sikun Lab Cybersecurity | CAPEC・ATT&CK 日本語版（非公式）";
 const BRAND_NAME = "Sikun Lab Cybersecurity";
-const SITE_DESC = "CAPEC 攻撃パターン辞典・日本語版（非公式）";
+const SITE_DESC = "CAPEC・ATT&CK 日本語版（非公式）";
 const DISCLAIMER = "AIによる日本語訳です。公式の日本語訳ではなく、MITREの公式サイトでも、MITREの承認を受けたものでもありません。誤りがありえるため、重要な点は原典（英語）で確認してください。";
 const FONTS = "https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700;900&family=Klee+One:wght@600&display=swap";
 
@@ -228,7 +228,7 @@ function footer() {
 </footer>`;
 }
 
-function page({ title, depth, body, current = "", description = "" }) {
+function page({ title, depth, body, current = "", description = "", readId = "" }) {
   const r = rel(depth);
   const cur = (k) => (k === current ? ' aria-current="page"' : "");
   return `<!doctype html>
@@ -248,7 +248,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <link rel="stylesheet" href="${r}assets/style.css">
 <script src="${r}assets/site.js" defer></script>
 </head>
-<body data-root="${r}">
+<body data-root="${r}"${readId ? ` data-read-id="${esc(readId)}"` : ""}>
 <a class="skip" href="#main">本文へ移動</a>
 <header class="head">
 <div class="wrap head-row">
@@ -482,7 +482,7 @@ ${sup}
 ${secs.map((s) => s.html).join("\n")}
 </div>
 </main>`;
-  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, description: `CAPEC-${e.id}（${e.name.en}）の日本語訳（非公式・AI訳）` });
+  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, description: `CAPEC-${e.id}（${e.name.en}）の日本語訳（非公式・AI訳）`, readId: `capec:${e.id}` });
 }
 
 // ---------- カテゴリ・ビューのページ ----------
@@ -514,7 +514,7 @@ function categoryPage(e) {
 ${sup}
 <div class="entry-body">${secs.map((s) => s.html).join("\n")}</div>
 </main>`;
-  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, current: "categories" });
+  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, current: "categories", readId: `capec:${e.id}` });
 }
 
 function viewPage(e) {
@@ -538,7 +538,7 @@ function viewPage(e) {
 <div class="entry-head">${headBlock(e, "ビュー（ある観点で項目を選んで並べた一覧）", chips, depth)}${tocHtml(secs)}</div>
 <div class="entry-body">${secs.map((s) => s.html).join("\n")}</div>
 </main>`;
-  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, current: "categories" });
+  return page({ title: `CAPEC-${e.id} ${ja || e.name.en}`, depth, body, current: "categories", readId: `capec:${e.id}` });
 }
 
 // ---------- トップページ ----------
@@ -554,7 +554,7 @@ function indexPage() {
     const ja = nameJa(e.id);
     const dep = e.status === "Deprecated" || e.status === "Obsolete";
     return `<tr${dep ? ' class="dep"' : ""} data-abs="${esc(e.abstraction || "")}" data-status="${esc(e.status || "")}" data-mech="${catsOf(mechCats, e.id).join(" ")}" data-dom="${catsOf(domainCats, e.id).join(" ")}">
-<td class="id">CAPEC-${esc(e.id)}</td><td class="ja"><a href="capec/${esc(e.id)}/">${ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span><span class="small">（${MISSING}）</span>`}</a></td><td class="en" lang="en">${esc(e.name.en)}</td><td>${e.abstraction ? `<span class="lv ${absCls[e.abstraction] || "d"}">${esc(labels.abstraction[e.abstraction] || e.abstraction)}</span>` : "—"}</td><td>${esc(labels.status[e.status] || e.status || "—")}</td></tr>`;
+<td class="id">CAPEC-${esc(e.id)}</td><td class="ja"><a href="capec/${esc(e.id)}/">${ja ? esc(ja) : `<span lang="en">${esc(e.name.en)}</span><span class="small">（${MISSING}）</span>`}</a> <span class="read-tag" data-read-tag="capec:${esc(e.id)}" hidden>済</span></td><td class="en" lang="en">${esc(e.name.en)}</td><td>${e.abstraction ? `<span class="lv ${absCls[e.abstraction] || "d"}">${esc(labels.abstraction[e.abstraction] || e.abstraction)}</span>` : "—"}</td><td>${esc(labels.status[e.status] || e.status || "—")}</td></tr>`;
   }).join("\n");
   const done = attackPatterns.filter((e) => translations.get(e.id)?.status === "done").length;
   const body = `<section class="hero">
@@ -569,6 +569,10 @@ function indexPage() {
 <span class="search-msg" role="status" data-search-msg></span>
 </form>
 </section>
+<ul class="tabs hub-tabs">
+<li><a href="#list"><span>CAPEC<small>攻撃パターン辞典（手口の型）</small></span><b>${meta.counts.attack_pattern}</b></a></li>
+<li><a href="attack/"><span>MITRE ATT&amp;CK<small>攻撃者の実際の戦術・技術（TTPs）</small></span><b>${attackDomains.reduce((n, d) => n + d.raw.meta.counts.technique + d.raw.meta.counts.subtechnique, 0)}</b></a></li>
+</ul>
 <div class="figs">
 <span class="fig">攻撃パターン<b>${meta.counts.attack_pattern}</b>件</span>
 <span class="fig">カテゴリ<b>${meta.counts.category}</b>件</span>
@@ -829,7 +833,7 @@ function attackBuild(dom) {
     if (!e) return `<span lang="en">${esc(id)}</span>`;
     const ja = aNameJa(id);
     const nm = label2 ?? (ja ? esc(ja) : `<span lang="en">${esc(e.name)}</span>`);
-    return `<a href="${rel(depth)}attack/${domain}/techniques/${esc(id)}/">${esc(id)} ${nm}</a>`;
+    return `<a href="${rel(depth)}attack/${domain}/techniques/${esc(id)}/">${esc(id)} ${nm}</a><span class="read-tag" data-read-tag="attack:${domain}:${esc(id)}" hidden>済</span>`;
   };
 
   function attackSupplementHtml(id) {
@@ -887,14 +891,14 @@ ${sup}
 <section id="source" class="sec" aria-labelledby="source-h"><h2 id="source-h"><span class="mk">原典</span><small>Source</small></h2>${source}</section>
 </div>
 </main>`;
-    return page({ title: `${e.id} ${ja || e.name}`, depth, body, description: `MITRE ATT&CK ${e.id}（${e.name}）の日本語訳（非公式・AI訳）`, current: "attack" });
+    return page({ title: `${e.id} ${ja || e.name}`, depth, body, description: `MITRE ATT&CK ${e.id}（${e.name}）の日本語訳（非公式・AI訳）`, current: "attack", readId: `attack:${domain}:${e.id}` });
   }
 
   function tacticPage(t) {
     const depth = 4;
     const ja = aNameJa(t.id);
     const techs = raw.techniques.filter((e) => !e.is_subtechnique && e.tactics.includes(t.shortname)).sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
-    const rows = techs.map((e) => `<tr><td class="id">${esc(e.id)}</td><td class="ja"><a href="../../techniques/${esc(e.id)}/">${aNameJa(e.id) ? esc(aNameJa(e.id)) : `<span lang="en">${esc(e.name)}</span>`}</a></td><td class="en" lang="en">${esc(e.name)}</td><td>${e.sub_technique_ids.length || "—"}</td></tr>`).join("");
+    const rows = techs.map((e) => `<tr><td class="id">${esc(e.id)}</td><td class="ja"><a href="../../techniques/${esc(e.id)}/">${aNameJa(e.id) ? esc(aNameJa(e.id)) : `<span lang="en">${esc(e.name)}</span>`}</a> <span class="read-tag" data-read-tag="attack:${domain}:${esc(e.id)}" hidden>済</span></td><td class="en" lang="en">${esc(e.name)}</td><td>${e.sub_technique_ids.length || "—"}</td></tr>`).join("");
     const sup = attackSupplementHtml(t.id);
     const body = `${crumbs([["../../../../", "ホーム"], ["../../", label], [null, `${t.id}`]])}
 <main id="main" class="entry${sup ? " has-memos" : ""}" tabindex="-1" data-pagefind-body>
@@ -912,7 +916,7 @@ ${sup}
 <section id="source" class="sec" aria-labelledby="source-h"><h2 id="source-h"><span class="mk">原典</span><small>Source</small></h2><p><a href="${tacticUrl(t.id)}" rel="noopener" lang="en">${tacticUrl(t.id)}</a></p></section>
 </div>
 </main>`;
-    return page({ title: `${t.id} ${ja || t.name}`, depth, body, current: "attack" });
+    return page({ title: `${t.id} ${ja || t.name}`, depth, body, current: "attack", readId: `attack:${domain}:${t.id}` });
   }
 
   function domainIndexPage() {
@@ -920,7 +924,7 @@ ${sup}
     const orderedTactics = raw.tactics; // STIXの戦術はkill-chain順に近い並びで入っている
     const rows = orderedTactics.map((t) => {
       const n = raw.techniques.filter((e) => !e.is_subtechnique && e.tactics.includes(t.shortname)).length;
-      return `<li><a href="tactics/${esc(t.id)}/"><span>${aNameJa(t.id) ? esc(aNameJa(t.id)) : `<span lang="en">${esc(t.name)}</span>`}</span><b>${n}</b></a></li>`;
+      return `<li><a href="tactics/${esc(t.id)}/"><span>${aNameJa(t.id) ? esc(aNameJa(t.id)) : `<span lang="en">${esc(t.name)}</span>`}</span><b>${n}</b></a> <span class="read-tag" data-read-tag="attack:${domain}:${esc(t.id)}" hidden>済</span></li>`;
     }).join("");
     const body = `${crumbs([["../../", "ホーム"], ["../", "ATT&CK"], [null, label]])}
 <main id="main" class="page" tabindex="-1" data-pagefind-body>
