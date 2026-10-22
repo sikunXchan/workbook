@@ -1,0 +1,22 @@
+{
+ "id": "T1429",
+ "source_sha": "b9d8840deffb8b35",
+ "status": "done",
+ "seg": {
+  "name": "音声キャプチャ",
+  "description/0": "攻撃者は、モバイル端末の標準的なOS APIを利用して、音声を録音し情報を収集することがある。攻撃者が狙う音声情報の例には、利用者の会話、周囲の音、電話の通話、その他の機密性のある情報が含まれる。",
+  "description/1": "AndroidとiOSは、既定では、アプリケーションが端末のマイクへのアクセスを利用者に要求することを求めている。",
+  "description/2": "Android端末では、アプリケーションがマイクにアクセスするには`RECORD_AUDIO`権限を、音声出力にアクセスするには`CAPTURE_AUDIO_OUTPUT`権限を保持する必要がある。Androidは既定でサードパーティのアプリケーションに`CAPTURE_AUDIO_OUTPUT`権限を保持させないため、Googleや端末ベンダーが配布するアプリケーションなどの特権的なアプリケーションのみが音声出力にアクセスできる。しかし、攻撃者は権限昇格に成功した後、このアクセスを得られる場合がある。`CAPTURE_AUDIO_OUTPUT`権限があれば、攻撃者は`MediaRecorder.AudioSource.VOICE_CALL`定数を`MediaRecorder.setAudioOutput`に渡すことで、通話の送話・受話の両方を録音できる場合がある。",
+  "description/3": "iOS端末では、アプリケーションがマイクにアクセスするには、`Info.plist`ファイルに`NSMicrophoneUsageDescription`キーを含める必要がある。"
+ },
+ "supplement": {
+  "summary": "モバイル端末の標準的なOS機能を使って、利用者の会話・周囲の音・電話の通話などをひそかに録音する技術。多くのスパイウェア・RATが持つ基本的な機能の一つ。",
+  "terms": [
+   { "term": "RAT（遠隔操作型トロイの木馬）", "en": "Remote Access Trojan", "explain": "攻撃者が端末を遠隔から操作できるようにする不正プログラムの総称。" }
+  ],
+  "learn": [
+   "AndroidとiOSはいずれも、マイクへのアクセスに利用者の許可（権限）を必要とする設計になっているが、権限昇格や利用者をだます手口によってこれが突破されうること"
+  ]
+ },
+ "proceduresKept": null
+}
