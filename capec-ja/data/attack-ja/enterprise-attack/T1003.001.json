@@ -7,13 +7,13 @@
   "description/0": "攻撃者は、Local Security Authority Subsystem Service(LSASS)のプロセスメモリに保存されている認証情報を取得しようとすることがある。利用者がログオンすると、システムはさまざまな認証情報をLSASSのプロセスメモリ内に生成・保存する。この認証情報は、管理権限を持つ利用者やSYSTEMによって抜き出すことができ、「代替の認証情報の利用」を使った横展開の実行に利用できる。",
   "description/1": "メモリ内で直接操作する手法のほか、LSASSのプロセスメモリを標的のホストからダンプして、別のローカルシステム上で解析することもできる。",
   "description/2": "例えば、標的のホスト上でprocdumpを使う方法は次のとおりである。",
-  "description/3": "* <code>procdump -ma lsass.exe lsass_dump</code>",
+  "description/3": "* `procdump -ma lsass.exe lsass_dump`",
   "description/4": "ローカルでは、mimikatzを次のように実行できる。",
-  "description/5": "* <code>sekurlsa::Minidump lsassdump.dmp</code>\n* <code>sekurlsa::logonPasswords</code>",
+  "description/5": "* `sekurlsa::Minidump lsassdump.dmp`\n* `sekurlsa::logonPasswords`",
   "description/6": "`comsvcs.dll`のようなWindows標準のツールも使うことができる。",
-  "description/7": "* <code>rundll32.exe C:\\Windows\\System32\\comsvcs.dll MiniDump PID lsass.dmp full</code>",
+  "description/7": "* `rundll32.exe C:\\Windows\\System32\\comsvcs.dll MiniDump PID lsass.dmp full`",
   "description/8": "イメージファイル実行オプションのインジェクションと同様に、Windowsエラー報告(`WerFault.exe`)を通じた、サイレントプロセス終了のしくみが悪用され、`lsass.exe`のメモリダンプを作成されることがある。",
-  "description/9": "Windows Security Support Provider(SSP)のDLLは、システム起動時にLSASSプロセスに読み込まれる。SSPのDLLはLSAに読み込まれると、Windowsに保存されている暗号化済みパスワードおよび平文パスワード（ログオン中の利用者のドメインパスワードやスマートカードPINなど）にアクセスできる。SSPの設定は、<code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Security Packages</code>と<code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\OSConfig\\Security Packages</code>という2つのレジストリキーに保存されている。攻撃者は、これらのレジストリキーを変更して新しいSSPを追加することがあり、それは次回のシステム起動時、またはAddSecurityPackage Windows API関数が呼び出されたときに読み込まれる。",
+  "description/9": "Windows Security Support Provider(SSP)のDLLは、システム起動時にLSASSプロセスに読み込まれる。SSPのDLLはLSAに読み込まれると、Windowsに保存されている暗号化済みパスワードおよび平文パスワード（ログオン中の利用者のドメインパスワードやスマートカードPINなど）にアクセスできる。SSPの設定は、`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Security Packages`と`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\OSConfig\\Security Packages`という2つのレジストリキーに保存されている。攻撃者は、これらのレジストリキーを変更して新しいSSPを追加することがあり、それは次回のシステム起動時、またはAddSecurityPackage Windows API関数が呼び出されたときに読み込まれる。",
   "description/10": "認証情報へのアクセスには、次のSSPが使われることがある。",
   "description/11": "* Msv：対話型ログオン、バッチログオン、サービスログオンは、MSV認証パッケージを通じて行われる。\n* Wdigest：Digest認証プロトコルは、Hypertext Transfer Protocol(HTTP)とSimple Authentication Security Layer(SASL)のやり取りで使うために設計されている。\n* Kerberos：Windows 2000以降で、クライアントとサーバー間の相互ドメイン認証に好んで使われる。\n* CredSSP：リモートデスクトップサービスにSSO（シングルサインオン）とネットワークレベル認証を提供する。",
   "mitigation/M1017/0": "利用者と管理者に、複数のアカウントで同じパスワードを使わないよう教育し、アカウント・システム間での認証情報の重複を制限する。",
@@ -51,7 +51,7 @@
   "procedure/G0108/0": "Blue Mockingbirdは、Mimikatzを使ってLSASSメモリから認証情報を取得した。",
   "procedure/G0117/0": "Fox Kittenは、produmpを使ってLSASSから認証情報をダンプした。",
   "procedure/G0119/0": "Indrik Spiderは、Cobalt StrikeとProcDumpを使って認証情報ダンプを実行した。",
-  "procedure/G0125/0": "HAFNIUMは、<code>procdump</code>を使ってLSASSプロセスメモリをダンプした。",
+  "procedure/G0125/0": "HAFNIUMは、`procdump`を使ってLSASSプロセスメモリをダンプした。",
   "procedure/G0129/0": "Mustang Pandaは、Mimikatzを使ってlssas.exeのメモリから認証情報を収集した。",
   "procedure/G0143/0": "Aquatic Pandaは、LSASSメモリのダンプによって認証情報の取得を試みた。",
   "procedure/G1003/0": "Ember Bearは、procdumpなどの正規のSysinternalsツールを使ってLSASSメモリをダンプする。",
@@ -97,10 +97,19 @@
  "supplement": {
   "summary": "ログオンした利用者の認証情報が一時的に保存されるLSASSプロセスのメモリを直接ダンプして解析する、OS認証情報ダンプの中でも最も広く使われるサブ技術。procdumpやMimikatzなど、具体的なコマンド例まで原典に示されている。",
   "terms": [
-   { "term": "Security Support Provider(SSP)", "en": "Security Support Provider", "explain": "LSASSプロセスに読み込まれ、さまざまな認証方式（Kerberos、NTLMなど）を提供するDLL。攻撃者はこの仕組み自体に不正なSSPを追加登録することで、ログオン時の平文パスワードを横取りできる。" }
+   {
+    "term": "Security Support Provider(SSP)",
+    "en": "Security Support Provider",
+    "explain": "LSASSプロセスに読み込まれ、さまざまな認証方式（Kerberos、NTLMなど）を提供するDLL。攻撃者はこの仕組み自体に不正なSSPを追加登録することで、ログオン時の平文パスワードを横取りできる。"
+   }
   ],
   "analogy": "受付で本人確認のたびに、確認した情報を一時的に記した紙をロビーの机の上に置き、一定時間後に捨てる運用をしている会社があるとする。警備員が気づかないうちにその紙を次々と写し取っていけば、わざわざ本人確認のプロセスそのものを突破しなくても、確認済みの情報だけをまとめて盗み出せてしまう。LSASSメモリへのダンプも同様に、認証そのものを攻略するのではなく、認証済みの結果が一時的に置かれている場所を直接覗き見る手口である。",
-  "learn": ["procdump・Mimikatz・Windows標準のcomsvcs.dllという、専用の攻撃ツールだけでなく正規のデバッグ用ツール（procdump、comsvcs.dll）までLSASSメモリのダンプに使えてしまうこと", "この手口がきわめて多数の攻撃グループ・マルウェアに使われている、実務上もっとも代表的な認証情報窃取手口であること（原典に70件の実例が記録されている）"],
-  "interpretation": ["procdumpやcomsvcs.dllのように、OS標準ないし正規のデバッグ目的で配布されているツールがこの手口に転用できる事実は、「怪しいツールの存在」だけを監視する対策の限界を示している。実行されたツール自体は正規かつ署名済みであっても、「lsass.exeというプロセスを対象にメモリダンプを取得する」という振る舞いそのものが異常である、という観点からの検知（振る舞いベースの検知）が必要になる。"]
+  "learn": [
+   "procdump・Mimikatz・Windows標準のcomsvcs.dllという、専用の攻撃ツールだけでなく正規のデバッグ用ツール（procdump、comsvcs.dll）までLSASSメモリのダンプに使えてしまうこと",
+   "この手口がきわめて多数の攻撃グループ・マルウェアに使われている、実務上もっとも代表的な認証情報窃取手口であること（原典に70件の実例が記録されている）"
+  ],
+  "interpretation": [
+   "procdumpやcomsvcs.dllのように、OS標準ないし正規のデバッグ目的で配布されているツールがこの手口に転用できる事実は、「怪しいツールの存在」だけを監視する対策の限界を示している。実行されたツール自体は正規かつ署名済みであっても、「lsass.exeというプロセスを対象にメモリダンプを取得する」という振る舞いそのものが異常である、という観点からの検知（振る舞いベースの検知）が必要になる。"
+  ]
  }
 }

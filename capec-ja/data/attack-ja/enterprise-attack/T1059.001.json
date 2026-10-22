@@ -4,10 +4,10 @@
  "status": "done",
  "seg": {
   "name": "PowerShell",
-  "description/0": "攻撃者は、実行のためにPowerShellのコマンドやスクリプトを悪用することがある。PowerShellは、Windows OSに含まれる強力な対話型コマンドラインインターフェース兼スクリプト実行環境である。PowerShellはLinuxやmacOSにも導入できる。攻撃者はPowerShellを使って、情報の探索やコードの実行を含む、さまざまな操作を行うことができる。例として、実行可能ファイルを実行するために使える<code>Start-Process</code>コマンドレットや、コマンドをローカルまたは遠隔のコンピュータ上で実行する<code>Invoke-Command</code>コマンドレットがある（ただし、PowerShellを使って遠隔システムに接続するには管理者権限が必要）。",
+  "description/0": "攻撃者は、実行のためにPowerShellのコマンドやスクリプトを悪用することがある。PowerShellは、Windows OSに含まれる強力な対話型コマンドラインインターフェース兼スクリプト実行環境である。PowerShellはLinuxやmacOSにも導入できる。攻撃者はPowerShellを使って、情報の探索やコードの実行を含む、さまざまな操作を行うことができる。例として、実行可能ファイルを実行するために使える`Start-Process`コマンドレットや、コマンドをローカルまたは遠隔のコンピュータ上で実行する`Invoke-Command`コマンドレットがある（ただし、PowerShellを使って遠隔システムに接続するには管理者権限が必要）。",
   "description/1": "PowerShellは、インターネットから実行可能ファイルをダウンロードして実行するためにも使われることがあり、その際、ディスクに触れることなくディスクから、あるいはメモリ上でそれを実行できる。",
   "description/2": "Empire・PowerSploit・PoshC2・PSAttackなど、PowerShellを基盤とした攻撃テスト用ツールが数多く存在する。",
-  "description/3": "PowerShellのコマンド・スクリプトは、<code>powershell.exe</code>バイナリを直接呼び出さずに実行することもできる。.NETフレームワークやWindows共通言語インターフェース（CLI）を通じて公開されている、PowerShellの基盤となる<code>System.Management.Automation</code>アセンブリDLLへのインターフェースを使う方法である。",
+  "description/3": "PowerShellのコマンド・スクリプトは、`powershell.exe`バイナリを直接呼び出さずに実行することもできる。.NETフレームワークやWindows共通言語インターフェース（CLI）を通じて公開されている、PowerShellの基盤となる`System.Management.Automation`アセンブリDLLへのインターフェースを使う方法である。",
   "mitigation/M1026/0": "PowerShellが必要な場合は、PowerShellの実行を管理者に限定するよう実行ポリシーを制限することを検討する。環境設定によっては、PowerShellの実行ポリシーを回避する方法が存在することに注意する。",
   "mitigation/M1026/1": "PowerShellのJEA（Just Enough Administration）も、管理作業をサンドボックス化し、遠隔PowerShellセッションを通じて管理者・利用者が実行できるコマンドを制限するために使用できる。",
   "mitigation/M1038/0": "適切な場面でアプリケーション制御を使用する。PowerShellの制約言語モードは、任意のWindows APIやファイルを実行する際に使われるような（例：`Add-Type`）、機密性が高い、または危険な言語要素へのアクセスを制限するために使用できる。",
@@ -41,7 +41,12 @@
  "supplement": {
   "summary": "Windowsに標準で備わる強力なスクリプト実行環境であるPowerShellを悪用する技術。情報探索からコードの遠隔実行まで幅広く行え、ディスクに触れずメモリ上だけで動作させられる点が、検知を特に難しくしている。",
   "analogy": "家の管理人室に置かれている万能の管理者用パスマスターキー（本来は配管や電気の点検のための道具）を、泥棒が手に入れて、建物のどの部屋にも自由に出入りする道具として使ってしまうのに近い。道具自体は管理のための正規の設備であり、取り除くと本来の管理業務にも支障が出る。",
-  "learn": ["PowerShellが「ディスクに触れずメモリ上で実行できる」という特性を持つため、ファイルベースのウイルス対策だけでは検知しづらいこと", "Empire・PowerSploitなど、PowerShellを悪用するための専用の攻撃テストツールが公開されており、攻撃者がそれを転用できること"],
-  "interpretation": ["対策（M1042）が『PowerShellの削除は環境への影響評価が必要』と明記している点は重要である。これは、PowerShellが攻撃にも悪用される一方で、現代のWindows管理に深く組み込まれた正規のツールであり、単純な無効化では業務が止まるという、防御側が抱えるジレンマを正直に示している。"]
+  "learn": [
+   "PowerShellが「ディスクに触れずメモリ上で実行できる」という特性を持つため、ファイルベースのウイルス対策だけでは検知しづらいこと",
+   "Empire・PowerSploitなど、PowerShellを悪用するための専用の攻撃テストツールが公開されており、攻撃者がそれを転用できること"
+  ],
+  "interpretation": [
+   "対策（M1042）が『PowerShellの削除は環境への影響評価が必要』と明記している点は重要である。これは、PowerShellが攻撃にも悪用される一方で、現代のWindows管理に深く組み込まれた正規のツールであり、単純な無効化では業務が止まるという、防御側が抱えるジレンマを正直に示している。"
+  ]
  }
 }

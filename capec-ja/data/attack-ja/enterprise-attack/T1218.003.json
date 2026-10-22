@@ -1,0 +1,23 @@
+{
+ "id": "T1218.003",
+ "source_sha": "fe8e1ca347eb3ad2",
+ "status": "done",
+ "seg": {
+  "name": "CMSTP",
+  "description/0": "攻撃者は、悪意あるコードの実行を代理させるためにCMSTPを悪用することがある。Microsoft Connection Manager Profile Installer（CMSTP.exe）は、Connection Managerのサービスプロファイルをインストールするために使われるコマンドラインプログラムである。CMSTP.exeはパラメータとしてインストール情報ファイル（INF）を受け取り、遠隔アクセス接続のために利用されるサービスプロファイルをインストールする。",
+  "description/1": "攻撃者は、悪意あるコマンドが仕込まれたINFファイルをCMSTP.exeに与えることがある。Regsvr32／「Squiblydoo」と同様に、CMSTP.exeは、遠隔サーバーからDLLやCOMスクリプトレット（SCT）を読み込んで実行するために悪用される場合がある。この実行は、CMSTP.exeがMicrosoftによって署名されている場合がある正規のバイナリであるため、AppLockerやその他のアプリケーション制御による防御を回避することもある。",
+  "description/2": "CMSTP.exeは、ユーザーアカウント制御を回避し、悪意あるINFから自動昇格するCOMインターフェースを介して任意のコマンドを実行するためにも悪用できる。",
+  "mitigation/M1038/0": "特定のシステムやネットワークで必要とされないのであれば、攻撃者による潜在的な悪用を防ぐため、CMSTP.exeの実行をブロックするよう構成したアプリケーション制御の利用を検討する。",
+  "mitigation/M1042/0": "CMSTP.exeは、ある環境では必要ない場合がある（VPN接続のインストールに使っていない限り）。",
+  "procedure/G0069/0": "MuddyWaterは、POWERSTATSペイロードを実行するために、CMSTP.exeと悪意あるINFを使用した。",
+  "procedure/G0080/0": "Cobalt Groupは、AppLockerを回避して悪意あるスクリプトを起動するために、`cmstp.exe /s /ns C:\\Users\\ADMINI~W\\AppData\\Local\\Temp\\XKNqbpzl.txt`というコマンドを使用した。",
+  "procedure/S1149/0": "CHIMNEYSWEEPは、悪意あるMicrosoft Connection Manager Profileをインストールするために、CMSTP.exeを使用できる。",
+  "procedure/S1202/0": "LockBit 3.0は、管理者権限を持っていない場合にCMSTPのUACバイパスを試みることができる。"
+ },
+ "supplement": {
+  "summary": "VPN接続プロファイルをインストールするための正規ツールCMSTP.exeに、悪意あるコマンドを仕込んだINFファイルを与えることで、DLLやCOMスクリプトレットの実行、さらにはUAC（ユーザーアカウント制御）の回避まで行える技術。Regsvr32の悪用（Squiblydoo）と同様の構造を持つ。",
+  "analogy": "正規の接続設定インストーラ（CMSTP）に、設定ファイルのふりをした指示書（悪意あるINF）を読み込ませることで、本来は設定変更だけのはずの作業の裏で、別のプログラムを実行させてしまうのに近い。設定の自動昇格の仕組みまで利用されると、通常はユーザーの確認が必要な操作まで素通りしてしまう。",
+  "learn": ["INFファイルという、通常は単純な設定情報を記述するためのファイル形式が、悪意あるコマンドの運び手になり得ること", "CMSTPがUACバイパスの手段としても使われる、複数の悪用経路を持つ技術であること"],
+  "interpretation": ["CMSTPの悪用がRegsvr32の悪用（Squiblydoo）と同じ構造を持つと明記されている点は、攻撃者が『遠隔のDLL/スクリプトレットを、署名済みの正規バイナリ経由で読み込ませる』という同一のパターンを、複数の異なるWindowsコンポーネント（Regsvr32、CMSTP、さらには他のLOLBins）に繰り返し適用していることを示している。1つの手口を学ぶことで、他の類似の悪用経路も見抜けるようになる、ATT&CKの技術群を横断して学ぶ価値がここにある。"]
+ }
+}

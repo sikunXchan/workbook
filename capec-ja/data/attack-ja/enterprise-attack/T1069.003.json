@@ -5,9 +5,9 @@
  "seg": {
   "name": "クラウドグループ",
   "description/0": "攻撃者は、クラウドのグループと権限設定を見つけようとすることがある。クラウドの権限グループについての知識は、攻撃者が環境内の利用者やグループの役割、そしてどの利用者が特定のグループに関連付けられているかを判断するのに役立つ。",
-  "description/1": "認証済みのアクセスがあれば、権限グループを見つけるために使えるツールがいくつか存在する。<code>Get-MsolRole</code> PowerShellコマンドレットは、ExchangeやOffice 365のアカウントについて、役割と権限グループを取得するために使用できる。",
-  "description/2": "Azure CLI（AZ CLI）やGoogle Cloud Identity Provider APIも、権限グループを取得するためのインターフェースを提供する。コマンド<code>az ad user get-member-groups</code>はAzureにおいて利用者アカウントに関連付けられたグループを一覧表示し、APIエンドポイント<code>GET https://cloudidentity.googleapis.com/v1/groups</code>はGoogleにおいて利用者が利用できるグループリソースを一覧表示する。AWSでは、`ListRolePolicies`と`ListAttachedRolePolicies`のコマンドによって、ロールに付与されたポリシーを列挙できる。",
-  "description/3": "攻撃者は、オブジェクトの所有者やそのオブジェクトにアクセスできる他のアカウントを特定するために、オブジェクトのACL（アクセス制御リスト）を一覧表示しようとすることがある。例えば、AWSの<code>GetBucketAcl</code> APIを介して行われる。この情報を使って、攻撃者は与えられたオブジェクトへの権限を持つアカウントを標的にしたり、すでに侵害済みのアカウントを利用してそのオブジェクトにアクセスしたりできる。",
+  "description/1": "認証済みのアクセスがあれば、権限グループを見つけるために使えるツールがいくつか存在する。`Get-MsolRole` PowerShellコマンドレットは、ExchangeやOffice 365のアカウントについて、役割と権限グループを取得するために使用できる。",
+  "description/2": "Azure CLI（AZ CLI）やGoogle Cloud Identity Provider APIも、権限グループを取得するためのインターフェースを提供する。コマンド`az ad user get-member-groups`はAzureにおいて利用者アカウントに関連付けられたグループを一覧表示し、APIエンドポイント`GET https://cloudidentity.googleapis.com/v1/groups`はGoogleにおいて利用者が利用できるグループリソースを一覧表示する。AWSでは、`ListRolePolicies`と`ListAttachedRolePolicies`のコマンドによって、ロールに付与されたポリシーを列挙できる。",
+  "description/3": "攻撃者は、オブジェクトの所有者やそのオブジェクトにアクセスできる他のアカウントを特定するために、オブジェクトのACL（アクセス制御リスト）を一覧表示しようとすることがある。例えば、AWSの`GetBucketAcl` APIを介して行われる。この情報を使って、攻撃者は与えられたオブジェクトへの権限を持つアカウントを標的にしたり、すでに侵害済みのアカウントを利用してそのオブジェクトにアクセスしたりできる。",
   "procedure/G1057/0": "ShinyHuntersは、侵害したAWSアカウントの権限を列挙するためにAPI呼び出しを実行している。",
   "procedure/S0677/0": "AADInternalsは、Azure ADのグループを列挙できる。",
   "procedure/S0684/0": "ROADToolsは、Azure ADのグループを列挙できる。",

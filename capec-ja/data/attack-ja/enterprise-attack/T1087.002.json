@@ -1,0 +1,41 @@
+{
+ "id": "T1087.002",
+ "source_sha": "d0edf8db39ef822d",
+ "status": "done",
+ "seg": {
+  "name": "ドメインアカウント",
+  "description/0": "攻撃者は、ドメインアカウントの一覧を得ようとすることがある。この情報は、攻撃者がどのドメインアカウントが存在するかを把握し、特定の権限を持つアカウントを狙うなど、その後の行動を助けるのに役立つ。",
+  "description/1": "Netユーティリティの`net user /domain`や`net group /domain`、macOSの`dscacheutil -q group`、Linuxの`ldapsearch`といったコマンドで、ドメインの利用者やグループを一覧表示できる。`Get-ADUser`や`Get-ADGroupMember`を含むPowerShellのコマンドレットは、Active Directoryのグループメンバーを列挙できる。",
+  "mitigation/M1028/0": "アプリケーションがUACを通じて権限昇格する際に、管理者アカウントが列挙されないようにする。これはアカウント名の漏洩につながりうる。該当のレジストリキーは`HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\CredUI\\EnumerateAdministrators`にある。GPOで無効化できる：コンピューターの構成 > [ポリシー] > 管理用テンプレート > Windowsの構成要素 > 資格情報のユーザーインターフェース：昇格時に管理者アカウントを列挙する。",
+  "procedure/G0004/0": "Ke3changは、`net localgroup administrators`や`net group \"REDACTED\" /domain`といったコマンドを使い、特定の権限グループに対してアカウント探索を行う。",
+  "procedure/G0010/0": "Turlaは、`net user /domain`を使ってドメインアカウントを列挙したことがある。",
+  "procedure/G0030/0": "Lotus Blossomは、`net`コマンドやAdFindなどのツールを使って、被害端末に関連するドメインアカウントを調べ、Active Directoryへの問い合わせを行ったことがある。",
+  "procedure/G0033/0": "Poseidon Groupは、被害端末のローカルとネットワークの両方で管理者アカウントを検索する。",
+  "procedure/G0034/0": "Sandworm Teamは、LDAPを使ってActive Directoryに問い合わせるツールを使い、AD上の利用者名に関する情報を探索したことがある。",
+  "procedure/G0035/0": "Dragonflyは、バッチスクリプトを使って被害者のドメインコントローラー上の利用者を列挙したことがある。",
+  "procedure/G0037/0": "FIN6は、MetasploitのPsExec NTDSGRABモジュールを使って、被害者のActive Directoryデータベースの複製を取得したことがある。",
+  "procedure/G0045/0": "menuPassは、Microsoftの管理ツールcsvde.exeを使ってActive Directoryのデータを抽出したことがある。",
+  "procedure/G0046/0": "FIN7は、PowerShellスクリプトの3CF9.ps1と実行ファイルWsTaskLoadを使い、`net group \"Domain Admins\" /domain`を実行してドメイン管理者を列挙した。FIN7は、Windows組み込みのコマンドラインツールcsvde.exeも使ってActive Directoryの情報を抽出したことがある。",
+  "procedure/G0049/0": "OilRigは、`net user`、`net user /domain`、`net group \"domain admins\" /domain`、`net group \"Exchange Trusted Subsystem\" /domain`を実行し、被害端末のアカウント一覧を取得した。",
+  "procedure/G0060/0": "BRONZE BUTLERは、`net user /domain`を使ってアカウント情報を特定したことがある。",
+  "procedure/G0069/0": "MuddyWaterは、`cmd.exe net user /domain`を使ってドメイン利用者を列挙したことがある。",
+  "procedure/G0096/0": "APT41は、組み込みの`net`コマンドを使ってドメイン管理者利用者を列挙した。",
+  "procedure/G0102/0": "Wizard Spiderは、`net group \"Domain admins\" /DOMAIN`を使ってドメイン管理者を特定した。Wizard Spiderは、PowerShellのコマンドレット`Get-ADComputer`を利用して、Active Directoryのデータから利用者名を収集したこともある。",
+  "procedure/G0114/0": "Chimeraは、`net user /dom`や`net user Administrator`を使い、管理者アカウントを含むドメインアカウントを列挙した。",
+  "procedure/G0117/0": "Fox Kittenは、Softerra LDAPブラウザを使い、サービスアカウントに関する資料を閲覧したことがある。",
+  "procedure/G0129/0": "Mustang Pandaは、AdFindを利用してドメイン利用者を特定したことがある。",
+  "procedure/G1004/0": "LAPSUS$は、AD Explorerというツールを使って、被害者のネットワーク上の利用者を列挙したことがある。",
+  "procedure/G1015/0": "Scattered Spiderは、標的環境で使われている正規のドメインアカウントを列挙したことがある。",
+  "procedure/G1016/0": "FIN13は、サービスプリンシパル名に関連する利用者アカウントを特定でき、`GetUserSPNs.vbs`と`querySpn.vbs`というスクリプトを使ってドメイン内のサービスプリンシパル名を問い合わせることができる。"
+ },
+ "supplement": {
+  "summary": "Active Directoryのような、組織全体で共有されるドメインの利用者・グループ一覧を調べる技術。`net user /domain`やPowerShellのADコマンドレット、AdFindのようなツールが使われ、特にドメイン管理者アカウントの特定が標的になりやすい。",
+  "analogy": "マンションの一室だけでなく、管理会社が持つマンション全体（さらには同じ管理会社が持つ複数の建物）の住民名簿にアクセスするようなもので、ローカルアカウントの探索より影響範囲がはるかに大きい。",
+  "learn": [
+   "AdFindやPowerShellのADコマンドレットなど、正規のActive Directory管理ツールが偵察に悪用される例が多いこと"
+  ],
+  "interpretation": [
+   "ドメイン管理者の特定（例：`net group \"Domain Admins\" /domain`）が繰り返し登場することは、攻撃者がこの技術を、権限昇格や横展開の『次の標的選び』として位置づけていることを示している。"
+  ]
+ }
+}

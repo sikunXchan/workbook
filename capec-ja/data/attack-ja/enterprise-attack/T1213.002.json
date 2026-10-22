@@ -1,0 +1,29 @@
+{
+ "id": "T1213.002",
+ "source_sha": "6a85267f5991040b",
+ "status": "done",
+ "seg": {
+  "name": "SharePoint",
+  "description/0": "攻撃者は、価値ある情報を探し出す元としてSharePointリポジトリを利用することがある。SharePointには、内部ネットワークやシステムの構造・機能について攻撃者が知るのに役立つ情報が含まれていることが多い。例えば、以下は、攻撃者にとって潜在的な価値を持ちうる、SharePoint上に見られる情報の例の一覧である。",
+  "description/1": "* 方針、手順、基準\n* 物理／論理ネットワーク図\n* システムアーキテクチャ図\n* 技術システムの文書\n* テスト・開発用の認証情報（すなわち、保護されていない認証情報）\n* 業務・プロジェクトの予定表\n* ソースコードの断片\n* ネットワーク共有やその他の内部リソースへのリンク",
+  "mitigation/M1017/0": "SharePointリポジトリに保存してよい情報を定義した方針を作成し、公開する。",
+  "mitigation/M1018/0": "最小権限の原則を徹底する。認証と認可の両方を含むアクセス制御のしくみの実装を検討する。",
+  "mitigation/M1047/0": "重要かつ機密性の高いSharePointリポジトリについて、アカウントと権限の定期的な見直しを検討する。",
+  "procedure/G0004/0": "Ke3changは、spwebmemberという、SharePointの列挙とデータダンプを行うツールを使った。",
+  "procedure/G0007/0": "APT28は、標的ネットワーク内のMicrosoft SharePointサービスから情報を収集した。",
+  "procedure/G0114/0": "Chimeraは被害者のSharePointから文書を収集した。",
+  "procedure/G0125/0": "HAFNIUMは、侵害した認証情報を悪用して、SharePointからデータを持ち出した。",
+  "procedure/G1004/0": "LAPSUS$は、さらなる高権限アカウントの認証情報を見つけ出すため、被害者のネットワーク内でSharePointのような協業プラットフォームを探した。",
+  "procedure/G1024/0": "Akiraは、データ収集と持ち出し活動の一環として、SharePointインスタンスに保存されている情報へのアクセスとダウンロードを行った。",
+  "procedure/G1055/0": "VOID MANTICOREは、被害者の公開向けSharePointサーバーにアクセスし、データを持ち出した。",
+  "procedure/G1059/0": "NIMBUS MANTICOREはSharePointサービスからファイルをダウンロードした。",
+  "procedure/S0227/0": "spwebmemberは、Microsoft SharePointから情報を列挙・ダンプするために使われる。",
+  "procedure/S9009/0": "TruffleHogはSharePointからデータと認証情報を検索した。"
+ },
+ "supplement": {
+  "summary": "多くの組織で社内文書共有に使われるSharePointから、ネットワーク構成情報や認証情報を探し出す技術。複数の攻撃グループ（APT28、HAFNIUM、Akiraなど）が実際に使用している実例が多い、よく悪用される情報リポジトリ。",
+  "analogy": "社内の資料共有フォルダを部署全員が自由に見られる設定にしておいたため、外部から侵入した者が人事情報から技術仕様まで一度にまとめて持ち出せてしまう状況に近い。",
+  "learn": ["SharePointが単なる文書共有ツールではなく、認証情報や内部ネットワーク構成を含む「攻撃者にとっての情報源」として狙われていること", "持ち出し（Exfiltration）につながる前段階として、SharePointからのデータ収集が多数のグループに使われている実態"],
+  "interpretation": ["procedures一覧に見られる攻撃グループの多様性（国家支援型のAPT28やHAFNIUMから、ランサムウェア系のAkiraまで）は、SharePointの悪用が特定の攻撃者の専売特許ではなく、広く共有された「定番の手口」であることを示している。これは、SharePointのアクセス権限設定が、組織の規模や攻撃者の種類を問わず、防御上の優先度が高い領域であることを意味する。"]
+ }
+}

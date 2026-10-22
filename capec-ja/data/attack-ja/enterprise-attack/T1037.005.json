@@ -5,9 +5,9 @@
  "seg": {
   "name": "スタートアップ項目",
   "description/0": "攻撃者は、起動初期化時に自動的に実行されるスタートアップ項目を使って永続化を確立することがある。スタートアップ項目は起動プロセスの最終段階で実行され、シェルスクリプトやその他の実行ファイルに加えて、システムがすべてのスタートアップ項目の実行順序を決めるために使う設定情報を含む。",
-  "description/1": "これは技術的には非推奨の技術であり（Launch Daemonに取って代わられている）、そのため適切なフォルダである<code>/Library/StartupItems</code>が既定でシステムに存在する保証はないが、macOS Sierraでは既定で存在するように見える。スタートアップ項目は、実行ファイルと設定用のプロパティリスト（plist）である<code>StartupParameters.plist</code>が、最上位のディレクトリに置かれたディレクトリである。",
+  "description/1": "これは技術的には非推奨の技術であり（Launch Daemonに取って代わられている）、そのため適切なフォルダである`/Library/StartupItems`が既定でシステムに存在する保証はないが、macOS Sierraでは既定で存在するように見える。スタートアップ項目は、実行ファイルと設定用のプロパティリスト（plist）である`StartupParameters.plist`が、最上位のディレクトリに置かれたディレクトリである。",
   "description/2": "攻撃者は、StartupItemsディレクトリ内に適切なフォルダ・ファイルを作成して、自分自身の永続化のしくみを登録できる。さらに、StartupItemsはmacOSの起動段階で実行されるため、昇格したroot利用者として実行される。",
-  "mitigation/M1022/0": "StartupItemsは非推奨であるため、すべての利用者が<code>/Library/StartupItems</code>ディレクトリへの書き込みを行えないようにすることで、スタートアップ項目が登録されることを防げる。",
+  "mitigation/M1022/0": "StartupItemsは非推奨であるため、すべての利用者が`/Library/StartupItems`ディレクトリへの書き込みを行えないようにすることで、スタートアップ項目が登録されることを防げる。",
   "procedure/S0283/0": "jRATは、スタートアップのエントリを一覧表示・管理できる。"
  },
  "supplement": {

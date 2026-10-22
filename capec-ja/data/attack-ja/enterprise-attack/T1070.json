@@ -14,13 +14,13 @@
   "procedure/G0129/0": "Mustang Pandaは、データを保存するレジストリキーを削除し、持続性を保っている。",
   "procedure/G1023/0": "APT5は、THINBLOODユーティリティを使って`/home/runtime/logs`にあるSSL VPNのログファイルを消去している。",
   "procedure/G1044/0": "APT42は、Chromeブラウザの履歴を消去している。",
-  "procedure/S0089/0": "BlackEnergyは、<code>TESTSIGNING</code>起動設定オプションを有効にしたことに伴う透かし表示を、システムの<code>user32.dll.mui</code>内の関連文字列を削除することで取り除いている。",
+  "procedure/S0089/0": "BlackEnergyは、`TESTSIGNING`起動設定オプションを有効にしたことに伴う透かし表示を、システムの`user32.dll.mui`内の関連文字列を削除することで取り除いている。",
   "procedure/S0229/0": "Orzは、被害者上での可視性を減らすためにレジストリ設定を上書きできる。",
   "procedure/S0239/0": "Bankshotは、感染したマシンからマルウェアに関連するすべての痕跡を削除する。",
   "procedure/S0332/0": "Remcosは、Webブラウザから保存済みのクッキーとログイン情報を消去できる。",
   "procedure/S0448/0": "Rising Sunは、ジャンクバイトで上書きすることで、プロセス内のメモリブロックを消去できる。",
   "procedure/S0449/0": "Mazeは、シャドウボリュームの削除を試みた後、“Wow64RevertWow64FsRedirection”関数を使って、リダイレクト前と同じ状態にシステムを戻している。",
-  "procedure/S0455/0": "Metamorfoは、自身が使用するレジストリキー<code>\\Software\\Microsoft\\Internet Explorer\\notes</code>を削除するコマンドを持っている。",
+  "procedure/S0455/0": "Metamorfoは、自身が使用するレジストリキー`\\Software\\Microsoft\\Internet Explorer\\notes`を削除するコマンドを持っている。",
   "procedure/S0461/0": "SDBbotは、侵害したホストからデータ構造を整理・削除する能力を持つ。",
   "procedure/S0527/0": "CSPY Downloaderは、自身がレジストリに書き込んだ値を削除する能力を持つ。",
   "procedure/S0559/0": "SUNBURSTは、実行の痕跡を消すためにHTTPプロキシのレジストリ値を削除している。",
@@ -34,10 +34,17 @@
  "supplement": {
   "summary": "ステルス戦術の一部として、コマンド履歴・ログ・ファイルのメタデータといった侵入の痕跡を選んで削除・改変する技術。すべてを消すのではなく、不審に見える部分だけを狙って残りはそのままにすることで、正常な見た目を保つのが特徴。",
   "terms": [
-   { "term": "フォレンジック分析", "en": "forensic analysis", "explain": "侵害を受けたシステムに残るデータやログを詳細に調べ、何が起きたかを後から再構築する調査手法。" }
+   {
+    "term": "フォレンジック分析",
+    "en": "forensic analysis",
+    "explain": "侵害を受けたシステムに残るデータやログを詳細に調べ、何が起きたかを後から再構築する調査手法。"
+   }
   ],
   "facts": [
-   { "text": "選んで削除・改変された痕跡は、より深いフォレンジック分析によって復元できる場合もあるが、その欠落や改変はタイムラインの再構築や攻撃者の特定を複雑にする可能性があると原典に書かれている。", "source": "description" }
+   {
+    "text": "選んで削除・改変された痕跡は、より深いフォレンジック分析によって復元できる場合もあるが、その欠落や改変はタイムラインの再構築や攻撃者の特定を複雑にする可能性があると原典に書かれている。",
+    "source": "description"
+   }
   ],
   "analogy": "空き巣が家中をひっくり返すのではなく、自分の指紋がついた場所だけをそっと拭き取り、他の場所はあえてそのままにしておくのに似ている。家全体が荒らされていなければ、住人はしばらく異変に気づかない。",
   "learn": [

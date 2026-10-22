@@ -4,15 +4,15 @@
  "status": "done",
  "seg": {
   "name": "ログオンスクリプト（Windows）",
-  "description/0": "攻撃者は、ログオン初期化時に自動的に実行されるWindowsのログオンスクリプトを使って永続化を確立することがある。Windowsでは、特定の利用者やグループがシステムにログオンするたびに、ログオンスクリプトを実行できる。これは、スクリプトへのパスを<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーに追加することで行われる。",
+  "description/0": "攻撃者は、ログオン初期化時に自動的に実行されるWindowsのログオンスクリプトを使って永続化を確立することがある。Windowsでは、特定の利用者やグループがシステムにログオンするたびに、ログオンスクリプトを実行できる。これは、スクリプトへのパスを`HKCU\\Environment\\UserInitMprLogonScript`というレジストリキーに追加することで行われる。",
   "description/1": "攻撃者は、これらのスクリプトを使って単一のシステム上で永続化を維持することがある。ログオンスクリプトのアクセス設定によっては、ローカルの認証情報、または管理者アカウントが必要になることがある。",
   "mitigation/M1024/0": "レジストリハイブに適切な権限が設定されていることを確かめ、利用者がログオンスクリプトのキーを変更して永続化につながることを防ぐ。",
-  "procedure/G0007/0": "APT28のローダー型トロイの木馬は、永続化を確立するために<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーを追加する。",
-  "procedure/G0080/0": "Cobalt Groupは、<code>HKCU\\Environment\\UserInitMprLogonScript</code>に次段のマルウェアのファイル名を登録することで永続化を追加した。",
-  "procedure/S0044/0": "JHUHUGITは、永続化を確立するために<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーにWindowsのシェルスクリプトを登録した。",
-  "procedure/S0251/0": "Zebrocyは、<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーに追加するログオンスクリプトによって永続化を行う。",
-  "procedure/S0438/0": "Attorのディスパッチャーは、ログオンスクリプトを持つレジストリキー<code>HKEY_CURRENT_USER\\Environment \"UserInitMprLogonScript\" </code>を追加することで永続化を確立できる。",
-  "procedure/S0526/0": "KGH_SPYは、ログオンスクリプトを実行するために<code>HKCU\\Environment\\UserInitMprLogonScript</code>というレジストリキーを設定する機能を持つ。"
+  "procedure/G0007/0": "APT28のローダー型トロイの木馬は、永続化を確立するために`HKCU\\Environment\\UserInitMprLogonScript`というレジストリキーを追加する。",
+  "procedure/G0080/0": "Cobalt Groupは、`HKCU\\Environment\\UserInitMprLogonScript`に次段のマルウェアのファイル名を登録することで永続化を追加した。",
+  "procedure/S0044/0": "JHUHUGITは、永続化を確立するために`HKCU\\Environment\\UserInitMprLogonScript`というレジストリキーにWindowsのシェルスクリプトを登録した。",
+  "procedure/S0251/0": "Zebrocyは、`HKCU\\Environment\\UserInitMprLogonScript`というレジストリキーに追加するログオンスクリプトによって永続化を行う。",
+  "procedure/S0438/0": "Attorのディスパッチャーは、ログオンスクリプトを持つレジストリキー`HKEY_CURRENT_USER\\Environment \"UserInitMprLogonScript\" `を追加することで永続化を確立できる。",
+  "procedure/S0526/0": "KGH_SPYは、ログオンスクリプトを実行するために`HKCU\\Environment\\UserInitMprLogonScript`というレジストリキーを設定する機能を持つ。"
  },
  "supplement": {
   "summary": "Windowsのレジストリキー`HKCU\\Environment\\UserInitMprLogonScript`に悪意あるスクリプトへのパスを登録することで、利用者のログオンごとに自動実行させる、起動・ログオン初期化スクリプト(T1037)のWindows向けサブ技術。",

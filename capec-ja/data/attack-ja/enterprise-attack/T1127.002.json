@@ -1,0 +1,31 @@
+{
+ "id": "T1127.002",
+ "source_sha": "cacb68d6ac7bcf20",
+ "status": "done",
+ "seg": {
+  "name": "ClickOnce",
+  "description/0": "攻撃者は、信頼されたWindowsユーティリティを通じてコードの実行を代理させるために、ClickOnceアプリケーション（.appref-msファイルや.applicationファイル）を使うことがある。ClickOnceは、利用者がほとんど操作をせずにファイル共有やWebページからインストール・実行できる、自己更新型のWindowsベースの.NETアプリケーション（.XBAP、.EXE、.DLLなど）を作成できる展開方式である。このアプリケーションは、アプリケーションのインストール・起動・更新を担うDFSVC.EXEの子プロセスとして起動する。",
+  "description/1": "ClickOnceアプリケーションは限定的な権限しか受け取らないため、インストールに管理者権限を必要としない。そのため、攻撃者は権限を昇格させずに、悪意あるコードの実行を代理させるためにClickOnceを悪用することがある。",
+  "description/2": "ClickOnceは、さまざまな方法で悪用されうる。例えば、攻撃者は「利用者による実行」に依存することがある。利用者が悪意あるWebサイトを訪れると、.NETマルウェアが正規のソフトウェアに偽装され、インストールのためのClickOnceのポップアップが表示される。",
+  "description/3": "攻撃者はまた、`rundll32.exe dfshim.dll,ShOpenVerbApplication1`というコマンドを使ったRundll32スクリプトを通じて、マルウェアを実行するためにClickOnceを悪用することがある。",
+  "description/4": "さらに、攻撃者は、悪意あるコードの展開を継続させるために、ClickOnceアプリケーションのファイルを遠隔の利用者のスタートアップフォルダに移動させることがある（レジストリ実行キー／スタートアップフォルダ）。",
+  "mitigation/M1021/0": "次のレジストリキーを使って、インターネットからのClickOnceのインストールを無効化する：\n`\\HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\.NETFramework\\Security\\TrustManager\\PromptingLevel — Internet:Disabled`",
+  "mitigation/M1042/0": "次のレジストリキーを使って、インターネットからのClickOnceのインストールを無効化する：\n`\\HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\.NETFramework\\Security\\TrustManager\\PromptingLevel — Internet:Disabled`",
+  "mitigation/M1042/1": "環境内でClickOnceが不要な場合があり、使われていなければ無効化すべきである。",
+  "mitigation/M1045/0": "信頼されないコードの実行を防ぐため、デジタル署名の検証によって、バイナリとアプリケーションの完全性を強制する。"
+ },
+ "supplement": {
+  "summary": "WebページやファイルサーバーからクリックひとつでインストールできるClickOnceの配布方式を悪用し、正規の.NET展開しくみ(DFSVC.EXE)を経由して、管理者権限を要求せずに悪意あるコードを動かす手口。「権限が低い＝安全」という思い込みを逆手に取る。",
+  "facts": [
+   { "text": "ClickOnceは`rundll32.exe dfshim.dll,ShOpenVerbApplication1`というコマンドを使ったRundll32経由でも悪用でき、さらにClickOnceのアプリケーションファイルを遠隔利用者のスタートアップフォルダに移動させて、持続的な悪意あるコードの展開を行うこともできると原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "来訪者カード（管理者権限）を発行せずに、通用口の自動ドア（ClickOnce）から誰でも入れるようにしておいた結果、そのドアを通って悪意ある訪問者が、監視カメラの電源には手を出せないまま（権限は低いまま）、受付のパソコン（.NETの実行環境）を操作してしまうのに似ている。",
+  "learn": [
+   "ClickOnceが管理者権限を必要としない設計になっていることが、利便性と同時に「権限昇格なしで悪意あるコードを実行できる」というセキュリティ上の弱点にもなっていること",
+   "ユーザー実行（フィッシングサイトでのポップアップ）とRundll32経由の実行という、2つの異なる悪用経路が存在すること"
+  ],
+  "interpretation": [
+   "この技術固有の対策として、レジストリキーによるインターネット経由インストールの無効化が具体的に示されている点は、MSBuild（T1127.001）のような「ブロックするしかない」対策と比べて、より細かい制御（インターネット経由のみを無効化し、社内のファイル共有経由は許可するなど）が可能であることを示している。これは、ClickOnceが正規の企業内ソフトウェア配布にも使われる場面があるため、全面的な無効化ではなく、信頼できる配布元を区別する対策が設計されていることを反映している。"
+  ]
+ }
+}

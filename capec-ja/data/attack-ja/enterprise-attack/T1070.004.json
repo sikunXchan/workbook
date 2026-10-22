@@ -5,7 +5,7 @@
  "seg": {
   "name": "ファイルの削除",
   "description/0": "攻撃者は、侵入活動の行為によって残されたファイルを削除することがある。マルウェア、ツール、その他のシステムに元から無いファイルが、攻撃者によって持ち込まれたり作成されたりすると（例：Ingress Tool Transfer）、ネットワーク内で何が、どのように行われたかを示す痕跡が残ることがある。これらのファイルの削除は、侵入中に行われることもあれば、攻撃者の足跡を最小限にするための侵入後のプロセスの一部として行われることもある。",
-  "description/1": "ホストOSには、後始まつを行うためのツールが用意されているが、攻撃者は他のツールを使うこともある。組み込みのCommand and Scripting Interpreter機能の例として、Windowsの<code>del</code>、Linux/macOSの<code>rm</code>や<code>unlink</code>、ESXiの`rm`がある。",
+  "description/1": "ホストOSには、後始まつを行うためのツールが用意されているが、攻撃者は他のツールを使うこともある。組み込みのCommand and Scripting Interpreter機能の例として、Windowsの`del`、Linux/macOSの`rm`や`unlink`、ESXiの`rm`がある。",
   "procedure/G0007/0": "APT28は、CCleanerというプログラムを使うなど、意図的にコンピュータのファイルを削除して自分の足跡を消している。",
   "procedure/G0016/0": "APT29は、被害者のネットワークから痕跡を取り除くためにSDeleteを使用している。",
   "procedure/G0022/0": "APT3は、ファイルを削除できるツールを持っている。",
@@ -31,7 +31,10 @@
  "supplement": {
   "summary": "侵入中に持ち込んだマルウェア・ツール・一時ファイルなどを削除し、何がシステムに持ち込まれたかという物的な証拠を取り除く技術。侵入中・侵入後どちらのタイミングでも行われる。",
   "facts": [
-   { "text": "削除には、Windowsの`del`、Linux/macOSの`rm`/`unlink`、ESXiの`rm`といったOS標準のコマンドだけでなく、SDeleteのようなより確実にファイルを消去する専用ツールも使われると原典に書かれている。", "source": "description/1" }
+   {
+    "text": "削除には、Windowsの`del`、Linux/macOSの`rm`/`unlink`、ESXiの`rm`といったOS標準のコマンドだけでなく、SDeleteのようなより確実にファイルを消去する専用ツールも使われると原典に書かれている。",
+    "source": "description/1"
+   }
   ],
   "analogy": "引っ越し作業で使った段ボールや工具を、作業完了後にすべて持ち帰り、何も置いていかないようにする行為に近い。普通の削除（`del`や`rm`）は段ボールを部屋の隅に置いていくようなもので、専用の消去ツール（SDeleteなど）を使うのは、床の跡まで消してから部屋を出るようなものである。",
   "learn": [

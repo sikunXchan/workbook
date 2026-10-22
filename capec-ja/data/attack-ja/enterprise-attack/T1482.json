@@ -1,0 +1,52 @@
+{
+ "id": "T1482",
+ "source_sha": "02423a8691514c0c",
+ "status": "done",
+ "seg": {
+  "name": "ドメイン信頼関係の探索",
+  "description/0": "攻撃者は、Windowsのマルチドメイン・フォレスト環境で横展開の機会を特定するために利用できる、ドメイン信頼関係についての情報を収集しようとすることがある。ドメイン信頼は、あるドメインが別のドメインの認証手続きに基づいてリソースへのアクセスを許可するためのしくみを提供する。ドメイン信頼により、信頼されたドメインの利用者は、信頼するドメイン内のリソースにアクセスできるようになる。発見された情報は、攻撃者がSIDの履歴の注入、Pass the Ticket、Kerberoastingを行う助けになることがある。ドメイン信頼は、`DSEnumerateDomainTrusts()`というWin32 APIの呼び出し、.NETのメソッド、LDAPを使って列挙できる。WindowsのユーティリティであるNltestは、攻撃者がドメイン信頼を列挙するために使っていることが知られている。",
+  "mitigation/M1030/0": "機密性の高いドメインにはネットワークの分割を利用する。",
+  "mitigation/M1047/0": "既存のドメイン・フォレスト内の信頼関係を図式化し、信頼関係を最小限に保つ。",
+  "procedure/G0030/0": "Lotus BlossomはAdFindなどのツールを使ってActive Directoryへの問い合わせを行ってきた。",
+  "procedure/G0059/0": "Magic Houndは、信頼関係を特定するためにWebシェルを使って`nltest /trusted_domains`を実行してきた。",
+  "procedure/G0061/0": "FIN8は`nltest.exe /domain_trusts`を使って信頼されたドメインの一覧を取得してきた。",
+  "procedure/G0114/0": "Chimeraはドメイン信頼関係を特定するために`nltest /domain_trusts`を使う。",
+  "procedure/G1006/0": "Earth Luscaは、ドメインコントローラーについての情報を取得するためにNltestを使ってきた。",
+  "procedure/G1024/0": "Akiraは、被害者の環境内のActive Directoryの信頼関係を列挙するために、標準搭載のNltestユーティリティやAdFindなどのツールを使う。",
+  "procedure/G1043/0": "BlackByteは作戦の中でActive Directoryの情報と信頼関係を列挙した。",
+  "procedure/G1053/0": "Storm-0501は探索のためにWindows標準のユーティリティであるNltest（`nltest.exe`）を使ってきた。",
+  "procedure/G1054/0": "MirrorFaceは、ドメイン関係を発見するために、侵害したシステム上で`nltest.exe /domain_trusts`を実行してきた。",
+  "procedure/S0105/0": "dsqueryは、`dsquery * -filter \"(objectClass=trustedDomain)\" -attr *`を使ってドメイン信頼についての情報を収集するために使うことができる。",
+  "procedure/S0194/0": "PowerSploitには、ドメインとフォレストの信頼関係を列挙するための`Get-NetDomainTrust`や`Get-NetForestTrust`などのモジュールがある。",
+  "procedure/S0266/0": "TrickBotはNltestを活用してドメイン信頼についての情報を収集できる。",
+  "procedure/S0359/0": "Nltestは、`nltest /domain_trusts`などのコマンドを使って信頼されたドメインを列挙するために使われることがある。",
+  "procedure/S0363/0": "Empireにはドメイン信頼を列挙するためのモジュールがある。",
+  "procedure/S0378/0": "PoshC2にはドメイン信頼を列挙するためのモジュールがある。",
+  "procedure/S0483/0": "IcedIDは初期の探索の際にNltestを使用した。",
+  "procedure/S0521/0": "BloodHoundには、ドメイン信頼を図式化し、悪用の可能性がある誤設定を特定する機能がある。",
+  "procedure/S0534/0": "Bazarは、ドメインについての情報を取得するためにNltestツールを使うことができる。",
+  "procedure/S0552/0": "AdFindは、Active Directoryから組織単位（OU）とドメイン信頼についての情報を収集できる。",
+  "procedure/S0650/0": "QakBotは、ドメイン信頼の探索のために`nltest /domain_trusts /all_trusts`を実行できる。",
+  "procedure/S1063/0": "Brute Ratel C4は、ドメイン信頼の探索のためにLDAPへの問い合わせと`nltest /domain_trusts`を使うことができる。",
+  "procedure/S1081/0": "BADHATCHは、侵害したマシン上でドメイン信頼関係を発見するために`nltest.exe /domain_trusts`を使うことができる。",
+  "procedure/S1124/0": "SocGholishは、ドメイン信頼関係を特定するために侵害したシステムの情報を収集できる。",
+  "procedure/S1160/0": "Latrodectusは、ドメイン信頼を発見するために`C:\\Windows\\System32\\cmd.exe /c nltest /domain_trusts`を実行できる。"
+ },
+ "supplement": {
+  "summary": "複数ドメイン・フォレスト構成のWindows環境で、ドメイン同士の信頼関係を調べ、横展開の足がかりを見つけるための探索技術。Nltestという標準ツールの悪用が特に目立つ。",
+  "terms": [
+   { "term": "ドメイン信頼", "en": "domain trust", "explain": "あるドメインの認証を、別のドメインが受け入れる関係。信頼されたドメインの利用者は、信頼するドメインのリソースにアクセスできるようになるため、片方のドメインが侵害されると、信頼関係をたどって他のドメインにも被害が広がる可能性がある。" }
+  ],
+  "facts": [
+   { "text": "発見された信頼関係の情報は、攻撃者がSIDの履歴の注入、Pass the Ticket、Kerberoastingを行う助けになる、と原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "複数の提携病院のあいだで、互いの診察券を共通して使えるようにしている仕組みに似ている。1つの病院（ドメイン）の診察券（認証情報）を持っていれば、提携先の病院（信頼するドメイン）でも受診できてしまうため、どの病院とどの病院が提携しているか（信頼関係）を把握されると、そこから別の病院への侵入経路が見えてしまう。",
+  "learn": [
+   "`nltest /domain_trusts`という単一のコマンドが、驚くほど多数の攻撃グループ・マルウェアファミリーに共通して使われていること（防御側にとって監視すべき具体的な実行コマンドの一つ）",
+   "単一ドメインの侵害が、信頼関係を通じて複数ドメイン・フォレスト全体に被害が広がる起点になり得ること"
+  ],
+  "interpretation": [
+   "この一覧に含まれる実例の多さと多様さ（30件以上の攻撃グループ・マルウェアが`nltest`やAdFindを使用）は、ドメイン信頼の探索が、ほぼすべての種類の攻撃者にとって、横展開の計画を立てる上での「定番の下調べ」になっていることを示している。対策として挙げられている「信頼関係を最小限に保つ」という助言は、単なる技術的な設定変更ではなく、組織の設計そのもの（なぜそのドメイン間に信頼関係が必要なのか）を見直すことを求めている点で、実装の難しい、しかし効果の大きい対策だと言える。"
+  ]
+ }
+}

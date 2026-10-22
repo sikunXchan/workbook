@@ -1,0 +1,39 @@
+{
+ "id": "T1102.002",
+ "source_sha": "a368985a9a2f2df6",
+ "status": "done",
+ "seg": {
+  "name": "双方向通信",
+  "description/0": "攻撃者は、既存の正規の外部Webサービスを、侵害したシステムへコマンドを送り、その出力をWebサービス経由で受け取る手段として使うことがある。侵害されたシステムは、人気のあるWebサイトやソーシャルメディアを悪用して、遠隔操作（C2）の指示をホストすることがある。感染したシステムは、そのコマンドの出力を同じWebサービス経路経由で送り返すことができる。戻り方向の通信は、利用されるWebサービスによって様々な形をとる。例えば、侵害されたシステムがフォーラムにコメントを投稿する、開発プロジェクトにプルリクエストを出す、Webサービス上のドキュメントを更新する、あるいはツイートを送信するといった形をとることがある。",
+  "description/1": "人気のあるWebサイトやソーシャルメディアがC2のしくみとして使われると、ネットワーク内のホストが侵害以前からすでにそれらと通信している可能性が高いため、大きな隠れみのになる。GoogleやTwitterなどが提供する一般的なサービスを使うことで、攻撃者は想定される通常の通信ノイズに紛れ込みやすくなる。Webサービス事業者は一般にSSL/TLS暗号化を使っているため、攻撃者にはさらなる保護の層が与えられる。",
+  "mitigation/M1021/0": "Webプロキシを使って、許可されていない外部サービスの利用を防ぐ外部ネットワーク通信方針を強制することができる。",
+  "mitigation/M1031/0": "特定の攻撃者のマルウェアに関する通信を識別するネットワーク署名を使うネットワーク侵入検知・防止システムは、ネットワークレベルでの活動の緩和に使うことができる。",
+  "procedure/G0005/0": "APT12は、C2基盤にブログとWordPressを使用した。",
+  "procedure/G0007/0": "APT28は、C2にGoogle Driveを使用した。",
+  "procedure/G0008/0": "Carbanakは、C2にGoogle Apps Script、Sheets、Formsのサービスを使う「ggldr」という名前のVBScriptを使用した。",
+  "procedure/G0010/0": "TurlaのJavaScript製バックドアは、C2サーバーとしてGoogle Apps Scriptを使用した。",
+  "procedure/G0032/0": "Lazarus Groupは、C2としてGitHubを使用し、ホストされた画像のペイロードを取得して、コマンド実行の結果を特定のディレクトリ内のファイルにコミットした。",
+  "procedure/G0034/0": "Sandworm Teamは、Pythonバックドアへのコマンドの送受信にTelegramメッセンジャーのTelegram Bot APIを使用した。Sandworm Teamは、正規のM.E.Docソフトウェア更新確認リクエストもコマンドの送受信に使い、悪意あるペイロードをputdrive.com上にホストした。",
+  "procedure/G0046/0": "FIN7は、C2にGoogle Docs、Google Scripts、Pastebinといった正規サービスを使用した。",
+  "procedure/G0047/0": "Gamaredon Groupは、C2サーバーの解決にいくつかの方法を使用した。公開の第三者Webサイト、攻撃者が運用するTelegraphチャンネル、ngrokユーティリティ、ハードコードされたC2ドメインのTXTレコードなどである。",
+  "procedure/G0059/0": "Magic Houndのマルウェアは、C2サーバーとの通信にSOAP Webサービスを使用できる。",
+  "procedure/G0067/0": "APT37は、C2にソーシャルネットワーキングサイトやクラウドプラットフォーム（AOL、Twitter、Yandex、Mediafire、pCloud、Dropbox、Box）を利用する。",
+  "procedure/G0069/0": "MuddyWaterは、リモートアクセスツールを配布するためにOneHubを含むWebサービスを使用した。",
+  "procedure/G0087/0": "APT39は、DropBoxへのアップロード・ダウンロードされたファイルを通じてC2と通信した。",
+  "procedure/G0094/0": "Kimsukyは、C2にBlogspotのページとGithubリポジトリを使用した。Kimsukyは、ペイロードのダウンロードや被害システムの情報のアップロードにDropboxも利用した。",
+  "procedure/G0128/0": "ZIRCONIUMは、ファイルのアップロード・ダウンロードや任意のコマンド実行を可能にするC2としてDropboxを使用した。",
+  "procedure/G1001/0": "HEXANEは、C2にOneDriveを含むクラウドサービスを使用した。",
+  "procedure/G1005/0": "POLONIUMは、C2にOneDriveとDropBoxを使用した。",
+  "procedure/S0025/0": "CALENDARマルウェアは、Google Calendarのイベントを使って通信する。",
+  "procedure/S0026/0": "GLOOXMAILは、Jabber/XMPPプロトコルを使ってGoogleが運用するサーバーと通信する。",
+  "procedure/S0042/0": "LOWBALLは、遠隔操作にDropboxのクラウドストレージサービスを使用する。",
+  "procedure/S0046/0": "CozyCarは、設定ファイルで指定したTwitterアカウントへの、バックアップC2経路としてTwitterを使用する。",
+  "procedure/S0054/0": "CloudDukeの1つの亜種は、Microsoft OneDriveアカウントを使って、運用者とコマンド・盗んだデータを交換する。"
+ },
+ "supplement": {
+  "summary": "攻撃者がWebサービスを使って指示を送るだけでなく、そのコマンドの実行結果も同じWebサービス経由で受け取る、往復のC2通信を実現する技術。",
+  "analogy": "指示を伝える側と報告を受け取る側の両方が、同じ掲示板（Webサービス）に書き込みを行う、2人の間の文通に似ている。片方が指示を貼り、もう片方が実行結果を同じ場所に貼り返す。",
+  "learn": ["戻りの通信の形が、使われるWebサービスの種類に応じて多様（コメント投稿、プルリクエスト、ドキュメント更新、ツイートなど）であること"],
+  "interpretation": ["一方向通信（T1102.003）と対になるサブ技術であり、指示と報告のやりとりがすべて同じ経路に乗ることは柔軟性を高める一方、片方の経路が検知・遮断されると双方向の制御が同時に失われるという、集中化のリスクも抱えている。"]
+ }
+}

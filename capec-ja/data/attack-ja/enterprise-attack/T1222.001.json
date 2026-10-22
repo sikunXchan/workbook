@@ -1,0 +1,51 @@
+{
+ "id": "T1222.001",
+ "source_sha": "2879acb0bebc7363",
+ "status": "done",
+ "seg": {
+  "name": "Windows Permissions",
+  "description/0": "攻撃者は、アクセス制御リスト（ACL）を回避し、保護されたファイルにアクセスするために、ファイルやディレクトリの権限・属性を変更することがある。ファイルとディレクトリの権限は、通常、ファイルやディレクトリの所有者、または適切な権限を持つ利用者によって設定されたACLで管理される。ファイルとディレクトリのACLの実装はプラットフォームによって異なるが、一般的には、どの利用者やグループがどの操作（読み取り・書き込み・実行など）を行えるかを明示的に指定する。",
+  "description/1": "Windowsは、ファイルとディレクトリのACLを裁量アクセス制御リスト（DACL）として実装している。標準的なACLと同様に、DACLは、保護対象オブジェクトへのアクセスが許可または拒否される利用者を識別する。保護対象オブジェクトへのアクセスが試行されると、システムはDACL内のアクセス制御エントリを順番に確認する。一致するエントリが見つかれば、オブジェクトへのアクセスが許可される。見つからなければ、アクセスは拒否される。",
+  "description/2": "攻撃者は、`icacls`、`cacls`、`takeown`、`attrib`のような標準搭載のWindowsコマンドを使ってDACLを操作でき、これにより特定のファイルやフォルダに対してより高い権限を得ることができる。さらに、PowerShellには、ファイルやディレクトリのDACLを取得・改変するために使えるコマンドレットが用意されている。特定のファイルとディレクトリの改変は、Accessibility FeaturesやBoot or Logon Initialization Scriptsを介した永続化の確立、またはHijack Execution Flowを介した他の重要なバイナリ・設定ファイルの汚染・乗っ取りなど、多くの技術で必要な手順になることがある。",
+  "mitigation/M1022/0": "ファイルやディレクトリにより制限的な権限を適用することで、攻撃者がそのアクセス制御リストを変更することを防げる可能性がある。",
+  "mitigation/M1026/0": "重要なシステムファイルや、攻撃者による悪用が知られているファイルに制限的な権限が設定され、適切な権限を持つアカウントによって所有されていることを確認する。特に、利用者によるアクセスが不要で、システムの機能を妨げない場合はそうする。",
+  "procedure/G0102/0": "Wizard Spiderは、バックアップサーバーへのアクセス制御を変更するためにicaclsコマンドを使用し、すべてのシステムフォルダへの完全な制御権を得た。",
+  "procedure/G1046/0": "Storm-1811は、被害者の環境でファイルとディレクトリの権限を変更するために、バッチスクリプトを介して`cacls.exe`を使用した。",
+  "procedure/S0201/0": "JPINは、ファイルの権限を変更するためにコマンドラインユーティリティのcacls.exeを使用できる。",
+  "procedure/S0366/0": "WannaCryは、一部のファイルを隠すために`attrib +h`を、すべての利用者に完全なアクセス制御を与えるために`icacls . /grant Everyone:F /T /C /Q`を使用する。",
+  "procedure/S0446/0": "Ryukは、ファイルとディレクトリへのアクセスに基づく制限をすべて削除するために`icacls <path> /grant Everyone:F /T /C /Q`を起動できる。",
+  "procedure/S0531/0": "Grandoreiroは、セキュリティツールの実行を防ぐために、バイナリのACLを変更できる。",
+  "procedure/S0570/0": "BitPaymerは、標的の実行ファイルの権限をリセットしてから所有権を取得するために、`icacls /reset`と`takeown /F`を使用できる。",
+  "procedure/S0612/0": "WastedLockerは、`takeown.exe /F filepath`コマンドを使ってファイルの所有権を取得し、ACLの権限をリセットするコマンドを持つ。",
+  "procedure/S0693/0": "CaddyWiperは、ファイルの所有権を取得するためにACLエントリを変更できる。",
+  "procedure/S1068/0": "BlackCatは、侵害したネットワークへのアクセスを得た後、ファイルシステムへのアクセスを別の場所にリダイレクトするために`fsutil behavior set SymLinkEvaluation R2L:1`のようなWindowsコマンドを使用できる。",
+  "procedure/S1180/0": "BlackByte Ransomwareは、ボリューム名をマウントするために`mountvol.exe`コマンドを使用し、Microsoft裁量アクセス制御リストツールの`icacls.exe`を利用して、ドライブのルートへの完全なアクセス権を「Everyone」に与える。",
+  "procedure/S9002/0": "Diskpartは、ディスクまたはボリュームの属性を表示・設定・消去するために使用できる。",
+  "procedure/S9050/0": "Vidarは、ファイルの権限を変更するために`icacls`を使用した。",
+  "procedure/S9051/0": "The Gentlemen Ransomwareは、暗号化前に標的のファイルパスへの無制限の書き込みアクセスを確保するために、所有権とアクセス制御の設定を変更した。The Gentlemen Ransomwareは、ファイルとフォルダの権限を変更するために`takeown`、`icacls`、`attrib`コマンドを利用した。"
+ },
+ "supplement": {
+  "summary": "Windowsの裁量アクセス制御リスト（DACL）を、icacls・cacls・takeown・attribといった標準搭載コマンドで操作し、保護されたファイルへのアクセス権を奪うサブ技術。特にランサムウェア（Ryuk、WannaCry、BlackByteなど）が暗号化前の下準備として多用する。",
+  "terms": [
+   {
+    "term": "DACL",
+    "en": "Discretionary Access Control List",
+    "explain": "Windowsが実装するACLの一種で、どの利用者・グループがあるファイルやオブジェクトにアクセスできるかを定めるエントリの一覧。アクセス要求があると、システムはこの一覧を順番に照合して許可・拒否を判断する。"
+   }
+  ],
+  "facts": [
+   {
+    "text": "ランサムウェア（WannaCry、Ryuk、BlackByte Ransomwareなど）による`icacls ... /grant Everyone:F`のようなコマンドの使用例が複数報告されており、暗号化前にすべての利用者へのフルアクセスを付与してアクセス制限を無力化するパターンが見られる、と原典の実例に記載がある。",
+    "source": "procedures"
+   }
+  ],
+  "analogy": "会社の金庫（ファイル）の暗証番号を知っている社員（所有者）が決まっているのに、警備員の記録簿を書き換えるコマンド（icacls）を使って、自分を含む全社員を金庫の正規の開錠権限者として記録し直してしまう、という手口に当たる。",
+  "learn": [
+   "icacls、cacls、takeown、attribという、Windows標準搭載の権限操作コマンド群が、ランサムウェアによる暗号化前の下準備として頻繁に使われること",
+   "`/grant Everyone:F`のようなコマンドが、アクセス制限を事実上無力化する典型パターンであること"
+  ],
+  "interpretation": [
+   "本技術の実例の多くがランサムウェア（Ryuk、WannaCry、BitPaymer、WastedLocker、BlackByteなど）である点は、ファイル権限の変更がランサムウェア攻撃の典型的な前段階の一つであることを示している。暗号化処理そのものの検知が難しい場合でも、`icacls`や`takeown`の異常な使用パターンを監視することで、暗号化が始まる前の段階で攻撃を検知できる可能性がある。"
+  ]
+ }
+}

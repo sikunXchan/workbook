@@ -4,11 +4,11 @@
  "status": "done",
  "seg": {
   "name": "Security Account Manager(SAM)",
-  "description/0": "攻撃者は、メモリ内での操作、またはSAMデータベースが保存されているWindowsレジストリ経由のいずれかで、Security Account Manager(SAM)データベースから認証情報を抽出しようとすることがある。SAMは、ホストのローカルアカウント（通常は<code>net user</code>コマンドで確認できるもの）を含むデータベースファイルである。SAMデータベースの列挙にはSYSTEMレベルのアクセスが必要である。",
+  "description/0": "攻撃者は、メモリ内での操作、またはSAMデータベースが保存されているWindowsレジストリ経由のいずれかで、Security Account Manager(SAM)データベースから認証情報を抽出しようとすることがある。SAMは、ホストのローカルアカウント（通常は`net user`コマンドで確認できるもの）を含むデータベースファイルである。SAMデータベースの列挙にはSYSTEMレベルのアクセスが必要である。",
   "description/1": "メモリ内での操作を通じてSAMファイルを取得するために使えるツールが複数存在する。",
   "description/2": "* pwdumpx.exe\n* gsecdump\n* Mimikatz\n* secretsdump.py",
   "description/3": "別の方法として、Regを使ってレジストリからSAMを抽出することもできる。",
-  "description/4": "* <code>reg save HKLM\\sam sam</code>\n* <code>reg save HKLM\\system system</code>",
+  "description/4": "* `reg save HKLM\\sam sam`\n* `reg save HKLM\\system system`",
   "description/5": "その後、Creddump7を使ってSAMデータベースをローカルで処理し、ハッシュ値を取得できる。",
   "description/6": "注記：",
   "description/7": "* RID 500のアカウントは、ローカルの組み込み管理者アカウントである。\n* RID 501はゲストアカウントである。\n* 利用者アカウントは1,000以上のRIDから始まる。",
@@ -21,10 +21,10 @@
   "procedure/G0027/0": "Threat Group-3390の攻撃者は、gsecdumpを使って認証情報をダンプした。また、ドメインコントローラーから認証情報をダンプした。",
   "procedure/G0035/0": "Dragonflyは、パスワードのハッシュ値をダンプするため、SecretsDumpを投下・実行した。",
   "procedure/G0045/0": "menuPassは、認証情報をダンプするため、ペネトレーションテスト用ツールwmiexec.vbsとsecretsdump.pyの改変版を使用した。",
-  "procedure/G0093/0": "GALLIUMは、<code>reg</code>コマンドを使って、SAMハイブなどWindowsレジストリの特定のハイブをダンプし、パスワードのハッシュ値を取得した。",
-  "procedure/G0096/0": "APT41は、Security Account Manager(SAM)から利用者アカウントのデータを抽出し、<code>reg save</code>コマンドまたはボリュームシャドウコピーの悪用によって、レジストリからこのデータベースのコピーを作成した。",
+  "procedure/G0093/0": "GALLIUMは、`reg`コマンドを使って、SAMハイブなどWindowsレジストリの特定のハイブをダンプし、パスワードのハッシュ値を取得した。",
+  "procedure/G0096/0": "APT41は、Security Account Manager(SAM)から利用者アカウントのデータを抽出し、`reg save`コマンドまたはボリュームシャドウコピーの悪用によって、レジストリからこのデータベースのコピーを作成した。",
   "procedure/G0102/0": "Wizard Spiderは、SAM/SECURITYレジストリハイブから認証情報を取得した。",
-  "procedure/G1003/0": "Ember Bearは、<code>reg save</code>などのコマンドを通じてSecurity Account Managerなどのレジストリハイブを抽出することで、被害者の認証情報を取得する。",
+  "procedure/G1003/0": "Ember Bearは、`reg save`などのコマンドを通じてSecurity Account Managerなどのレジストリハイブを抽出することで、被害者の認証情報を取得する。",
   "procedure/G1016/0": "FIN13は、侵害したマシンからパスワードのハッシュ値を取得するため、`reg.exe`バイナリを使ってSAMとSYSTEMのレジストリハイブを抽出した。",
   "procedure/G1023/0": "APT5は、標的のシステムからSAMレジストリハイブをコピーして持ち出した。",
   "procedure/G1030/0": "Agriusは、被害者のマシン上でSAMファイルをダンプし、認証情報を取得した。",
@@ -49,10 +49,19 @@
  "supplement": {
   "summary": "ローカルアカウントの情報を保持するSAMデータベースを、メモリ内操作またはレジストリ経由で抽出するサブ技術。SYSTEM権限があれば、`reg save`コマンドのような標準ツールだけでも実行できる。",
   "terms": [
-   { "term": "RID", "en": "Relative Identifier", "explain": "Windowsのアカウントに割り当てられる識別子の一部。RID 500は組み込みの管理者アカウント、RID 501はゲストアカウントと決まっており、一般の利用者アカウントは1000番以降になる。" }
+   {
+    "term": "RID",
+    "en": "Relative Identifier",
+    "explain": "Windowsのアカウントに割り当てられる識別子の一部。RID 500は組み込みの管理者アカウント、RID 501はゲストアカウントと決まっており、一般の利用者アカウントは1000番以降になる。"
+   }
   ],
   "analogy": "住民票を管理する役所のサーバーそのものに侵入するのではなく、役所の職員が業務で使う、住民の基本情報を一時的に書き出したバックアップファイルを盗み出すようなもの。正規の業務機能（レジストリの保存）を使うだけで、本来は厳重に守られているはずの台帳の写しが手に入ってしまう。",
-  "learn": ["SAMデータベースの列挙にSYSTEMレベルのアクセスが必要という条件が、この手口を防ぐ第一の防衛線になっていること", "`reg save`という、攻撃専用ではないWindows標準コマンドだけで、この攻撃の一部が実行できてしまうこと"],
-  "interpretation": ["本サブ技術は、T1003.001(LSASSメモリ)と並ぶ代表的な認証情報ダンプ手口だが、狙う対象が実行中のプロセスメモリではなく、レジストリに保存された静的なファイルである点が異なる。これは、プロセスの監視だけでなく、レジストリの特定のキー（HKLM\\SAMなど）への読み取りアクセスそのものを監視対象にする必要があることを示している。"]
+  "learn": [
+   "SAMデータベースの列挙にSYSTEMレベルのアクセスが必要という条件が、この手口を防ぐ第一の防衛線になっていること",
+   "`reg save`という、攻撃専用ではないWindows標準コマンドだけで、この攻撃の一部が実行できてしまうこと"
+  ],
+  "interpretation": [
+   "本サブ技術は、T1003.001(LSASSメモリ)と並ぶ代表的な認証情報ダンプ手口だが、狙う対象が実行中のプロセスメモリではなく、レジストリに保存された静的なファイルである点が異なる。これは、プロセスの監視だけでなく、レジストリの特定のキー（HKLM\\SAMなど）への読み取りアクセスそのものを監視対象にする必要があることを示している。"
+  ]
  }
 }

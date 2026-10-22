@@ -6,7 +6,7 @@
   "name": "ネットワーク接続履歴・設定の消去",
   "description/0": "攻撃者は、自分の作戦の痕跡を消し去るため、悪意あるネットワーク接続の証拠を消去・削除することがある。リモートサービスや外部リモートサービスのような、ネットワーク接続を必要とする振る舞いからは、設定情報や、接続履歴を示すさまざまな痕跡が、システム上やアプリケーションのログに作られることがある。防御側は、これらの痕跡を使って、攻撃者が作ったネットワーク接続を監視・分析できる。",
   "description/1": "ネットワーク接続の履歴は、さまざまな場所に保存されうる。例えば、RDP接続の履歴は、次のようなWindowsレジストリの値の下に保存されることがある。",
-  "description/2": "* <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Default</code>\n* <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Servers</code>",
+  "description/2": "* `HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Default`\n* `HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Servers`",
   "description/3": "Windowsはまた、最近のRDP接続についての情報を、`C:\\Users\\%username%\\Documents\\Default.rdp`や`C:\\Users\\%username%\\AppData\\Local\\Microsoft\\Terminal\nServer Client\\Cache\\`のようなファイルに保存することがある。同様に、macOSやLinuxのホストも、接続履歴を示す情報をシステムログ（`/Library/Logs`や`/var/log/`に保存されるものなど）に保存することがある。",
   "description/4": "悪意あるネットワーク接続には、サードパーティ製アプリケーションやネットワーク設定の変更（システムファイアウォールの無効化・改変や、プロキシを有効にする改ざんなど）が必要になることもある。攻撃者は、痕跡を隠す、または防御側の分析を妨げるために、このデータを削除・改変することがある。",
   "mitigation/M1024/0": "生成されたイベントファイルやログを、適切な権限と認証で保護し、権限昇格の機会を防ぐことで、攻撃者が権限を昇格させる機会を限定する。",

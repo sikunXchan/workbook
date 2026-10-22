@@ -1,0 +1,38 @@
+{
+ "id": "T1217",
+ "source_sha": "670f0a9d244f58d8",
+ "status": "done",
+ "seg": {
+  "name": "ブラウザ情報の探索",
+  "description/0": "攻撃者は、侵害した環境についてさらに詳しく知るために、ブラウザについての情報を列挙することがある。ブラウザによって保存されたデータ（ブックマーク、アカウント、閲覧履歴など）は、利用者についての多様な個人情報（銀行サイト、交友関係・興味関心、ソーシャルメディアなど）だけでなく、サーバーやツール・ダッシュボード、その他の関連基盤といった内部ネットワークのリソースについての詳細も明らかにする場合がある。",
+  "description/1": "ブラウザの情報は、攻撃者が有効な認証情報、特にブラウザにキャッシュされたログイン情報に関連するファイル内の認証情報へのアクセスを得た後、さらなる標的を浮かび上がらせることもある。",
+  "description/2": "具体的な保存場所はプラットフォームやアプリケーションによって異なるが、ブラウザの情報は通常、ローカルのファイルやデータベースに保存されている（例：`%APPDATA%/Google/Chrome`）。",
+  "procedure/G0082/0": "APT38は、侵害したホストについてさらに知り、利用者についての個人情報を得て、内部ネットワークのリソースについての詳細を手に入れるために、ブラウザのブックマーク情報を収集した。APT38はまた、166種類の暗号資産ウォレット、ブラウザ拡張機能、ブラウザ履歴を列挙できるマルウェアも使用した。",
+  "procedure/G0094/0": "Kimsukyは、`GetBrowserData()`という関数を使って、ログイン認証情報・ブックマーク・クッキー・暗号鍵を含む、機密性の高いブラウザデータを収集した。",
+  "procedure/G0114/0": "Chimeraは、ブックマークの探索のために`type \\\\<hostname>\\c$\\Users\\<username>\\Favorites\\Links\\Bookmarks bar\\Imported From IE\\*citrix*`を使用した。",
+  "procedure/G0117/0": "Fox Kittenは、内部リソースや資産を特定するために、Google Chromeのブックマークを使用した。",
+  "procedure/G1015/0": "Scattered Spiderは、Raccoon Stealerのような情報窃取型マルウェアを介してブラウザの履歴を取得する。",
+  "procedure/G1017/0": "Volt Typhoonは、ネットワーク管理者の閲覧履歴を標的にした。",
+  "procedure/G1036/0": "Moonstone Sleetは、被害者のシステムのブラウザ情報を取得できるYouieLoaderのようなマルウェアを展開した。",
+  "procedure/S0079/0": "MobileOrderには、被害者のブラウザのブックマークをC2サーバーにアップロードするコマンドがある。",
+  "procedure/S0274/0": "CalistoはGoogle Chromeのブックマークについての情報を収集する。",
+  "procedure/S0363/0": "Empireには、ブックマークや閲覧済みサイトのようなブラウザデータを収集する機能がある。",
+  "procedure/S0409/0": "MacheteはChromeとFirefoxブラウザから利用者プロファイルデータ（ブラウザなど）を取得する。",
+  "procedure/S0567/0": "Dtrackはブラウザの履歴を取得できる。",
+  "procedure/S0673/0": "DarkWatchmanはブラウザの履歴を取得できる。",
+  "procedure/S0681/0": "Lizarはブラウザの履歴とデータベースファイルを取得できる。",
+  "procedure/S1012/0": "PowerLessには、ChromeとEdgeブラウザのデータベースファイルを読み取れるブラウザ情報窃取モジュールがある。",
+  "procedure/S1042/0": "SUGARDUMPはブラウザのブックマークと履歴の情報を収集した。",
+  "procedure/S1060/0": "Mafaldaは`%USERPROFILE%\\AppData\\Local\\Google\\Chrome\\User Data\\LocalState`ファイルの内容を収集できる。",
+  "procedure/S1122/0": "Mispaduはオンラインバンキングの操作についてブラウザの動作を監視できるほか、利用者のアクセスを本来の意図したサイトから遮断する、あるいは追加のデータ入力欄を提示するための全画面の重ね表示画像を表示できる。",
+  "procedure/S1153/0": "Cuckoo Stealerは、Safariからブックマーク・クッキー・履歴を収集できる。",
+  "procedure/S1185/0": "ホストのWi-Fi接続履歴に関するデータを収集するため、LightSpyは`/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist`ファイルを読み取る。また、AppleのCWWiFiClient APIを利用して周辺のWi-Fiネットワークをスキャンし、SSID・セキュリティ方式・RSSI（信号強度）値についてのデータを取得する。",
+  "procedure/S1196/0": "Troll Stealerは、Chromiumベースのブラウザやクッキー・履歴・ダウンロード・拡張機能などのFirefoxから情報を収集する。"
+ },
+ "supplement": {
+  "summary": "ブラウザのブックマークや閲覧履歴、キャッシュされたログイン情報を収集し、被害者個人の生活（銀行利用先、交友関係）から内部ネットワークのリソースまで浮かび上がらせる技術。多数の情報窃取型マルウェア（Raccoon Stealer、Vidarなど）に標準機能として組み込まれている。procedure件数が27件と、情報収集・探索系の技術の中でも非常に多く使われている。",
+  "analogy": "誰かの財布の中身を見るのではなく、スマートフォンのブラウザの「よく見るサイト一覧」や「ブックマーク」を見るだけで、その人の勤務先・取引銀行・趣味・交友関係がほぼすべて把握できてしまうのに似ている。",
+  "learn": ["ブラウザに保存された情報が、個人情報だけでなく『社内ツールのダッシュボードURL』のような内部ネットワーク情報まで含むこと", "この技術が多数の情報窃取型マルウェア（Stealer系）に標準装備されている定番機能であること"],
+  "interpretation": ["procedureの実例の多くが『Stealer』と名のつくマルウェア（Raccoon Stealer、Vidar、Cuckoo Stealer、RedLine Stealerなど）に集中している点は象徴的である。これは、ブラウザ情報の収集が、特定の標的を狙った高度な攻撃だけでなく、大量生産・販売されている汎用の情報窃取ツールキットの標準機能として、裾野の広い脅威になっていることを示している。"]
+ }
+}

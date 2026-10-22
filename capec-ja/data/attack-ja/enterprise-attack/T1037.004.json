@@ -5,7 +5,7 @@
  "seg": {
   "name": "RCスクリプト",
   "description/0": "攻撃者は、Unix系システムの起動時に実行されるRCスクリプトを変更することで永続化を確立することがある。これらのファイルを使うことで、システム管理者は起動時に、実行レベルごとにカスタムサービスを割り当てて開始できる。RCスクリプトを変更するにはroot権限が必要である。",
-  "description/1": "攻撃者は、悪意あるバイナリのパスやシェルコマンドを<code>rc.local</code>、<code>rc.common</code>、その他Unix系ディストリビューション特有のRCスクリプトに追加することで永続化を確立することがある。再起動すると、システムはスクリプトの内容をrootとして実行するため、永続化が実現する。",
+  "description/1": "攻撃者は、悪意あるバイナリのパスやシェルコマンドを`rc.local`、`rc.common`、その他Unix系ディストリビューション特有のRCスクリプトに追加することで永続化を確立することがある。再起動すると、システムはスクリプトの内容をrootとして実行するため、永続化が実現する。",
   "description/2": "攻撃者によるRCスクリプトの悪用は、ESXiハイパーバイザー、IoT、組み込みシステムのような、root利用者を既定とする軽量なUnix系ディストリビューションに対して特に効果的である。ESXiサーバーはほとんどのシステムファイルをメモリに保存し、シャットダウン時に変更を破棄するため、`/etc/rc.local.d/local.sh`を利用することが、再起動をまたいで永続化を可能にする数少ない手段の1つになっている。",
   "description/3": "いくつかのUnix系システムはSystemdへ移行し、RCスクリプトの使用を非推奨にしている。これはmacOSでも現在非推奨の仕組みとなり、Launchdに置き換えられている。この技術は、RCスクリプトを依然として実行するMac OS X Panther v10.3以前のバージョンで使用できる。後方互換性を保つため、Ubuntuなどの一部のシステムは、正しいファイル権限を持つRCスクリプトが存在すればそれを実行する。",
   "mitigation/M1022/0": "利用者アカウントの権限を制限し、認可された利用者だけが`rc.common`ファイルを編集できるようにする。",
@@ -13,9 +13,9 @@
   "procedure/G1047/0": "Velvet Antは、侵害したF5 BIG-IPデバイス上で、変更した`/etc/rc.local`ファイルを使って永続化を維持した。",
   "procedure/G1048/0": "UNC3886は、永続化を確立するために`/etc/rc.local.d/`にbashのインストールスクリプトを配置した。",
   "procedure/S0278/0": "iKittenは、永続化のためにrc.commonファイルにエントリを追加する。",
-  "procedure/S0394/0": "HiddenWaspは、自身を<code>/etc/rc.local</code>に追加することで、再起動時の永続化をインストールする。",
+  "procedure/S0394/0": "HiddenWaspは、自身を`/etc/rc.local`に追加することで、再起動時の永続化をインストールする。",
   "procedure/S0687/0": "Cyclops Blinkは、S51armledという名前の変更されたRCスクリプトを使って、デバイスの起動時に実行する機能を持つ。",
-  "procedure/S0690/0": "Green Lambertは、永続化を確立するために<code>/etc</code>フォルダ内に<code>init.d</code>と<code>rc.d</code>のファイルを追加できる。",
+  "procedure/S0690/0": "Green Lambertは、永続化を確立するために`/etc`フォルダ内に`init.d`と`rc.d`のファイルを追加できる。",
   "procedure/S9046/0": "IOCONTROLは、再起動をまたいでシステム上で永続化を確立するため、RCスクリプト（`/etc/rc3.d/S93InitSystemd.sh`）を使用した。",
   "procedure/S9051/0": "The Gentlemen Ransomwareは、ESXiサービス内で永続化を確立するためにRCスクリプトを利用した。"
  },

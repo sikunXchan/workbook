@@ -1,0 +1,26 @@
+{
+ "id": "T1218.008",
+ "source_sha": "5d864c4266c3b5ab",
+ "status": "done",
+ "seg": {
+  "name": "Odbcconf",
+  "description/0": "攻撃者は、odbcconf.exeを悪用して悪意あるペイロードの実行を代理させることがある。Odbcconf.exeは、ODBC（Open Database Connectivity）ドライバーとデータソース名を構成するためのWindowsユーティリティである。Odbcconf.exeバイナリは、Microsoftによってデジタル署名されている場合がある。",
+  "description/1": "攻撃者は、その潜在的な悪用を想定していないアプリケーション制御のしくみを回避するために、odbcconf.exeを悪用することがある。Regsvr32と同様に、odbcconf.exeには`REGSVR`フラグがあり、これを悪用してDLLを実行できる（例：`odbcconf.exe /S /A &lbrace;REGSVR \"C:\\Users\\Public\\file.dll\"&rbrace;`）。",
+  "mitigation/M1038/0": "odbcconf.exeの実行が特定のシステムやネットワークで必要ない場合は、アプリケーション制御を設定してその実行を遮断し、攻撃者による悪用の可能性を防ぐ。",
+  "mitigation/M1042/0": "環境によっては、odbcconf.exeが不要な場合がある。",
+  "procedure/G0080/0": "Cobalt Groupは、悪意あるDLLファイルの実行を代理させるために`odbcconf`を使用した。",
+  "procedure/S1039/0": "Bumblebeeは、標的ホスト上でDLLを実行するために`odbcconf.exe`を使用できる。",
+  "procedure/S1130/0": "Raspberry Robinは、Windowsユーティリティodbcconf.exeを使って悪意あるコマンドを実行し、`regsvr`フラグを使ってDLLを実行し、odbcconf.exeの悪用を監視していないアプリケーション制御のしくみを回避する。"
+ },
+ "supplement": {
+  "summary": "データベース接続設定用のWindowsユーティリティodbcconf.exeを悪用し、REGSVRフラグ経由でDLLを実行させる、Regsvr32（T1218.010）と似た構造を持つサブ技術。知名度の低いユーティリティであるぶん、監視対象から漏れやすい。",
+  "analogy": "データベースの接続設定だけを担当するはずの事務員（odbcconf.exe）に、裏口から別の文書（DLL）を受け取って回す権限（REGSVRフラグ）が実はあり、誰もその事務員を疑って見ていないために気づかれない状況に近い。",
+  "learn": [
+   "Regsvr32と同様の「DLL実行フラグ」を持つWindowsユーティリティが複数存在し、どれも似た悪用パターンを持つこと",
+   "知名度の低い正規ユーティリティほど、監視対象から漏れやすいこと"
+  ],
+  "interpretation": [
+   "本技術の説明文がRegsvr32（T1218.010）を明示的に引用している点は、こうしたシステムバイナリ代理実行の手口が、個々のユーティリティ固有の脆弱性ではなく、「DLLを実行できるフラグを持つ署名済みWindowsユーティリティ」という共通のパターンに基づいていることを示している。防御側は、odbcconf.exeだけでなく、同様のフラグを持つ他のユーティリティも併せて監視対象にする必要がある。"
+  ]
+ }
+}
