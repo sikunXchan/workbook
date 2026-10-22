@@ -1,0 +1,23 @@
+{
+ "id": "T1569.003",
+ "source_sha": "c30116b01afad780",
+ "status": "done",
+ "seg": {
+  "name": "Systemctl",
+  "description/0": "攻撃者は、コマンドやプログラムを実行するためにsystemctlを悪用することがある。systemctlは、Linuxの初期化システム・サービス管理ツールであるsystemdの主要なインターフェースである。systemctlは通常シェルから呼び出されるが、スクリプトやアプリケーションに組み込んで使うこともできる。",
+  "description/1": "攻撃者は、systemctlを使ってSystemdサービスとしてコマンドやプログラムを実行することがある。よく使われるサブコマンドには `systemctl start`、`systemctl stop`、`systemctl enable`、`systemctl disable`、`systemctl status` がある。",
+  "mitigation/M1018/0": "正当な必要性のある利用者だけに`systemctl`へのアクセスを限定する。",
+  "procedure/G0139/0": "TeamTNTは、暗号資産のマイニングソフトウェアを実行するためにシステムサービスを作成した。",
+  "procedure/S9042/0": "CanisterWormは、`systemctl --user daemon-reload`を実行してsystemdを再読み込みさせた後、悪意あるサービスを有効化・起動した。"
+ },
+ "supplement": {
+  "summary": "Linuxの初期化・サービス管理の中核であるsystemdを操作するコマンド`systemctl`を悪用し、Systemdサービスとしてコマンドやプログラムを実行する手口。TeamTNTのような暗号資産マイニングを狙う攻撃グループで典型的に見られる。",
+  "analogy": "工場の生産ラインを統括する制御盤（systemd）を操作する管理者用コンソール（systemctl）を使って、本来の生産設備の代わりに、侵入者が持ち込んだ別の機械を「正規の生産設備」として登録し、動かし続けるのに似ている。",
+  "learn": [
+   "systemctlがLinuxの正規の管理コマンドでありながら、攻撃者による持続的なサービスの作成・起動手段としても使われること"
+  ],
+  "interpretation": [
+   "T1569の3つのサブ技術（Launchctl=macOS、Service Execution=Windows、Systemctl=Linux）がちょうど三大OSのサービス管理インターフェースに対応していることは、「サービスを悪用する」という攻撃者の目的そのものがOSに依存しない普遍的な発想であることを示している。"
+  ]
+ }
+}
