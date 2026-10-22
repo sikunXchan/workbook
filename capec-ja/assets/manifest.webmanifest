@@ -1,0 +1,16 @@
+{
+  "name": "Sikun Lab Cybersecurity | CAPEC・ATT&CK 日本語版（非公式）",
+  "short_name": "CAPEC/ATT&CK 日本語版",
+  "description": "MITRE CAPEC・ATT&CKの非公式AI日本語訳",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FCFCFA",
+  "theme_color": "#B23A24",
+  "lang": "ja",
+  "icons": [
+    { "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

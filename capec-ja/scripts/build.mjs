@@ -241,6 +241,9 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" type="image/png" href="${r}assets/brand/icon.png">
+<link rel="apple-touch-icon" href="/assets/brand/icon-192.png">
+<link rel="manifest" href="/assets/manifest.webmanifest">
+<meta name="theme-color" content="#B23A24">
 <link rel="stylesheet" href="${esc(FONTS)}">
 <link rel="stylesheet" href="${r}assets/style.css">
 <script src="${r}assets/site.js" defer></script>
@@ -366,7 +369,7 @@ function supplementHtml(entry) {
   if (s.interpretation?.length) parts.push(memo("AIの解釈", `<ul>${s.interpretation.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
   if (s.learn?.length) parts.push(memo("この項目で学べること", `<ul>${s.learn.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
   return `<aside id="supplement" class="memos" aria-labelledby="supplement-h">
-<h2 id="supplement-h" class="memos-h">初学者向けの補足<small>AIの書き込みです。原典の訳ではありません。</small></h2>
+<h2 id="supplement-h" class="memos-h">初学者向けの補足<small>AIによる書き込み</small></h2>
 ${parts.join("\n")}
 </aside>`;
 }
@@ -841,7 +844,7 @@ function attackBuild(dom) {
     if (s.interpretation?.length) parts.push(memo("AIの解釈", `<ul>${s.interpretation.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
     if (s.learn?.length) parts.push(memo("この項目で学べること", `<ul>${s.learn.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
     return `<aside id="supplement" class="memos" aria-labelledby="supplement-h">
-<h2 id="supplement-h" class="memos-h">初学者向けの補足<small>AIの書き込みです。原典の訳ではありません。</small></h2>
+<h2 id="supplement-h" class="memos-h">初学者向けの補足<small>AIによる書き込み</small></h2>
 ${parts.join("\n")}
 </aside>`;
   }
