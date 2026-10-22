@@ -1,0 +1,32 @@
+{
+ "id": "T1567",
+ "source_sha": "0914d206fc99087e",
+ "status": "done",
+ "seg": {
+  "name": "Webサービス経由の持ち出し",
+  "description/0": "攻撃者は、主な遠隔操作（C2）経路の代わりに、既存の正規の外部Webサービスを使ってデータを持ち出すことがある。よく使われるWebサービスは、ネットワーク内のホストが侵害前からすでにそのサービスと通信している可能性が高いため、持ち出しの仕組みとして使われると大きな隠れ蓑になる。また、こうしたサービスへの通信を許可するファイアウォールのルールがすでに存在していることもある。",
+  "description/1": "Webサービスの提供者も一般にSSL/TLS暗号化を使用しており、攻撃者に追加の保護レベルを与える。",
+  "mitigation/M1021/0": "Webプロキシを使って、未承認の外部サービスの利用を防ぐ、外部ネットワーク通信ポリシーを強制できる。",
+  "mitigation/M1057/0": "データ漏えい防止（DLP）は、Webブラウザを介してWebサービスにアップロードされる機密データを検知・遮断できる。",
+  "procedure/G0007/0": "APT28は、Google Driveを介してデータを持ち出すことができる。",
+  "procedure/G0059/0": "Magic Houndは、侵害済みデバイス上のデータを中継するために、Telegram APIの`sendMessage`を使用した。",
+  "procedure/G0082/0": "APT38は、Telegram Bot APIを利用して、盗んだ認証情報を攻撃者が管理するインフラに持ち出した。",
+  "procedure/G1043/0": "BlackByteは、被害者データを持ち出すために`anonymfiles.com`や`file.io`のようなサービスを使用した。",
+  "procedure/G1052/0": "Contagious Interviewは、盗んだデータを持ち出すためにTelegram APIを利用した。",
+  "procedure/G1057/0": "ShinyHuntersは、侵害済みのSalesforce CRM（顧客関係管理）ダッシュボードを使って大量のデータを持ち出した。さらに、ShinyHuntersは、ファイル共有サービスのLimeWireを使って、盗んだデータの一部を示した。",
+  "procedure/S0508/0": "ngrokは、データ持ち出し用のサーバーを構成するために、脅威アクターによって使用された。",
+  "procedure/S0547/0": "DropBookは、データを持ち出すために正規のWebサービスを使用した。",
+  "procedure/S0622/0": "AppleSeedは、Webサービスを使ってファイルを持ち出した。",
+  "procedure/S1168/0": "SampleCheck5000は、Microsoft Office Exchange Web Services APIを使って攻撃者管理のアカウントにアクセスし、持ち出し用のファイルを取得できる。",
+  "procedure/S1171/0": "OilCheckは、侵害済みホストから共有のMicrosoft Office 365 Outlookメールアカウントに文書をアップロードし、持ち出すことができる。",
+  "procedure/S1179/0": "Exbyteは、`Mega.co.nz`のようなオンラインファイルホスティングサイトに収集したデータを持ち出す。",
+  "procedure/S1245/0": "InvisibleFerretは、ボットトークンを使ったTelegram APIを利用して、盗んだデータをTelegramチャットにアップロードした。",
+  "procedure/S9045/0": "BACKUPOSINT v9.0 APEX PREDATORは、OpenAIのGPT-4.1 APIを使ってデータを持ち出した。"
+ },
+ "supplement": {
+  "summary": "専用の遠隔操作（C2）通信経路ではなく、Google DriveやTelegramのような既存の正規Webサービスを使ってデータを外部に送り出す手口。侵害前から通信していることが多い正規サービスを使うことで、ファイアウォールのルールやSSL/TLS暗号化という既存の仕組みをそのまま「隠れ蓑」にできる。",
+  "analogy": "荷物を自分専用の運送業者（独自のC2経路）で送ると目立つため、普段から近所の人が利用している宅配サービス（正規のWebサービス）に紛れ込ませて送るようなもの。宅配トラックが通ること自体は珍しくないため、怪しまれにくい。",
+  "learn": ["持ち出しに専用の通信経路を用意する必要はなく、正規のクラウドサービスやチャットAPIがそのまま使われること", "SSL/TLSによる暗号化が、本来は利用者を守るためのものでありながら、攻撃者の通信内容を検査しにくくするという副作用も持つこと"],
+  "interpretation": ["AIサービスのAPI（BACKUPOSINT v9.0 APEX PREDATORの例）までが持ち出し経路として使われている事実は、正規サービスを使った持ち出しという手口が、サービスの種類を問わず「広く使われ、暗号化され、すでに通信がある」という3条件を満たす限り、常に新しいサービスへ拡張されていくことを示している。"]
+ }
+}
