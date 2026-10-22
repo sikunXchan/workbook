@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-22T11:54:01.688Z
+実行日時: 2026-10-22T11:54:56.120Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -239,4 +239,4 @@ URL
 - 用語集の訳語が使われていない可能性: 448件（reports/glossary-check.md、文脈上正しい場合もあるため目視で確認）
 
 ## 6. 読み直し用の無作為抽出（10件）
-- CAPEC-107, CAPEC-137, CAPEC-300, CAPEC-4, CAPEC-196, CAPEC-681, CAPEC-538, CAPEC-474, CAPEC-271, CAPEC-171
+- CAPEC-614, CAPEC-216, CAPEC-250, CAPEC-53, CAPEC-289, CAPEC-252, CAPEC-296, CAPEC-332, CAPEC-669, CAPEC-574
