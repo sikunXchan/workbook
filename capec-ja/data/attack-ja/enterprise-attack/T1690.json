@@ -1,0 +1,40 @@
+{
+ "id": "T1690",
+ "source_sha": "d65f00698f65d145",
+ "status": "done",
+ "seg": {
+  "name": "コマンド履歴ログの記録の妨害",
+  "description/0": "攻撃者は、侵害したシステム上で実行したコマンドを隠すため、コマンド履歴のログ記録を妨害することがある。さまざまなコマンドインタプリタは、利用者が自分の操作を振り返られるように、ターミナルに入力したコマンドを記録している。",
+  "description/1": "LinuxとmacOSでは、コマンド履歴は、環境変数`HISTFILE`が指すファイルに記録される。利用者がシステムからログオフすると、この情報は利用者のホームディレクトリ内の`~/.bash_history`というファイルに書き出される。環境変数`HISTCONTROL`は、利用者がログオフしたときに、履歴コマンドが何を保存すべきか、そして最終的に`~/.bash_history`ファイルに何を書き込むかを管理する。`HISTCONTROL`はmacOSには既定で存在しないが、利用者が設定すれば反映される。`HISTFILE`環境変数は、一部のESXiシステムでも使われている。",
+  "description/2": "攻撃者は、コマンドの記録を防ぐため、履歴の環境変数を消去（`unset HISTFILE`）したり、コマンド履歴のサイズをゼロに設定（`export HISTFILESIZE=0`）したりすることがある。さらに、`HISTCONTROL`を「ignorespace」に設定することで、スペースから始まるコマンドを無視するように構成できる。`HISTCONTROL`はまた、「ignoredups」に設定することで重複するコマンドを無視するようにもできる。一部のLinuxシステムでは、これは既定で「ignoreboth」に設定されており、これは前の2つの例の両方をカバーする。つまり、「 ls」（先頭にスペース）は保存されないが、「ls」は履歴に保存される。攻撃者は、すべてのターミナルコマンドの先頭にスペースを付けるだけで、痕跡を残さずに操作できることを悪用できる。",
+  "description/3": "Windowsシステムでは、`PSReadLine`モジュールが、すべてのPowerShellセッションで使われたコマンドを追跡し、ファイル（既定では`$env:APPDATA\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt`）に書き込む。攻撃者は、`Set-PSReadLineOption -HistorySavePath {ファイルパス}`を使って、これらのログが保存される場所を変更することがある。これにより、`ConsoleHost_history.txt`はログを受け取らなくなる。さらに、PowerShellのコマンド`Set-PSReadlineOption -HistorySaveStyle SaveNothing`を使って、このファイルへのログ記録を無効化することも可能である。",
+  "description/4": "攻撃者はまた、ネットワーク機器上のネットワーク機器CLIを利用して、履歴コマンドのログ記録を無効化することもある（例：`no logging`）。",
+  "mitigation/M1028/0": "`HISTCONTROL`環境変数が「ignoreboth」や「ignorespace」ではなく「ignoredups」に設定されていることを確認する。",
+  "mitigation/M1039/0": "利用者が`HISTCONTROL`・`HISTFILE`・`HISTFILESIZE`環境変数を変更できないようにする。",
+  "procedure/G0082/0": "APT38は、HISTCONTROL環境を使って痕跡を残さずに操作するため、すべてのターミナルコマンドの先頭にスペースを付けた。APT38はまた、`/dev/null 2>&1 &`を使ってログ記録を防ぎ、エラーログを抑制した。APT38はさらに、PowerShellのコマンド履歴ファイルを削除し、`-Force Set-PSReadLineOption -HistorySaveStyle SaveNothing`を使って今後の履歴記録を防ぐスクリプトを実行した。",
+  "procedure/G1041/0": "Sea Turtleは、被害者のシステム上でBashとMySQLの履歴ファイルを無効化した。",
+  "procedure/G1048/0": "UNC3886は、標的のシステム上のログ記録サービスを改ざんし、無効化した。",
+  "procedure/G1051/0": "Medusa Groupは、PowerShellのコマンド`Remove-Item (Get-PSReadlineOption).HistorySavePath`を実行することで、PSReadLineモジュールを通じてPowerShellのコマンド履歴を削除した。",
+  "procedure/S0692/0": "SILENTTRINITYは、メモリから管理外のPowerShellコードを実行するため、ScriptBlockのログ記録を回避できる。",
+  "procedure/S1161/0": "BPFDoorは、`MYSQL_HISTFILE`と`HISTFILE`を`/dev/null`に設定し、シェルとMySQLが`/proc/<PID>/environ`内に履歴を記録することを防ぐ。",
+  "procedure/S1186/0": "Line Dancerは、侵害した機器上でsyslogを無効化できる。",
+  "procedure/S1217/0": "VIRTUALPITAは、`HISTFILE`環境変数を`0`に設定し、`vmsyslogd`サービスを停止することで、ログ記録を妨害できる。",
+  "procedure/S9015/0": "BRICKSTORMは、`dev/null`を使ってコマンドログ記録を妨害した。これはコマンドからの出力を生成せず、入力も待たない。",
+  "procedure/S9024/0": "SPAWNCHIMERAは、Ivantiの機器上で`dslogserver`プロセスを標的にし、ログ記録とログの転送を無効化した。",
+  "procedure/S9051/0": "The Gentlemen Ransomwareは、出力を抑制し書き込まれたデータを破棄する`/dev/null 2 &1`を使って、コマンドログ記録を防いだ。"
+ },
+ "supplement": {
+  "summary": "Linux/macOSの`HISTFILE`・`HISTCONTROL`環境変数や、WindowsのPSReadLineモジュールを操作して、ターミナルやPowerShellで実行したコマンドが履歴ファイルに残らないようにする技術。",
+  "facts": [
+   { "text": "Linuxの`HISTCONTROL`が既定で「ignoreboth」に設定されている場合、スペースで始まるコマンドと重複するコマンドの両方が履歴に残らず、攻撃者はすべてのコマンドの先頭にスペースを付けるだけで痕跡を残さず操作できると原典に書かれている（APT38の事例でも実際に使われている）。", "source": "description/2, procedure/G0082/0" }
+  ],
+  "analogy": "図書館の利用者が、借りた本の記録を帳簿にわざと書かせない、あるいは帳簿自体を白紙にして返すのに似ている。実際に本を借りて読んだ（コマンドを実行した）という事実は変わらないが、後から誰が何を借りたかを調べる手段が失われる。",
+  "learn": [
+   "`HISTCONTROL=ignoreboth`という、便利さのための設定（重複やスペース始まりのコマンドを記録しない）が、意図せず攻撃者に悪用可能な抜け道を提供していること",
+   "コマンド履歴の無効化が、LinuxのBash履歴だけでなく、WindowsのPowerShell履歴（PSReadLine）やネットワーク機器のログ記録にも共通して存在する、OS・プラットワームを問わない手口であること"
+  ],
+  "interpretation": [
+   "対策として『利用者がHISTCONTROL等の環境変数を変更できないようにする』（M1039）が挙げられている点は、この技術が『痕跡そのものを生成させない』という、消去（T1685系）よりも一歩手前の防御無効化であることを示唆している。ログが生成された後に消すより、最初から記録されないようにする方が攻撃者にとって確実であり、防御側はこの環境変数の変更自体を監視対象に含めるべきだと言える。"
+  ]
+ }
+}

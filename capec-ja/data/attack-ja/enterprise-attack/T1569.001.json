@@ -1,0 +1,30 @@
+{
+ "id": "T1569.001",
+ "source_sha": "f4964fbe6e0a2387",
+ "status": "done",
+ "seg": {
+  "name": "Launchctl",
+  "description/0": "攻撃者は、コマンドやプログラムを実行するためにlaunchctlを悪用することがある。launchctlは、macOSのサービス管理フレームワークであるlaunchdとやりとりするためのインターフェースである。launchctlは、コマンドラインでのサブコマンド指定、対話的な操作、標準入力からのリダイレクトのいずれにも対応している。",
+  "description/1": "攻撃者はlaunchctlを使って、Launch AgentやLaunch Daemonとしてコマンドやプログラムを実行する。よく使われるサブコマンドには `launchctl load`、`launchctl unload`、`launchctl start` がある。攻撃者は、スクリプトを使うか、`launchctl load -w \"%s/Library/LaunchAgents/%s\"` や `/bin/launchctl load` といったコマンドを手動で実行することで、Launch AgentやLaunch Daemonを実行できる。",
+  "mitigation/M1018/0": "利用者が自分自身の起動エージェントや起動デーモンをインストールできないようにする。",
+  "procedure/S0274/0": "Calistoは、被害者のマシンで画面共有を有効にするためにlaunchctlを使用する。",
+  "procedure/S0451/0": "LoudMinerは、`launchctl`を使って`/Library/LaunchDaemons/`フォルダ内でQEMUサービスを起動した。また、LoudMinerの新しいバージョンに更新する際には、`launchctl`を使ってすべてのLaunch Daemonをアンロードする。",
+  "procedure/S0584/0": "AppleJeusは、`launchctl`コマンドを使ってplistファイルを読み込んだ。",
+  "procedure/S0658/0": "XCSSETは、`/System/Librarby/LaunchDaemons/ssh.plist`から`launchctl load -w`コマンドを使って、システムレベルのlaunchdaemonを読み込む。",
+  "procedure/S1048/0": "macOS.OSAMinerは、Launch Agentを再起動するために`launchctl`を使用した。",
+  "procedure/S1153/0": "Cuckoo Stealerは、持続化のためにLaunchAgentを読み込むのに`launchctl`を使用できる。"
+ },
+ "supplement": {
+  "summary": "macOSのサービス管理フレームワークlaunchdを操作するコマンド`launchctl`を悪用し、Launch Agent・Launch Daemonとしてコマンドやプログラムを実行する手口。これらは本来、通常のアプリやシステム機能をバックグラウンドで動かすための正規の仕組みである。",
+  "terms": [
+   { "term": "Launch Agent / Launch Daemon", "en": "Launch Agent / Launch Daemon", "explain": "macOSでバックグラウンド処理を自動実行するための設定のしくみ。Launch Agentは利用者のログイン時に、Launch Daemonはシステム起動時に動作する。どちらもplist形式の設定ファイルで定義される。" }
+  ],
+  "analogy": "マンションの管理人が使う「共用設備を自動で動かすタイマー」の設定盤を操作して、本来の清掃ロボットの代わりに、侵入者が仕掛けた別の装置を定時に動かすように仕向けるのに似ている。設定盤自体は住人の誰もが疑わない、ごく普通の管理ツールである。",
+  "learn": [
+   "launchctlがmacOSの正規の管理ツールでありながら、攻撃者の持続化手段としても使われること"
+  ],
+  "interpretation": [
+   "複数のマルウェア（LoudMiner、AppleJeus、XCSSETなど）が同じlaunchctlの`load`サブコマンドを使っている点は、macOSを狙う攻撃者にとってこの手口が標準的な選択肢になっていることを示している。"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "id": "T1588.002",
+ "source_sha": "c8c21bf665074f59",
+ "status": "done",
+ "seg": {
+  "name": "ツール",
+  "description/0": "攻撃者は、標的への攻撃の際に使えるソフトウェアツールを購入・窃取・ダウンロードすることがある。ツールはオープンソースでも非公開でも、無料でも有償でもよい。ツールは攻撃者によって悪意ある目的で使われることがあるが、マルウェアと違って、本来そうした目的で使われることを意図されていない（例：PsExec）。",
+  "description/1": "攻撃者はツールを入手することで作戦を支え、侵害後の挙動の実行を支えることがある。ツールはテストのために活用されることもあり、例えば市販のアンチウイルスソフトやEDR（エンドポイント検知・対応）製品に対してマルウェアを評価する用途がある。",
+  "description/2": "ツールの入手には、商用ソフトウェアライセンスの調達が伴うことがあり、これにはCobalt Strikeのようなレッドチーム用ツールのライセンスも含まれる。無料でダウンロードしたり購入したりすることに加えて、攻撃者は第三者の組織（他の攻撃者を含む）からソフトウェアやソフトウェアライセンスを窃取することがある。攻撃者は、試用版ソフトウェアのクラック（制限解除）を行うこともある。",
+  "mitigation/M1056/0": "この技術は、企業の防御・対策の範囲外で行われる挙動に基づくため、予防的な対策で容易に緩和することはできない。",
+  "procedure/G0003/0": "Cleaverは、PsExec、Windows Credential Editor、Mimikatzといったオープンソースのツールを入手して使用した。",
+  "procedure/G0004/0": "Ke3changは、Mimikatzなどのツールを入手して使用した。",
+  "procedure/G0006/0": "APT1は、権限昇格の目的でさまざまなオープンソースのツールを使用した。",
+  "procedure/G0007/0": "APT28は、Koadic、Mimikatz、Responderといったオープンソースのツールを入手して使用した。",
+  "procedure/G0008/0": "Carbanakは、PsExecやMimikatzといったオープンソースのツールを入手して使用した。",
+  "procedure/G0010/0": "Turlaは、Mimikatzなどの、入手した公開ツールを改造して使用した。",
+  "procedure/G0011/0": "PittyTigerは、Mimikatzやgsecdumpといったツールを入手して使用した。",
+  "procedure/G0016/0": "APT29は、Mimikatz、SDelete、Tor、meek、Cobalt Strikeなど、さまざまなツールを入手して使用した。",
+  "procedure/G0027/0": "Threat Group-3390は、Impacket、pwdump、Mimikatz、gsecdump、NBTscan、Windows Credential Editorといったツールを入手して使用した。",
+  "procedure/G0030/0": "Lotus Blossomは、Chromeブラウザ向けのPython製クッキー窃取ツール、Impacket、Venomプロキシツールといった、公開ツールを使用した。",
+  "procedure/G0032/0": "Lazarus Groupは、ResponderやPuTTY PSCPなど、作戦のためにさまざまなツールを入手した。",
+  "procedure/G0034/0": "Sandworm Teamは、オープンソースのツールを作戦のために入手した。2018年の冬季オリンピックに向けた攻撃の準備では、侵害済みホストからC2サーバーへの暗号化された通信経路の確立にInvoke-PSImageを使用し、2022年のPrestige作戦ではImpacketとRemoteExecを使用した。さらにEmpire、Cobalt Strike、PoshC2も使用している。",
+  "procedure/G0035/0": "Dragonflyは、Mimikatz、CrackMapExec、PsExecといったツールを入手して使用した。",
+  "procedure/G0037/0": "FIN6は、Mimikatz、Cobalt Strike、AdFindといったツールを入手して使用した。",
+  "procedure/G0040/0": "Patchworkは、QuasarRATなどのオープンソースのツールを入手して使用した。",
+  "procedure/G0045/0": "menuPassは、Impacket、Mimikatz、pwdumpといったオープンソースのツールを入手し、改造して使用した。",
+  "procedure/G0046/0": "FIN7は、Cobalt Strike、PowerSploit、リモート管理ツールのAteraなど、さまざまなツールを標的への攻撃に活用した。",
+  "procedure/G0047/0": "Gamaredon Groupは、`mshta.exe`やRegといった正規のツール・サービスを作戦中に使用した。",
+  "procedure/G0049/0": "OilRigは、PlinkやMimikatzを含む、公開されているツールを活用した。",
+  "procedure/G0050/0": "APT32は、MimikatzやCobalt Strikeを含む、GitHub上のさまざまなオープンソースのツールを入手して使用した。",
+  "procedure/G0051/0": "FIN10は、被害者環境での足がかりと持続化の確立に、公開されているソフトウェアを頼りにした。"
+ },
+ "supplement": {
+  "summary": "能力の入手（T1588）のうち、マルウェアとは異なり元々は正規の目的（システム管理やセキュリティ診断など）で作られたソフトウェアツールを、攻撃に転用するために入手する技術。PsExecやMimikatzなど、合法的にも使われるツールが数多くの攻撃グループで共有されている。",
+  "terms": [
+   { "term": "両用ツール", "en": "dual-use tool", "explain": "システム管理者やセキュリティ診断担当者が正規に使うツールでありながら、攻撃者にも悪用される、マルウェアではないソフトウェア。PsExecやMimikatzが代表例。" }
+  ],
+  "facts": [
+   { "text": "ツールは、マルウェアと違って本来は悪意ある目的のために作られたものではないと原典に書かれている（例としてPsExecが挙げられている）。", "source": "description" }
+  ],
+  "analogy": "ホームセンターで売っているバールや万能鍵（本来はDIYや正規の解錠業務のための道具）を、泥棒が空き巣に使うのに似ている。道具自体は合法だが、使われ方次第で犯罪の道具になる。",
+  "learn": [
+   "「マルウェア」と「両用ツール」の違い。前者は最初から悪意を持って作られ、後者は正規の目的のために作られたが悪用されうること",
+   "Mimikatz・PsExec・Cobalt Strikeのような一部の両用ツールが、非常に多くの異なる攻撃グループで共通して使われていること"
+  ],
+  "interpretation": [
+   "多数の攻撃グループが同じ両用ツール（特にMimikatzとPsExec）を使っているという実例の集積は、「正規のツールの使用」という一点だけでは攻撃者を区別できないことを示している。防御側がこれらのツールの存在そのものを禁止するのは現実的ではなく、誰が・いつ・どこで・どのように使ったかという文脈（通常の管理者の業務パターンから外れているか）を見る必要がある。"
+  ]
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "id": "T1569.002",
+ "source_sha": "292b470339623989",
+ "status": "done",
+ "seg": {
+  "name": "サービス実行",
+  "description/0": "攻撃者は、悪意あるコマンドやペイロードを実行するために、Windowsのサービス制御マネージャーを悪用することがある。Windowsのサービス制御マネージャー（`services.exe`）は、サービスを管理・操作するためのインターフェースである。サービス制御マネージャーには、GUIの構成要素だけでなく、`sc.exe`やNetのようなシステムユーティリティからも利用できる。",
+  "description/1": "PsExecも、サービス制御マネージャーのAPIを通じて作成される一時的なWindowsサービスを介して、コマンドやペイロードを実行するために使用できる。PsExecや`sc.exe`のようなツールは、引数として遠隔のサーバーを受け取ることができ、遠隔実行を行うために使われることがある。",
+  "description/2": "攻撃者は、これらのしくみを悪用して悪意あるコンテンツを実行することがある。これは、新規または改変済みのサービスを実行することで行われる。この技術は、サービスによる持続化や権限昇格の際に、実行の手段として組み合わせて使われる。",
+  "mitigation/M1022/0": "高い権限レベルで動くサービスのバイナリが、より低い権限のユーザーによって置き換えられたり改変されたりできないようにする。",
+  "mitigation/M1026/0": "より高い権限レベルで動くサービスが、より低い権限のユーザーによって作成されたり操作されたりできないような権限設定にする。",
+  "mitigation/M1040/0": "Windows 10では、攻撃面の縮小（ASR）ルールを有効にして、PsExecによって作成されたプロセスの実行を阻止する。",
+  "procedure/G0004/0": "Ke3changは、RemoteExec（PsExecに似たツール）を使って、バッチスクリプトやバイナリを遠隔から実行した。",
+  "procedure/G0037/0": "FIN6は、エンコードされたPowerShellコマンドを実行するためにWindowsサービスを作成した。",
+  "procedure/G0046/0": "FIN7は、`sc start sshd`を実行してSSHサービスを起動した。",
+  "procedure/G0050/0": "APT32のバックドアは、悪意あるペイロードを実行する手段としてWindowsサービスを使用した。",
+  "procedure/G0082/0": "APT38は、実行ファイル・コマンド・スクリプトを動かすために、新しいサービスを作成するか既存のサービスを改変した。APT38はまた、起動時に悪意あるDLLを読み込ませるために、持続的なサービスを対象ホストにインストールした。",
+  "procedure/G0087/0": "APT39は、プロセスを実行するために、RemComやNon-sucking Service Manager（NSSM）といった侵害後利用ツールを使用した。",
+  "procedure/G0091/0": "Silenceは、遠隔システムにサービスをインストールするためにWinexeを使用した。",
+  "procedure/G0096/0": "APT41は、Cobalt StrikeのBEACONローダーを起動するためにインストールされたシステムサービスを実行するのに、svchost.exeとNetを使用した。",
+  "procedure/G0102/0": "Wizard Spiderは、被害者ネットワーク内の横展開の際にスクリプトや実行ファイルを実行するのに`services.exe`を使用した。Wizard Spiderはまた、PsExecを利用するバッチスクリプトを使って、あらかじめ転送しておいたランサムウェアのペイロードを被害者ネットワーク上で実行した。",
+  "procedure/G0108/0": "Blue Mockingbirdは、「wercplsupport」サービスを通じて実行されるように設定した、独自にコンパイルしたXMRIGマイナーのDLLを実行した。",
+  "procedure/G0114/0": "Chimeraは、侵害済みシステムにビーコンを展開するためにPsExecを使用した。",
+  "procedure/G1032/0": "INC Ransomは、`Service Control Manager/7045;winupd,%SystemRoot%\\winupd.exe,user mode service,demand start,LocalSystem`を通じて、ファイル暗号化用の実行ファイルを動かした。",
+  "procedure/G1036/0": "Moonstone Sleetは、悪意あるサービスを作成する、YouieLoaderやSplitLoaderといった中間ローダー型のマルウェアを使用した。",
+  "procedure/G1043/0": "BlackByteは、ランサムウェアを実行するために悪意あるサービスを作成した。",
+  "procedure/G1047/0": "Velvet Antは、PlugXをWindowsサービスとして実行・インストールした。",
+  "procedure/G1051/0": "Medusa Groupは、被害者環境内でスクリプトやコマンドを実行するためにPsExecを利用した。Medusa Groupはまた、持ち出し用のデータを探索・コピーするために、Windowsサービスの一種であるRoboCopyを使用した。",
+  "procedure/S0029/0": "Microsoft SysinternalsのPsExecは、一時的なWindowsサービスを使って遠隔システム上でバイナリを実行できる、広く使われている管理ツールである。",
+  "procedure/S0032/0": "gh0st RATは、Serviceキーが存在する場合はそのサービスを実行できる。キーが存在しない場合、gh0st RATはサービスを作成して実行する。",
+  "procedure/S0039/0": "Netに含まれる`net start`や`net stop`コマンドは、Windowsサービスの実行や停止に使用できる。",
+  "procedure/S0056/0": "Net Crawlerは、横展開の一環として自分自身のコピーを実行するために、PsExecを使って遠隔からサービスを操作する。",
+  "procedure/S0123/0": "xCmdは、サービスを作成・起動することで、遠隔システム上でバイナリを実行するために使用できる。",
+  "procedure/S0127/0": "BBSRATは、サービスの開始・停止・削除を行うことができる。"
+ },
+ "supplement": {
+  "summary": "Windowsのサービス制御マネージャー（services.exe、sc.exe、PsExecなど）を悪用して、悪意あるコマンドやペイロードを実行する手口。新規サービスの作成だけでなく、既存サービスの改変を通じても行われ、横展開・持続化・権限昇格の実行手段として組み合わされることが多い。",
+  "terms": [
+   { "term": "サービス制御マネージャー", "en": "service control manager", "explain": "Windowsのサービスを管理するための中核的な仕組み。GUI（サービス管理ツール）や`sc.exe`、PsExecのようなコマンドラインツールから操作できる。" }
+  ],
+  "facts": [
+   { "text": "PsExecは、サービス制御マネージャーのAPIを通じて作成される一時的なWindowsサービスを介してコマンドやペイロードを実行できると原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "ビル管理システムの「定期清掃サービス」の設定を書き換え、清掃業者の代わりに侵入者の指定したプログラムを、清掃業者と同じ強い入館権限で実行させるのに似ている。サービスという「普段は裏側で動いている仕組み」を乗っ取ることで、表側からは見えにくい形で高い権限の処理を行える。",
+  "learn": [
+   "PsExecやsc.exeという正規の管理ツールが、横展開やコマンド実行の手段として悪用されやすいこと",
+   "一時的なサービスの作成・改変だけで、高い権限でのコマンド実行が可能になること"
+  ],
+  "interpretation": [
+   "PsExecが「正規の管理ツール」でありながら、多数の攻撃グループ（Ke3chang、Chimera、Net Crawlerなど）の手口に繰り返し登場している点は、環境寄生型（LOLBins）の典型例であり、ツールの善悪だけでなく、どのサービスがいつ作成・起動されたかという文脈の監視が重要であることを示している。"
+  ]
+ }
+}

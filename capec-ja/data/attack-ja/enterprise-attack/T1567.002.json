@@ -1,0 +1,39 @@
+{
+ "id": "T1567.002",
+ "source_sha": "e3299e5e141ad739",
+ "status": "done",
+ "seg": {
+  "name": "クラウドストレージへの持ち出し",
+  "description/0": "攻撃者は、主な遠隔操作（C2）経路の代わりに、クラウドストレージサービスにデータを持ち出すことがある。クラウドストレージサービスは、インターネットを介して、遠隔のクラウドストレージサーバーからデータを保存・編集・取得できるようにする。",
+  "description/1": "クラウドストレージサービスの例には、DropboxやGoogle Docsがある。ネットワーク内のホストが既にそのサービスと通信している場合、これらのクラウドストレージサービスへの持ち出しは、攻撃者に大きな隠れ蓑を提供することがある。",
+  "mitigation/M1021/0": "Webプロキシを使って、未承認の外部サービスの利用を防ぐ、外部ネットワーク通信ポリシーを強制できる。",
+  "procedure/G0010/0": "Turlaは、盗んだUSBファイルをクラウドドライブにアップロードするためにWebDAVを使用した。Turlaは、盗んだファイルをOneDriveや4sharedに持ち出すこともした。",
+  "procedure/G0027/0": "Threat Group-3390は、盗んだデータをDropboxに持ち出した。",
+  "procedure/G0046/0": "FIN7は、盗んだデータをMEGAファイル共有サイトに持ち出した。",
+  "procedure/G0065/0": "Leviathanは、Dropboxへファイルを持ち出せるLUNCHMONEYというアップローダーを使用した。",
+  "procedure/G0069/0": "MuddyWaterは、Rcloneを使って、クラウドストレージサービスのWasabiへデータを持ち出そうとした。",
+  "procedure/G0094/0": "Kimsukyは、盗んだファイルやデータを攻撃者管理のBlogspotアカウントに持ち出した。Kimsukyは、被害者のシステム情報をアップロードするためにDropboxも利用した。",
+  "procedure/G0102/0": "Wizard Spiderは、盗んだ被害者のデータを様々なクラウドストレージ提供者に持ち出した。",
+  "procedure/G0114/0": "Chimeraは、盗んだデータをOneDriveアカウントに持ち出した。",
+  "procedure/G0119/0": "Indrik Spiderは、ランサムウェアを展開する前に、RcloneまたはMEGASyncを使ってデータを持ち出した。",
+  "procedure/G0125/0": "HAFNIUMは、MEGAを含むファイル共有サイトにデータを持ち出した。",
+  "procedure/G0128/0": "ZIRCONIUMは、盗んだデータをDropboxに持ち出した。",
+  "procedure/G0129/0": "Mustang Pandaは、`curl`を使って、Dropboxのようなクラウドサービスにアーカイブ化したファイルも持ち出した。",
+  "procedure/G0142/0": "Confuciusは、クラウドストレージサービスのアカウントに被害者のデータを持ち出した。",
+  "procedure/G1001/0": "HEXANEは、データ持ち出しにOneDriveを含むクラウドサービスを使用した。",
+  "procedure/G1003/0": "Ember Bearは、Rcloneのようなツールを使って、被害者の環境から`mega.nz`のようなクラウドストレージに情報を持ち出した。",
+  "procedure/G1005/0": "POLONIUMは、盗んだデータをPOLONIUMが所有するOneDriveおよびDropboxアカウントに持ち出した。",
+  "procedure/G1006/0": "Earth Luscaは、megacmdツールを使って、被害者ネットワークから盗んだファイルをMEGAにアップロードした。",
+  "procedure/G1014/0": "LuminousMothは、データをGoogle Driveに持ち出した。",
+  "procedure/G1015/0": "Scattered Spiderは、被害者のデータをMEGAファイル共有サイト、SnowFlake、AWS S3バケットに持ち出した。",
+  "procedure/G1021/0": "Cinnamon Tempestは、キャプチャしたキーストロークのログをAlibaba CloudのオブジェクトストレージサービスであるAliyun OSSにアップロードした。",
+  "procedure/G1022/0": "ToddyCatは、盗んだファイルを持ち出すために、Dropboxアップローダーを使用した。",
+  "procedure/G1024/0": "Akiraは、Rcloneのようなアプリケーションを使って被害者のデータを持ち出す。"
+ },
+ "supplement": {
+  "summary": "DropboxやGoogle Drive、OneDriveといった広く使われるクラウドストレージサービスを、持ち出し経路として利用する手口。Rcloneのようなクラウド同期ツールが悪用されることも多く、ランサムウェア展開の直前に実行される例も目立つ。",
+  "analogy": "個人の引っ越し業者を使うのではなく、誰もが使っている有名な宅配便の集配所（公開クラウドサービス）に荷物を持ち込むようなもの。宅配便の利用そのものがありふれているため、怪しまれにくい。",
+  "learn": ["Rcloneという正規のクラウド同期ツールが、多数の攻撃グループに持ち出し手段として悪用されていること", "ランサムウェア攻撃では、暗号化（影響）の前にデータの持ち出しが行われることが多いという、攻撃の典型的な順序"],
+  "interpretation": ["41件という procedures の多さは、クラウドストレージが企業で広く日常的に使われているサービスであるからこそ、攻撃者にとっても『疑われにくい持ち出し先』として圧倒的に選ばれやすいことを裏付けている。"]
+ }
+}

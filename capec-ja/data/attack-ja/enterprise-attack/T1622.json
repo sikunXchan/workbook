@@ -1,0 +1,50 @@
+{
+ "id": "T1622",
+ "source_sha": "a3dc70309d7c2afb",
+ "status": "done",
+ "seg": {
+  "name": "デバッガの回避",
+  "description/0": "攻撃者は、デバッガを検知し、それを避けるためにさまざまな手段を用いることがある。デバッガは通常、防御側がマルウェアのペイロードの実行を追跡・解析するために使われる。",
+  "description/1": "デバッガの回避には、デバッグされている環境を示す痕跡の有無を確認した結果に応じて振る舞いを変えることが含まれる。仮想化・サンドボックスの回避と同様に、攻撃者はデバッガを検知すると、マルウェアを被害者から切り離したり、インプラントの中核機能を隠したりすることがある。また、二次的な、あるいは追加のペイロードを投下する前に、デバッガの痕跡を探すこともある。",
+  "description/2": "具体的な確認方法は標的や攻撃者によって異なる。Windowsでは、`IsDebuggerPresent()`や`NtQueryInformationProcess()`といったネイティブAPI関数呼び出しを使ったり、プロセス環境ブロック(PEB)の`BeingDebugged`フラグを手動で確認したりすることがある。Linuxでは、`/proc/self/status`の`TracerPID`フィールドを問い合わせることがあり、これはそのプロセスが動的解析ツールによって追跡されているかどうかを示す。デバッグの痕跡を確認する他の方法として、ハードウェアブレークポイントの列挙、割り込み用アセンブリ命令、時間の計測、現在のプロセスで例外が発生した場合の挙動（デバッガが存在すれば、エラーを「握りつぶす」あるいは処理すると想定して）の確認などもある。",
+  "description/3": "マルウェアは、構造化例外処理(SEH)を利用してデバッガを検知することもある。例外を発生させ、プロセスが一時停止するかどうかを確認するのである。SEHはハードウェアとソフトウェア双方の例外を処理し、デバッグのサポートを含む例外全体の制御を提供する。デバッガが存在する場合、プログラムの制御はデバッガに移り、コードの実行は一時停止する。デバッガが存在しない場合、制御はSEHハンドラに移り、ハンドラが例外を自動的に処理してプログラムの実行を継続させる。",
+  "description/4": "攻撃者は、こうしたデバッガの確認から得た情報を、自動化された探索の中で以降の挙動を形作るために使うことがある。デバッガはまた、プロセスを切り離したり、ループするネイティブAPI関数呼び出し（例えば`OutputDebugStringW()`）によって生成されるメッセージでデバッグログを無意味なデータで溢れさせたりすることでも回避できる。",
+  "procedure/G0129/0": "Mustang Pandaは、解析者を混乱させるメッセージを含むデバッグ用文字列を埋め込んでいる。Mustang Pandaはまた、Windows APIの`CheckRemoteDebuggerPresent`を呼び出し、デバッガを検知すると終了する。",
+  "procedure/S0013/0": "PlugXは、Windows APIの`CheckRemoteDebuggerPresent`を呼び出し、デバッガを検知すると終了する。",
+  "procedure/S0240/0": "ROKRATはデバッグツールの有無を確認できる。",
+  "procedure/S0595/0": "ThiefQuestは`is_debugging`という名前の関数を使ってアンチデバッグ処理を行う。この関数は`sysctl`を呼び出し、返された`P_TRACED`の値を確認する。ThiefQuestはまた、`PTRACE_DENY_ATTACH`フラグを付けて`ptrace`を呼び出し、デバッグを阻止する。",
+  "procedure/S0694/0": "DRATzarusは`IsDebuggerPresent`を使って、被害者環境にデバッガが存在するかどうかを検知できる。",
+  "procedure/S1018/0": "Saint Botは、環境確認の一部として`is_debugger_present`を使った。",
+  "procedure/S1039/0": "Bumblebeeは、静的解析に使われるツールを探すことができる。",
+  "procedure/S1060/0": "Mafaldaは、侵害したホスト上のデバッグツールを探すことができる。",
+  "procedure/S1066/0": "DarkTortillaは`DebuggerIsAttached`や`DebuggerIsLogging`といった関数を使ってデバッガを検知できる。DarkTortillaはまた、`COR_ENABLE_PROFILING`環境変数が存在し有効かどうかを確認することで、プロファイラも検知できる。",
+  "procedure/S1070/0": "Black Bastaのドロッパーは、システムフラグ、CPUレジスタ、CPU命令、プロセスのタイミング、システムライブラリ、APIを確認して、デバッガが存在するかどうかを判定できる。",
+  "procedure/S1087/0": "AsyncRATは`CheckRemoteDebuggerPresent`関数を使ってデバッガの存在を検知できる。",
+  "procedure/S1111/0": "DarkGateは、実行中にPEB構造体の`BeingDebugged`フラグを確認して、マルウェアがデバッグされているかどうかを識別する。",
+  "procedure/S1130/0": "Raspberry Robinは`ThreadHideFromDebugger`を使ったアンチデバッグ機構を利用する。",
+  "procedure/S1145/0": "Pikabotは、アクティブなデバッガの確認、実行中のブレークポイントの使用、システムメモリやプロセッサ数といったさまざまなシステム情報項目の確認など、解析者によるデバッグを回避するいくつもの手法を備えている。",
+  "procedure/S1160/0": "Latrodectusはデバッガの存在を確認する機能を持つ。",
+  "procedure/S1183/0": "StrelaStealerの各種変種は、デバッガを識別し回避する機能を含む。",
+  "procedure/S1200/0": "StealBitは、デバッガの環境下で実行されていることを検知できる。",
+  "procedure/S1202/0": "LockBit 3.0は、ヒープメモリのパラメータを確認してデバッガの兆候を調べ、動的解析を妨げるために、接続されたデバッガへのイベントの流れを止めることができる。",
+  "procedure/S1207/0": "XLoaderは、`InfoClass=7`（`ProcessDebugPort`を参照）を指定した`NtQueryInformationProcess`の呼び出しなど、アンチデバッグ機構を使って、解析されているかどうかを判定する。",
+  "procedure/S1213/0": "Lumma Stealerは、`GetForegroundWindow`を呼び出し、「x32dbg」「x64dbg」「windbg」「ollydbg」「dnspy」「immunity debugger」「hyperdbg」「debug」「debugger」「cheat engine」「cheatengine」「ida」といった文字列を含むかどうかを確認して、デバッガ文字列を確認する。",
+  "procedure/S1228/0": "PUBLOADは、解析者を混乱させるメッセージを含むデバッグ用文字列を埋め込んでいる。PUBLOADは`OutputDebugStringW`および`OutputDebugStringA`関数を利用した。",
+  "procedure/S1239/0": "TONESHELLは、コードの流れを隠し、デバッガの実行を止めるために、カスタムの例外ハンドラを利用した。",
+  "procedure/S9019/0": "PureCrypterは`CheckRemoteDebuggerPresent`を呼び出す機能を持つ。",
+  "procedure/S9027/0": "ANELLDRは、第2引数を`ThreadHideFromDebugger (0x11)`に設定して`ZwSetInformationThread`を呼び出し、デバッグを回避できる。",
+  "procedure/S9037/0": "RustyWaterは、デバッグの試みを捕捉するために、ベクタ化例外ハンドラ(VEH)を登録した。",
+  "procedure/S9050/0": "Vidarは`IsDebuggerPresent`関数を使って、被害者のマシンにデバッガが存在するかどうかを検知した。"
+ },
+ "supplement": {
+  "summary": "マルウェアが、解析者がデバッガでその動作を追跡・解析していないかを確認し、見つかれば振る舞いを変えたり停止したりして、解析を妨げるための技術。Windows・Linux双方にそれぞれ特有の確認方法がある。",
+  "analogy": "見張りがいないか確認するために、金庫破りが作業を始める前にまず部屋の隅々を見渡し、監視カメラの赤いランプが点いていないかを確かめ、もし点いていたら即座に作業道具をしまって立ち去るのに似ている。",
+  "learn": [
+   "デバッガ回避の確認方法がOSによって異なること（Windowsでは`IsDebuggerPresent()`などのAPI、Linuxでは`/proc/self/status`のTracerPIDフィールド）",
+   "構造化例外処理(SEH)という、本来はエラー処理のための正規のしくみが、デバッガの有無を判定する手段として悪用されること"
+  ],
+  "interpretation": [
+   "多数の実在するマルウェア（PlugX、AsyncRAT、LockBit 3.0など）がそれぞれ少しずつ異なる具体的な手法でデバッガ回避を実装している事実は、この技術が「概念としては一つ」でも「実装としては無数にある」ことを示している。防御側がすべての手法を個別に把握することは難しく、むしろ『デバッガの有無を確認する』という振る舞いそのものを広く検知する対策（振る舞い検知）が重要になる。"
+  ]
+ }
+}

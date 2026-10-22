@@ -1,0 +1,55 @@
+{
+ "id": "T1583.006",
+ "source_sha": "c475ad7803fd772f",
+ "status": "done",
+ "seg": {
+  "name": "Webサービス",
+  "description/0": "攻撃者は、攻撃対象の選定の際に利用できるWebサービスに登録することがある。攻撃者が登録できる人気のWebサービスは多数存在し、それらは後の攻撃者のライフサイクルの段階、例えば遠隔操作（Web Service経由）、Webサービスを介した持ち出し、フィッシングなどで悪用されることがある。Google、GitHub、Twitterなどが提供する一般的なサービスを使うことで、攻撃者は想定される通信量の中に紛れ込みやすくなる。また、Webサービスを利用することで、その活動を自分自身に物理的に結び付けることを難しくできる。",
+  "mitigation/M1056/0": "この技術は、企業の防御・対策の範囲外で行われる行動に基づいているため、予防的な対策では簡単に緩和できない。",
+  "procedure/G0007/0": "APT28は、新しく作成したBlogspotのページを認証情報の収集活動に使用した。",
+  "procedure/G0010/0": "Turlaは、C2と文書の持ち出しのために、DropboxやGitHubを含むWebアカウントを作成した。",
+  "procedure/G0016/0": "APT29は、HAMMERTOSSのようなマルウェアのC2に使われる、アルゴリズムで生成されたTwitterハンドルを登録した。APT29は、その活動においてDropboxやConstant Contactなどの正規のWebサービスも使用した。",
+  "procedure/G0025/0": "APT17は、C2インフラとして使われるプロフィールページをMicrosoft TechNetに作成した。",
+  "procedure/G0032/0": "Lazarus Groupは、悪意あるダウンロードファイルをGithub上でホストした。",
+  "procedure/G0046/0": "FIN7は、トロイ化したデジタル製品をホストするためにAmazon S3バケットを設定した。",
+  "procedure/G0047/0": "Gamaredon Groupは、C2ノードを得るためにCloudflareのTryCloudflareサービスを使用した。",
+  "procedure/G0050/0": "APT32は、悪意あるダウンロードファイルをホストするために、Dropbox・Amazon S3・Google Driveを設定した。",
+  "procedure/G0059/0": "Magic Houndは、C2で使うためにAmazon S3バケットを取得した。",
+  "procedure/G0069/0": "MuddyWaterは、ツールを配布するために、OneHub・Sync・TeraBoxを含むファイル共有サービスを使用した。",
+  "procedure/G0082/0": "APT38は、悪意あるファイルをホストするためにOneDriveとGoogleDriveを使用した。",
+  "procedure/G0094/0": "Kimsukyは、標的選定の活動に使うコンテンツをBlogspotなどのWebサービス経由でホストした。Kimsukyは、ペイロードのホスティングと被害システム情報のアップロードにもDropboxを利用した。",
+  "procedure/G0099/0": "APT-C-36のキャンペーン構成には、画像ホスティングサイト、Pastebin、Discord、GitHub、Google Drive、BitBucket、Dropboxが含まれていた。",
+  "procedure/G0125/0": "HAFNIUMは、C2と持ち出しに使うためにWebサービスを取得した。",
+  "procedure/G0128/0": "ZIRCONIUMは、スピアフィッシングメールにリンクされたマルウェアをホストするためにGitHubを使用した。",
+  "procedure/G0129/0": "Mustang Pandaは、悪意あるダウンロードファイルをホストするために、DropboxとGoogle Driveを設定した。",
+  "procedure/G0136/0": "IndigoZebraは、自らの活動のためにDropboxアカウントを作成した。",
+  "procedure/G0140/0": "LazyScripterは、ツールセットをホストするためにGitHubアカウントを開設した。",
+  "procedure/G0142/0": "Confuciusは、盗んだデータをホストするためにクラウドストレージサービスのアカウントを取得した。",
+  "procedure/G1005/0": "POLONIUMは、自らの活動のために正規のMicrosoft OneDriveアカウントを作成・使用した。",
+  "procedure/G1006/0": "Earth Luscaは、マルウェアをホストするためにGitHubアカウントを開設した。",
+  "procedure/G1018/0": "TA2541は、Google Drive・OneDrive・Discord・PasteText・ShareText・GitHubなど、さまざまなプラットフォーム上に悪意あるファイルをホストした。",
+  "procedure/G1031/0": "Saint Bearは、初期アクセスの活動の際に取得する悪意あるコンテンツをホストするために、DiscordのコンテンツデリバリーネットワークCDNを利用した。",
+  "procedure/G1038/0": "TA578は、悪意あるスクリプトをホストするためにGoogle Firebaseを使用した。",
+  "procedure/G1051/0": "Medusa Groupは、後続の活動を助ける悪意あるペイロードを含むzipファイルをホストするために、filemail[.]comというファイルホスティングサービスを利用した。",
+  "procedure/G1052/0": "Contagious Interviewは、盗んだデータを受け取るためにDropboxなどのWebサービスを使用し、ファイルの配布にはGoogle Drive・Firebase・GitHub・Telegramを使用した。Contagious Interviewは、悪意あるWebアプリケーションや静的ページを使ったC2活動にVercelなどのクラウドプラットフォームも使用した。Contagious Interviewは、活動の調整にSlackも使用した。",
+  "procedure/G1055/0": "VOID MANTICOREは、悪意ある活動を開始するために商用VPNサービスへのアクセスを取得した。VOID MANTICOREは、Starlinkのインターネットサービスも利用した。VOID MANTICOREは、運用者が制御するTelegramのボットとチャンネルをC2インフラとして使用した。",
+  "procedure/G1056/0": "TeamPCPは、マルウェアのC2のためにCloudflare Tunnelsを設定した。TeamPCPは、分散・暗号化された持ち出しのために、session messengerネットワーク（`*.getsession[.]org`、受信ID `05f9e609d79eed391015e11380dee4b5c9ead0b6e2e7f0134e6e51767a87323026`）も使用した。",
+  "procedure/G1059/0": "NIMBUS MANTICOREは、被害者に悪意あるペイロードを配布するためにOnlyOfficeプラットフォームを利用した。",
+  "procedure/G1059/1": "NIMBUS MANTICOREは、`*[.]azurewebsites[.]net`を含む、自らのインフラに正当性の印象を与えようとWebサービスを利用した。",
+  "procedure/G1059/2": "NIMBUS MANTICOREは、Cloudflareも利用した。"
+ },
+ "supplement": {
+  "summary": "GitHub・Dropbox・Google Driveなど人気のWebサービスに攻撃者自身が新規アカウントを登録し、後のC2・持ち出し・フィッシングの下準備として使う技術。既存アカウントを乗っ取る「対策を講じたWebサービス」（T1586.003等）とは異なり、攻撃者が自ら作成したアカウントを使う点が特徴。",
+  "terms": [
+   { "term": "リソース開発", "en": "Resource Development", "explain": "攻撃の前段階で、攻撃者が使うインフラ・アカウント・能力をあらかじめ用意しておく戦術。この技術はその一部として、実際の侵入より前に行われる準備活動を指す。" }
+  ],
+  "analogy": "詐欺グループが、本人確認が簡単な無料のレンタル私書箱を多数契約しておき、後で架空の会社名義の郵便物をやり取りする窓口として使うのに似ている。郵便局（Webサービス運営者）から見れば、ごく普通の契約者の一人にしか見えない。",
+  "learn": [
+   "Google・GitHub・Twitterのような高い信頼性を持つサービスを使うことで、攻撃者の通信が『正常な雑音』に紛れ込みやすくなるという考え方",
+   "この技術が、後続の遠隔操作・持ち出し・フィッシングといった複数の戦術の『土台』として機能すること"
+  ],
+  "interpretation": [
+   "この技術の手口の実例が、ごく短い1文で「〇〇が△△サービスを使った」という形式で大量に記録されている点は、Webサービスの悪用が業界や攻撃グループの系統を問わず、ほぼすべての攻撃者に共通する「当たり前の下準備」になっていることを示している。防御側にとっては、個々のサービスを締め出すことよりも、正規サービスへの通信のうち、通常の業務パターンから外れるものを見分ける力が重要になる。"
+  ]
+ }
+}
