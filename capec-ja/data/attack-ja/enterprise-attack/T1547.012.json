@@ -1,0 +1,22 @@
+{
+ "id": "T1547.012",
+ "source_sha": "bfbd9a690537f554",
+ "status": "done",
+ "seg": {
+  "name": "印刷プロセッサ",
+  "description/0": "攻撃者は、永続化や権限昇格のためにシステム起動時に悪意あるDLLを実行させるため、印刷プロセッサを悪用することがある。印刷プロセッサは、起動時に印刷スプーラーサービス`spoolsv.exe`によって読み込まれるDLLである。",
+  "description/1": "攻撃者は、起動時に悪意あるDLLを読み込む印刷プロセッサを追加することで、印刷スプーラーサービスを悪用することがある。印刷プロセッサは、`SeLoadDriverPrivilege`が有効なアカウントで`AddPrintProcessor` API呼び出しを通じてインストールできる。別の方法として、DLLを指す`HKLM\\SYSTEM\\[CurrentControlSet または ControlSet001]\\Control\\Print\\Environments\\[Windowsアーキテクチャ：例 Windows x64]\\Print Processors\\[利用者定義]\\Driver`レジストリキーを追加することで、印刷プロセッサを印刷スプーラーサービスに登録することもできる。",
+  "description/2": "悪意ある印刷プロセッサが正しくインストールされるには、ペイロードが専用のシステム印刷プロセッサディレクトリ（`GetPrintProcessorDirectory` API呼び出しで特定できる）に配置されているか、このディレクトリからの相対パスで参照されている必要がある。印刷プロセッサがインストールされた後、ブート時に起動する印刷スプーラーサービスを再起動しなければ、それらは実行されない。",
+  "description/3": "印刷スプーラーサービスはSYSTEMレベルの権限で動作するため、攻撃者がインストールした印刷プロセッサは昇格した権限で動作することがある。",
+  "mitigation/M1018/0": "`SeLoadDriverPrivilege`を無効化することで、ドライバを読み込み・取り外しできる利用者アカウントを制限する。",
+  "procedure/G1006/0": "Earth Luscaは、マルウェアを印刷プロセッサとして読み込むため、レジストリキー`HKLM\\SYSTEM\\ControlSet001\\Control\\Print\\Environments\\Windows x64\\Print Processors\\UDPrint\" /v Driver /d \"spool.dll /f`を追加した。",
+  "procedure/S0501/0": "PipeMonのインストーラーは、レジストリキー`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Print\\Environments\\Windows x64\\Print Processors`を変更し、PipeMonを印刷プロセッサとしてインストールした。",
+  "procedure/S0666/0": "Gelsemiumは、印刷スプーラー（spoolsv）のWindowsサービスによって自動的に読み込まれるよう、自身を`C:\\Windows\\System32\\spool\\prtprocs\\x64\\winprint.dll`に配置できる。"
+ },
+ "supplement": {
+  "summary": "Windowsの印刷スプーラーサービスが起動時に読み込む「印刷プロセッサ」の登録を悪用し、SYSTEM権限で悪意あるDLLを実行させる手口。印刷機能という、普段は注目されにくいしくみを狙う。",
+  "analogy": "工場の生産ライン管理システム（印刷スプーラー）に、特定の工程を処理する専用の機械（印刷プロセッサ）を登録するしくみを使って、本来の工程機械の代わりに不正な機械をこっそり登録しておくのに似ている。工場が稼働を始めると、自動的にその不正な機械も動き出す。",
+  "learn": ["印刷機能そのものが攻撃対象になるという、意外性のある永続化・権限昇格の経路があること", "印刷プロセッサがインストールされただけでは実行されず、印刷スプーラーサービスの再起動が必要という、実行のタイミングに関する制約"],
+  "interpretation": ["印刷スプーラーサービスがSYSTEM権限で動作するという事実は、Print Nightmareなど、過去に印刷スプーラーの脆弱性が重大な権限昇格の経路として注目された実例とも通じる。この技術は、印刷スプーラーという一つのプロセスに、永続化・権限昇格の両方につながる複数の悪用経路（ポートモニター、印刷プロセッサ）が存在することを示している。"]
+ }
+}

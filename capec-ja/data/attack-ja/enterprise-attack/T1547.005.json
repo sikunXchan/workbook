@@ -1,0 +1,21 @@
+{
+ "id": "T1547.005",
+ "source_sha": "e3e353ac5b06fef5",
+ "status": "done",
+ "seg": {
+  "name": "セキュリティサポートプロバイダー",
+  "description/0": "攻撃者は、システム起動時にDLLを実行させるため、セキュリティサポートプロバイダー（SSP）を悪用することがある。WindowsのSSP DLLは、システム起動時にLocal Security Authority（LSA）プロセスに読み込まれる。LSAに読み込まれると、SSPのDLLは、ログオン中の利用者のドメインパスワードやスマートカードPINなど、Windowsに保存されている暗号化済みパスワードおよび平文パスワードにアクセスできる。",
+  "description/1": "SSPの設定は、`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Security Packages`と`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\OSConfig\\Security Packages`という2つのレジストリキーに保存されている。攻撃者は、これらのレジストリキーを変更して新しいSSPを追加することがあり、それは次回のシステム起動時、またはAddSecurityPackage Windows API関数が呼び出されたときに読み込まれる。",
+  "mitigation/M1025/0": "Windows 8.1、Windows Server 2012 R2以降のバージョンでは、レジストリキー`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\RunAsPPL`を設定することで、LSAをProtected Process Light（PPL）として動作させることができ、これによりすべてのSSPのDLLがMicrosoftの署名を持つことが要求される。",
+  "procedure/S0002/0": "認証情報ダンパーであるMimikatzには、SSPの実装が含まれている。",
+  "procedure/S0194/0": "PowerSploitの`Install-SSP`永続化モジュールは、SSPのDLLをインストールすることで永続化を確立するために使用できる。",
+  "procedure/S0363/0": "Empireは、セキュリティサポートプロバイダー（SSP）を列挙できるほか、PowerSploitの`Install-SSP`と`Invoke-Mimikatz`を使って悪意あるSSPをインストールし、認証イベントを記録することもできる。"
+ },
+ "supplement": {
+  "summary": "LSAプロセスに読み込まれるセキュリティサポートプロバイダー（SSP）のレジストリ設定に新しいDLLを追加し、システム起動時に自動実行させる手口。SSPはパスワードの平文・暗号化済みの両方にアクセスできるため、認証情報の窃取（Mimikatzなど）とも直結する。",
+  "facts": [{"text": "SSPのDLLはLSAに読み込まれると、ログオン中の利用者のドメインパスワードやスマートカードPINなど、Windowsに保存されている暗号化済みパスワードおよび平文パスワードにアクセスできると原典に書かれている。", "source": "description"}],
+  "analogy": "銀行の窓口業務システム（LSA）に接続される、本人確認の補助装置（SSP）に不正な装置をこっそり接続するのに似ている。この装置は本来、暗証番号を確認するためのものだが、不正な装置を接続すると、確認のために通過するすべての暗証番号そのものが盗み見られてしまう。",
+  "learn": ["SSPが単なる『起動時に実行されるDLL』ではなく、パスワードそのものにアクセスできる特権的な位置にあるため、この技術が永続化だけでなく認証情報アクセスにも関わること", "MimikatzがSSPの実装を含んでいるという事実が、この技術と認証情報ダンプの手口がいかに密接に結びついているかを示していること"],
+  "interpretation": ["対策がM1025（LSAのPPL化、認証パッケージ・タイムプロバイダーと共通）のみである点は、LSAという一つのプロセスに対する構造的な保護（署名検証の強制）が、認証パッケージ・SSP・タイムプロバイダーという複数の異なる永続化サブ技術に共通して効く、効率のよい対策であることを示している。"]
+ }
+}

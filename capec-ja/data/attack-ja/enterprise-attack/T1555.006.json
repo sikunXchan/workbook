@@ -1,0 +1,34 @@
+{
+ "id": "T1555.006",
+ "source_sha": "5c18e1aee7094997",
+ "status": "done",
+ "seg": {
+  "name": "クラウドのシークレット管理ストア",
+  "description/0": "攻撃者は、AWS Secrets Manager、GCP Secret Manager、Azure Key Vault、Terraform Vaultのような、クラウドネイティブなシークレット管理ソリューションから認証情報を取得することがある。",
+  "description/1": "シークレットマネージャーは、パスワード・APIキー・その他の認証情報を、安全に一元管理することを支える。シークレットマネージャーが使われている場合、クラウドサービスは、平文のファイルや環境変数に安全でない形で保存されたシークレットにアクセスするのではなく、APIリクエストを通じて動的に認証情報を取得できる。",
+  "description/2": "攻撃者がクラウド環境で十分な権限を得ることができれば──例えば、強い権限を持つクラウドアカウントの認証情報を得る、またはシークレットを取得する権限を持つサービスを侵害するなどして──シークレットマネージャーにシークレットを要求できる可能性がある。これは、AWSの`get-secret-value`、GCPの`gcloud secrets describe`、Azureの`az key vault secret show`といったコマンドを通じて実行できる。",
+  "description/3": "**注記：** この技術は、クラウドインスタンスのメタデータAPIとは異なる。この技術では、インスタンスメタデータAPIという仲介を経ず、クラウドのシークレットマネージャーに直接認証情報が要求される点が異なる。",
+  "mitigation/M1026/0": "シークレットマネージャーを問い合わせる権限を持つクラウドアカウントやサービスの数を、必要なものだけに限定する。シークレットマネージャーを問い合わせる権限を持つアカウントやサービスが、必要なシークレットにのみアクセスできることを確実にする。",
+  "procedure/G0125/0": "HAFNIUMは、Azureのキーボールトからパスワードを盗むために、オンプレミス環境から横展開した。",
+  "procedure/G1053/0": "Storm-0501は、`Microsoft.KeyVault/Vaults/write`という操作を使って、暗号鍵を保存するためにAzure Key Vaultを利用した。",
+  "procedure/G1056/0": "TeamPCPは、AWS、GCP、Azureを含む標的の環境から、クラウドのシークレットを持ち出すためにマルウェアを使用した。",
+  "procedure/S1091/0": "Pacuは、enum_secretsモジュールを通じて、AWS Secrets Managerからシークレットを取得できる。",
+  "procedure/S9008/0": "Shai-Huludは、AWS SecretsとGCP Secret Managerからシークレットを収集した。Shai-Huludはまた、Azure Key Vaultからもデータを収集した。",
+  "procedure/S9009/0": "TruffleHogは、AWS SecretsとGCP Secret Managerからシークレットを取得できる。TruffleHogはまた、ソースリポジトリ、.envファイル、gitの履歴からパスワード・シークレット・APIキーを収集した。",
+  "procedure/S9041/0": "TeamPCP Cloud Stealerは、Identity Access Management（IAM）の認証情報を含む、AWS、GCP、Azure用の認証情報を抜き出すために、複数のファイルシステムパスを列挙できる。",
+  "procedure/S9042/0": "CanisterWormは、Amazon Web Services（AWS）、Google Cloud Platform（GCP）、Microsoft Azureから認証情報を収集した。",
+  "procedure/S9043/0": "Mini Shai-Huludは、クラウドのシークレットストアに保存された認証情報を捕捉した。",
+  "procedure/S9045/0": "BACKUPOSINT v9.0 APEX PREDATORには、Microsoft Azure、Amazon Web Services（AWS）、Google Cloud Platform（GCP）内のパスワードボールトから、クラウドのシークレット管理ストアを収集するモジュールがある。"
+ },
+ "supplement": {
+  "summary": "AWS Secrets Manager、Azure Key Vault、GCP Secret Managerといった、クラウドの「シークレットの一元管理」のしくみ自体を、十分な権限を得た攻撃者がAPIを通じて直接問い合わせ、保管されている認証情報を取得する手口。",
+  "analogy": "会社の金庫の鍵を、各部署がその都度、金庫番（シークレットマネージャー）に申請して借りる運用にしているとき、金庫番自身への立ち入り許可（クラウドの権限）を得てしまった攻撃者は、正規の申請手続きを装って、堂々と金庫番に鍵を出してもらえてしまう。",
+  "learn": [
+   "シークレットマネージャーは『平文での保存をやめる』という点では優れた対策だが、それ自体への十分な権限を得られれば、依然として認証情報を取得できてしまうこと",
+   "この手口がクラウドインスタンスメタデータAPI（T1552.005）とは明確に区別されており、シークレットマネージャーへの『直接の』問い合わせであるという点が特徴であること"
+  ],
+  "interpretation": [
+   "緩和策がM1026（特権アカウント管理）に限られているのは、この技術に対する防御の本質が、暗号化やファイルシステムのアクセス制御ではなく、『誰がシークレットマネージャーに問い合わせる権限を持つか』という、クラウドのIAM（Identity and Access Management）設計そのものに帰着することを示している。クラウド環境では、認証情報を安全に保管する仕組み（シークレットマネージャー）自体が、新たな、集中化された標的になるという構造が、この技術からうかがえる。"
+  ]
+ }
+}

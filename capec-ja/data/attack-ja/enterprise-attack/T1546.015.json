@@ -1,0 +1,31 @@
+{
+ "id": "T1546.015",
+ "source_sha": "4089100c0c7b9707",
+ "status": "done",
+ "seg": {
+  "name": "COMハイジャック",
+  "description/0": "攻撃者は、Component Object Model（COM）オブジェクトへの参照を乗っ取ることで起動する悪意あるコンテンツを実行し、永続化を確立することがある。COMは、ソフトウェア構成要素どうしがOSを介して連携できるようにする、Windows内のしくみである。さまざまなCOMオブジェクトへの参照は、レジストリに保存されている。",
+  "description/1": "攻撃者は、COMへの参照や関連性を乗っ取る手段として、正規のソフトウェアの代わりに実行される悪意あるコードを挿入するために、このCOMのしくみを利用することがある。COMオブジェクトの乗っ取りには、正規のシステム構成要素への参照を置き換えるレジストリの変更が必要であり、その構成要素は実行時に正しく動作しなくなることがある。そのシステム構成要素が通常のシステム動作の中で実行されると、代わりに攻撃者のコードが実行される。攻撃者は、システムの不安定化による検知を避けるため、頻繁に使われて持続的な永続化を保てるが、気づかれるほどの機能破綻を起こしにくいオブジェクトを乗っ取る傾向がある。",
+  "description/2": "COMハイジャックの一つの変化形に、COMオブジェクトのインターフェースやメソッドといったメタデータを提供するType Libraries（TypeLibs）を悪用するものがある。攻撃者は、TypeLibsに関連するレジストリキーを変更し、正規のCOMオブジェクトの機能を悪意あるスクリプトやペイロードへとリダイレクトすることがある。通常のCOMハイジャックがローカルのDLLを使うことが多いのに対し、この変化形は「script:」というモニカーを使って外部サーバー上にホストされた遠隔のスクリプトを実行することがある。この手法により、乗っ取られたCOMオブジェクトにアクセスするたびに遠隔のペイロードが自動的にダウンロードされるため、永続化を保ちながら隠密にコードを実行できる。",
+  "procedure/G0007/0": "APT28は、正規の`MMDeviceEnumerator`オブジェクトをペイロードに置き換えることで、永続化のためにCOMハイジャックを使用した。",
+  "procedure/S0044/0": "JHUHUGITは、MMDeviceEnumeratorという名前のクラスを乗っ取ることで、またShell Icon Overlay handler COMオブジェクト（{3543619C-D563-43f7-95EA-4DA7E1CC396A}）としてペイロードを登録することで、COMハイジャックを使って永続化を確立した。",
+  "procedure/S0045/0": "ADVSTORESHELLの一部の変種は、ペイロードをShell Icon Overlay handler COMオブジェクトとして登録することで永続化を達成する。",
+  "procedure/S0126/0": "ComRATのサンプルには、レジストリの場所`HKCU\\Software\\Classes\\CLSID\\{42aedc87-2188-41fd-b9a3-0c966feabec1}\\InprocServer32`にあるshell32.dllへのパスを置き換えることで、COMオブジェクトを乗っ取り永続化するものが確認されている。",
+  "procedure/S0127/0": "BBSRATは、システムのCPUアーキテクチャに応じて、MruPidlListのCOMオブジェクト（`{42aedc87-2188-41fd-b9a3-0c966feabec1}`）またはMicrosoft WBEM New Event Subsystemのそれ（`{F3130CDB-AA52-4C3A-AB32-85FFC23AF9C1}`）を置き換えることで、COMハイジャックを通じて永続化することが確認されている。",
+  "procedure/S0256/0": "Mosquitoは、永続化の手段としてCOMハイジャックを使用する。",
+  "procedure/S0356/0": "KONNIは、悪意あるDLLペイロードを読み込ませるために、ComSysAppサービスを変更した。",
+  "procedure/S0670/0": "WarzoneRATは、`DelegateExecute`パラメータとともに自身へのパスを`HKCU\\Software\\Classes\\Folder\\shell\\open\\command`キーに設定することで、COMハイジャックを実行できる。",
+  "procedure/S0679/0": "Ferociousは、永続化を確立するためにCOMハイジャックを使用できる。",
+  "procedure/S0692/0": "SILENTTRINITYは、`Registry.CurrentUser.CreateSubKey(\"Software\\\\Classes\\\\CLSID\\\\{\" + clsid + \"}\\\\InProcServer32\")`を通じて、ペイロード実行用のCLSIDキーを追加できる。",
+  "procedure/S1050/0": "PcShareは、永続化のために`HKCU\\\\Software\\\\Classes\\\\CLSID\\\\{42aedc87-2188-41fd-b9a3-0c966feabec1}\\\\InprocServer32`レジストリキーを作成した。",
+  "procedure/S1064/0": "SVCReadyは、永続化のために`HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{E6D34FFC-AD32-4d6a-934C-D387FA873A19}`レジストリキーを作成した。"
+ },
+ "supplement": {
+  "summary": "Windowsのソフトウェア構成要素連携のしくみであるCOM（Component Object Model）への参照をレジストリ上で書き換え、正規の構成要素の代わりに悪意あるコードが実行されるようにして永続化する手口。",
+  "terms": [{"term": "COM（Component Object Model）", "en": "COM", "explain": "Windows上でソフトウェアの構成要素どうしが機能を呼び合うための仕組み。どのオブジェクトがどこにあるかという対応関係がレジストリに保存されている。"}],
+  "facts": [{"text": "攻撃者は、頻繁に使われて持続的な永続化を保てるが、気づかれるほどの機能破綻を起こしにくいオブジェクトを乗っ取る傾向があると原典に書かれている。", "source": "description"}],
+  "analogy": "電話交換局の名簿（COMオブジェクトの登録先）を書き換えて、本来は『お客様窓口』につながるはずの番号を、密かに別の場所（攻撃者のコード）につなげてしまうのに似ている。見た目には同じ番号にかけているだけなので、利用者は何かが起きたことに気づきにくい。",
+  "learn": ["COMオブジェクトの参照がレジストリに保存されているため、Windowsのレジストリ全体が、ファイル実行だけでなく『どのコードがどこで呼び出されるか』という連携のしくみそのものを書き換えられる攻撃対象になり得ること"],
+  "interpretation": ["TypeLibsを悪用する変化形が、ローカルDLLではなく『script:』モニカーで外部サーバーのスクリプトを実行できる点は重要である。これは、ローカルファイルの検査だけでは見つからない、ネットワーク越しの持続的な実行経路が存在することを示しており、ネットワーク監視とレジストリ監視を組み合わせる必要性を示している。"]
+ }
+}

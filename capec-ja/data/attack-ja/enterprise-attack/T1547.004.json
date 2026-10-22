@@ -1,0 +1,34 @@
+{
+ "id": "T1547.004",
+ "source_sha": "9c3d600545e0f5b7",
+ "status": "done",
+ "seg": {
+  "name": "Winlogonヘルパーダンプ",
+  "description/0": "攻撃者は、利用者がログインしたときにDLLや実行ファイルを実行させるため、Winlogonの機能を悪用することがある。Winlogon.exeは、ログオン・ログオフ時の処理や、Ctrl-Alt-Deleteによって起動されるセキュアアテンションシーケンス（SAS）を担うWindowsの構成要素である。`HKLM\\Software[\\Wow6432Node\\]\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\`および`HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\`のレジストリエントリは、Winlogonをサポートする追加のヘルパープログラムや機能を管理するために使われる。",
+  "description/1": "これらのレジストリキーへの悪意ある変更は、Winlogonに悪意あるDLLや実行ファイルを読み込ませ、実行させる可能性がある。特に、次のサブキーが悪用される可能性のあるものとして知られている。",
+  "description/2": "* Winlogon\\Notify - Winlogonのイベントを処理する通知パッケージDLLを指す\n* Winlogon\\Userinit - 利用者がログオンしたときに実行される利用者初期化プログラム、userinit.exeを指す\n* Winlogon\\Shell - 利用者がログオンしたときに実行されるシステムシェル、explorer.exeを指す",
+  "description/3": "攻撃者は、これらの機能を利用して悪意あるコードを繰り返し実行し、永続化を確立することがある。",
+  "mitigation/M1018/0": "利用者アカウントの権限を制限し、認可された管理者のみがWinlogonヘルパーの変更を行えるようにする。",
+  "mitigation/M1038/0": "AppLockerのような、未知のDLLを監査・遮断できるアプリケーション制御ツールを使い、Winlogonヘルパー処理を通じて実行される可能性のある、悪意あるソフトウェアを特定・遮断する。",
+  "procedure/G0010/0": "Turlaは、レジストリキー`HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon`にShell値を追加することで永続化を確立した。",
+  "procedure/G0081/0": "Tropic Trooperは、レジストリキー`HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell`を作成し、その値を設定して永続化を確立した。",
+  "procedure/G0102/0": "Wizard Spiderは、レジストリキーHKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogonを追加することで、Userinitを使って永続化を確立した。",
+  "procedure/S0168/0": "Gazerは、レジストリキー`HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon`の値「Shell」を「explorer.exe, %malware_pathfile%」に設定することで永続化を確立できる。",
+  "procedure/S0200/0": "Dipsindの変種は、永続化を確立するためにWinlogon Event Notify DLLとして登録する。",
+  "procedure/S0351/0": "Cannonは、永続化を確立するためにレジストリキー`HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon`を追加する。",
+  "procedure/S0375/0": "Remexiは、レジストリキー`HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Userinit`を追加することで、Userinitを使って永続化を達成する。",
+  "procedure/S0379/0": "Revenge RATは、`HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell`にレジストリキーを作成し、システムの再起動をまたいで生き残る。",
+  "procedure/S0387/0": "KeyBoyは、永続化を達成するために`reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\"`というコマンドを発行する。",
+  "procedure/S0534/0": "Bazarは、永続化を確立するためにWinlogonヘルパーDLLを使用できる。",
+  "procedure/S1066/0": "DarkTortillaは、`Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon`レジストリキーを介して永続化を確立した。",
+  "procedure/S1202/0": "LockBit 3.0は、`SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon`レジストリキーを通じて、自動ログオンを有効化できる。",
+  "procedure/S1242/0": "Qilinは、Winlogonのレジストリエントリを設定できる。"
+ },
+ "supplement": {
+  "summary": "利用者のログオン・ログオフ処理を司るWindowsのWinlogon構成要素のレジストリ設定（Notify/Userinit/Shellなど）を変更し、悪意あるDLLや実行ファイルをログオン時に自動実行させる手口。",
+  "facts": [{"text": "悪用されやすいサブキーとしてWinlogon\\Notify（通知パッケージDLL）、Winlogon\\Userinit（利用者初期化プログラムのパス）、Winlogon\\Shell（システムシェルのパス）の3つが原典に名指しで挙げられている。", "source": "description"}],
+  "analogy": "朝、オフィスの受付担当者（Winlogon）が出社した社員を案内する際、通常は『自分の席（explorer.exe）』に案内するが、案内マニュアル（レジストリのShellキー）をこっそり書き換えて、別の部屋（悪意あるプログラム）に案内させるように仕向けるのに似ている。",
+  "learn": ["Winlogon\\Shellキーは通常explorer.exeを指しており、これを書き換えると、デスクトップ画面そのもの（システムシェル）が悪意あるプログラムに置き換わる、という影響の大きさ", "Userinit・Shell・Notifyという3つの異なるサブキーが、それぞれ異なるタイミング・文脈でコードを実行させるため、監視対象が複数あること"],
+  "interpretation": ["procedures（13件）の多さと、Shell・Userinit・Notifyという複数の悪用経路の存在は、Winlogonという『ログオン体験そのもの』を司るプロセスが、攻撃者にとって極めて魅力的な標的であることを示している。Shellキーの書き換えは特に深刻で、利用者が見るデスクトップ環境そのものを攻撃者の制御下に置ける可能性がある。"]
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "id": "T1518.001",
+ "source_sha": "48f42a432eab9365",
+ "status": "done",
+ "seg": {
+  "name": "セキュリティソフトウェアの探索",
+  "description/0": "攻撃者は、システムやクラウド環境にインストールされているセキュリティソフトウェア・構成・防御用ツール・センサーの一覧を取得しようとすることがある。これには、クラウド監視エージェントやアンチウイルスのようなものが含まれる。攻撃者は、自動化された探索の中でこのセキュリティソフトウェア探索から得た情報を使い、標的への完全な感染を行うかどうか、特定の行動を試みるかどうかなど、その後の振る舞いを決める材料にすることがある。",
+  "description/1": "セキュリティソフトウェアの情報を得るために使われる代表的なコマンドには、netsh、Regを使った`reg query`、cmdを使った`dir`、Tasklistなどがあるが、他の探索的な振る舞いの指標は、攻撃者が探しているソフトウェアやセキュリティシステムの種類に、より特化したものになることがある。macOSのマルウェアが、LittleSnitchやKnockKnockといったソフトウェアの有無を確認するのも、よく見られるようになってきている。",
+  "description/2": "攻撃者はまた、Cloud APIを利用して、AWS CloudWatchエージェント、Azure VMエージェント、Google Cloud Monitorエージェントのような、計算基盤にインストールされたクラウドネイティブのセキュリティソフトウェアを発見することがある。これらのエージェントは、仮想マシンからメトリクスやログを収集し、クラウド型の監視プラットフォームに一元的に集約することがある。",
+  "procedure/G0019/0": "Naikonは、`netsh advfirewall firewall`のようなコマンドを使って、ローカルのファイアウォール設定を探索する。",
+  "procedure/G0069/0": "MuddyWaterは、マルウェアを使って、実行中のプロセスを、マルウェア研究者がよく使うセキュリティツールのハードコードされた一覧と照合した。",
+  "procedure/G0082/0": "APT38は、侵害したシステムにインストールされているセキュリティソフトウェア・構成・防御用ツール・センサーを特定した。APT38は、インストール済みのセキュリティ製品を含む、Windowsホスト上のすべてのインストール済みアプリケーションを列挙するマルウェアインプラントも実行した。",
+  "procedure/G0089/0": "The White Companyは、Kaspersky、Quick Heal、AVG、BitDefender、Avira、Sophos、Avast!、ESETを含む、標的のコンピュータ上の特定のアンチウイルス製品を確認した。",
+  "procedure/G0094/0": "Kimsukyは、`powershell Get-CimInstance -Namespace root/securityCenter2 – classname antivirusproduct`を使って、アンチウイルスソフトウェアの有無を確認した。Kimsukyは、`Win32_OperatingSystem`と`SecurityCenter2.AntiVirusProduct`を使ったWMIクエリによって、アンチウイルスソフトウェアの詳細も取得した。Kimsukyは、`cmd /s sc query WinDefend`を使ってWindows Defenderの状態も確認した。",
+  "procedure/G0102/0": "Wizard Spiderは、WMIを使って、被害者のマシンにインストールされているアンチウイルス製品を特定した。",
+  "procedure/G1022/0": "ToddyCatは、`cmd /c wmic process where name=\"avp.exe\"`を実行することで、エンドポイント上でKasperskyのソフトウェアが動作しているかを判定できる。",
+  "procedure/G1040/0": "Playは、情報窃取ツールGrixbaを使って、アンチウイルスソフトウェアを探索した。",
+  "procedure/G1053/0": "Storm-0501は、`sc query sense`と`sc query windefend`を使って、エンドポイントのセキュリティ対策を検知した。",
+  "procedure/S0057/0": "Tasklistは、既知の製品のプロセス名によって、システム上で現在動作しているセキュリティソフトウェアを列挙するために使われることがある。",
+  "procedure/S0108/0": "netshは、システムのファイアウォール設定を探索するために使われることがある。",
+  "procedure/S0373/0": "Astarothは、`C:\\Program\\Files\\`フォルダ内に、Avastのアンチウイルスが存在するかを確認する。",
+  "procedure/S0483/0": "IcedIDは、次のコマンドを使って、感染したホスト上のAV製品を特定できる。\n` WMIC.exe WMIC /Node:localhost /Namespace:\\\\root\\SecurityCenter2 Path AntiVirusProduct Get * /Format:List`。",
+  "procedure/S0559/0": "SUNBURSTは、実行前に、さまざまなアンチウイルス／エンドポイント検知エージェントの有無を確認した。",
+  "procedure/S0595/0": "ThiefQuestは、`kill_unwanted`関数を使って、実行中のプロセスの一覧を取得し、それぞれのプロセスを「望ましくない」セキュリティ関連プログラムの暗号化された一覧と比較し、該当するセキュリティ関連プログラムのプロセスを終了させる。",
+  "procedure/S0658/0": "XCSSETは、`/Library/Preferences/`にあるファイアウォールの設定ファイルを探索し、`csrutil status`を使ってSystem Integrity Protectionが有効かどうかを判定する。",
+  "procedure/S1028/0": "Action RATは、次のコマンドを使って、感染したホスト上のAV製品を特定できる：`cmd.exe WMIC /Node:localhost /Namespace:\\\\root\\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List`。",
+  "procedure/S1111/0": "DarkGateは、マルウェアにハードコードされた値を使って、プロセス名によって、さまざまなセキュリティ製品を探索する。DarkGateは、Trend Microのアンチウイルスに関連するプロセス名が見つかった場合、またはKasperskyのアンチウイルスの存在が実行時の確認で判明した場合、キーロギングのスレッドを実行しない。DarkGateは、被害者側で特定のセキュリティ製品が検知された場合、新しいスレッドを起動し、セキュリティソフトウェアによって除去されたと判断した悪意あるファイルを、新たなシステム上の位置に再作成する。",
+  "procedure/S1228/0": "PUBLOADは、次のコマンドを使って、感染したホスト上のAV製品を特定した：`WMIC /Node:localhost /Namespace:\\\\root\\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List`。",
+  "procedure/S1239/0": "TONESHELLは、ESETのアンチウイルスアプリケーションである`ekrn.exe`と`egui.exe`の存在を確認した。"
+ },
+ "supplement": {
+  "summary": "侵入先に、どのようなアンチウイルスやEDR、監視エージェントが入っているかを調べる技術。多くのマルウェアが、自分を検知しうるセキュリティ製品を事前に特定し、それに応じて挙動を変える（実行を止める、特定機能を無効化する等）ために使う。",
+  "terms": [
+   { "term": "EDR", "en": "Endpoint Detection and Response", "explain": "端末上の挙動を監視し、不審な活動を検知・対応するためのセキュリティ製品のしくみ。アンチウイルスより広い範囲の挙動を見る。" }
+  ],
+  "facts": [
+   { "text": "macOSのマルウェアが、LittleSnitchやKnockKnockといったソフトウェアの有無を確認するのがよく見られるようになってきていると原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "泥棒が侵入前に、その家にどんな警備会社のステッカーが貼られているか、どの種類の警報機が設置されているかを事前に確認するのに似ている。警備会社の種類によって、裏口から入るか、窓から入るか、そもそも計画を中止するかを決める。",
+  "learn": [
+   "マルウェアがセキュリティ製品の有無を確認し、それに応じて自分の挙動を変える（実行を中止する、特定機能を無効にするなど）という適応的な振る舞いがよく見られること",
+   "WMI・レジストリ照会・プロセス一覧表示といった、OS標準の正規の手段がこの探索によく使われること"
+  ],
+  "interpretation": [
+   "多数の攻撃グループ・マルウェアがこの技術を使っている実例の多さ（原典には100件を超える使用例が挙げられている）は、セキュリティソフトウェアの探索が、ほぼすべての高度な攻撃における標準的な下調べの一つであることを示している。これは裏を返せば、セキュリティ製品自身が『自分の存在をどう隠すか』『探索されたこと自体をどう検知するか』を考える必要があることも意味している。"
+  ]
+ }
+}

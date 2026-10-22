@@ -1,0 +1,21 @@
+{
+ "id": "T1547.008",
+ "source_sha": "38db211b24d85ae8",
+ "status": "done",
+ "seg": {
+  "name": "LSASSドライバ",
+  "description/0": "攻撃者は、侵害したシステム上で永続化を得るため、LSASSドライバを変更または追加することがある。Windowsのセキュリティサブシステムは、コンピュータやドメインのセキュリティポリシーを管理・強制する構成要素の集まりである。Local Security Authority（LSA）は、ローカルのセキュリティポリシーと利用者認証を担う主要な構成要素である。LSAには、さまざまな他のセキュリティ機能に関連する複数の動的リンクライブラリ（DLL）が含まれ、これらはすべてLSA Subsystem Service（LSASS、lsass.exeプロセス）の文脈で動作する。",
+  "description/1": "攻撃者は、永続化を得るためにLSASSドライバを標的にすることがある。不正なドライバを置き換えるか追加する（例：実行フローのハイジャック）ことで、攻撃者はLSAの処理を利用して悪意あるペイロードを継続的に実行させることができる。",
+  "mitigation/M1025/0": "Windows 8.1、Server 2012 R2では、レジストリキー`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\RunAsPPL`を`dword:00000001`に設定することで、LSA Protectionを有効化する。LSA Protectionは、LSAのプラグインとドライバが、デジタル署名されており、Microsoft Security Development Lifecycle（SDL）のプロセス指針に準拠している場合にのみ読み込まれることを保証する。",
+  "mitigation/M1043/0": "Windows 10、Server 2016では、Windows Defender Credential Guardを有効化することで、lsass.exeをデバイスドライバのない隔離された仮想環境内で実行できる。",
+  "mitigation/M1044/0": "安全なDLL検索モード（`HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\SafeDllSearchMode`）が有効になっていることを確認し、lsass.exeが悪意あるコードライブラリを読み込んでしまうリスクを緩和する。",
+  "procedure/S0176/0": "Wingbirdは、悪意あるファイル（sspisrv.dll）をlsass.exeのコピーとともに配置し、sspisrv.dllをドライバとして読み込むサービスを登録するために使用する。この悪意あるドライバのペイロード（エントリポイント関数に配置されている）は、偽装されたサービスが不安定になりクラッシュする前に、lsass.exeによって読み込まれた際に実行される。",
+  "procedure/S0208/0": "Pasamは、ディスクに書き込まれた悪意あるDLLを読み込むために、Security Accounts Manager（SAM）のDLLを感染させて永続化を確立する。"
+ },
+ "supplement": {
+  "summary": "Windowsの認証を司るLSASSプロセスが読み込むドライバを不正に置き換える、または追加することで、悪意あるコードをLSAの処理の一部として継続的に実行させる手口。LSASSの文脈で動くため、高い権限と信頼性のもとで動作する。",
+  "analogy": "銀行の本人確認システム（LSASS）を支える裏方の機器（ドライバ）の一つを、見た目はそっくりな不正な機器にひそかに交換するのに似ている。本人確認の処理自体は普段どおり動いているように見えても、裏の機器が攻撃者のものに置き換わっているため、確認作業のたびに攻撃者のコードが一緒に動いている。",
+  "learn": ["LSASS自体ではなく、LSASSが使う『ドライバ』という一段階離れた部分を狙うことで、LSASSプロセスの表面的な正当性を保ったまま悪意あるコードを実行できること", "LSA Protection、Credential Guard、安全なDLL検索モードという3つの異なる防御層が、それぞれ別の角度からこの手口に対処していること"],
+  "interpretation": ["3つの対策（LSA Protectionによる署名検証、Credential Guardによる仮想化隔離、安全なDLL検索モードによる読み込み順序の制御）が揃って挙げられている点は、LSASSという単一の重要プロセスを守るには、単一の対策では不十分で、複数の防御層を重ねる必要があることを示している。これは、認証情報アクセス（T1003.001など）とも関連する、LSASSプロセスの重要性の高さを裏付けている。"]
+ }
+}

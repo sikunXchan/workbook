@@ -1,0 +1,21 @@
+{
+ "id": "T1547.015",
+ "source_sha": "5dfc193aeaa1eeea",
+ "status": "done",
+ "seg": {
+  "name": "ログインアイテム",
+  "description/0": "攻撃者は、永続化を得るため、または権限を昇格させるために、利用者のログイン時に実行されるログインアイテムを追加することがある。ログインアイテムとは、利用者がログインしたときに自動的に起動されるアプリケーション・書類・フォルダ・サーバー接続のことである。ログインアイテムは、shared file listやService Management Frameworkを通じて追加できる。shared file listによるログインアイテムはAppleScriptなどのスクリプト言語で設定できる一方、Service Management FrameworkはAPI呼び出し`SMLoginItemSetEnabled`を使う。",
+  "description/1": "Service Management Frameworkを使ってインストールされたログインアイテムは、`launchd`を利用し、システム環境設定には表示されず、それを作成したアプリケーションによってのみ削除できる。shared file listで作成されたログインアイテムはシステム環境設定に表示され、起動時にそのアプリケーションを隠すことができ、Finderを使わずにアプリケーション・書類・URLを開くために、launchdではなくLaunchServicesを通じて実行される。利用者やアプリケーションは、メール・チャット・音楽アプリケーションなど、よく使うサービスやアプリケーションを起動するように利用者環境を設定するためにログインアイテムを使う。",
+  "description/2": "攻撃者は、AppleScriptやNative API呼び出しを利用して、悪意ある実行ファイルを起動するログインアイテムを作成できる。macOSのバージョン10.5より前では、攻撃者はAppleScriptを使って「System Events」プロセスにApple eventを送ることでログインアイテムを追加できる。このプロセスは、ログインアイテムを操作するためのAppleScriptの辞書を持っている。攻撃者は、`tell application \"System Events\" to make login item at end with properties /path/to/executable`のようなコマンドを使用できる。このコマンドは、悪意ある実行ファイルのパスを、`~/Library/Application Support/com.apple.backgroundtaskmanagementagent/backgrounditems.btm`にあるログインアイテムファイルリストに追加する。攻撃者はまた、被害システムを遠隔操作するため、または利用者の認証情報を求めるプロンプトを出すことで権限昇格を得る手段として、ログインアイテムを使って実行ファイルを起動することもできる。",
+  "procedure/S0198/0": "NETWIREは、ログインアイテムのスタートアップオプションを通じて永続化できる。",
+  "procedure/S0281/0": "Dokは、AppleScriptを使って`System Events`プロセスにApple eventを送ることで、ログインアイテムをインストールする。",
+  "procedure/S0690/0": "Green Lambertは、永続化を確立するためにログインアイテムを追加できる。"
+ },
+ "supplement": {
+  "summary": "macOSの「ログインアイテム」（ログイン時に自動起動するアプリ・書類・接続）に、悪意ある実行ファイルを追加し、ログインのたびに実行させる手口。shared file listとService Management Frameworkという2つの異なる追加方法がある。",
+  "terms": [{"term": "ログインアイテム", "en": "login item", "explain": "macOSで、利用者がログインしたときに自動的に起動されるよう設定されたアプリケーション・書類・フォルダ・サーバー接続のこと。システム環境設定（ユーザとグループ）で管理されることが多い。"}],
+  "analogy": "家の鍵を開けたら自動でつく『おはよう照明』の設定（ログインアイテム）に、照明だけでなく、別の機器（悪意あるプログラム）も一緒に起動するように設定を追加してしまうのに似ている。",
+  "learn": ["ログインアイテムには、利用者に見える（shared file list）ものと、見えず削除もできない（Service Management Framework）ものという、透明性の異なる2つの追加方法があること", "ログインアイテムが、認証情報を求めるプロンプトを表示させることで権限昇格にもつながり得ること"],
+  "interpretation": ["Service Management Frameworkで作成されたログインアイテムが『システム環境設定に表示されず、作成したアプリケーションでしか削除できない』という特性は、この手口が利用者からの発見・削除を特に困難にする、ステルス性の高い永続化手段であることを示している。利用者の目に見える対策（システム環境設定の確認）だけでは不十分であることがわかる。"]
+ }
+}

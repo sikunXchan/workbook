@@ -1,0 +1,18 @@
+{
+ "id": "T1547.002",
+ "source_sha": "a3e53cf6c3fc6334",
+ "status": "done",
+ "seg": {
+  "name": "認証パッケージ",
+  "description/0": "攻撃者は、システム起動時にDLLを実行させるため、認証パッケージを悪用することがある。Windowsの認証パッケージDLLは、システム起動時にLocal Security Authority（LSA）プロセスによって読み込まれる。これらは、複数のログオン処理と複数のセキュリティプロトコルをOSに対してサポートする。",
+  "description/1": "攻撃者は、Windowsのレジストリの場所`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\`に、`\"Authentication Packages\"=<対象バイナリ>`というキーの値でバイナリへの参照を配置することで、LSA認証パッケージが提供する自動起動のしくみを永続化に利用できる。認証パッケージが読み込まれる際に、そのバイナリがシステムによって実行される。",
+  "mitigation/M1025/0": "Windows 8.1、Windows Server 2012 R2以降のバージョンでは、レジストリキー`HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\RunAsPPL`を設定することで、LSAをProtected Process Light（PPL）として動作させることができ、これによりLSAが読み込むすべてのDLLがMicrosoftの署名を持つことが要求される。",
+  "procedure/S0143/0": "Flameは、永続化のためにWindowsの認証パッケージを使用できる。"
+ },
+ "supplement": {
+  "summary": "WindowsのLSA（Local Security Authority）プロセスが起動時に読み込む「認証パッケージ」の設定レジストリに、悪意あるDLLへの参照を追加し、システム起動時に自動実行させる手口。",
+  "analogy": "建物の受付（LSA）が、出勤時に必ず確認する『本日の警備担当者リスト』に、本来の警備員の名前に混ぜて、無関係な人物の名前をこっそり書き加えておくのに似ている。受付は毎朝リストを確認して担当者を招き入れるだけなので、リストに名前があれば誰でも中に入れてしまう。",
+  "learn": ["LSAという、Windowsの認証そのものを司る中核プロセスが読み込む設定も、永続化の悪用対象になり得ること"],
+  "interpretation": ["対策がLSAをPPL（Protected Process Light）として保護し、読み込むDLLにMicrosoftの署名を要求する、という一点に集約されている。これは、このしくみの悪用を防ぐ最も効果的な方法が、個々のレジストリ変更の監視よりも、LSAプロセス自体に『署名されたコードしか読み込まない』という構造的な制約を課すことだという判断を示している。"]
+ }
+}
