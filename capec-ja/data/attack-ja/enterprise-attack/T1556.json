@@ -1,0 +1,41 @@
+{
+ "id": "T1556",
+ "source_sha": "43f0324fce8b30c5",
+ "status": "done",
+ "seg": {
+  "name": "認証プロセスの変更",
+  "description/0": "攻撃者は、利用者の認証情報にアクセスする、あるいは本来は許可されていないアカウントへのアクセスを可能にするために、認証のしくみやプロセスを変更することがある。認証プロセスは、Windowsでは Local Security Authentication Server（LSASS）プロセスやSecurity Accounts Manager（SAM）、Unix系システムではpluggable authentication modules（PAM）、macOSではauthorization pluginsといった、認証情報を収集・保存・検証する役割を持つしくみによって処理される。認証プロセスを変更することで、攻撃者は、有効なアカウントを使わずにサービスやシステムに認証できる可能性がある。",
+  "description/1": "攻撃者は、認証情報を明らかにする、あるいは認証のしくみを迂回するために、このプロセスの一部を悪意を持って変更することがある。侵害された認証情報やアクセスは、ネットワーク内のシステム上にあるさまざまなリソースに設置されたアクセス制御を迂回するために使われることがあり、さらにVPN、Outlook Web Access、リモートデスクトップのような、外部からアクセス可能なリモートシステムやサービスへの持続的なアクセスのために使われることさえある。",
+  "mitigation/M1018/0": "MFAのような認証のしくみの、安全な登録と解除を規定する適切な方針が、利用者アカウントに対して実施されていることを確実にする。",
+  "mitigation/M1022/0": "`/Library/Security/SecurityAgentPlugins`ディレクトリへの書き込みアクセスを制限する。",
+  "mitigation/M1024/0": "`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\NetworkProvider\\Order`のような、機密性の高いレジストリキーの変更を許さないように、レジストリの権限を制限する。",
+  "mitigation/M1025/0": "LSAに対して、Protected Process Light（PPL）のような機能を有効にする。",
+  "mitigation/M1026/0": "特権を持つアカウントの認証情報を取得することで、攻撃者が広範囲のアクセスを得られてしまう状況を見つけるために、ドメインアカウントとローカルアカウント、およびそれらの権限レベルを定期的に点検する。この点検には、デフォルトのアカウントが有効化されていないか、承認されていない新しいローカルアカウントが作成されていないかも含めるべきである。管理ティアを超えた特権アカウントの使用を制限するために、企業ネットワークの設計・運用のベストプラクティスに従う。",
+  "mitigation/M1026/1": "rootアカウントへのアクセスを制限し、適切な権限分離（例：SELinux、grsecurity、AppArmorなど）と、権限昇格の機会の制限によって、利用者が保護された構成要素を変更できないようにする。",
+  "mitigation/M1026/2": "ハイブリッドID基盤へのアクセス権を持つオンプレミスのアカウントを制限する。例えば、Azure ADのグローバル管理者アカウントを必要な範囲のみに限定し、これらがハイブリッドアカウントではなく、専用のクラウドのみのアカウントであることを確実にする。",
+  "mitigation/M1027/0": "アプリケーションの要件がない限り、`AllowReversiblePasswordEncryption`プロパティが無効に設定されていることを確実にする。",
+  "mitigation/M1028/0": "有効なパスワードフィルタだけが登録されていることを確実にする。フィルタ用のDLLは、ドメインコントローラーまたはローカルコンピュータのWindowsインストールディレクトリ（デフォルトでは`C:\\Windows\\System32\\`）に存在し、`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Notification Packages`に対応する項目があるはずである。",
+  "mitigation/M1028/1": "Windows 11 22H2以降では、グループポリシーまたは構成サービスプロバイダーを通じて`EnableMPRNotifications`ポリシーを無効化することで、Winlogonがネットワークプロバイダーに認証情報を送信することを防げる。",
+  "mitigation/M1032/0": "多要素認証（MFA）を組織の方針の一部として組み込むことで、初期アクセス・横展開・情報収集といった追加の戦術に使われうる有効な認証情報を、攻撃者が制御下に置いてしまうリスクを大幅に減らせる。MFAはまた、クラウドリソースやAPIへのアクセスを制限するためにも使える。",
+  "mitigation/M1047/0": "MFAの強制のようなしくみが意図どおりに機能していることを確実にするために、認証ログを確認する。",
+  "mitigation/M1047/1": "使用中のハイブリッドID基盤を、何らかの不整合がないか定期的に確認する。例えば、Azure管理ポータル内のすべてのPass Through Authentication（PTA）エージェントを確認し、望ましくない、または承認されていないものを特定する。ADFSが使われている場合、AD FSおよびGlobal Assembly Cacheディレクトリ内のDLLと実行ファイルを確認し、Microsoftによって署名されていることを確かめる。場合によっては、バイナリがカタログ署名されていることがあり、ファイルのプロパティを見ると未署名に見えることがある点に注意する。",
+  "mitigation/M1047/2": "レジストリ（`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\<NetworkProviderName>\\NetworkProvider\\ProviderPath`）内に、新しい、見覚えのないネットワークプロバイダーDLLが無いか、定期的に確認する。有効なネットワークプロバイダーDLLのみが登録されていることを確実にする。これらの名前は、`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\NetworkProvider\\Order`のレジストリキー内にあり、対応するサービスのサブキーが、`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\<NetworkProviderName>\\NetworkProvider`のDLLを指している。",
+  "procedure/G1016/0": "FIN13は、多数のアプリケーションからパスワードを収集するために、正規のKeePassバイナリをトロイ化されたバージョンに置き換えた。",
+  "procedure/G1045/0": "Salt Typhoonは、Authentication, Authorization, and Accounting（AAA）の設定を変更し、機器がより安全性の低い認証方法を使うよう強制し、情報を自分たちのインフラに送信させた。",
+  "procedure/S0377/0": "Eburyは、トロイ化された`ssh-add`関数を使って秘密鍵を傍受できる。",
+  "procedure/S0487/0": "Kesselは、平文の認証情報を盗むために、`ssh_login`関数と`user-auth_pubkey`関数をトロイ化した。",
+  "procedure/S0692/0": "SILENTTRINITYは、悪意ある設定ファイルを使ってKeePassに、レジストリフックを使ってTortoiseSVNに、それぞれバックドアを作成できる。",
+  "procedure/S9013/0": "DRYHOOKは、Ivanti Connect Secure VPNのエッジデバイス内の`/home/perl/DSAuth.pm`にあるPerlモジュールを改変することで、利用者の認証情報を傍受し記録した。"
+ },
+ "supplement": {
+  "summary": "LSASS・SAM（Windows）やPAM（Unix系）、authorization plugins（macOS）といった、認証そのものを処理するしくみを改変することで、認証情報を盗み取る、あるいは認証を迂回する戦術。17以上の緩和策が並ぶ、対策の難しさが際立つ技術である。",
+  "analogy": "ビルの入館ゲートの受付担当者（認証プロセス）自身を抱き込んでしまうのに似ている。社員証を偽造したり盗んだりするのではなく、受付担当者に『誰でも通してよい』と裏で言い聞かせてしまえば、入館の判定そのものが無意味になる。",
+  "learn": [
+   "この項目が、SAM・LSASS・PAMなど、OSごとに異なる認証のしくみを広くカバーする、親の技術であり、具体的な手口は6つのサブ技術（ドメインコントローラーの認証、パスワードフィルタDLL、PAMなど）に分かれていること",
+   "緩和策の数の多さ（9件、さらに複数の小項目）が、認証プロセスという一点を守るためには、レジストリ権限・MFA・監査・アカウント管理など、多層的な対策が必要であることを示していること"
+  ],
+  "interpretation": [
+   "正規のKeePassバイナリやssh関連の関数をトロイ化する実例は、この技術がホストソフトウェアバイナリの侵害（T1554）と密接に関連していることを示している。両者の違いは、改変される対象が『バイナリの実行ファイル』か『認証という処理そのもの』かという点にあり、認証プロセスの変更は、しばしばホストソフトウェアバイナリの改変という手段によって実現される。この重なりは、ATT&CKの各技術が独立した手口の分類であると同時に、実際の攻撃では複数の技術が組み合わされて実行されることを示す好例である。"
+  ]
+ }
+}
