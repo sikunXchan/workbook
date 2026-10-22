@@ -1,0 +1,45 @@
+{
+ "id": "T1409",
+ "source_sha": "f05bf1f98f2729ad",
+ "status": "done",
+ "seg": {
+  "name": "保存済みアプリケーションデータ",
+  "description/0": "攻撃者は、デバイス上に存在するアプリケーションのデータにアクセスし、収集しようとすることがある。攻撃者は、Facebook・WeChat・Gmailのような、よく使われるアプリケーションを標的にすることが多い。",
+  "description/1": "モバイルOSのサンドボックス機構により、この技術が成立するのは次の3つの場合に限られる。",
+  "description/2": "* アプリケーションが保護されていない外部ストレージにファイルを保存している場合\n* アプリケーションが安全でないパーミッション（例：777）で内部ストレージディレクトリにファイルを保存している場合\n* 攻撃者がデバイス上でroot権限を得ている場合",
+  "mitigation/M1006/0": "Android 9では、権限の有無にかかわらず、アプリケーションが他のアプリケーションの内部ストレージディレクトリに対してデータの読み書きを行うことを防ぐ新しいセキュリティポリシーが導入された。",
+  "procedure/G0034/0": "Sandworm Teamは、暗号化されたTelegramおよびSignalの通信を収集できる。",
+  "procedure/S0289/0": "iOS版Pegasusは、ファイル内のセンシティブなデータにアクセスする。例えば、Skypeのデータベースファイルから読み出すことでSkypeの通話を保存する。",
+  "procedure/S0295/0": "RCSAndroidは、Facebook Messenger・WhatsApp・Skype・Viber・Line・WeChat・Hangouts・Telegram・BlackBerry Messengerといった、よく使われるアプリケーションから連絡先やメッセージを収集できる。",
+  "procedure/S0311/0": "YiSpecterは、感染したデバイス上でSafariの既定の検索エンジンを変更し、ブックマークしたウェブサイトや開いたページを記録し、IMプログラム「QQ」の連絡先・認証トークンにアクセスしていた。",
+  "procedure/S0316/0": "Android版Pegasusは、ファイル内のセンシティブなデータにアクセスする。例えば、WhatsApp・Facebook・Twitterのアプリケーションに保存されたメッセージなどである。また、任意のファイル名にアクセスし、ディレクトリの一覧を取得する機能もある。",
+  "procedure/S0324/0": "SpyDealerは、WeChat・Facebook・WhatsApp・Skypeなど、40以上のアプリからデータを持ち出す。",
+  "procedure/S0327/0": "Skygofreeには、他にインストールされているアプリケーションからファイルを取得する機能がある。",
+  "procedure/S0399/0": "Pallasは、よく使われるメッセージングアプリケーションや、デバイスに保存された他のアカウントについて、メッセージと復号キーを取得する。",
+  "procedure/S0405/0": "Exodus Twoは、Facebook・Facebook Messenger・Gmail・IMO・Skype・Telegram・Viber・WhatsApp・WeChatから情報を抽出する。",
+  "procedure/S0408/0": "FlexiSpyは、`FileObserver`オブジェクトを使ってSkypeおよびWeChatのデータベースファイルと共有設定を監視し、チャットメッセージ・アカウント情報、アカウント所有者とチャット参加者のプロフィール画像を取得する。FlexiSpyは、Facebook・Hangouts・Hike・Instagram・Kik・Line・QQ・Snapchat・Telegram・Tinder・Viber・WhatsAppといったよく使われるアプリケーションを監視対象にすることもできる。",
+  "procedure/S0485/0": "Mandrakeは、デバイスに保存されているすべてのアカウントを収集できる。",
+  "procedure/S0509/0": "FakeSpyは、デバイスに保存されたアカウント情報や、外部ストレージ内のデータを収集できる。",
+  "procedure/S0550/0": "DoubleAgentは、ブラウザの履歴に加え、他の15種類のアプリのファイルにアクセスしていた。",
+  "procedure/S0655/0": "BusyGasperは、WhatsApp・Viber・Facebookを含むメッセージングアプリケーションからデータを収集できる。",
+  "procedure/S1062/0": "S.O.V.A.は、感染したデバイスからセッションクッキーを収集できる。S.O.V.A.は、Google Authenticatorのトークンを盗むためにアクセシビリティ機能を悪用することもできる。",
+  "procedure/S1067/0": "FluBotは、被害者のデバイスから認証情報、銀行関連の詳細、その他の情報を収集していた。",
+  "procedure/S1077/0": "Hornbillは、WhatsAppがインストールされている場合、そのボイスメモとメッセージを収集できる。",
+  "procedure/S1079/0": "BOULDSPYは、Google・Telegram・WeChat・WhatsAppなど、サードパーティサービスのアカウント情報を取得できる。",
+  "procedure/S1082/0": "Sunbirdは、ブラウザの履歴、BlackBerry Messengerのファイル、IMOインスタントメッセージの内容、WhatsAppのボイスメモを持ち出すことができる。",
+  "procedure/S1092/0": "Escobarは、`GET_ACCOUNTS`権限を要求してデバイス上のアカウント一覧を取得でき、メディアファイルも収集できる。",
+  "procedure/S1093/0": "FlyTrapは、Facebook ID・メールアドレス・クッキー・ログイントークンといったFacebookのアカウント情報を収集できる。",
+  "procedure/S1103/0": "FlixOnlineは、利用者のWhatsAppアカウントからデータを盗み取ることができる。",
+  "procedure/S1185/0": "LightSpyは、WeChat Payの決済履歴を収集していた。",
+  "procedure/S1243/0": "DCHSpyは、WhatsAppのファイルを含む、デバイス上の関心対象のファイルを収集していた。",
+  "procedure/S9006/0": "VajraSpyは、WhatsApp・WhatsApp Business・Signalのメッセージを収集していた。"
+ },
+ "supplement": {
+  "summary": "SNS・メッセージングアプリなど、よく使われるアプリケーションが端末に保存しているデータ（メッセージ・連絡先・アカウント情報など）に直接アクセスして収集する技術。モバイルOSのアプリ間のサンドボックス分離により、通常は外部ストレージの不適切な設定やroot権限の取得が前提となる。",
+  "terms": [
+   { "term": "サンドボックス", "en": "sandbox", "explain": "各アプリを互いに分離し、原則として他のアプリのデータへ直接アクセスできないようにするモバイルOSのしくみ。" }
+  ],
+  "learn": ["モバイルOSの基本的な保護（アプリ間のサンドボックス分離）があっても、外部ストレージの誤った使い方やroot化によって、この保護が無効化されてしまう場合があること"],
+  "interpretation": ["狙われるアプリがFacebook・WhatsApp・WeChatなど利用者数が極めて多いものに集中していることから、攻撃者は個々のアプリの脆弱性そのものよりも、「多くの被害者が同じアプリを使っている」という点を優先して標的を選んでいると考えられる。"]
+ }
+}

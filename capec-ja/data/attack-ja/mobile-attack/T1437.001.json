@@ -1,0 +1,47 @@
+{
+ "id": "T1437.001",
+ "source_sha": "ec28f0a9b7c65c33",
+ "status": "done",
+ "seg": {
+  "name": "Webプロトコル",
+  "description/0": "攻撃者は、既存の通信に紛れ込ませることで検知やネットワークフィルタリングを避けるために、Web通信に関連するアプリケーション層のプロトコルを使って通信することがある。遠隔のモバイル端末への命令、そしてその命令の実行結果もしばしば、モバイルクライアントとサーバーの間を流れるプロトコル通信の中に埋め込まれる。",
+  "description/1": "HTTPやHTTPSなどのWebプロトコルは、通常のWeb通信に加えて、Google Cloud Messaging（GCM）や、より新しいFirebase Cloud Messaging（FCM、いずれも双方向通信）、Apple Push Notification Service（APNS。サーバーから端末への一方向通信）といった、モバイル向けメッセージサービスに組み込まれた通知のしくみにも使われる。こうした通知サービスはそれぞれのAPIを通じてHTTP/HTTPSを利用しており、AndroidとiOSでそれぞれよく悪用される。これは、端末の日常的な通信に紛れ込ませることで、企業側が通信内容を検査しづらくするためである。",
+  "procedure/G0070/0": "Dark Caracalは、標準的なHTTP通信を使ってインプラント（侵害後に送り込む不正プログラム）を制御する。",
+  "procedure/S0304/0": "Android/Chuli.Aは、あるURLへのHTTPアップロードを遠隔操作（C2）の手段として使用した。",
+  "procedure/S0311/0": "YiSpecterは、HTTPを介して遠隔操作（C2）サーバーに接続した。",
+  "procedure/S0327/0": "Skygofreeは、HTTP・XMPP・Firebase Cloud Messaging、あるいは旧バージョンではGoogle Cloud Messagingを通じて制御できる。",
+  "procedure/S0403/0": "Riltokは、HTTPリクエストを使って遠隔操作（C2）サーバーと通信する。",
+  "procedure/S0406/0": "Gustuffは、HTTPリクエストを使って遠隔操作（C2）サーバーと通信する。",
+  "procedure/S0411/0": "Rotexyは、HTTP POSTリクエストの本文に含めたJSONペイロードを使って遠隔操作（C2）サーバーと通信できる。また、Google Cloud Messagingを通じて送られるJSONメッセージを使って通信することもできる。",
+  "procedure/S0427/0": "TrickMoは、暗号化されていないHTTPリクエストでJSONオブジェクトを送ることで、遠隔操作（C2）と通信する。",
+  "procedure/S0432/0": "Breadは、HTTPリクエストを使って遠隔操作（C2）サーバーと通信する。",
+  "procedure/S0463/0": "INSOMNIAは、HTTPSリクエストを使って遠隔操作（C2）サーバーと通信する。",
+  "procedure/S0478/0": "EventBotは、HTTPリクエストを使って遠隔操作（C2）と通信する。",
+  "procedure/S0480/0": "Cerberusは、HTTPを使って遠隔操作（C2）サーバーと通信する。",
+  "procedure/S0509/0": "FakeSpyは、HTTPリクエストを使ってデータを持ち出す。",
+  "procedure/S0522/0": "Exobotは、遠隔操作（C2）通信にHTTPSを使用した。",
+  "procedure/S0540/0": "Asacubは、HTTP POSTリクエストを使って遠隔操作（C2）と通信した。",
+  "procedure/S1055/0": "SharkBotは、HTTPを使って感染した端末へ遠隔操作（C2）のメッセージを送ることができる。",
+  "procedure/S1061/0": "AbstractEmuは、HTTPを使って遠隔操作（C2）サーバーと通信できる。",
+  "procedure/S1067/0": "FluBotは、遠隔操作（C2）サーバーとの通信にポート80宛のHTTP POSTリクエストを使用できる。",
+  "procedure/S1077/0": "Hornbillは、HTTPおよびHTTP POSTを使って遠隔操作（C2）に情報を伝えることができる。",
+  "procedure/S1079/0": "BOULDSPYは、被害者と遠隔操作（C2）基盤の間で暗号化されていないHTTP通信を使用する。",
+  "procedure/S1083/0": "Chameleonは、HTTPを使って遠隔操作（C2）サーバーと通信した。",
+  "procedure/S1094/0": "BRATAは、HTTPとWebSocketsの両方を使って遠隔操作（C2）サーバーと通信できる。",
+  "procedure/S1185/0": "LightSpyは、HTTPSとWebsocketsの両方を使って遠隔操作（C2）と通信した。",
+  "procedure/S1231/0": "GodFatherは、遠隔操作（C2）にWebSocketsを利用した。",
+  "procedure/S1241/0": "RatMiladは、遠隔操作（C2）サーバーとの通信にHTTP POSTリクエストを使用した。",
+  "procedure/S9004/0": "Crocodilusは、HTTPの遠隔操作（C2）ノードと通信した。",
+  "procedure/S9040/0": "NGateは、遠隔操作（C2）サーバーとの通信にTLSを使用した。NGateはHTTPを使って遠隔操作（C2）サーバーと通信することもあった。"
+ },
+ "supplement": {
+  "summary": "HTTP・HTTPSなど、普段のWeb利用やモバイル通知サービス（GCM/FCM、APNSなど）で使われる正規のプロトコルに、遠隔操作（C2）の通信を紛れ込ませる技術。モバイルマルウェアの遠隔操作でもっとも多く使われる方法の一つ。",
+  "terms": [
+   { "term": "プッシュ通知サービス", "en": "push notification service", "explain": "アプリを開いていなくても、サーバーから端末へ通知を送り届けるためのしくみ。Googleの Firebase Cloud Messaging や Apple の APNS が代表例。" }
+  ],
+  "learn": [
+   "一般的なWebプロトコルやモバイルOS標準のプッシュ通知のしくみが、遠隔操作の通信路としてそのまま悪用されうること",
+   "HTTPS化されていても、通信先が悪性サーバーであれば内容の検知は難しいこと"
+  ]
+ }
+}

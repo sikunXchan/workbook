@@ -1,0 +1,49 @@
+{
+ "id": "T1655.001",
+ "source_sha": "1f2883448a470c66",
+ "status": "done",
+ "seg": {
+  "name": "正規の名前・場所への偽装",
+  "description/0": "攻撃者は、防御や観測を回避するために、正規のファイルやリソースの名前・場所に似せたり一致させたりすることがある。これは、信頼されている正規のアプリケーション（例：「設定」）の名前やアイコンを自分の作った物に付けたり、信頼されている正規のアプリケーションと一致するパッケージ名（例：`com.google.android.gm`）を使ったりすることで行われる。",
+  "description/1": "攻撃者は、模倣しようとしているファイルやアプリケーションと同じアイコンを使うこともある。",
+  "mitigation/M1011/0": "利用者には、改変された（repackaged）悪意あるアプリを含む可能性が低い、正規のアプリストアからのみアプリをインストールするよう勧めるべきである。",
+  "procedure/G0097/0": "Bouncing Golfは、マルウェアを改変済みの正規アプリケーションとして配布し、悪意あるコードを`com.golf`パッケージの中に入れていた。",
+  "procedure/G1028/0": "APT-C-23は、マルウェアを正規のアプリケーションに偽装した。",
+  "procedure/S0292/0": "AndroRATは、正規のアプリケーションに偽装する。",
+  "procedure/S0314/0": "X-Agent for Androidは、ウクライナの砲兵部隊が使用するアプリケーションの改変版の中に仕込まれた。",
+  "procedure/S0318/0": "XLoader for Androidは、Androidのセキュリティアプリケーションに偽装した。",
+  "procedure/S0320/0": "DroidJackは、利用者から見て見分けがつかないように正規のポケモンGOアプリのコードを含んでいたが、それに加えて追加の悪意あるコードも含んでいた。",
+  "procedure/S0422/0": "Anubisは、「Google Play Protect」に偽装してアクセシビリティサービスの権限を要求し、追加の悪意あるアプリケーションのインストールを正規のシステム更新として偽装した。",
+  "procedure/S0423/0": "Ginpは、「Adobe Flash Player」や「Google Play Verificator」に偽装した。",
+  "procedure/S0440/0": "Agent Smithは、感染端末上の人気アプリケーションになりすますことができ、マルウェアの中核部分は正規のGoogleアプリケーションに偽装する。Agent Smithのドロッパーは、武器化された正規のFeng Shui Bundleである。",
+  "procedure/S0478/0": "EventBotは、人気アプリケーションのアイコンを使用した。",
+  "procedure/S0480/0": "Cerberusは、Adobe Flash Playerのインストーラーを装った。",
+  "procedure/S0485/0": "Mandrakeは、自身のアイコンを隠せない場合、「Storage Settings」というアプリを模倣できる。",
+  "procedure/S0489/0": "WolfRATは、「Google service」「GooglePlay」「Flash update」に偽装した。",
+  "procedure/S0506/0": "ViperRATの第2段階は、「System Updates」「Viber Update」「WhatsApp Update」に偽装した。",
+  "procedure/S0509/0": "FakeSpyは、現地の郵便サービスのアプリケーションに偽装する。",
+  "procedure/S0522/0": "Exobotは、WhatsAppやNetflixのような名前を使用した。",
+  "procedure/S0524/0": "AndroidOS/MalLocker.Bは、人気アプリ・クラック版ゲーム・動画プレイヤーに偽装した。",
+  "procedure/S0525/0": "Android/AdDisplay.Ashasは、検出を避けるために「最近使ったアプリ」画面でFacebookやGoogleのアイコンを模倣し、検知を避けるために`com.google.xxx`というパッケージ名を使用した。",
+  "procedure/S0529/0": "CarbonStealは、Googleの公式アプリ、チャットアプリ、VPNアプリ、人気ゲームなど複数のアプリになりすました。",
+  "procedure/S0536/0": "GPlayedは、Playストアのアイコンと「Google Play Marketplace」という名前を使用した。",
+  "procedure/S0540/0": "Asacubは、人気の無料広告サービスのクライアントに偽装した。",
+  "procedure/S0544/0": "HenBoxは、VPNアプリやAndroidのシステムアプリに偽装した。",
+  "procedure/S1077/0": "Hornbillは、Fruit Chat、Cucu Chat、Kako Chatといったチャットアプリケーションになりすました。",
+  "procedure/S1079/0": "BOULDSPYは、`com.android.callservice`というパッケージ名を使い、Androidのシステムサービスを装ってインストールされた。",
+  "procedure/S1080/0": "Fakecallsは、韓国の人気銀行アプリに偽装した。",
+  "procedure/S1083/0": "Chameleonは、「CoinSpot」という暗号資産アプリケーション、ポーランドのIKO銀行アプリケーション、オーストラリア税務当局（ATO）が使用するアプリケーションなど、正規のアプリケーションに偽装した。また、ChromeやBitcoinのロゴなど、見慣れたアイコンも使用した。",
+  "procedure/S1094/0": "BRATAは、正規のWhatsAppの更新やアプリのセキュリティスキャナーに偽装した。",
+  "procedure/S1195/0": "SpyC23は、正規のメッセージングアプリケーションに偽装した。",
+  "procedure/S1231/0": "GodFatherは、すべてのAndroid端末にプリインストールされているセキュリティアプリケーションであるGoogle Play Protectと、端末のスキャンやアクセシビリティサービスの要求といったその機能を模倣した。",
+  "procedure/S1243/0": "DCHSpyは、VPNアプリや銀行アプリなどの正規アプリケーションに偽装した。",
+  "procedure/S9040/0": "NGateは、ブラジルの政府系銀行で宝くじの大半を管理するCaixa Econômica FederalになりすましたWhatsAppのプロフィール画像を使用した。"
+ },
+ "supplement": {
+  "summary": "T1655（偽装）のうち、名前・アイコン・パッケージ名を正規のアプリや機能に意図的に似せる、最も具体的で頻出する手口。正規アプリのアイコンやパッケージ名をそのまま模倣することが多い。",
+  "learn": [
+   "パッケージ名やアイコンだけでは、正規アプリかどうかを見分けるのが難しいこと",
+   "金融・VPN・セキュリティアプリなど、利用者が信頼しやすいジャンルのアプリが特に模倣されやすいこと"
+  ]
+ }
+}
