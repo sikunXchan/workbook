@@ -1,0 +1,30 @@
+{
+ "id": "T1201",
+ "source_sha": "96c568c82c812670",
+ "status": "done",
+ "seg": {
+  "name": "パスワードポリシーの探索",
+  "description/0": "攻撃者は、企業ネットワークやクラウド環境内で使われているパスワードポリシーについての詳細な情報を得ようとすることがある。パスワードポリシーは、総当たり（ブルートフォース）で推測・解読されにくい複雑なパスワードを強制する手段である。この情報は、攻撃者がよく使われるパスワードの一覧を作り、そのポリシーに従った辞書攻撃や総当たり攻撃を仕掛けるのに役立つ（例：最小パスワード長が8文字なら「pass123」のような短いパスワードは試さない。ロックアウトのしきい値が6回なら、アカウントをロックしないよう1アカウントにつき3〜4回までしか試さない）。",
+  "description/1": "パスワードポリシーは、Windows・Linux・macOSの各システムで、`net accounts (/domain)`、`Get-ADDefaultDomainPasswordPolicy`、`chage -l <username>`、`cat /etc/pam.d/common-password`、`pwpolicy getaccountpolicies`といった様々なコマンドシェルのユーティリティを通じて設定・調査できる。攻撃者は、ネットワーク機器のCLI（例：`show aaa`、`show aaa common-criteria policy all`）を使ってパスワードポリシー情報を調べることもある。",
+  "description/2": "パスワードポリシーは、AWSの`GetAccountPasswordPolicy`のような利用可能なAPIを使い、クラウド環境内でも調べることができる。",
+  "mitigation/M1027/0": "有効なパスワードフィルタだけが登録されていることを確認すること。フィルタ用のDLLは、ドメインコントローラやローカルコンピュータのWindowsインストールディレクトリ（既定では`C:\\Windows\\System32\\`）内に存在し、`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Notification Packages`に対応する項目があること。",
+  "procedure/G0010/0": "Turlaは、パスワードポリシー情報を得るために`net accounts`と`net accounts /domain`を使った。",
+  "procedure/G0049/0": "OilRigは、ドメインのパスワードポリシーを調べるため、`net accounts /domain`を使ったスクリプトでnet.exeを使った。",
+  "procedure/G0114/0": "Chimeraは、アカウントとパスワードに関連する情報を収集するため、NtdsAuditユーティリティを使った。",
+  "procedure/S0039/0": "Netの`net accounts`および`net accounts /domain`コマンドは、パスワードポリシー情報を得るために使える。",
+  "procedure/S0236/0": "Kwampirsは、`net accounts`コマンドでパスワードポリシー情報を収集する。",
+  "procedure/S0378/0": "PoshC2は、`Get-PassPol`を使ってドメインのパスワードポリシーを列挙できる。",
+  "procedure/S0488/0": "CrackMapExecは、対象システムに適用されているパスワードポリシーを調べることができる。"
+ },
+ "supplement": {
+  "summary": "総当たり攻撃を始める前に、そのシステムのパスワードポリシー（最小文字数やロックアウトのしきい値など）を調べる技術。無駄な試行を避け、アカウントロックによる検知を回避しながら、効率よく攻撃できるようにする下準備にあたる。",
+  "analogy": "金庫の暗証番号を当てずっぽうで試す前に、その金庫が何回失敗すると警報が鳴るか、何桁の番号が設定されているかを、あらかじめ説明書で調べておくようなもの。無駄な試行で警報を鳴らさずに、的を絞った試行ができる。",
+  "learn": [
+   "この探索が、その後の総当たり攻撃（Brute Force）を効率化し、かつアカウントロックによる検知を避けるための下調べであること",
+   "Windows・Linux・macOS・クラウド（AWS）のそれぞれに、パスワードポリシーを調べる標準的なコマンドやAPIが存在すること"
+  ],
+  "interpretation": [
+   "この技術が示すのは、攻撃者が『力任せの試行』ではなく、まず防御側の設定（ロックアウトのしきい値など）を把握してから攻撃を最適化する、合理的なアプローチを取ることである。防御側にとっては、パスワードポリシーの情報を得られること自体をどこまで制限すべきか（例：匿名でのドメイン情報取得を制限する）という観点が、総当たり攻撃対策と並んで重要になる。"
+  ]
+ }
+}

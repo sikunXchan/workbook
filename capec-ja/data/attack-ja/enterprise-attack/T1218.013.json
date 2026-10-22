@@ -1,0 +1,24 @@
+{
+ "id": "T1218.013",
+ "source_sha": "5707b348c813ba41",
+ "status": "done",
+ "seg": {
+  "name": "Mavinject",
+  "description/0": "攻撃者は、mavinject.exeを悪用して悪意あるコードの実行を代理させることがある。Mavinject.exeはMicrosoft Application Virtualization Injectorであり、Microsoft Application Virtualization（App-V）の一部として、外部プロセスにコードを注入できるWindowsユーティリティである。",
+  "description/1": "攻撃者は、mavinject.exeを悪用して悪意あるDLLを実行中のプロセスに注入し（すなわちDynamic-link Library Injection）、任意のコード実行を可能にすることがある（例：`C:\\Windows\\system32\\mavinject.exe PID /INJECTRUNNING PATH_DLL`）。mavinject.exeはMicrosoftによってデジタル署名されている場合があるため、この方法を経由した代理実行は、実行が正規のプロセスの中に隠されることで、セキュリティ製品による検知を回避できることがある。",
+  "description/2": "Dynamic-link Library Injectionに加えて、Mavinject.exeは、`/HMODULE`コマンドラインパラメータを使ったインポートディスクリプタ注入の悪用にも使われることがある（例：`mavinject.exe PID /HMODULE=BASE_ADDRESS PATH_DLL ORDINAL_NUMBER`）。このコマンドは、指定されたDLLを含むインポートテーブルのエントリを、指定されたベースアドレスのモジュールに注入する。",
+  "mitigation/M1038/0": "mavinject.exeの実行が特定のシステムやネットワークで必要ない場合は、アプリケーション制御を設定してその実行を遮断し、攻撃者による悪用の可能性を防ぐ。",
+  "mitigation/M1042/0": "環境内でMicrosoft App-Vが使われていなければ、mavinject.exeの削除を検討する。",
+  "procedure/S1239/0": "TONESHELLは、Windowsユーティリティ Microsoft Application Virtualization Injector の`MAVInject.exe`を通じて、悪意あるペイロードを実行中のプロセスに注入した。"
+ },
+ "supplement": {
+  "summary": "App-V（アプリケーション仮想化）向けの正規DLL注入ツールmavinject.exeを悪用し、実行中の正規プロセスに悪意あるDLLを注入するサブ技術。他のT1218系と異なり、「実行の代理」というより「プロセスへの注入」という、Process Injection（T1055）に近い性質を持つ。",
+  "analogy": "引っ越し業者が、契約で許された範囲（App-Vによる仮想化アプリの注入）を越えて、別の荷物（悪意あるDLL）を、すでに住んでいる住人（実行中の正規プロセス）の部屋の中にこっそり運び入れてしまう状況に近い。",
+  "learn": [
+   "mavinject.exeの悪用は、他の多くのT1218系サブ技術が「実行の代理」であるのに対し、「実行中プロセスへの注入」という、やや異なる性質を持つこと"
+  ],
+  "interpretation": [
+   "この技術がApp-Vという特定の用途向けツールに依存している点は、環境にApp-Vを導入していない組織にとっては、対策が「mavinject.exeを単純に削除する」というシンプルな一手で済むことを意味する。これは、使っていない正規機能を残しておくこと自体がリスクになる、という環境寄生型(LOLBins)全体に共通する教訓を具体的に示す例である。"
+  ]
+ }
+}

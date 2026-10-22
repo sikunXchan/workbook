@@ -1,0 +1,52 @@
+{
+ "id": "T1059.001",
+ "source_sha": "864d9f3c94b4fb1f",
+ "status": "done",
+ "seg": {
+  "name": "PowerShell",
+  "description/0": "攻撃者は、実行のためにPowerShellのコマンドやスクリプトを悪用することがある。PowerShellは、Windows OSに含まれる強力な対話型コマンドラインインターフェース兼スクリプト実行環境である。PowerShellはLinuxやmacOSにも導入できる。攻撃者はPowerShellを使って、情報の探索やコードの実行を含む、さまざまな操作を行うことができる。例として、実行可能ファイルを実行するために使える`Start-Process`コマンドレットや、コマンドをローカルまたは遠隔のコンピュータ上で実行する`Invoke-Command`コマンドレットがある（ただし、PowerShellを使って遠隔システムに接続するには管理者権限が必要）。",
+  "description/1": "PowerShellは、インターネットから実行可能ファイルをダウンロードして実行するためにも使われることがあり、その際、ディスクに触れることなくディスクから、あるいはメモリ上でそれを実行できる。",
+  "description/2": "Empire・PowerSploit・PoshC2・PSAttackなど、PowerShellを基盤とした攻撃テスト用ツールが数多く存在する。",
+  "description/3": "PowerShellのコマンド・スクリプトは、`powershell.exe`バイナリを直接呼び出さずに実行することもできる。.NETフレームワークやWindows共通言語インターフェース（CLI）を通じて公開されている、PowerShellの基盤となる`System.Management.Automation`アセンブリDLLへのインターフェースを使う方法である。",
+  "mitigation/M1026/0": "PowerShellが必要な場合は、PowerShellの実行を管理者に限定するよう実行ポリシーを制限することを検討する。環境設定によっては、PowerShellの実行ポリシーを回避する方法が存在することに注意する。",
+  "mitigation/M1026/1": "PowerShellのJEA（Just Enough Administration）も、管理作業をサンドボックス化し、遠隔PowerShellセッションを通じて管理者・利用者が実行できるコマンドを制限するために使用できる。",
+  "mitigation/M1038/0": "適切な場面でアプリケーション制御を使用する。PowerShellの制約言語モードは、任意のWindows APIやファイルを実行する際に使われるような（例：`Add-Type`）、機密性が高い、または危険な言語要素へのアクセスを制限するために使用できる。",
+  "mitigation/M1042/0": "必要が無い場合、システムからPowerShellを削除することも可能だが、多くの正当な用途や管理機能に使われていることがあるため、環境への影響を評価したうえで行うべきである。",
+  "mitigation/M1042/1": "WinRMサービスを無効化・制限することで、遠隔実行のためにPowerShellが使われるのを防ぐ助けになる。",
+  "mitigation/M1045/0": "PowerShellの実行ポリシーを、署名済みのスクリプトのみを実行するよう設定する。",
+  "mitigation/M1049/0": "アンチウイルスソフトを使って、疑わしいファイルを自動的に隔離できる。",
+  "procedure/G0007/0": "APT28は、PowerShellスクリプトをダウンロード・実行し、PowerShellコマンドを実行する。",
+  "procedure/G0009/0": "Deep Pandaは、ディスクに書き込まずにメモリ上でプログラムをダウンロード・実行するPowerShellスクリプトを使用した。",
+  "procedure/G0010/0": "Turlaは、コマンド・スクリプトを実行するためにPowerShellを使用した。場合によっては自作の実行ファイルやEmpireのPSInjectのコードを介して実行した。Turlaはまた、メモリ上でマルウェアを読み込み・実行するためにPowerShellスクリプトを使用した。",
+  "procedure/G0016/0": "APT29は、CozyCarの導入環境にアップロードした符号化PowerShellスクリプトを使って、SeaDukeをダウンロード・インストールした。",
+  "procedure/G0021/0": "Molerats配下の攻撃者は、標的のマシン上でPowerShellのインプラントを使用した。",
+  "procedure/G0022/0": "APT3は、侵害後に被害者システム上でペイロードをダウンロード・実行するためにPowerShellを使用した。",
+  "procedure/G0027/0": "Threat Group-3390は、実行のためにPowerShellを使用した。",
+  "procedure/G0032/0": "Lazarus Groupは、コマンドや悪意あるコードを実行するためにPowerShellを使用した。",
+  "procedure/G0033/0": "Poseidon GroupのInformation Gathering Tool（IGT）には、PowerShellの構成要素が含まれる。",
+  "procedure/G0034/0": "Sandworm Teamは、防御回避のために、認証情報収集ツールをメモリ上で実行するPowerShellスクリプトを使用した。",
+  "procedure/G0035/0": "Dragonflyは、実行のためにPowerShellスクリプトを使用した。",
+  "procedure/G0037/0": "FIN6は、加盟店のネットワークへのアクセスを得るためにPowerShellを使用し、シェルコードをダウンロード・実行してローカルのリスナーを設定するためにMetasploitのPowerShellモジュールを使用した。",
+  "procedure/G0038/0": "Stealth Falconのマルウェアは、WMIを介したシステム情報の収集やC2サーバーからのコマンド実行など、さまざまな機能を実行するためにPowerShellコマンドを使用する。",
+  "procedure/G0040/0": "Patchworkは、ペイロードのダウンロード・逆シェルの実行・被害者マシン上でのマルウェア実行のためにPowerSploitを使用した。",
+  "procedure/G0045/0": "menuPassは、シェルコードをPowerShellに注入するためにPowerSploitを使用する。",
+  "procedure/G0046/0": "FIN7は、追加のペイロードを取得するシェルコードを起動するためにPowerShellスクリプトを使用した。さらに、PowerSploit内のシェルコード呼び出しツールの自作の難読化版であるPOWERTRASHも使用した。",
+  "procedure/G0047/0": "Gamaredon Groupは、ステージングのために難読化されたPowerShellスクリプトを使用した。さらに、攻撃の後段ではPowerShellベースのツールも使用した。Gamaredon Groupはまた、次の段のペイロードをダウンロード・実行するためにPowerShellコマンドレットの`Get-Command`を使用した。",
+  "procedure/G0049/0": "OilRigは、ファイル内容を復号するマクロからPowerShellコマンドを実行する手法を含め、実行のためにPowerShellスクリプトを使用した。",
+  "procedure/G0050/0": "APT32は、実行のためにPowerShellベースのツール・PowerShellの一行コマンド・シェルコードローダーを使用した。",
+  "procedure/G0051/0": "FIN10は、実行にPowerShellを使用するとともに、永続化を確立するためにPowerShell Empireを使用した。",
+  "procedure/G0052/0": "CopyKittensはPowerShell Empireを使用した。",
+  "procedure/G0059/0": "Magic Houndは、実行と権限昇格のためにPowerShellを使用した。"
+ },
+ "supplement": {
+  "summary": "Windowsに標準で備わる強力なスクリプト実行環境であるPowerShellを悪用する技術。情報探索からコードの遠隔実行まで幅広く行え、ディスクに触れずメモリ上だけで動作させられる点が、検知を特に難しくしている。",
+  "analogy": "家の管理人室に置かれている万能の管理者用パスマスターキー（本来は配管や電気の点検のための道具）を、泥棒が手に入れて、建物のどの部屋にも自由に出入りする道具として使ってしまうのに近い。道具自体は管理のための正規の設備であり、取り除くと本来の管理業務にも支障が出る。",
+  "learn": [
+   "PowerShellが「ディスクに触れずメモリ上で実行できる」という特性を持つため、ファイルベースのウイルス対策だけでは検知しづらいこと",
+   "Empire・PowerSploitなど、PowerShellを悪用するための専用の攻撃テストツールが公開されており、攻撃者がそれを転用できること"
+  ],
+  "interpretation": [
+   "対策（M1042）が『PowerShellの削除は環境への影響評価が必要』と明記している点は重要である。これは、PowerShellが攻撃にも悪用される一方で、現代のWindows管理に深く組み込まれた正規のツールであり、単純な無効化では業務が止まるという、防御側が抱えるジレンマを正直に示している。"
+  ]
+ }
+}

@@ -259,6 +259,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <nav class="links" aria-label="案内">
 <a href="${r}guide/"${cur("guide")}>はじめに</a>
 <a href="${r}categories/"${cur("categories")}>索引</a>
+<a href="${r}attack/"${cur("attack")}>ATT&amp;CK</a>
 <a href="${r}glossary/"${cur("glossary")}>用語集</a>
 <a href="${r}favorites/"${cur("favorites")}>お気に入り</a>
 <a href="${r}about/"${cur("about")}>このサイトについて</a>
@@ -760,6 +761,196 @@ function notFoundPage() {
     .replaceAll('href="./', 'href="/').replaceAll('src="./', 'src="/').replaceAll('action="./', 'action="/').replace('data-root="./"', 'data-root="/"');
 }
 
+// ========== MITRE ATT&CK（統合：攻撃者が実際にどう動くか） ==========
+// CAPECが「攻撃パターンの型」を示すのに対し、ATT&CKは「攻撃者が実際に使う戦術・技術・手順
+// （TTPs）」と、実在する攻撃グループ・ソフトウェアによる使用例を示す。データは
+// scripts/attack-extract.mjs が source/attack/*.json（公式STIXデータ、未コミット）から
+// 抜き出した data/attack.<domain>.json。ファイルが無いドメインは、まだ範囲外として省く。
+const ATTACK_DOMAINS = [
+  { domain: "enterprise-attack", label: "Enterprise", jaDir: "data/attack-ja/enterprise-attack" },
+  { domain: "mobile-attack", label: "Mobile", jaDir: "data/attack-ja/mobile-attack" },
+  { domain: "ics-attack", label: "ICS", jaDir: "data/attack-ja/ics-attack" },
+];
+const attackDomains = [];
+for (const d of ATTACK_DOMAINS) {
+  const p = path.join(ROOT, `data/attack.${d.domain}.json`);
+  if (!fs.existsSync(p)) continue;
+  const raw = readJson(`data/attack.${d.domain}.json`);
+  const trDir = path.join(ROOT, d.jaDir);
+  const trMap = new Map();
+  if (fs.existsSync(trDir)) {
+    for (const f of fs.readdirSync(trDir)) {
+      if (!f.endsWith(".json")) continue;
+      const t = JSON.parse(fs.readFileSync(path.join(trDir, f), "utf8"));
+      trMap.set(String(t.id), t);
+    }
+  }
+  attackDomains.push({ ...d, raw, trMap });
+}
+
+function attackBuild(dom) {
+  const { raw, trMap, domain, label } = dom;
+  const atr = (id) => trMap.get(String(id)) || { seg: {} };
+  const aNameJa = (id) => atr(id).seg?.name || "";
+  const techById = new Map(raw.techniques.map((t) => [t.id, t]));
+  const tacticById = new Map(raw.tactics.map((t) => [t.id, t]));
+  const tacticByShort = new Map(raw.tactics.map((t) => [t.shortname, t]));
+  for (const [id, t] of trMap) {
+    const e = techById.get(id) || tacticById.get(id);
+    if (!e) warnings.push(`ATT&CK訳文があるが公式データに無い: ${domain} ${id}`);
+    else if (t.source_sha !== e.source_sha) warnings.push(`ATT&CK原典が更新されている(要再訳): ${domain} ${id}`);
+  }
+  const techDone = raw.techniques.filter((t) => trMap.get(t.id)?.status === "done").length;
+
+  // 段落の配列(en)を、訳があれば訳、無ければ未翻訳表示にして<p>の並びにする
+  function aBlocks(entry, paragraphs, keyPrefix) {
+    if (!paragraphs?.length) return "";
+    const t = trMap.get(entry.id);
+    return paragraphs.map((p) => {
+      const ja = t?.seg?.[p.k];
+      const html = ja ? fmt(ja) : `<span class="untranslated" data-untranslated="${esc(p.k)}">${MISSING}</span>`;
+      return `<p>${html}</p>`;
+    }).join("\n");
+  }
+
+  const techUrl = (id) => {
+    const m = String(id).match(/^T(\d+)(?:\.(\d+))?$/);
+    return m ? `https://attack.mitre.org/techniques/T${m[1]}/${m[2] ? m[2] + "/" : ""}` : `https://attack.mitre.org/techniques/${id}/`;
+  };
+  const tacticUrl = (id) => `https://attack.mitre.org/tactics/${id}/`;
+  const mitigationUrl = (id) => `https://attack.mitre.org/mitigations/${id}/`;
+  const actorUrl = (type, id) => `https://attack.mitre.org/${type === "group" ? "groups" : "software"}/${id}/`;
+
+  const techLink = (id, depth, label2) => {
+    const e = techById.get(id);
+    if (!e) return `<span lang="en">${esc(id)}</span>`;
+    const ja = aNameJa(id);
+    const nm = label2 ?? (ja ? esc(ja) : `<span lang="en">${esc(e.name)}</span>`);
+    return `<a href="${rel(depth)}attack/${domain}/techniques/${esc(id)}/">${esc(id)} ${nm}</a>`;
+  };
+
+  function attackSupplementHtml(id) {
+    const s = trMap.get(id)?.supplement;
+    if (!s) return "";
+    const memo = (who, inner) => `<div class="memo"><span class="who">${who}</span>${inner}</div>`;
+    const parts = [];
+    if (s.summary) parts.push(memo("ひとことで（AIの要約）", `<p>${fmt(s.summary)}</p>`));
+    if (s.terms?.length) parts.push(memo("用語", `<dl>${s.terms.map((t) => `<dt>${esc(t.term)}${t.en ? `（<span lang="en">${esc(t.en)}</span>）` : ""}</dt><dd>${fmt(t.explain)}</dd>`).join("")}</dl>`));
+    if (s.facts?.length) parts.push(memo("原典から読める事実", `<ul>${s.facts.map((f) => `<li>${fmt(f.text)}<span class="src">根拠：${fmt(f.source)}</span></li>`).join("")}</ul>`));
+    if (s.analogy) parts.push(memo("たとえ話（AIの解釈）", `<p>${fmt(s.analogy)}</p>`));
+    if (s.interpretation?.length) parts.push(memo("AIの解釈", `<ul>${s.interpretation.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
+    if (s.learn?.length) parts.push(memo("この項目で学べること", `<ul>${s.learn.map((x) => `<li>${fmt(x)}</li>`).join("")}</ul>`));
+    return `<aside id="supplement" class="memos" aria-labelledby="supplement-h">
+<h2 id="supplement-h" class="memos-h">初学者向けの補足<small>AIの書き込みです。原典の訳ではありません。</small></h2>
+${parts.join("\n")}
+</aside>`;
+  }
+
+  function techniquePage(e) {
+    const depth = 4;
+    const ja = aNameJa(e.id);
+    const chips = [
+      ...e.tactics.map((sn) => { const t = tacticByShort.get(sn); return t ? chip(`../../tactics/${esc(t.id)}/`, aNameJa(t.id) ? esc(aNameJa(t.id)) : `<span lang="en">${esc(t.name)}</span>`) : ""; }),
+      ...e.platforms.map((p) => plainChip(esc(p))),
+      e.is_subtechnique ? plainChip("サブ技術") : "",
+    ].join("");
+    const parentNote = e.is_subtechnique && e.parent_id ? `<p class="small">上位の技術：${techLink(e.parent_id, depth)}</p>` : "";
+    const subList = e.sub_technique_ids.length ? `<ul class="entry-list">${e.sub_technique_ids.map((sid) => `<li>${techLink(sid, depth)}</li>`).join("")}</ul>` : "";
+    const mitTable = e.mitigations.length ? `<div class="table-wrap"><table><thead><tr><th scope="col">対策</th><th scope="col">この技術への具体的な適用</th></tr></thead><tbody>${e.mitigations.map((m) => `<tr><td><a href="${mitigationUrl(m.id)}" rel="noopener">${esc(m.id)}<br><span lang="en">${esc(m.name)}</span></a></td><td>${aBlocks(e, m.note)}</td></tr>`).join("")}</tbody></table></div>` : "";
+    const procList = e.procedures.length ? `<div class="table-wrap"><table><thead><tr><th scope="col">攻撃グループ・ソフトウェア</th><th scope="col">実際の使用例</th></tr></thead><tbody>${e.procedures.map((p) => `<tr><td><a href="${actorUrl(p.actor_type, p.actor_id)}" rel="noopener">${esc(p.actor_id)}<br><span lang="en">${esc(p.actor_name)}</span></a><br><span class="small">${p.actor_type === "group" ? "攻撃グループ" : p.actor_type === "tool" ? "ツール" : "マルウェア"}（原文サイトへリンク）</span></td><td>${aBlocks(e, p.text)}</td></tr>`).join("")}</tbody></table></div>` : "";
+    const refs = e.references.length ? `<ol class="refs" lang="en">${e.references.map((r) => `<li>${esc(r.description || r.source_name)}${r.url ? ` <a href="${esc(r.url)}" rel="noopener">${esc(r.url)}</a>` : ""}</li>`).join("")}</ol>` : "";
+
+    const secs = [
+      section("parent", "", "", parentNote),
+      section("sub", `サブ技術（${e.sub_technique_ids.length}件）`, "Sub-techniques", subList),
+      section("mitigations", "どう守る？", "Mitigations", mitTable, "box def"),
+      section("procedures", `実際に使われた例（${e.procedures.length}件）`, "Procedure Examples", procList),
+      section("references", "参考文献", "References", refs),
+    ].filter(Boolean);
+    const sup = attackSupplementHtml(e.id);
+    const source = `<p><a href="${techUrl(e.id)}" rel="noopener" lang="en">${techUrl(e.id)}</a><br><span class="small">データ取得日 ${esc(raw.meta.retrieved)}（${esc(label)}マトリクス）</span></p>`;
+    const body = `${crumbs([["../../../../", "ホーム"], ["../../", label], [null, `${e.id}`]])}
+<main id="main" class="entry${sup ? " has-memos" : ""}" tabindex="-1" data-pagefind-body>
+<div class="entry-head">
+<div class="chips">${chips}</div>
+<p class="cid">${esc(e.id)}<span class="kind">ATT&amp;CK 技術</span></p>
+<h1 data-pagefind-meta="title">${ja ? esc(ja) : `<span lang="en">${esc(e.name)}</span>`}</h1>
+<p class="en" lang="en">${esc(e.name)}</p>
+<section id="description" class="lead" aria-labelledby="description-h"><h2 id="description-h" class="vh">説明</h2>${aBlocks(e, e.description) || `<p class="small">データに説明の記載はありません。</p>`}</section>
+${tocHtml(secs, sup ? `<a href="#supplement">補足（AI）</a>` : "")}
+</div>
+${sup}
+<div class="entry-body">${secs.map((s) => s.html).join("\n")}
+<section id="source" class="sec" aria-labelledby="source-h"><h2 id="source-h"><span class="mk">原典</span><small>Source</small></h2>${source}</section>
+</div>
+</main>`;
+    return page({ title: `${e.id} ${ja || e.name}`, depth, body, description: `MITRE ATT&CK ${e.id}（${e.name}）の日本語訳（非公式・AI訳）`, current: "attack" });
+  }
+
+  function tacticPage(t) {
+    const depth = 4;
+    const ja = aNameJa(t.id);
+    const techs = raw.techniques.filter((e) => !e.is_subtechnique && e.tactics.includes(t.shortname)).sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+    const rows = techs.map((e) => `<tr><td class="id">${esc(e.id)}</td><td class="ja"><a href="../../techniques/${esc(e.id)}/">${aNameJa(e.id) ? esc(aNameJa(e.id)) : `<span lang="en">${esc(e.name)}</span>`}</a></td><td class="en" lang="en">${esc(e.name)}</td><td>${e.sub_technique_ids.length || "—"}</td></tr>`).join("");
+    const sup = attackSupplementHtml(t.id);
+    const body = `${crumbs([["../../../../", "ホーム"], ["../../", label], [null, `${t.id}`]])}
+<main id="main" class="entry${sup ? " has-memos" : ""}" tabindex="-1" data-pagefind-body>
+<div class="entry-head">
+<p class="cid">${esc(t.id)}<span class="kind">ATT&amp;CK 戦術</span></p>
+<h1 data-pagefind-meta="title">${ja ? esc(ja) : `<span lang="en">${esc(t.name)}</span>`}</h1>
+<p class="en" lang="en">${esc(t.name)}</p>
+<section id="description" class="lead" aria-labelledby="description-h"><h2 id="description-h" class="vh">説明</h2>${aBlocks(t, t.description)}</section>
+</div>
+${sup}
+<div class="entry-body">
+<section id="techs" class="sec" aria-labelledby="techs-h"><h2 id="techs-h"><span class="mk">この戦術に含まれる技術</span><small>Techniques（${techs.length}件）</small></h2>
+<div class="table-wrap"><table class="list"><thead><tr><th scope="col">番号</th><th scope="col">日本語名</th><th scope="col">英語名</th><th scope="col">サブ技術数</th></tr></thead><tbody>${rows}</tbody></table></div>
+</section>
+<section id="source" class="sec" aria-labelledby="source-h"><h2 id="source-h"><span class="mk">原典</span><small>Source</small></h2><p><a href="${tacticUrl(t.id)}" rel="noopener" lang="en">${tacticUrl(t.id)}</a></p></section>
+</div>
+</main>`;
+    return page({ title: `${t.id} ${ja || t.name}`, depth, body, current: "attack" });
+  }
+
+  function domainIndexPage() {
+    const depth = 2;
+    const orderedTactics = raw.tactics; // STIXの戦術はkill-chain順に近い並びで入っている
+    const rows = orderedTactics.map((t) => {
+      const n = raw.techniques.filter((e) => !e.is_subtechnique && e.tactics.includes(t.shortname)).length;
+      return `<li><a href="tactics/${esc(t.id)}/"><span>${aNameJa(t.id) ? esc(aNameJa(t.id)) : `<span lang="en">${esc(t.name)}</span>`}</span><b>${n}</b></a></li>`;
+    }).join("");
+    const body = `${crumbs([["../../", "ホーム"], ["../", "ATT&CK"], [null, label]])}
+<main id="main" class="page" tabindex="-1" data-pagefind-body>
+<h1 class="page-h">ATT&amp;CK（${esc(label)}）</h1>
+<p>MITRE ATT&amp;CKの${esc(label)}マトリクスを、日本語で読めるようにしたものです。戦術（Tactic）は攻撃者の目的（なぜそれをするか）、技術（Technique）はその目的を達成する具体的な手段（どうやってするか）を示します。各技術のページには、実在する攻撃グループやソフトウェアによる、実際の使用例を載せています。</p>
+<div class="figs">
+<span class="fig">戦術<b>${raw.meta.counts.tactic}</b>件</span>
+<span class="fig">技術<b>${raw.meta.counts.technique}</b>件</span>
+<span class="fig">サブ技術<b>${raw.meta.counts.subtechnique}</b>件</span>
+<span class="fig">取得日<b>${esc(raw.meta.retrieved)}</b></span>
+<span class="fig">日本語訳が済んだ技術<b>${techDone}</b>件</span>
+</div>
+<ul class="tabs">${rows}</ul>
+</main>`;
+    return page({ title: `ATT&CK（${label}）`, depth, body, current: "attack" });
+  }
+
+  return { domainIndexPage, tacticPage, techniquePage };
+}
+
+function attackIndexPage() {
+  const body = `${crumbs([["../", "ホーム"], [null, "ATT&CK"]])}
+<main id="main" class="page" tabindex="-1">
+<h1 class="page-h">MITRE ATT&amp;CK（日本語版・非公式）</h1>
+<p>CAPECが「攻撃パターンの型」を一項目ずつ整理した辞典であるのに対し、ATT&amp;CKは、攻撃者が実際に使う「戦術・技術・手順（TTPs）」と、実在する攻撃グループやソフトウェアが、どの技術をどう使ったかという、実際の使用例を整理したものです。「攻撃者がどう動くか」を知るための資料です。</p>
+<ul class="entry-list">
+${attackDomains.map((d) => `<li><a href="${esc(d.domain)}/">${esc(d.label)}</a>（戦術${d.raw.meta.counts.tactic}件・技術${d.raw.meta.counts.technique}件・サブ技術${d.raw.meta.counts.subtechnique}件）</li>`).join("\n")}
+</ul>
+<div class="memo"><span class="who">補足（AI）</span><p>攻撃グループ・マルウェア・ツールそのものの解説ページは作らず、各技術ページの「実際に使われた例」から、MITREの原典サイト（英語）へ直接リンクしています。</p></div>
+</main>`;
+  return page({ title: "ATT&CK", depth: 1, body, current: "attack" });
+}
+
 // ---------- 出力 ----------
 fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(DIST, { recursive: true });
@@ -779,7 +970,23 @@ for (const e of entries) {
 const ids = Object.fromEntries(entries.map((e) => [e.id, [e.kind, nameJa(e.id), e.name.en]]));
 fs.writeFileSync(path.join(DIST, "assets/ids.json"), JSON.stringify(ids));
 
+let attackTechCount = 0, attackTacticCount = 0, attackDoneCount = 0;
+if (attackDomains.length) {
+  writePage("attack/index.html", attackIndexPage());
+  for (const dom of attackDomains) {
+    const { domainIndexPage, tacticPage, techniquePage } = attackBuild(dom);
+    writePage(`attack/${dom.domain}/index.html`, domainIndexPage());
+    for (const t of dom.raw.tactics) writePage(`attack/${dom.domain}/tactics/${t.id}/index.html`, tacticPage(t));
+    for (const e of dom.raw.techniques) writePage(`attack/${dom.domain}/techniques/${e.id}/index.html`, techniquePage(e));
+    attackTechCount += dom.raw.techniques.length;
+    attackTacticCount += dom.raw.tactics.length;
+    attackDoneCount += dom.raw.techniques.filter((t) => dom.trMap.get(t.id)?.status === "done").length;
+  }
+}
+
 fs.mkdirSync(path.join(ROOT, "reports"), { recursive: true });
 const uniq = [...new Set(warnings)];
 fs.writeFileSync(path.join(ROOT, "reports/build-warnings.txt"), uniq.join("\n") + "\n");
 console.log(`生成: 項目ページ ${entries.length}件（攻撃パターン ${attackPatterns.length} / カテゴリ ${categories.length} / ビュー ${views.length}）、訳文 ${translations.size}件、警告 ${uniq.length}件`);
+if (attackDomains.length) console.log(`生成(ATT&CK): ${attackDomains.map((d) => d.label).join("・")} / 戦術 ${attackTacticCount}件・技術 ${attackTechCount}件、訳文済み技術 ${attackDoneCount}件`);
+else console.log("ATT&CK: data/attack.<domain>.json が無いため未生成");

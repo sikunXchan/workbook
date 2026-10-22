@@ -1,0 +1,47 @@
+{
+ "id": "T1129",
+ "source_sha": "12d8adefe7a4ea02",
+ "status": "done",
+ "seg": {
+  "name": "共有モジュール",
+  "description/0": "攻撃者は、共有モジュールの読み込みを通じて、悪意あるペイロードを実行することがある。共有モジュールとは、特定の独自関数の呼び出しやOS APIの関数（ネイティブAPI）の呼び出しなど、再利用可能なコードへのアクセスを提供するために、プロセスに読み込まれる実行可能ファイルである。",
+  "description/1": "攻撃者は、被害者のシステム上で任意のペイロードを実行する手段として、この機能を使うことがある。例えば、攻撃者はマルウェアの機能を、C2のネットワーク通信の管理や、目的に応じた特定の操作の実行といった、さまざまな機能を担う共有オブジェクトにモジュール化できる。",
+  "description/2": "LinuxとmacOSのモジュールローダーは、任意のローカルパスから共有オブジェクトを読み込み、実行できる。この機能は`dlfcn.h`にあり、`dlopen`や`dlsym`といった関数として存在する。macOSは`.so`ファイルも実行できるが、一般的には`.dylib`ファイルが使われる。",
+  "description/3": "Windowsのモジュールローダーは、任意のローカルパスや任意のUNC（Universal Naming Convention）ネットワークパスからDLLを読み込むように指示できる。この機能は`NTDLL.dll`にあり、実行時に`LoadLibrary`のような関数から呼び出される、WindowsのネイティブAPIの一部である。",
+  "mitigation/M1038/0": "未知のモジュールの読み込みを防げるアプリケーション制御ツールを使って、この技術を通じて実行される、悪意あるかもしれないソフトウェアを特定・ブロックする。",
+  "procedure/G0129/0": "Mustang Pandaは、DLLを読み込むために`LoadLibrary`を利用した。",
+  "procedure/S0032/0": "gh0st RATは、DLLをメモリに読み込める。",
+  "procedure/S0196/0": "PUNCHBUGGYは、LoadLibrary APIを使ってDLLを読み込める。",
+  "procedure/S0203/0": "Hydraqは、遠隔の攻撃者がDLLの関数を読み込み・呼び出せるバックドアを作成する。",
+  "procedure/S0352/0": "ネットワーク通信のために、OSX_OCEANLOTUS.Dは`dlopen()`を使って動的ライブラリ（`.dylib`ファイル）を読み込み、`dlsym()`を使ってその共有ライブラリ内で実行する関数ポインタを取得する。",
+  "procedure/S0373/0": "Astarothは、追加のモジュールを読み込むために`LoadLibraryExW()`関数を使用する。",
+  "procedure/S0377/0": "Eburyは、正規版の`OpenSSH`や`libcurl`が使用するkeyutils.soファイルをフックすることで実行される。",
+  "procedure/S0415/0": "BOOSTWRITEは、追加のモジュールを読み込むために`DWriteCreateFactory()`関数を使用した。",
+  "procedure/S0438/0": "Attorのディスパッチャーは、それぞれのDLLを読み込むことで、追加のプラグインを実行できる。",
+  "procedure/S0455/0": "Metamorfoは、AutoItを使ってDLLペイロードを読み込み・実行した。",
+  "procedure/S0467/0": "TajMahalは、`LoadLibrary`呼び出しのテンプレートDLLを、実行中のプロセスに注入する能力を持つ。",
+  "procedure/S0501/0": "PipeMonは、自身のインストーラーを読み込むために`LoadLibrary`の呼び出しを使用した。PipeMonは、リフレクティブローディングや独自のシェルコードを使って、自身のモジュールを読み込む。",
+  "procedure/S0520/0": "BLINDINGCANは、被害者のマシンで実行時にDLLをメモリに読み込み、実行した。",
+  "procedure/S0567/0": "Dtrackには、`LoadLibrary`と`GetProcAddress`を呼び出す関数が含まれている。",
+  "procedure/S0603/0": "Stuxnetは、LoadLibraryを呼び出し、その後DLLからエクスポートされた関数を実行する。",
+  "procedure/S0607/0": "KillDiskは、DLLから関数を読み込み・実行する。",
+  "procedure/S0661/0": "FoggyWebのローダーは、`load()`関数を呼び出して、侵害したAD FSサーバー上のアプリケーションドメインにFoggyWebのDLLを読み込める。",
+  "procedure/S0673/0": "DarkWatchmanは、DLLを読み込める。",
+  "procedure/S1039/0": "Bumblebeeは、GdiPlus.dllの実行を試みるために`LoadLibrary`を使用できる。",
+  "procedure/S1078/0": "RotaJakiroは、`dlopen()`と`dlsym()`を使って追加の機能を実行するために、動的にリンクされた共有ライブラリ（`.so`ファイル）を使用する。",
+  "procedure/S1154/0": "VersaMemは、メモリ内の既存のJavaコードを動的に変更するために、Java Instrumentation APIとJavassistを利用した。",
+  "procedure/S1185/0": "LightSpyの主要な実行ファイルとモジュールの`.dylib`バイナリは、ライブラリを読み込む`dlopen()`、クラス定義を取得する`_objc_getClass()`、読み込まれたクラス内の指定したメソッドを呼び出し・実行する`_objec_msgSend()`を組み合わせて読み込まれる。",
+  "procedure/S9050/0": "Vidarは、実行中にWindowsの一般的なDLLを読み込み・実行した。"
+ },
+ "supplement": {
+  "summary": "マルウェアの機能をDLLや共有ライブラリ(.so/.dylib)として分割し、実行時に動的に読み込ませることで悪意あるコードを実行する技術。機能のモジュール化はソフトウェア開発の一般的な手法でもあり、正規の仕組みと区別がつきにくい点が悪用される理由になっている。",
+  "analogy": "完成した1つの犯罪計画書を丸ごと持ち込むのではなく、「鍵開けの手順」「金庫破りの手順」「逃走の手順」という別々の小冊子（共有モジュール）を必要なときに1冊ずつ取り出して読む、という形にして、持ち物検査（静的なマルウェア検知）で一度に全体の意図を見抜かれにくくするのに似ている。",
+  "learn": [
+   "LoadLibrary（Windows）やdlopen（Linux/macOS）という、ごく一般的なプログラミングAPIが、悪意あるコードの実行手段としても使われること",
+   "機能をモジュール化することで、マルウェアの全体像を一度に検知されにくくする、攻撃者側の設計上の利点があること"
+  ],
+  "interpretation": [
+   "対策がただ一つ、「未知のモジュールの読み込みを防ぐアプリケーション制御」であることは、この技術の防御の要が、個々のDLL・共有ライブラリファイルそのものの正当性を検証することに集約されることを示している。LoadLibraryやdlopenの呼び出し自体は正規のプログラムでも極めて頻繁に発生するため、呼び出しの有無ではなく、読み込まれるモジュールの署名や既知のハッシュ値との照合が、実務上の防御の鍵になる。"
+  ]
+ }
+}

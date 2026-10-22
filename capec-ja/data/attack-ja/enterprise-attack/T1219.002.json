@@ -1,0 +1,32 @@
+{
+ "id": "T1219.002",
+ "source_sha": "965cefd3701ada6f",
+ "status": "done",
+ "seg": {
+  "name": "Remote Desktop Software",
+  "description/0": "攻撃者は、ネットワーク内の標的システムへの対話的な遠隔操作（C2）用の通信経路を確立するために、正規のデスクトップサポートソフトウェアを使うことがある。デスクトップサポートソフトウェアは、別のコンピュータを遠隔操作するためのグラフィカルインターフェースを提供し、さまざまなプロトコルを使ってデバイス間で画面表示・キーボード入力・マウス操作を伝送する。`VNC`、`Team Viewer`、`AnyDesk`、`ScreenConnect`、`LogMein`、`AmmyyAdmin`のようなデスクトップサポートソフトウェアや、その他の遠隔監視・管理（RMM）ツールは、正規の技術サポート用ソフトウェアとして一般的に使われ、標的の環境内でアプリケーション制御によって許可されている場合がある。",
+  "description/1": "リモートアクセスのモジュール・機能は、ZoomやGoogle ChromeのRemote Desktopのような、それ以外の既存のソフトウェアの一部として存在することもある。",
+  "mitigation/M1037/0": "リモートアクセスソフトウェアが使うサイトやサービスへの送信トラフィックを制限するよう、ファイアウォール・アプリケーションファイアウォール・プロキシを適切に設定する。",
+  "mitigation/M1038/0": "リモートアクセスに使える、未承認のソフトウェアのインストール・使用を緩和するためにアプリケーション制御を使う。",
+  "mitigation/M1042/0": "未承認のソフトウェアのインストールと、対応アプリケーションに組み込まれた特定の機能の両方を含め、不要な遠隔接続機能の無効化を検討する。",
+  "procedure/G0048/0": "RTMは、遠隔アクセスのために改変版のTeamViewerとRemote Utilitiesを使用した。",
+  "procedure/G0069/0": "MuddyWaterは、侵害したホスト内での後続の活動（データの持ち出しを含む）を助けるために、ScreenConnect、AteraAgent、SimpleHelp、Action1、Level、PDQを含むRMMソリューションを利用した。",
+  "procedure/G0076/0": "Thripは、自分たちの攻撃のために、LogMeInと呼ばれるクラウドベースの遠隔アクセスソフトウェアを使用した。",
+  "procedure/G0094/0": "Kimsukyは、遠隔操作（C2）の通信経路として改変版のTeamViewerクライアントを使用した。",
+  "procedure/G0120/0": "EVILNUMは、マルウェアの変種TerraTVを使って正規のTeamViewerアプリケーションを動かし、侵害したマシンに接続した。",
+  "procedure/G0129/0": "Mustang Pandaは、標的のシステムにTeamViewerをインストールした。",
+  "procedure/G1015/0": "Scattered Spiderのメンバーは、被害者に遠隔ソフトウェアを実行させることに加え、侵害したネットワーク上で永続化を確立するために、TeamViewer、AnyDesk、LogMeIn、ngrok、ConnectWiseを含むRMMソフトウェアを自分たちでも展開する。",
+  "procedure/G1046/0": "Storm-1811は、ScreenConnect、NetSupport Manager、AnyDeskのような複数種類の正規のリモートアクセスソフトウェアとツールを悪用した。",
+  "procedure/G1052/0": "Contagious Interviewは、侵害後の活動のために「AnyDesk」のような遠隔管理・監視ソフトウェアをダウンロードした。",
+  "procedure/G1053/0": "Storm-0501は、AnyDesk、NinjaOne、Level.ioを含む正規の遠隔監視・管理（RMM）ツールを使用した。",
+  "procedure/G1055/0": "VOID MANTICOREは、複数の被害者デバイスを同時に制御できるメッシュネットワークを作るために、被害者のデバイスにNetBirdをインストールした。",
+  "procedure/G1058/0": "The Gentlemenは、被害者の環境へのアクセスを維持する手段として、AnyDeskのようなリモートアクセスツールに依存した。",
+  "procedure/S1242/0": "Qilinは、Linux用のランサムウェアバイナリをWindowsシステム上で直接実行するために、Splashtopの遠隔管理サービス（SRManager.exe）を使用できる。"
+ },
+ "supplement": {
+  "summary": "VNC・TeamViewer・AnyDesk・ScreenConnectなど、技術サポート用途で広く許可されているデスクトップ遠隔操作ソフトウェアを悪用し、対話的なC2経路を確立するサブ技術。実例の多さ（本データで13件）は、この手口が特に定番化していることを示す。",
+  "analogy": "修理業者が、建物の管理会社の許可（アプリケーション制御）を得て、遠隔から設備を操作できる正規の端末（VNCやTeamViewer）を使っているとき、その端末を乗っ取った者も、同じ正規の操作画面を通じて建物のすべての設備を自由に操作できてしまう。",
+  "learn": ["デスクトップ遠隔操作ソフトウェアが、正規の技術サポート業務で広く許可されているため、アプリケーション制御による遮断リストに最初から例外として登録されがちであること", "改変版の正規ツール（例：改変版TeamViewer）を使うことで、通信先の判別すら難しくなる手口があること"],
+  "interpretation": ["Kimsukyの例（改変版TeamViewerクライアント）やEVILNUMの例（マルウェアから正規TeamViewerアプリを動かす）は、攻撃者が正規ツールそのものを「乗っ物」として使うパターンの多様性を示している。単に『TeamViewerの通信を許可するかどうか』という二択ではなく、どのバイナリが実際にTeamViewerを呼び出しているかという、プロセスの親子関係の監視が重要になる。"]
+ }
+}

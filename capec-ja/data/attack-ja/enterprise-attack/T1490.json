@@ -1,0 +1,56 @@
+{
+ "id": "T1490",
+ "source_sha": "2a1d89c4281db38d",
+ "status": "done",
+ "seg": {
+  "name": "システム復旧の妨害",
+  "description/0": "攻撃者は、破損したシステムの復旧を助けるために設計された、組み込みのデータを削除・除去し、サービスを無効化することで、復旧を妨げることがある。これにより、利用可能なバックアップや復旧の選択肢へのアクセスが拒否される場合がある。",
+  "description/1": "OSには、バックアップカタログ、ボリュームシャドウコピー、自動修復機能といった、破損したシステムの修復を助ける機能が含まれていることがある。攻撃者は、データの破壊や影響を与えるためのデータの暗号化の効果を増幅させるために、システム復旧機能を無効化・削除することがある。さらに、攻撃者は復旧の通知を無効化してから、バックアップを破損させることがある。",
+  "description/2": "攻撃者は、システム復旧機能を無効化・削除するために、多数のWindows標準ユーティリティを使ってきた。",
+  "description/3": "* `vssadmin.exe`は、システム上のすべてのボリュームシャドウコピーを削除するために使うことができる - `vssadmin.exe delete shadows /all /quiet`\n* Windows Management Instrumentationは、ボリュームシャドウコピーを削除するために使うことができる - `wmic shadowcopy delete`\n* `wbadmin.exe`は、Windowsのバックアップカタログを削除するために使うことができる - `wbadmin.exe delete catalog -quiet`\n* `bcdedit.exe`は、起動設定データを変更することで、Windowsの自動復旧機能を無効化するために使うことができる - `bcdedit.exe /set {default} bootstatuspolicy ignoreallfailures & bcdedit /set {default} recoveryenabled no`\n* `REAgentC.exe`は、感染したシステムのWindows回復環境（WinRE）の修復・復旧の選択肢を無効化するために使うことができる\n* `diskshadow.exe`は、システム上のすべてのボリュームシャドウコピーを削除するために使うことができる - `diskshadow delete shadows all`",
+  "description/4": "ネットワークデバイス上では、攻撃者はディスクの消去を活用してバックアップのファームウェアイメージを削除し、ファイルシステムを再フォーマットした後、システムのシャットダウン・再起動を使ってデバイスを再読み込みさせることがある。これらの活動が組み合わされることで、ネットワークデバイスが完全に動作不能になり、復旧作業が妨げられることがある。",
+  "description/5": "ESXiサーバー上では、攻撃者は、バックアップとして活用されるのを防ぐために、影響を与えるためのデータの暗号化を支援する目的で、仮想マシンのスナップショットを削除・暗号化することがある（例：`vim-cmd vmsvc/snapshot.removeall`を通じて）。",
+  "description/6": "攻撃者は、ネットワークストレージメディアを介して、またはクラウドサービスに同期するフォルダを介して、ネットワークに接続された「オンライン」バックアップを削除することもある。クラウド環境では、攻撃者はバージョニングとバックアップポリシーを無効化し、ディザスタリカバリのシナリオで使われることを意図した、スナップショット、データベースのバックアップ、マシンイメージ、オブジェクトの以前のバージョンを削除することがある。",
+  "mitigation/M1018/0": "バックアップへのアクセス権を持つ利用者アカウントを、必要なものだけに限定する。AWS環境では、バックアップ・スナップショット・イメージを削除するAPI呼び出しを制限するために、サービスコントロールポリシーの使用を検討する。",
+  "mitigation/M1028/0": "システム復旧に関わるサービスの無効化やファイルの削除を防ぐための技術的な制御の実装を検討する。さらに、次のコマンドを使ってWinREが有効になっていることを確認する：`reagentc /enable`。",
+  "mitigation/M1038/0": "特定のシステムやネットワークで不要な`diskshadow.exe`のようなユーティリティの実行をブロックするよう設定されたアプリケーション制御の使用を検討し、攻撃者による潜在的な悪用を防ぐ。",
+  "mitigation/M1053/0": "組織のデータを復元するために使える、定期的なデータバックアップの手順を含むITディザスタリカバリ計画の実装を検討する。バックアップはシステム外に保存し、攻撃者がアクセスしてバックアップを破壊し復元を妨げるために使う一般的な手法から保護されるようにする。クラウド環境では、可能な場合はストレージオブジェクトのバージョニングを有効にし、バックアップを別のアカウントやリージョンにコピーして元のコピーから分離する。ESXiサーバーでは、仮想マシンのディスクイメージとスナップショットを定期的に取得し、コピーをシステム外に保存するようにする。",
+  "procedure/G0034/0": "Sandworm Teamは、`C:\\Windows\\System32\\wbadmin.exe delete catalog -quiet`を使って標的のシステムからバックアップカタログを削除し、`C:\\Windows\\System32\\vssadmin.exe delete shadows /all /quiet`を使ってボリュームシャドウコピーを削除するために、Prestigeを使用する。",
+  "procedure/G0102/0": "Wizard Spiderは、WMICとvssadminを使ってボリュームシャドウコピーを手動で削除してきた。Wizard Spiderは、vssadminの使用を通じてボリュームシャドウコピーを自動的に削除するために、Contiランサムウェアも使用してきた。",
+  "procedure/G1015/0": "Scattered Spiderは、侵害したホスト上でボリュームシャドウコピーサービスを停止してきた。",
+  "procedure/G1043/0": "BlackByteは、暗号化後のシステム復旧を防ぐため、ボリュームシャドウコピーファイルのサイズを変更し削除した。",
+  "procedure/G1051/0": "Medusa Groupは、`vssadmin.exe`を使ってシャドウコピーなどの復旧用ファイルを削除してきた。",
+  "procedure/G1053/0": "Storm-0501は、修復と復元を防ぐために、スナップショット、復元ポイント、ストレージアカウント、バックアップサービスを削除してきた。Storm-0501は、`Microsoft.Compute/snapshots/delete`、`Microsoft.Compute/restorePointCollections/delete`、`Microsoft.Storage/storageAccounts/delete`、`Microsoft.RecoveryServices/Vaults/backupFabrics/protectionContainers/delete`を標的にすることで、Azureリソースに影響を与えてきた。",
+  "procedure/G1055/0": "VOID MANTICOREは、仮想化プラットフォームから直接仮想マシンを削除してきた。",
+  "procedure/S0365/0": "Olympic Destroyerは、WindowsバックアップカタログやWindows自動修復といったOS復旧機能を削除・無効化するために、Windows標準のユーティリティである`vssadmin`、`wbadmin`、`bcdedit`を使用する。",
+  "procedure/S0366/0": "WannaCryは、OS復旧機能を削除・無効化するために`vssadmin`、`wbadmin`、`bcdedit`、`wmic`を使用する。",
+  "procedure/S0446/0": "Ryukは、ボリュームシャドウコピーを削除するために`vssadmin Delete Shadows /all /quiet`を、サードパーティ製アプリケーションが作成したシャドウコピーの削除を強制するために`vssadmin resize shadowstorage`を使用してきた。",
+  "procedure/S0449/0": "Mazeは、感染したマシンのシャドウボリュームを、暗号化処理の前と後に一度ずつ削除しようとしてきた。",
+  "procedure/S0481/0": "Ragnar Lockerは、`vssadmin delete shadows /all /quiet`を使ってボリュームシャドウコピーを削除できる。",
+  "procedure/S0496/0": "REvilは、ボリュームシャドウコピーを削除するためにvssadminを、復旧機能を無効化するためにbcdeditを使うことができる。",
+  "procedure/S0575/0": "Contiは、`vssadmin`を使ってWindowsのボリュームシャドウコピーを削除できる。",
+  "procedure/S0638/0": "Babukには、`vssadmin.exe delete shadows /all /quiet`を使ってシャドウボリュームを削除する機能がある。",
+  "procedure/S1058/0": "Prestigeは、`c:\\Windows\\System32\\wbadmin.exe delete catalog -quiet`を使って標的のシステムからバックアップカタログを削除でき、`\\Windows\\System32\\vssadmin.exe delete shadows /all /quiet`を使ってボリュームシャドウコピーを削除することもできる。",
+  "procedure/S1068/0": "BlackCatは、`vssadmin.exe delete shadows /all /quiet`と`wmic.exe Shadowcopy Delete`を使ってシャドウコピーを削除できる。また、`bcdedit /set {default} recoveryenabled No`を使ってブートローダーを改変することもできる。",
+  "procedure/S1202/0": "LockBit 3.0はボリュームシャドウコピーを削除できる。",
+  "procedure/S1212/0": "RansomHubは、ボリュームシャドウコピーを削除するために`vssadmin.exe`を使用してきた。",
+  "procedure/S1242/0": "Qilinは、ボリュームシャドウコピーを削除するために`vssadmin.exe delete shadows /all /quiet`を実行できるほか、vCenterクラスタ内の高可用性（HA）と分散リソーススケジューラ（DRS）を無効化できる。"
+ },
+ "supplement": {
+  "summary": "ボリュームシャドウコピー、バックアップカタログ、自動修復機能といった、OS標準の「元に戻す」機能そのものを削除・無効化し、データ破壊や暗号化からの復旧を不可能にする技術。procedures一覧の件数の多さから、これが現代のランサムウェア攻撃における「ほぼ必須の手順」であることがうかがえる。",
+  "terms": [
+   { "term": "ボリュームシャドウコピー", "en": "Volume Shadow Copy", "explain": "Windowsが自動的に作成する、ファイルやシステムの過去の状態のスナップショット。ランサムウェアによる暗号化後も、これが残っていれば比較的簡単にファイルを復元できるため、攻撃者にとって真っ先に削除すべき対象になる。" }
+  ],
+  "facts": [
+   { "text": "`vssadmin.exe delete shadows /all /quiet`という単一のコマンドが、procedures一覧の半数近くの攻撃者によって、ほぼ同じ形で使われていることが分かる。", "source": "procedures" }
+  ],
+  "analogy": "家に火をつける前に、まず消火器と火災報知器を取り除き、非常口の鍵をかけてしまうようなもの。火そのもの（データの暗号化・破壊）が主たる被害であることに変わりはないが、消火器（バックアップ）が無ければ、被害者は何もできずに全焼を見届けるしかなくなる。",
+  "learn": [
+   "`vssadmin`というWindows標準ツールの単一コマンドが、数十のランサムウェアファミリーに共通して使われていること（防御側が最優先で監視すべき具体的なコマンドの一つ）",
+   "この技術がデータ破壊・暗号化そのものの前段として実行される、いわば『保険を無効化する』役割を持つこと"
+  ],
+  "interpretation": [
+   "対策としてM1038（diskshadow.exeなど不要なユーティリティの実行制御）が挙げられている点は実務的に重要である。`vssadmin`や`wbadmin`はシステム管理者にとっても正規に必要なツールであるため単純に禁止できないが、一般利用者の端末では使われる機会が少ない`diskshadow.exe`のような、より専門的なツールの実行を制限することは、業務への影響を抑えつつ攻撃者の手口を塞ぐ、現実的な一歩になる。"
+  ]
+ }
+}

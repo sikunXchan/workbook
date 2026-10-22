@@ -1,0 +1,36 @@
+{
+ "id": "T1555.001",
+ "source_sha": "647c68ceccaead8d",
+ "status": "done",
+ "seg": {
+  "name": "Keychain",
+  "description/0": "攻撃者は、Keychainから認証情報を取得することがある。Keychain（またはKeychain Services）は、アカウント名、パスワード、秘密鍵、証明書、機密性の高いアプリケーションデータ、決済データ、安全なメモを保存する、macOSの認証情報管理システムである。Keychainには、ログインキーチェーン、システムキーチェーン、ローカル項目（iCloud）キーチェーンという3つの種類がある。デフォルトのKeychainはログインキーチェーンで、利用者のパスワードと情報を保存する。システムキーチェーンは、ホスト上の複数利用者間で共有される項目など、オペレーティングシステムがアクセスする項目を保存する。ローカル項目（iCloud）キーチェーンは、AppleのiCloudサービスと同期される項目に使われる。",
+  "description/1": "Keychainは、Keychain Accessアプリケーションや、コマンドラインユーティリティの`security`を使って、閲覧・編集できる。Keychainファイルは`~/Library/Keychains/`、`/Library/Keychains/`、`/Network/Library/Keychains/`に配置されている。",
+  "description/2": "攻撃者は、Keychainの保存領域・メモリから利用者の認証情報を収集することがある。例えば、`security dump-keychain –d`というコマンドは、`~/Library/Keychains/login.keychain-db`からログインキーチェーンの認証情報をすべてダンプする。攻撃者はまた、`~/Library/Keychains/login.keychain`ファイルから、ログインキーチェーンの認証情報を直接読み取ることもある。両方の方法ともパスワードが必要であり、ログインキーチェーンのデフォルトのパスワードは、利用者がmacOSホストにログインする際のパスワードである。",
+  "mitigation/M1027/0": "利用者のログインキーチェーンのパスワードは、利用者のログインパスワードとは別に変更できる。これにより、攻撃者が追加のパスワードを知る必要が生じるため、難易度が上がる。",
+  "procedure/G0082/0": "APT38は、macOSのキーチェーンに保存されたデータを盗んだ。",
+  "procedure/G1052/0": "Contagious Interviewは、macOSのキーチェーンから認証情報をダンプするように設定されたマルウェアの変種を活用した。",
+  "procedure/S0274/0": "Calistoは、Keychainの保存データを収集し、それらのパスワードやトークンをファイルにコピーする。",
+  "procedure/S0278/0": "iKittenは、システム上のキーチェーンを収集する。",
+  "procedure/S0279/0": "Protonは、キーチェーン用のファイルから認証情報を収集する。",
+  "procedure/S0349/0": "LaZagneは、macOSのKeychainから認証情報を取得できる。",
+  "procedure/S0363/0": "Empireは、`/usr/bin/security dump-keychain -d`というコマンドを使って、キーチェーンの認証情報を読み取る。",
+  "procedure/S0690/0": "Green Lambertは、`SecKeychainFindInternetPassword`や`SecKeychainItemCopyAttributesAndData`のような、Keychain Services APIの関数を使って、パスワードを見つけて収集できる。",
+  "procedure/S1016/0": "MacMaは、macOSのキーチェーンから認証情報をダンプできる。",
+  "procedure/S1153/0": "Cuckoo Stealerは、標的とした利用者のキーチェーンディレクトリからファイルを収集できる。",
+  "procedure/S1185/0": "LightSpyは、`SecItemCopyMatching()`を使ってメモリ上でキーチェーンを問い合わせ、取得したデータを持ち出し用にJSON形式に整形する。",
+  "procedure/S1246/0": "BeaverTailは、`/Library/Keychains/login.keychain`内にある、macOSに関連する鍵を収集した。",
+  "procedure/S9010/0": "GlassWormは、`/Library/Keychains/login.keychain-db`内に保存された鍵を収集した。"
+ },
+ "supplement": {
+  "summary": "macOSの認証情報管理システムであるKeychainから、パスワードや秘密鍵をまとめて盗み出す手口。KeychainはOS標準のコマンド（`security dump-keychain`）やAPIで扱えるため、攻撃者にとっても扱いやすい標的になっている。",
+  "analogy": "家の中の貴重品をすべて一つの金庫にまとめて保管しているとき、その金庫の暗証番号（ログインパスワード）が分かれば、中のすべて（パスワード・秘密鍵・証明書）を一度に取り出せてしまうのに似ている。便利なようにまとめて管理する発想自体が、集中的に奪われるリスクを生んでいる。",
+  "learn": [
+   "Keychainのデフォルトのパスワードが、利用者のログインパスワードと同じであるため、ログインパスワードを得れば、Keychain内のすべての認証情報にアクセスできてしまうこと",
+   "Keychainへのアクセス手段が、専用のハッキングツールだけでなく、OS標準の`security`コマンドやAPIでも可能であること"
+  ],
+  "interpretation": [
+   "多くの実例がOS標準の`security dump-keychain`コマンドや、正規のKeychain Services APIを使っている点は、この技術が特別な脆弱性の悪用というより、『設計どおりに使える機能』を認証情報の窃取に転用している点を示している。これは、Keychainという便利な集中管理のしくみが、ログインパスワード一つを守ることの重要性を、利用者が実感している以上に高めていることを意味する。緩和策が『ログインパスワードとは別のKeychainパスワードを設定する』ことを挙げているのは、この一点（パスワードの一致）こそが最大の弱点であるからである。"
+  ]
+ }
+}

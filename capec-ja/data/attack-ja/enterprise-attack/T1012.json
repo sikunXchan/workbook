@@ -1,0 +1,35 @@
+{
+ "id": "T1012",
+ "source_sha": "9fb8eddd036bb0de",
+ "status": "done",
+ "seg": {
+  "name": "レジストリへの問い合わせ",
+  "description/0": "攻撃者は、システム・設定・インストール済みソフトウェアについての情報を集めるために、Windowsのレジストリを操作することがある。",
+  "description/1": "レジストリには、OS・設定・ソフトウェア・セキュリティについての、かなりの量の情報が含まれている。情報はRegユーティリティを使えば簡単に問い合わせられるが、レジストリへのアクセス手段は他にも存在する。この情報は、攻撃者がネットワーク内での活動を進めるのに役立つことがある。攻撃者は、自動化された探索の中でレジストリへの問い合わせから得た情報を使って、標的に完全に感染させるかどうか、特定の操作を試みるかどうかなど、その後の行動を形作ることがある。",
+  "procedure/G0010/0": "Turlaは、チェックイン時にシステムを調べ、`reg query`コマンドでWindowsレジストリ内の情報を見つける。Turlaはレジストリキーに隠されたPowerShellのペイロードを取得したり、名前付きパイプのnullセッションに関連するキーを確認したりもしている。",
+  "procedure/G0027/0": "Threat Group-3390のツールは、保存されたレジストリの値を読み取り、復号できる。",
+  "procedure/G0030/0": "Lotus Blossomは、インストールされたインプラントがサービスとして動作しているかを確認するために、`reg query HKLM\\SYSTEM\\CurrentControlSet\\Services\\[service name]\\Parameters`のようなコマンドを実行した。",
+  "procedure/G0032/0": "Lazarus Groupのマルウェア IndiaIndia は、SecureCRT、Terminal Services、RealVNC、TightVNC、UltraVNC、Radmin、mRemote、TeamViewer、FileZilla、pcAnyware、Remote Desktopなどの特定のアプリケーションが存在するかを確認するため、HKCUとHKLM内のレジストリキーを確認する。別のLazarus Groupのマルウェアは、`HKEY_CURRENT_USER\\Software\\Bitcoin\\Bitcoin-Qt`というレジストリキーの存在を確認する。",
+  "procedure/G0035/0": "Dragonflyは、被害者の情報を特定するためレジストリに問い合わせた。",
+  "procedure/G0038/0": "Stealth Falconのマルウェアは、レジストリへの問い合わせによって、インストールされている.NETのバージョンを調べようとする。",
+  "procedure/G0047/0": "Gamaredon Groupは、C2アドレスを得るために`HKEY_CURRENT_USER\\Console\\WindowsUpdates`に問い合わせた。",
+  "procedure/G0049/0": "OilRigは、被害者のレジストリに問い合わせるために`reg query “HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Default”`を使用した。",
+  "procedure/G0050/0": "APT32のバックドアは、システム情報を集めるためにWindowsレジストリに問い合わせることができる。",
+  "procedure/G0082/0": "APT38は、インストール済みソフトウェアを調べるためにレジストリへ問い合わせるnode.jsマルウェアを実行した。",
+  "procedure/G0087/0": "APT39は、さまざまな種類のマルウェアを使ってレジストリに問い合わせた。",
+  "procedure/G0094/0": "Kimsukyは、侵害したホスト上で特定のレジストリキーと値を取得した。",
+  "procedure/G0096/0": "APT41は、設定されたRDPポートやネットワーク設定などの項目を調べるために、レジストリの値に問い合わせた。",
+  "procedure/G0114/0": "Chimeraは、`reg query \\\\<host>\\HKU\\<SID>\\SOFTWARE\\Microsoft\\Terminal Server Client\\Servers`や`reg query \\\\<host>\\HKU\\<SID>\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings`を使ってレジストリキーに問い合わせた。",
+  "procedure/G0117/0": "Fox Kittenは、レジストリハイブのntuser.datとUserClass.datにアクセスした。"
+ },
+ "supplement": {
+  "summary": "Windowsのレジストリ（設定を一元管理するデータベース）に、標準のRegユーティリティなどを使って問い合わせ、OS・ソフトウェア・セキュリティ設定の情報を集める探索（Discovery）の技術。問い合わせ自体は正規の管理操作とほぼ同じであり、見分けがつきにくい。",
+  "analogy": "家の間取り図と設備台帳が保管されている管理室に、合鍵を使って入り、「このドアにはどんな鍵がついているか」「どの部屋に金目のものがあるか」を台帳で確認する行為に近い。台帳を見ること自体は壁を壊すような派手な行為ではないため、気づかれにくい。",
+  "learn": [
+   "Lazarus Groupの例のように、レジストリへの問い合わせが、特定のセキュリティソフトや監視ツールがインストールされているかどうかを調べる「環境認識」の手段としても使われること"
+  ],
+  "interpretation": [
+   "`reg query`という単一のコマンドが、Turla・Lotus Blossom・OilRigなど出自の異なる多数の攻撃グループに独立して使われている事実は、この技術がOS標準機能であるがゆえに、特定のマルウェア検知だけでは防ぎきれないことを示している。防御側には、どのプロセスがどのレジストリキーに、どれだけの頻度で問い合わせているかという「振る舞い」そのものを監視する視点が求められる。"
+  ]
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "T1552.002",
+ "source_sha": "3fa07208e5fb0291",
+ "status": "done",
+ "seg": {
+  "name": "レジストリ内の認証情報",
+  "description/0": "攻撃者は、侵害したシステムのレジストリを、安全でない方法で保存された認証情報を求めて探索することがある。Windowsのレジストリは、システムや他のプログラムが使用できる設定情報を保存している。攻撃者は、他のプログラムやサービスで使用するために保存された認証情報やパスワードを求めて、レジストリを照会することがある。これらの認証情報は、自動ログオンに使われることもある。",
+  "description/1": "パスワード情報に関連するレジストリキーを見つけるコマンドの例：",
+  "description/2": "* ローカルマシンハイブ：`reg query HKLM /f password /t REG_SZ /s`\n* 現在の利用者のハイブ：`reg query HKCU /f password /t REG_SZ /s`",
+  "mitigation/M1026/0": "ソフトウェアが認証情報をレジストリに保存する必要がある場合は、関連するアカウントの権限を限定し、攻撃者に取得されても悪用されないようにする。",
+  "mitigation/M1027/0": "認証情報をレジストリ内に保存しない。",
+  "mitigation/M1047/0": "レジストリ内の認証情報を事前に探索し、リスクの修正を試みる。",
+  "procedure/G0050/0": "APT32は、Windowsのレジストリに保存された認証情報を収集するために、Outlook Credential Dumperを使用した。",
+  "procedure/G1039/0": "RedCurlは、レジストリ内のパスワードを取得するためにLaZagneを使用した。",
+  "procedure/G1055/0": "VOID MANTICOREは、HKLM内に保存されたものを含め、レジストリハイブから認証情報を抜き出した。",
+  "procedure/S0075/0": "Regは、Windowsレジストリ内の認証情報を見つけるために使われることがある。",
+  "procedure/S0194/0": "PowerSploitは、保存された認証情報をWindowsレジストリ内から探索する、いくつものモジュールを持つ：`Get-UnattendedInstallFile`、`Get-Webconfig`、`Get-ApplicationHost`、`Get-SiteListPassword`、`Get-CachedGPPPassword`、`Get-RegistryAutoLogon`。",
+  "procedure/S0266/0": "TrickBotは、`Software\\SimonTatham\\Putty\\Sessions`レジストリキーを照会することで、PuTTYの認証情報を取得した。",
+  "procedure/S0331/0": "Agent Teslaは、レジストリから認証情報を抜き出す機能を持つ。",
+  "procedure/S0476/0": "Valakは、レジストリからメールの認証情報を盗むために、clientgrabberモジュールを使用できる。",
+  "procedure/S1022/0": "IceAppleは、ローカルおよびリモートホストのレジストリから認証情報を収集できる。",
+  "procedure/S1183/0": "StrelaStealerは、Outlookメールアプリケーションに関連する「IMAP User」「IMAP Server」「IMAP Password」の値を特定するために、`HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Profiles\\Outlook\\9375CFF0413111d3B88A00104B2A6676\\`レジストリキーを列挙する。"
+ },
+ "supplement": {
+  "summary": "Windowsのレジストリに、アプリケーションやサービスが便宜上保存してしまったパスワード・認証情報を、特定のキーを照会して探し出す技術。`reg query`のような標準コマンドだけで実行できる手軽さが特徴。",
+  "terms": [
+   { "term": "レジストリ", "en": "registry", "explain": "Windowsの設定情報を一元的に保存する、階層構造のデータベース。アプリケーションの設定だけでなく、誤って認証情報まで平文で保存されてしまうことがある。" }
+  ],
+  "facts": [
+   { "text": "パスワード情報に関連するレジストリキーを見つけるコマンドの例として、`reg query HKLM /f password /t REG_SZ /s`と`reg query HKCU /f password /t REG_SZ /s`が原典に挙げられている。", "source": "description" }
+  ],
+  "analogy": "オフィスの共有設定台帳に、本来は運用手順だけを書くはずなのに、担当者が「このシステムのパスワードは○○です」とメモを書き加えてしまい、その台帳を見られる人全員がそのパスワードを読めてしまうのに似ている。",
+  "learn": [
+   "`reg query`という標準のWindowsコマンド1つだけで、特別なツールを持ち込まなくても認証情報の探索が可能であるという、環境寄生型の手口としての手軽さ",
+   "PowerSploitの`Get-CachedGPPPassword`のように、グループポリシー設定（T1552のGPP関連の弱点）とレジストリ探索が組み合わされる実例があること"
+  ],
+  "interpretation": [
+   "StrelaStealerの実例が、Outlookの特定の設定キー（IMAPのユーザー名・サーバー・パスワード）を名指しで列挙していることは、攻撃者が汎用的な「password」という文字列の検索だけでなく、特定のアプリケーションが使う、よく知られたレジストリパスを事前に把握した、標的を絞った探索も行うことを示している。"
+  ]
+ }
+}

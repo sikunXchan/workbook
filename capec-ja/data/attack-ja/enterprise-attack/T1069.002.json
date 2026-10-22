@@ -1,0 +1,42 @@
+{
+ "id": "T1069.002",
+ "source_sha": "211e8d814be2e5fe",
+ "status": "done",
+ "seg": {
+  "name": "ドメイングループ",
+  "description/0": "攻撃者は、ドメインレベルのグループと権限設定を見つけようとすることがある。ドメインレベルの権限グループについての知識は、攻撃者がどのグループが存在し、どの利用者が特定のグループに属しているかを判断するのに役立つ。攻撃者はこの情報を使って、ドメイン管理者のような昇格した権限を持つ利用者を特定することがある。",
+  "description/1": "Netユーティリティの`net group /domain`、macOSの`dscacheutil -q group`、Linuxの`ldapsearch`といったコマンドで、ドメインレベルのグループを一覧表示できる。",
+  "procedure/G0004/0": "Ke3changは`net group /domain`を使って権限グループの探索を行っている。",
+  "procedure/G0010/0": "Turlaは`net group \"Domain Admins\" /domain`を使って、ドメイン管理者を特定している。",
+  "procedure/G0035/0": "Dragonflyは、ドメイン内の管理者と利用者を列挙するためにバッチスクリプトを使用している。",
+  "procedure/G0046/0": "FIN7は`net group \"domain admins\" /domain`コマンドを使って、ドメイングループを列挙している。",
+  "procedure/G0049/0": "OilRigは`net group /domain`、`net group \"domain admins\" /domain`、`net group \"Exchange Trusted Subsystem\" /domain`を使って、ドメインのグループ権限設定を調べている。",
+  "procedure/G0100/0": "Inceptionは特定のマルウェアモジュールを使って、ドメインの所属情報を収集している。",
+  "procedure/G0129/0": "Mustang Pandaは、AdFindを活用してドメイングループを列挙している。",
+  "procedure/G1004/0": "LAPSUS$は、AD Explorerツールを使って被害者ネットワーク上のグループを列挙している。",
+  "procedure/G1015/0": "Scattered Spiderは、ADExplorer・ADRecon.ps1・Get-ADUserなどを使って、Active Directoryのセキュリティグループを列挙している。",
+  "procedure/G1017/0": "Volt Typhoonは、侵害した環境で`net group`を実行し、ドメインのグループを探索している。",
+  "procedure/G1022/0": "ToddyCatは、侵害したマシン上の探索のために`net group \"domain admins\" /dom`を実行している。",
+  "procedure/G1032/0": "INC Ransomは、標的のホスト上でドメインのグループを列挙している。",
+  "procedure/G1051/0": "Medusa Groupは、`net group`コマンドを利用して、被害者環境内のドメイングループを照会している。",
+  "procedure/S0039/0": "Netでは`net group /domain`のようなコマンドを使って、グループについての情報を収集・操作できる。",
+  "procedure/S0105/0": "dsqueryは、ドメイン内の権限グループに関する情報を収集するために使用できる。",
+  "procedure/S0154/0": "Cobalt Strikeは、ドメインコントローラー上のアカウントグループを照会することで標的を特定できる。",
+  "procedure/S0165/0": "OSInfoは特にドメイン内のドメイン管理者とパワーユーザーを探す。",
+  "procedure/S0170/0": "Helminthは、`net group Exchange Trusted Subsystem /domain`と`net group domain admins /domain`のコマンドを使って、ドメイン管理者グループとExchange Trusted Subsystemグループを確認している。",
+  "procedure/S0184/0": "POWRUNERは、`net group /domain`や被害者上でのその他一連のコマンドを実行することで、ドメインのグループ情報を収集することがある。",
+  "procedure/S0236/0": "Kwampirsは、`net localgroup /domain`コマンドでドメイングループの一覧を収集する。",
+  "procedure/S0417/0": "GRIFFONは、Windowsドメインの所属情報を取得できる偵察用モジュールを使用している。",
+  "procedure/S0488/0": "CrackMapExecは、ドメイングループ内の利用者アカウントを収集できる。"
+ },
+ "supplement": {
+  "summary": "ドメイン内のグループ（例：ドメイン管理者グループ）とその所属メンバーを調べる技術。どの利用者が強い権限を持っているかを把握し、権限昇格や横展開の標的を選ぶ材料にされる。",
+  "analogy": "会社の組織図を取り寄せて、どの部署が経営会議の決裁権を持っているか、誰がその部署に所属しているかを調べる行為に近い。組織図自体は機密ではなくても、それを使って「次に誰を狙えば効率的か」を判断できてしまう。",
+  "learn": [
+   "`net group /domain`のようなOS標準コマンド1つで、攻撃者はドメイン管理者などの強い権限を持つグループの全メンバーを特定できること"
+  ],
+  "interpretation": [
+   "この技術はDiscovery（探索）戦術に属し、攻撃そのものではなく「次に誰の認証情報や権限を狙うべきか」を決めるための下調べに使われる点で、権限昇格や認証情報アクセスの前段階として位置づけられる。"
+  ]
+ }
+}

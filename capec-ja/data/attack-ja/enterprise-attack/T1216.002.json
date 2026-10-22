@@ -1,0 +1,20 @@
+{
+ "id": "T1216.002",
+ "source_sha": "e2642778519a560a",
+ "status": "done",
+ "seg": {
+  "name": "SyncAppvPublishingServer",
+  "description/0": "攻撃者は、悪意あるPowerShellコマンドの実行を代理させるために、SyncAppvPublishingServer.vbsを悪用することがある。SyncAppvPublishingServer.vbsは、Windowsがアプリケーションを仮想化する方法（Microsoft Application Virtualization、すなわちApp-V）に関連するVisual Basicスクリプトである。例えば、Windowsは、Win32アプリケーションを仮想アプリケーションとして利用者に見せることがあり、これにより利用者はローカルにインストールされているかのように、そのアプリケーションを起動・操作できる。",
+  "description/1": "SyncAppvPublishingServer.vbsスクリプトは正規のものであり、Microsoftによって署名されている場合があり、通常は`\\System32`から、コマンドラインを介して`wscript.exe`で実行される。",
+  "description/2": "攻撃者は、SyncAppvPublishingServer.vbsを悪用して、PowerShellの実行制限を回避し、「環境寄生」によって防御対策を回避することがある。代理実行は、`powershell.exe`を直接呼び出す代わりの、信頼された・署名済みの手段として機能する場合がある。",
+  "description/3": "例えば、PowerShellコマンドは次のようにして呼び出すことができる。",
+  "description/4": "`SyncAppvPublishingServer.vbs \"n; {PowerShell}\"`",
+  "mitigation/M1038/0": "他のプログラムの実行に使える、署名済みの特定のスクリプトは、ある環境では必要ない場合がある。特定のシステムやネットワークで必要とされないのであれば、攻撃者による潜在的な悪用を防ぐため、こうしたスクリプトの実行をブロックするよう構成したアプリケーション制御を使う。"
+ },
+ "supplement": {
+  "summary": "Windowsのアプリケーション仮想化（App-V）機能に付随する正規スクリプトSyncAppvPublishingServer.vbsを悪用し、PowerShellの実行制限を回避してコマンドを実行する技術。procedureの実例は現時点では確認されていない（0件）。",
+  "analogy": "工事現場への立入は制限されているが、設備点検担当者用の通用口（App-Vの仕組み）を使えば、点検に見せかけて別の作業員を出入りさせられてしまうのに似ている。",
+  "learn": ["App-Vのような、一般にはあまり知られていないWindowsの機能にも、署名済みスクリプトを介した代理実行の経路が存在すること", "PowerShellの実行制限（実行ポリシー）が、別の正規スクリプトを経由することで回避される可能性があること"],
+  "interpretation": ["procedureの実例が確認されていない（0件）ことは、この手口がまだ広くは使われていない、あるいは検知・報告されにくいことを示唆している。App-Vという機能自体の利用率が低い組織では、このスクリプトの実行自体を完全にブロックすることが、実務上の影響を抑えつつ有効な対策になり得る。"]
+ }
+}

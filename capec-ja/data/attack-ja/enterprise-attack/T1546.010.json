@@ -1,0 +1,31 @@
+{
+ "id": "T1546.010",
+ "source_sha": "842a55ffb9856cdc",
+ "status": "done",
+ "seg": {
+  "name": "AppInit DLL",
+  "description/0": "攻撃者は、プロセスに読み込まれるAppInit DLLによって引き起こされる悪意あるコンテンツを実行させることで、永続化を確立し、権限を昇格させることがある。レジストリキー`HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows`または`HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows`内の`AppInit_DLLs`値で指定されたダイナミックリンクライブラリ(DLL)は、user32.dllを読み込むすべてのプロセスに、user32.dllによって読み込まれる。実際には、user32.dllは非常によく使われるライブラリであるため、ほぼすべてのプログラムが対象になる。",
+  "description/1": "プロセス・インジェクションと同様に、これらの値は、コンピューター上の別々のプロセスの文脈で悪意あるDLLを読み込み・実行させることで、権限を昇格させるために悪用される可能性がある。悪意あるAppInit DLLは、API活動によって継続的に呼び出されることで、永続化も提供することがある。",
+  "description/2": "AppInit DLLの機能は、セキュアブートが有効な場合、Windows 8以降では無効化されている。",
+  "mitigation/M1038/0": "攻撃者は、この技術を実行するために新しいAppInit DLLの実行ファイルを導入できる。Windows Defender Application Control・AppLocker・ソフトウェア制限ポリシーのようなアプリケーション制御ツールを適宜使い、AppInit DLLsの機能を通じて実行される可能性のある悪意あるソフトウェアを特定・ブロックすること。",
+  "mitigation/M1051/0": "Windows 8以降にアップグレードし、セキュアブートを有効にすること。",
+  "procedure/G0087/0": "APT39は、永続化を確立するために、レジストリキー`SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows`内の`LoadAppInit_DLLs`を設定するマルウェアを使った。",
+  "procedure/S0098/0": "被害者が特定の条件を満たす場合、T9000は、生成されるすべてのユーザーモードプロセスが悪意あるDLLであるResN32.dllを確実に読み込むようにするために、AppInit_DLLの機能を使って永続化を達成する。これは、次のレジストリキーを作成することで行われる：`HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_DLLs – %APPDATA%\\Intel\\ResN32.dll`と`HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\LoadAppInit_DLLs – 0x1`。",
+  "procedure/S0107/0": "Cherry Pickerの一部の変種は、次のレジストリキーを作成することで、AppInit_DLLsを使って永続化を達成する：`HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows \"AppInit_DLLs\"=\"pserver32.dll\"`。",
+  "procedure/S0458/0": "Ramsayは、AppInit DLLのレジストリキーを使って、他のアプリケーションのアドレス空間に自身を挿入できる。"
+ },
+ "supplement": {
+  "summary": "AppCert DLLsと似た仕組みで、ユーザーインターフェースの基盤ライブラリであるuser32.dllを読み込むほぼすべてのプロセス（事実上ほとんどすべてのプログラム）に、追加のDLLを読み込ませるAppInit_DLLs機能を悪用する技術。Windows 8以降、セキュアブートが有効なら無効化されるという対策が施された経緯がある。",
+  "facts": [
+   { "text": "AppInit DLLの機能は、セキュアブートが有効な場合、Windows 8以降では無効化されていると原典に明記されており、OS側の設計変更によってこの技術自体の有効性が大きく下がった経緯が読み取れる。", "source": "description" }
+  ],
+  "analogy": "AppCertDLLsが『新入社員が受け取るマニュアル』なら、AppInit_DLLsは『社内の掲示板を見るための専用眼鏡（user32.dll）を使う全員』に配られる、不正な追加資料に近い。掲示板を見る人はほぼ全員なので、影響範囲はAppCertDLLsと同様に広い。",
+  "learn": [
+   "AppCert DLLsとAppInit DLLsが、それぞれ異なるAPI（プロセス生成APIかuser32.dllか）を起点にした、似た構造を持つ姉妹関係の技術であること",
+   "OSの設計変更（セキュアブートによる機能無効化）が、技術そのものの有効性を過去のものにできるという、攻撃と防御のいたちごっこの一例"
+  ],
+  "interpretation": [
+   "このようにOS側の仕組みの変化によって無効化された技術であっても、ATT&CKの辞典に残り続けている理由は、セキュアブートが有効になっていない古い環境やWindows 7以前の環境がまだ現役で使われている場合に、依然として有効な攻撃手段となりうるためだと考えられる。"
+  ]
+ }
+}

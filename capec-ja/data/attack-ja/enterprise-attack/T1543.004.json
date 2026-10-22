@@ -1,0 +1,38 @@
+{
+ "id": "T1543.004",
+ "source_sha": "771241ce1b0fbfb6",
+ "status": "done",
+ "seg": {
+  "name": "Launch Daemon",
+  "description/0": "攻撃者は、永続化の一環として、悪意あるペイロードを実行させるために、Launch Daemonを作成または改変することがある。Launch Daemonは、macOSで使われるサービス管理フレームワークであるLaunchdとやりとりするために使われるplistファイルである。Launch Daemonの導入には高い権限が必要で、システム上のすべての利用者に対してログイン前に実行され、利用者の操作を必要とせずバックグラウンドで動作する。macOSの初期化時の起動中、launchdプロセスは、`/System/Library/LaunchDaemons/`と`/Library/LaunchDaemons/`にあるplistファイルから、オンデマンドで起動するシステムレベルのデーモンのパラメーターを読み込む。Launch Daemonに必要なパラメーターには、タスクを識別する`Label`、実行ファイルへのパスを示す`Program`、タスクの実行タイミングを指定する`RunAtLoad`が含まれる。Launch Daemonは、共有リソースへのアクセスの提供、ソフトウェアの更新、または自動化タスクの実行によく使われる。",
+  "description/1": "攻撃者は、`RunAtLoad`パラメーターを`true`に、`Program`パラメーターを悪意ある実行ファイルのパスに設定することで、起動時に実行されるように構成されたLaunch Daemonを導入することがある。デーモンの名前は、関連するOSや無害なソフトウェアに由来する名前を使って偽装される（すなわち偽装）ことがある。Launch Daemonが実行されると、そのプログラムは管理者権限を引き継ぐ。",
+  "description/2": "さらに、（サードパーティ製パッケージ管理ソフトウェアの導入のような）システム構成の変更によって、`usr/local/bin`のようなフォルダが全体に書き込み可能になることがある。そのため、設定の不備によって、攻撃者が既存のLaunch Daemonのplistファイルが参照する実行ファイルを改変できてしまう可能性がある。",
+  "mitigation/M1018/0": "利用者アカウントの権限を制限し、権限昇格の経路を修正することで、新しいLaunch Daemonを作成できるのは許可された管理者だけに限られるようにすること。",
+  "mitigation/M1047/0": "システム上でのフォルダ権限の悪用の機会を検知できる監査ツールを使うこと。特に、サードパーティ製ソフトウェアによるフォルダへの変更を確認すること。",
+  "procedure/G0082/0": "APT38は、悪意あるplistファイルを`/Library/LaunchDaemons`に保存することで永続化を確立した。",
+  "procedure/S0352/0": "`root`権限で動作している場合、OSX_OCEANLOTUS.Dは`/Library/LaunchDaemons`フォルダ内に永続化用のファイルを作成できる。",
+  "procedure/S0451/0": "LoudMinerは、RunAtLoadとKeepAliveキーを`true`に設定した、`com.[ランダムな名前].plist`という命名形式のplistファイルを`/Library/LaunchDaemons`フォルダに追加する。",
+  "procedure/S0482/0": "Bundloreは、LaunchDaemonを介して永続化できる。",
+  "procedure/S0497/0": "Daclsは、Launch Daemonを介して永続化を確立できる。",
+  "procedure/S0584/0": "AppleJeusは、`LaunchDaemons`フォルダ内にplistファイルを配置し、手動で起動した。",
+  "procedure/S0595/0": "Launch Agentが導入された後にroot権限で動作している場合、ThiefQuestは、`RunAtLoad`キーを`true`に設定したplistファイルを`/Library/LaunchDaemons/`フォルダに導入し、Launch Daemonとして永続化を確立する。",
+  "procedure/S0658/0": "XCSSETは、権限を昇格させ、システム制御を回避し、被害者への遠隔アクセスを可能にするために、sshのlaunchdaemonを使う。",
+  "procedure/S0690/0": "Green Lambertは、永続化を確立するために、`Library/LaunchDaemons`にplistファイルを追加できる。",
+  "procedure/S1105/0": "COATHANGERは、遠隔操作(C2)基盤との定期的な接続確認のために、デーモンを作成する。",
+  "procedure/S1219/0": "REPTILEのランチャーは、プロセスをデーモン化できる。"
+ },
+ "supplement": {
+  "summary": "Launch Agentの『システムレベル版』とも言えるLaunch Daemonは、ログイン前から全利用者に対してバックグラウンドで動く、より高い権限が必要なmacOSのしくみ。これを悪用すると、プログラムは管理者権限を引き継いで実行される。",
+  "facts": [
+   { "text": "Launch Daemonが実行されると、そのプログラムは管理者権限を引き継ぐと原典に書かれている。Launch Agent（利用者レベル権限）との権限の違いが、この技術の危険性を特徴づけている。", "source": "description" }
+  ],
+  "analogy": "マンションの各住戸の呼び鈴（Launch Agent、個々の利用者がログインしたときだけ動く）ではなく、マンション全体の電気系統を管理する設備（Launch Daemon、住民の誰かがログインする前から、建物全体に対して常に動いている）に相当する。後者を乗っ取られると、影響範囲も権限もはるかに大きくなる。",
+  "learn": [
+   "Launch AgentとLaunch Daemonの違い（利用者ログイン時のみ対利用者レベル／ログイン前から対システムレベル、より高い権限）",
+   "サードパーティ製ソフトウェアの導入が、意図せず`usr/local/bin`のようなフォルダを書き込み可能にしてしまう、設定不備のリスク"
+  ],
+  "interpretation": [
+   "この技術とLaunch Agent（T1543.001）は、同じ『macOSのlaunchdの仕組みを悪用する』という土台を共有しながら、要求される権限レベルと影響範囲で明確に区別される。防御側は、単に『plistファイルの監視』を行うだけでなく、監視対象のフォルダ（`/Library/LaunchAgents`か`/Library/LaunchDaemons`か）によって、想定すべき被害の重大度を変える必要がある。"
+  ]
+ }
+}

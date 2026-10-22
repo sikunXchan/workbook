@@ -1,0 +1,50 @@
+{
+ "id": "T1543.001",
+ "source_sha": "229a7daff33a4b76",
+ "status": "done",
+ "seg": {
+  "name": "Launch Agent",
+  "description/0": "攻撃者は、永続化の一環として、悪意あるペイロードを繰り返し実行させるために、Launch Agentを作成または改変することがある。利用者がログインすると、利用者ごとのlaunchdプロセスが開始され、`/System/Library/LaunchAgents`、`/Library/LaunchAgents`、`~/Library/LaunchAgents`にあるプロパティリスト(.plist)ファイルから、オンデマンドで起動される各利用者エージェントのパラメーターを読み込む。プロパティリストファイルは、`Label`・`ProgramArguments`・`RunAtLoad`というキーを使って、Launch Agentの名前・実行ファイルの場所・実行時刻を指定する。Launch Agentは、プログラムの更新を行うため、ログイン時に利用者が指定したプログラムを起動するため、またその他の開発者向けの作業を行うために導入されることが多い。",
+  "description/1": "Launch Agentは、Launchctlコマンドを使って実行することもできる。",
+  "description/2": "攻撃者は、適切なフォルダに、`RunAtLoad`または`KeepAlive`キーを`true`に設定した.plistファイルを配置することで、ログイン時に実行される新しいLaunch Agentを導入することがある。Launch Agentの名前は、関連するOSや無害なソフトウェアに由来する名前を使って偽装されることがある。Launch Agentは利用者レベルの権限で作成され、利用者レベルの権限で実行される。",
+  "mitigation/M1022/0": "`~/launchagents`フォルダへのファイル権限を制限するよう、グループポリシーを設定すること。",
+  "procedure/G0082/0": "APT38は、macOS上で永続化を確立するために、Launch Agentを~/Library/NodePackages/に配置する、複数プラットフォーム対応のインプラントを実行した。",
+  "procedure/G1052/0": "Contagious Interviewは、InvisibleFerretマルウェアを使い、LaunchAgentsを介して起動時にスクリプトを実行するファイルを作成することで永続化を確立した。Contagious Interviewは、悪意あるbashスクリプトを永続化させるために、`/Library/LaunchAgents`にあるplistファイルも利用した。",
+  "procedure/S0162/0": "Komplexトロイの木馬は、`$HOME/Library/LaunchAgents/com.apple.updates.plist`という名前の、`launchctl load -w ~/Library/LaunchAgents/com.apple.updates.plist`で呼び出される、持続的なLaunch Agentを作成する。",
+  "procedure/S0198/0": "NETWIREは、永続化のためにLaunch Agentを使うことができる。",
+  "procedure/S0235/0": "CrossRATは、macOS上にLaunch Agentを作成する。",
+  "procedure/S0274/0": "Calistoは、永続化を維持するために、.plistファイルを/Library/LaunchAgentsフォルダに追加する。",
+  "procedure/S0276/0": "Keydnapは、永続化のためにLaunch Agentを使う。",
+  "procedure/S0277/0": "FruitFlyは、Launch Agentを介して永続化する。",
+  "procedure/S0279/0": "Protonは、Launch Agentを介して永続化する。",
+  "procedure/S0281/0": "Dokは、各plistファイルについて`com.random.name.plist`という形式を保ったランダムに生成された名前で、すべてのネットワーク通信をリダイレクトするため、2つのLaunchAgentsを導入する。",
+  "procedure/S0282/0": "MacSpyは、Launch Agentを介して永続化する。",
+  "procedure/S0352/0": "OSX_OCEANLOTUS.Dは、`/Library/LaunchAgents`フォルダ内に永続化用のファイルを作成できる。",
+  "procedure/S0369/0": "CoinTickerは、永続化を確立するために、.espl.plistとcom.apple.[ランダムな文字列].plistという名前の利用者Launch Agentを作成する。",
+  "procedure/S0482/0": "Bundloreは、LaunchAgentを介して永続化できる。",
+  "procedure/S0492/0": "CookieMinerは、暗号資産マイニングソフトウェアの永続化を維持するため、複数の新しいLaunch Agentsを導入した。",
+  "procedure/S0497/0": "Daclsは、LaunchAgentを介して永続化を確立できる。",
+  "procedure/S0595/0": "ThiefQuestは、暗号化され埋め込まれたLaunch Agentプロパティリストのテンプレートを使って、起動項目を導入する。plistファイルは`~/Library/LaunchAgents/`フォルダ内に導入され、`~/Library/`フォルダ内にある永続化用バイナリへのパスが設定される。",
+  "procedure/S0690/0": "Green Lambertは、`RunAtLoad`キーの値を`true`に設定したLaunch Agentを作成し、`com.apple.GrowlHelper.plist`ファイルが利用者のログインごとに必ず実行されるようにできる。",
+  "procedure/S1016/0": "MacMaは、`RunAtLoad`の値を`true`に設定した`com.apple.softwareupdate.plist`ファイルを`/LaunchAgents`フォルダに導入する。利用者のログイン時、MacMaはroot権限で`/var/root/.local/softwareupdate`から実行される。一部の変種には、ログイン中のGUI利用者がいる場合にのみMacMaが実行されるようにする`LimitLoadToSessionType`キー（値は`Aqua`）も含まれる。",
+  "procedure/S1048/0": "macOS.OSAMinerは、`plist`拡張子を持つStripped Payloadsを、Launch Agentのフォルダに配置した。",
+  "procedure/S1153/0": "Cuckoo Stealerは、悪意あるペイロードを繰り返し実行するLaunch Agentを作成することで、永続化を達成できる。",
+  "procedure/S1245/0": "InvisibleFerretは、“com.avatar.update.wake.plist”という名前のファイルを使い、起動時に実行されるmacOS上のLaunchAgentsを使って永続化を確立した。",
+  "procedure/S9010/0": "GlassWormは、`/library/LaunchAgents`配下にplistを書き込むことで、LaunchAgentを介してmacOS上で永続化を確立した。",
+  "procedure/S9043/0": "Mini Shai-Huludは、60秒ごとにGitHubをポーリングするgh-token-monitorデーモンをLaunchAgentを通じて導入することで、macOSホスト上で永続化を確立した。"
+ },
+ "supplement": {
+  "summary": "macOS特有の仕組みであるLaunch Agent（利用者ログイン時に実行されるlaunchdのプロパティリスト設定）を悪用し、ログインするたびに悪意あるペイロードを実行させる技術。実際の使用例はこのサイトでATT&CKのサブ技術として扱う中でも特に多く、macOSを狙うマルウェアの定番の持続化手段であることが伺える。",
+  "facts": [
+   { "text": "Launch Agentは利用者レベルの権限で作成・実行されるため、T1543.004のLaunch Daemon（root権限で実行される）とは権限の強さが異なる、と原典のdescriptionに書かれている。", "source": "description" }
+  ],
+  "analogy": "毎朝、家の鍵を開けると自動的に点灯する照明のタイマーのような仕組みに似ている。この「ログインしたら自動実行する」という便利な機能（本来はソフトウェアの自動更新などに使われる）を、攻撃者が「ログインしたら自分の悪意あるプログラムを動かす」ための仕掛けとして流用する。",
+  "learn": [
+   "macOSのLaunch Agent・Launch Daemonという仕組みが、本来は正規のソフトウェア更新やユーザー指定プログラムの起動のために用意されていること",
+   "原典の実際の使用例の数の多さから、この技術がmacOSを狙う実在のマルウェアで極めて頻繁に使われる、定番の持続化手段であることが読み取れること"
+  ],
+  "interpretation": [
+   "多数の実在するマルウェア（Proton, FruitFly, CoinTicker, ThiefQuestなど）が同じLaunch Agentという一つの仕組みを使っている事実は、macOSのセキュリティ対策において、この一か所（`~/Library/LaunchAgents`などのフォルダの監視）を押さえることが、非常に多種多様な脅威への対策として効果的であることを示唆している。"
+  ]
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "id": "T1018",
+ "source_sha": "eb212dc55c92efef",
+ "status": "done",
+ "seg": {
+  "name": "リモートシステムの探索",
+  "description/0": "攻撃者は、現在のシステムからの横展開に使えるような、ネットワーク上の他のシステムのIPアドレス・ホスト名・その他の論理識別子による一覧を得ようとすることがある。これを実現する機能がリモートアクセス用ツール内に存在することもあるが、Pingや、Netによる`net view`、あるいはESXiサーバーでの`esxcli network diag ping`のような、OS標準のユーティリティも使われることがある。",
+  "description/1": "攻撃者は、環境内のリモートシステムの存在を発見するために、ローカルホストファイル（例：`C:\\Windows\\System32\\Drivers\\etc\\hosts`や`/etc/hosts`）や、その他の受動的な手段（ローカルのArpキャッシュの項目など）からのデータを分析することもある。",
+  "description/2": "攻撃者は、ネットワーク基盤そのものの探索を目的とすることもあり、ネットワーク機器上でNetwork Device CLIのコマンド（例：`show cdp neighbors`、`show arp`）を利用して、ネットワーク内のシステムについての詳細な情報を集めることもある。",
+  "procedure/G0004/0": "Ke3changは、Pingを含むネットワークスキャン・列挙ツールを使用した。",
+  "procedure/G0009/0": "Deep Pandaは、関心のある他のマシンを特定するためにpingを使用した。",
+  "procedure/G0010/0": "Turlaは、チェックイン時にシステムを調べ、`net view`や`net view /DOMAIN`コマンドでローカルネットワーク上のリモートシステムを見つける。Turlaは、組織のDCやExchange Serverを含むドメインコンピュータを列挙するために、`net group \"Domain Computers\" /domain`、`net group \"Domain Controllers\" /domain`、`net group \"Exchange Servers\" /domain`も使用している。",
+  "procedure/G0019/0": "Naikonは、リモートマシンの特定にNetBIOSスキャナを使用した。",
+  "procedure/G0022/0": "APT3は、リモートシステムの存在を検知できるツールを持っている。",
+  "procedure/G0027/0": "Threat Group-3390は、`net view`コマンドを使用した。",
+  "procedure/G0030/0": "Lotus Blossomは、リモートシステムを特定するためにPingを使用した。",
+  "procedure/G0034/0": "Sandworm Teamは、LDAPを使ってActive Directoryに問い合わせるツールを使用し、AD内に一覧されたコンピュータについての情報を見つけた。",
+  "procedure/G0035/0": "Dragonflyは、被害者環境内のホストの一覧を入手したとみられている。",
+  "procedure/G0037/0": "FIN6は、公開ツール（Microsoft標準のSQL問い合わせツールであるosql.exeを含む）を使用して、内部ネットワークの地図を作り、Active Directory・SQLサーバー・NetBIOSに対する偵察を行った。",
+  "procedure/G0045/0": "menuPassは、被害者のネットワーク上のIP範囲を列挙するためにスクリプトを使用する。menuPassは、ネットワーク上のリモートシステムについての情報を集めるために、PlugXインプラントに`net view /domain`コマンドを発行することもある。",
+  "procedure/G0050/0": "APT32は、`net group \"Domain Controllers\" /domain`コマンドを使ってDCサーバーを列挙した。このグループは`ping`コマンドも使用している。",
+  "procedure/G0053/0": "FIN5は、ネットワークの地図を作り標的の一覧を構築するために、オープンソースツールEssential NetToolsを使用した。",
+  "procedure/G0059/0": "Magic Houndは、標的のネットワーク上での探索にPingを使用した。",
+  "procedure/G0060/0": "BRONZE BUTLERは、通常`ping`とNetを使ってシステムを列挙する。"
+ },
+ "supplement": {
+  "summary": "横展開（ラテラルムーブメント）の準備として、同じネットワーク上に他にどんなシステムがあるかを調べる技術。PingやNetコマンドなどOS標準の機能のほか、hostsファイルやArpキャッシュといった受動的な手がかりからも、リモートシステムの存在を割り出せる。",
+  "analogy": "見知らぬオフィスビルに入り込んだ人が、各フロアの表示案内やインターホンの一覧を見て『このビルには他にどんな部署や部屋があるか』を把握する行為に近い。この時点ではまだどの部屋にも足を踏み入れていないが、次にどこへ移動すべきかの計画を立てられるようになる。",
+  "learn": [
+   "この技術が横展開そのものではなく、その前段の『どこへ移動できるか』を把握するための探索であること",
+   "Active DirectoryへのLDAP問い合わせ（Sandworm Teamの例）のように、Windowsドメイン環境ではドメインコントローラへの問い合わせが特に有力な手がかりになること"
+  ],
+  "interpretation": [
+   "FIN6がMicrosoft標準のosql.exeという正規ツールを使って内部ネットワークの地図を作った例は、横展開に先立つ探索の多くが、悪意あるツールの持ち込みなしに、環境にすでに存在する管理ツールだけで完結してしまうことを示している。ネットワーク境界だけでなく、内部での『誰が、どの範囲のシステム一覧を、どのツールで取得しているか』という振る舞いの監視が、横展開の予兆を捉える鍵になる。"
+  ]
+ }
+}

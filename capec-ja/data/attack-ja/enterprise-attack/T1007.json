@@ -1,0 +1,41 @@
+{
+ "id": "T1007",
+ "source_sha": "d334a1f26a183c27",
+ "status": "done",
+ "seg": {
+  "name": "システムサービスの探索",
+  "description/0": "攻撃者は、登録されているローカルシステムサービスについての情報を集めようとすることがある。攻撃者は、ツールや、`sc query`・`tasklist /svc`・`systemctl --type=service`・`net start`といったOSユーティリティコマンドを使ってサービスの情報を得ることがある。攻撃者は、Windowsでは`schtasks`、LinuxやmacOSでは`crontab -l`といったコマンドを通じて、スケジュールされたタスクについての情報を集めることもある。",
+  "description/1": "攻撃者は、自動探索の際にシステムサービスの探索から得た情報を使い、標的を完全に感染させるかどうかや、特定の行動を試みるかどうかなど、その後の行動を形作ることがある。",
+  "procedure/G0004/0": "Ke3changは、`net start`コマンドを使ってサービス探索を行う。",
+  "procedure/G0006/0": "APT1は、`net start`と`tasklist`コマンドを使って、システム上のサービスの一覧を取得した。",
+  "procedure/G0010/0": "Turlaは、チェックイン時にシステムを調べ、`tasklist /svc`コマンドを使って稼働中のサービスと関連プロセスを探索する。",
+  "procedure/G0018/0": "admin@338の攻撃者は、LOWBALLマルウェアでマシンを侵害した後、サービスについての情報を得るため次のコマンドを使った：`net start >> %temp%\\download`",
+  "procedure/G0033/0": "Poseidon Groupは、被害者を侵害した後、稼働中のすべてのサービスを探索する。",
+  "procedure/G0049/0": "OilRigは、被害者上でサービスについての情報を集めるため`sc query`を使っている。",
+  "procedure/G0060/0": "BRONZE BUTLERは、システムサービスを探索するためTROJ_GETVERSIONを使っている。",
+  "procedure/G0094/0": "Kimsukyは、被害者のシステム上で稼働するすべてのサービスの名前を集めるため、インストルメンター・スクリプトを使っている。",
+  "procedure/G0114/0": "Chimeraは、システムサービスの探索のため`net start`と`net use`を使っている。",
+  "procedure/G0119/0": "Indrik Spiderは、システムからサービスの一覧を取得するためwin32_service WMIクラスを使っている。",
+  "procedure/G0139/0": "TeamTNTは、Alibaba CloudセキュリティのaliyunサービスやBMC Helix Cloud Securityのbmc-agentサービスを無効化するため、これらを探している。",
+  "procedure/G0143/0": "Aquatic Pandaは、サードパーティ製EDR製品のサービスを探索しようとした。",
+  "procedure/G1006/0": "Earth Luscaは、侵害したホストから情報を取得するためTasklistを使っている。",
+  "procedure/G1017/0": "Volt Typhoonは、稼働中のサービスを一覧表示するため`net start`を使っている。",
+  "procedure/G1054/0": "MirrorFaceは、侵害後の探索のためTasklistを使っている。",
+  "procedure/G1059/0": "NIMBUS MANTICOREは、Atelier Web Remote Commander（AWRC）を含む遠隔管理サービスを使って、稼働中のサービスを特定している。",
+  "procedure/S0015/0": "Ixesheは、稼働中のサービスを一覧表示できる。",
+  "procedure/S0018/0": "Sykipotは、稼働中のサービスを表示するため`net start`を使う場合がある。",
+  "procedure/S0024/0": "Dyreは、侵害したホスト上の稼働中のサービスを特定する能力を持つ。",
+  "procedure/S0039/0": "`net start`コマンドは、Windowsサービスについての情報を見つけるためNetで使うことができる。"
+ },
+ "supplement": {
+  "summary": "対象システムにどのサービス（EDR製品やセキュリティ関連サービスを含む）が稼働しているかを調べる、侵害後の探索技術。OS標準のコマンドだけで実行できるため、ほぼすべての攻撃グループやマルウェアが使うごく基本的な手口になっている。",
+  "analogy": "泥棒が建物に入った直後、警備会社のロゴが貼られた機器や警備員の配置を確認して、どの警備サービスが使われているかを把握する行動に当たる。この情報は、警備をかいくぐるための後の行動（防御回避）の判断材料になる。",
+  "learn": [
+   "この探索技術で得た情報が、攻撃者が『標的に完全に感染させるか』を決める判断材料として使われること",
+   "対策が0件である理由（`net start`や`tasklist`は正規の管理コマンドであり、実行そのものを禁止することが現実的ではないため）"
+  ],
+  "interpretation": [
+   "この技術に対策が1件も挙げられていない事実は見過ごせない。これは、サービス一覧の取得が本質的に無害な操作であり、技術的に防ぐ対象ではなく、検知の対象として扱うべきことを示している。特に『サードパーティ製EDR製品のサービスを探す』という事例は、この探索が単なる偵察ではなく、防御側の監視能力そのものを把握し、その後の防御回避の計画につなげるための重要な一歩であることを物語っている。"
+  ]
+ }
+}

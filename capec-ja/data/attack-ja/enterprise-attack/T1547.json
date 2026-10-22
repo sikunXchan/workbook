@@ -1,0 +1,21 @@
+{
+ "id": "T1547",
+ "source_sha": "dd80645528da09c7",
+ "status": "done",
+ "seg": {
+  "name": "ブート・ログオン自動実行",
+  "description/0": "攻撃者は、侵害したシステム上で永続化を維持するか、より高い権限を得るために、システム起動時やログオン時にプログラムを自動的に実行するようシステム設定を構成することがある。OSには、システム起動時やアカウントのログオン時にプログラムを自動実行するためのしくみが備わっていることがある。これらのしくみには、特別に指定されたディレクトリに置かれたプログラムを自動実行すること、あるいはWindowsレジストリのような設定情報を保存するリポジトリから参照されるプログラムを自動実行することなどが含まれる。攻撃者は、カーネルの機能を変更・拡張することでも同じ目的を達成することがある。",
+  "description/1": "ブート・ログオン時の自動実行プログラムの一部はより高い権限で動作するため、攻撃者はこれを利用して権限を昇格させることがある。",
+  "procedure/G1044/0": "APT42は、永続化を維持するためにレジストリを変更した。",
+  "procedure/S0083/0": "Misdatは、`HKCU\\Software\\dnimtsoleht\\StubPath`、`HKCU\\Software\\snimtsOleht\\StubPath`、`HKCU\\Software\\Backtsaleht\\StubPath`、`HKLM\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components\\{3bf41072-b2b1-21c8-b5c1-bd56d32fbda7}`、`HKLM\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components\\{3ef41072-a2f1-21c8-c5c1-70c2c3bc7905}`を含む、永続化のためのレジストリキーを作成した。",
+  "procedure/S0084/0": "Mis-Typeは、`HKCU\\Software\\bkfouerioyou`、`HKLM\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components\\{6afa8072-b2b1-31a8-b5c1-{固有識別子}`、`HKLM\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components\\{3BF41072-B2B1-31A8-B5C1-{固有識別子}`を含む、永続化のためのレジストリキーを作成した。",
+  "procedure/S0567/0": "DtrackのRATは、ホスト起動時に自動実行される永続的な標的ファイルを作成する。",
+  "procedure/S0651/0": "BoxCaonは、`HKEY_CURRENT_USER\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\load`レジストリキーを自身の実行ファイルを指すように設定することで、永続化を確立した。",
+  "procedure/S0653/0": "xCaonは、レジストリキー`HKEY_CURRENT_USER\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\load`を介して永続化を追加しており、これによりいずれかの利用者がログインするたびにマルウェアが実行される。"
+ },
+ "supplement": {
+  "summary": "システム起動時やログオン時に自動実行されるしくみ（スタートアップ、レジストリの各種実行キー、カーネル拡張など）を悪用して、再起動をまたいでプログラムを実行させ続ける、あるいはより高い権限を得るための、親となる技術。具体的な手口は多数のサブ技術に分かれている。",
+  "learn": ["ブート・ログオン自動実行は単一の手口ではなく、Windowsのレジストリ実行キーからmacOSのLaunch Daemon、Linuxのudevルールまで、OSごとに多種多様なサブ技術の集合であること", "一部の自動実行のしくみがより高い権限で動作するため、永続化の確立と権限昇格が同じ手口で同時に達成できる場合があること"],
+  "interpretation": ["この技術が、永続化（Persistence）と権限昇格（Privilege Escalation）の両方の戦術に紐づけられている理由は、『システムが自動的にプログラムを実行する』というしくみの性質そのものが、再起動後も残り続ける（永続化）という側面と、昇格した文脈で実行される（権限昇格）という側面の両方を同時に持つためである。防御側が片方の戦術だけに注目して対策すると、もう一方の側面を見落とす危険がある。"]
+ }
+}

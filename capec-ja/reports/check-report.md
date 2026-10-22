@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-21T19:01:37.628Z
+実行日時: 2026-10-22T06:51:10.146Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -8,79 +8,227 @@
 - ✅ View: 公式XML 13件 / ページ 13件
 
 ## 2. 内部リンク切れ
-- ✅ 内部リンク切れ 0件（全22153件を確認）
+- ✅ 内部リンク切れ 0件（全38773件を確認）
 
 ## 3. 英語のまま残っている本文
-- ✅ 未翻訳の箇所: 0件
+- ❌ 未翻訳の箇所: 12626件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 42件
--   capec/1/index.html: Example Instances
-Java EE
--   capec/105/index.html: Example Instances
-Microsoft Internet Explorer
--   capec/135/index.html: intl/gettext/loadmsgcat.c
--   capec/237/index.html: Example Instances
-Exploit:Java/ByteVerify.C
--   capec/26/index.html: Example Instances
-Nortel Application Switch
--   capec/267/index.html: Example Instances
-Microsoft Internet Explorer
--   capec/273/index.html: Example Instances
-Red Hat
--   capec/273/index.html: Jboss Enterprise Application Platform
--   capec/275/index.html: Example Instances
-www.evil.com
--   capec/279/index.html: Simple Object Access Protocol
--   capec/29/index.html: Example Instances
-Nortel Application Switch
--   capec/298/index.html: Resources Required
-UDP Ping
--   capec/299/index.html: Resources Required
-SYN Ping
--   capec/32/index.html: Resources Required
-HTTP POST
--   capec/33/index.html: Sun Java System Web Proxy Server
--   capec/33/index.html: Sun Java System Application Server
--   capec/46/index.html: Example Instances
-Yamaha MidiPlug
--   capec/475/index.html: Example Instances
-Windows CryptoAPI
--   capec/521/index.html: AMD Phenom II X
--   capec/549/index.html: Low Energy Audio Protocol
--   capec/561/index.html: Extended Description
-Windows NT
--   capec/562/index.html: Microsoft Enhanced Mitigation Experience Toolkit
--   capec/577/index.html: dir /A ntuser.dat
--   capec/600/index.html: J.P. Morgan Chase
--   capec/645/index.html: Example Instances
-Bronze Butler
--   capec/652/index.html: Example Instances
-Bronze Butler
--   capec/657/index.html: eTrust Antivirus Webscan Automated Update Remote Code Execution
--   capec/665/index.html: Input-Output Memory Management Units
--   capec/70/index.html: Microsoft Security Response Center
--   capec/700/index.html: Smart Install Exploitation Tool
--   capec/701/index.html: Adversary in the Browser
--   capec/701/index.html: Browser in the Middle
--   capec/701/index.html: Browser in the Middle
--   capec/72/index.html: Example Instances
-IceCast MP
--   capec/75/index.html: Example Instances
-BEA Weblogic
--   capec/80/index.html: Microsoft Internet Information Server
--   capec/82/index.html: XML Ping of Death
--   capec/92/index.html: server/dia/audispatch.c
--   capec/93/index.html: Example Instances
-Dave Nielsen
--   capec/93/index.html: INFO: Failed to parse val
--   capec/95/index.html: Web Services Description Language
--   capec/95/index.html: Seven Steps to XML Mastery, Step
+- ❌ 本文に残る英語（4語以上連続）: 429件
+-   attack/enterprise-attack/index.html: ATT CK 
+MITRE ATT CK
+-   attack/enterprise-attack/tactics/TA0112/index.html: File and Directory Permissions Modification
+-   attack/enterprise-attack/techniques/T1001.003/index.html: Host: ocsp.verisign.com
+-   attack/enterprise-attack/techniques/T1003/index.html: Security Account Manager T
+-   attack/enterprise-attack/techniques/T1003/index.html: Lightweight Directory Access Protocol
+-   attack/enterprise-attack/techniques/T1003.001/index.html: Local Security Authority Subsystem Service
+-   attack/enterprise-attack/techniques/T1003.001/index.html: ma lsass.exe lsass
+-   attack/enterprise-attack/techniques/T1003.001/index.html: sekurlsa::Minidump lsassdump.dmp
+-   attack/enterprise-attack/techniques/T1003.001/index.html: sekurlsa::logonPasswords
+comsvcs.dll
+-   attack/enterprise-attack/techniques/T1003.001/index.html: comsvcs.dll MiniDump PID lsass.dmp full
+-   attack/enterprise-attack/techniques/T1003.001/index.html: Windows Security Support Provider
+-   attack/enterprise-attack/techniques/T1003.001/index.html: Simple Authentication Security Layer
+-   attack/enterprise-attack/techniques/T1003.003/index.html: ntds.dit Active Directory
+-   attack/enterprise-attack/techniques/T1003.003/index.html: msadcs.exe  NTDS.dit
+-   attack/enterprise-attack/techniques/T1003.003/index.html: Directory Replication Services API
+-   attack/enterprise-attack/techniques/T1003.005/index.html: System Security Services Daemon
+-   attack/enterprise-attack/techniques/T1003.005/index.html: var/lib/sss/db/cache
+-   attack/enterprise-attack/techniques/T1003.005/index.html: var/opt/quest/vas/authcache/vas
+-   attack/enterprise-attack/techniques/T1003.008/index.html: usr/bin/unshadow /etc/passwd /etc/shadow   /tmp/crack.password.db
+-   attack/enterprise-attack/techniques/T1007/index.html: BMC Helix Cloud Security
+-   attack/enterprise-attack/techniques/T1007/index.html: Atelier Web Remote Commander
+-   attack/enterprise-attack/techniques/T1014/index.html: etc/ld.so.preload
+-   attack/enterprise-attack/techniques/T1014/index.html: Hacking Team UEFI Rootkit
+-   attack/enterprise-attack/techniques/T1016/index.html: esxcli network nic list
+-   attack/enterprise-attack/techniques/T1016/index.html: esxcli network ip interface ipv
+-   attack/enterprise-attack/techniques/T1016.001/index.html: cmd.exe /c ping
+-   attack/enterprise-attack/techniques/T1016.002/index.html: netsh wlan show profiles
+-   attack/enterprise-attack/techniques/T1016.002/index.html: netsh wlan show profile
+-   attack/enterprise-attack/techniques/T1016.002/index.html: netsh wlan show networks mode
+-   attack/enterprise-attack/techniques/T1016.002/index.html: netsh wlan show interfaces
+-   attack/enterprise-attack/techniques/T1016.002/index.html: netsh wlan show profiles
+-   attack/enterprise-attack/techniques/T1016.002/index.html: netsh wlan show profiles
+-   attack/enterprise-attack/techniques/T1016.002/index.html: netsh wlan show interface
+-   attack/enterprise-attack/techniques/T1018/index.html: esxcli network diag ping
+-   attack/enterprise-attack/techniques/T1018/index.html: net group  Domain Computers  /domain
+-   attack/enterprise-attack/techniques/T1018/index.html: net group  Domain Controllers  /domain
+-   attack/enterprise-attack/techniques/T1018/index.html: net group  Exchange Servers  /domain
+-   attack/enterprise-attack/techniques/T1018/index.html: net group  Domain Controllers  /domain
+-   attack/enterprise-attack/techniques/T1021.004/index.html: Putty Secure Copy Client
+-   attack/enterprise-attack/techniques/T1027.006/index.html: Google Chrome Enterprise Policies
+-   attack/enterprise-attack/techniques/T1033/index.html: cmd.exe  /C whoami
+-   attack/enterprise-attack/techniques/T1033/index.html: cmd.exe /C quser
+-   attack/enterprise-attack/techniques/T1036.001/index.html: Tencent Technology   Company Limited
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Corel Writing Tools Utility
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Microsoft Network Realtime Inspection Service
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Windows Management Help Service
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Windows Advanced Task Manager
+-   attack/enterprise-attack/techniques/T1036.004/index.html: WMI Performance Adapter Extension
+-   attack/enterprise-attack/techniques/T1036.004/index.html: com.apple.openssl.plist
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Windows Defender System Service
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Windows Update Security Patches
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Google Chrome Security Update
+-   attack/enterprise-attack/techniques/T1036.004/index.html: usr/lib/systemd/system
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Windows Power Efficiency Diagnostics
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Server Manager Performance Monitor
+-   attack/enterprise-attack/techniques/T1036.004/index.html: Microsoft Windows DeviceSync Service
+-   attack/enterprise-attack/techniques/T1036.011/index.html: usr/lib/systemd/systemd-journald
+-   attack/enterprise-attack/techniques/T1037/index.html: etc/rc.d/init.d
+-   attack/enterprise-attack/techniques/T1037/index.html: etc/init.d/localnet
+-   attack/enterprise-attack/techniques/T1037.002/index.html: Library/Preferences/com.apple.loginwindow.plist
+-   attack/enterprise-attack/techniques/T1037.002/index.html: com.apple.loginwindow.plist
+-   attack/enterprise-attack/techniques/T1037.002/index.html: com.apple.loginwindow.plist
+-   attack/enterprise-attack/techniques/T1037.002/index.html: Launch Daemon/Launch Agent
+-   attack/enterprise-attack/techniques/T1037.004/index.html: etc/rc.local.d/local.sh
+-   attack/enterprise-attack/techniques/T1037.004/index.html: Mac OS X Panther v
+-   attack/enterprise-attack/techniques/T1037.004/index.html: etc/rc.local.d
+-   attack/enterprise-attack/techniques/T1047/index.html: wmic.exe Shadowcopy Delete
+-   attack/enterprise-attack/techniques/T1047/index.html: Windows Defender Application Control
+-   attack/enterprise-attack/techniques/T1047/index.html: cmd /c wmic computersystem get domain
+-   attack/enterprise-attack/techniques/T1048/index.html: ESXiIaaSLinuxmacOSNetwork DevicesOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1048.002/index.html: Secure File Transfer Protocol
+-   attack/enterprise-attack/techniques/T1049/index.html: esxi network ip connection list
+-   attack/enterprise-attack/techniques/T1053.002/index.html: at.allow/at.deny
+-   attack/enterprise-attack/techniques/T1053.005/index.html: schtasks /create /tn  mysc  /tr C
+-   attack/enterprise-attack/techniques/T1053.005/index.html: test.exe /sc ONLOGON /ru  System
+-   attack/enterprise-attack/techniques/T1053.006/index.html: usr/lib/systemd/system
+-   attack/enterprise-attack/techniques/T1053.006/index.html: config/systemd/user/gh-token-monitor.service
+-   attack/enterprise-attack/techniques/T1056.002/index.html: Applications/Safari.app/Contents/MacOS/SafariForWebKitDevelopment
+-   attack/enterprise-attack/techniques/T1057/index.html: esxcli system process list
+-   attack/enterprise-attack/techniques/T1059/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1059.002/index.html: osascript /path/to/script
+-   attack/enterprise-attack/techniques/T1059.002/index.html: set keychainPassword to do shell script
+-   attack/enterprise-attack/techniques/T1059.003/index.html: cmd.exe  /C whoami
+-   attack/enterprise-attack/techniques/T1059.005/index.html: Visual Basic for Applications
+-   attack/enterprise-attack/techniques/T1059.005/index.html: Mark of the Web
+-   attack/enterprise-attack/techniques/T1059.013/index.html: Docker SDK for Python
+-   attack/enterprise-attack/techniques/T1068/index.html: Bring Your Own Vulnerable Driver
+-   attack/enterprise-attack/techniques/T1068/index.html: Windows Defender Exploit Guard
+-   attack/enterprise-attack/techniques/T1068/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1069/index.html: ContainersIaaSIdentity ProviderLinuxmacOSOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1069.002/index.html: net group  Domain Admins  /domain
+-   attack/enterprise-attack/techniques/T1069.002/index.html: net group  domain admins  /domain
+-   attack/enterprise-attack/techniques/T1069.002/index.html: net group  domain admins  /domain
+-   attack/enterprise-attack/techniques/T1069.002/index.html: net group  Exchange Trusted Subsystem  /domain
+-   attack/enterprise-attack/techniques/T1069.002/index.html: net group  domain admins  /dom
+-   attack/enterprise-attack/techniques/T1069.002/index.html: net group Exchange Trusted Subsystem /domain
+-   attack/enterprise-attack/techniques/T1069.002/index.html: net group domain admins /domain
+-   attack/enterprise-attack/techniques/T1069.003/index.html: Google Cloud Identity Provider API
+-   attack/enterprise-attack/techniques/T1069.003/index.html: az ad user get-member-groups
+-   attack/enterprise-attack/techniques/T1070/index.html: ContainersESXiLinuxmacOSNetwork DevicesOffice SuiteWindows
+T
+-   attack/enterprise-attack/techniques/T1070.003/index.html: var/log/shell.log
+-   attack/enterprise-attack/techniques/T1070.003/index.html: AppData/Roaming/Microsoft/Windows/PowerShell/PSReadline/ConsoleHost
+-   attack/enterprise-attack/techniques/T1070.004/index.html: Command and Scripting Interpreter
+-   attack/enterprise-attack/techniques/T1070.005/index.html: SMB/Windows Admin Shares
+-   attack/enterprise-attack/techniques/T1072/index.html: Atelier Web Remote Commander
+-   attack/enterprise-attack/techniques/T1072/index.html: Microsoft System Center Configuration Manager
+-   attack/enterprise-attack/techniques/T1078/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1078.001/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1078.001/index.html: powershell.exe  /c net user DefaultAccount /active:yes
+-   attack/enterprise-attack/techniques/T1078.004/index.html: Azure AD Graph API
+-   attack/enterprise-attack/techniques/T1087/index.html: ESXiIaaSIdentity ProviderLinuxmacOSOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1087.001/index.html: esxcli system account list
+-   attack/enterprise-attack/techniques/T1087.001/index.html: net group  REDACTED  /domain
+-   attack/enterprise-attack/techniques/T1087.001/index.html: download net user /domain
+-   attack/enterprise-attack/techniques/T1087.001/index.html: net group  domain admins  /domain
+-   attack/enterprise-attack/techniques/T1087.001/index.html: net group  Exchange Trusted Subsystem  /domain
+-   attack/enterprise-attack/techniques/T1087.002/index.html: net group  REDACTED  /domain
+-   attack/enterprise-attack/techniques/T1087.002/index.html: net group  Domain Admins  /domain
+-   attack/enterprise-attack/techniques/T1087.002/index.html: net group  domain admins  /domain
+-   attack/enterprise-attack/techniques/T1087.002/index.html: net group  Exchange Trusted Subsystem  /domain
+-   attack/enterprise-attack/techniques/T1087.002/index.html: cmd.exe net user /domain
+-   attack/enterprise-attack/techniques/T1087.002/index.html: net group  Domain admins  /DOMAIN
+-   attack/enterprise-attack/techniques/T1087.003/index.html: Google Workspace Sync for Microsoft Outlook
+-   attack/enterprise-attack/techniques/T1087.004/index.html: az ad user list
+-   attack/enterprise-attack/techniques/T1087.004/index.html: gcloud iam service-accounts list
+-   attack/enterprise-attack/techniques/T1087.004/index.html: az ad user list
+-   attack/enterprise-attack/techniques/T1095/index.html: Internet Control Message Protocol
+-   attack/enterprise-attack/techniques/T1095/index.html: Virtual Machine Communication Interface
+-   attack/enterprise-attack/techniques/T1098/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1098.001/index.html: gcloud compute os-login ssh-keys add
+-   attack/enterprise-attack/techniques/T1098.001/index.html: gcloud iam service-accounts keys create
+-   attack/enterprise-attack/techniques/T1098.003/index.html: Microsoft.Authorization/elevateAccess/action
+-   attack/enterprise-attack/techniques/T1098.003/index.html: Microsoft.Authorization/roleAssignments/write
+-   attack/enterprise-attack/techniques/T1106/index.html: Windows Defender Application Control
+-   attack/enterprise-attack/techniques/T1110/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1110.001/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1110.001/index.html: P.A.S. Webshell
+-   attack/enterprise-attack/techniques/T1110.002/index.html: Identity ProviderLinuxmacOSNetwork DevicesOffice SuiteWindows
+-   attack/enterprise-attack/techniques/T1110.003/index.html: ContainersESXiIaaSIdentity ProviderLinuxNetwork DevicesOffice SuiteSaaSWindowsma
+-   attack/enterprise-attack/techniques/T1110.004/index.html: ContainersESXiIaaSIdentity ProviderLinuxmacOSNetwork DevicesOffice SuiteSaaSWind
+-   attack/enterprise-attack/techniques/T1112/index.html: Environment  /v UserInitMprLogonScript /t REG
+-   attack/enterprise-attack/techniques/T1112/index.html: Paessler Router Traffic Grapher
+-   attack/enterprise-attack/techniques/T1114.001/index.html: wmic /node: ip  process call create  cmd /c copy c
+-   attack/enterprise-attack/techniques/T1114.001/index.html: backup.pst  copy  i
+-   attack/enterprise-attack/techniques/T1124/index.html: esxcli system clock get
+-   attack/enterprise-attack/techniques/T1127.001/index.html: Windows Defender Application Control
+-   attack/enterprise-attack/techniques/T1127.002/index.html: exe dfshim.dll,ShOpenVerbApplication
+-   attack/enterprise-attack/techniques/T1127.002/index.html: exe dfshim.dll,ShOpenVerbApplication
+-   attack/enterprise-attack/techniques/T1134.002/index.html: AdvancedRun.exe  /EXEFilename  C
+-   attack/enterprise-attack/techniques/T1134.002/index.html: CommandLine  stop WinDefend  /StartDirectory    /RunAs
+-   attack/enterprise-attack/techniques/T1135/index.html: net view/net share
+-   attack/enterprise-attack/techniques/T1135/index.html: net view / net share
+-   attack/enterprise-attack/techniques/T1136/index.html: WindowsIaaSLinuxmacOSNetwork DevicesContainersSaaSOffice SuiteIdentity ProviderE
+-   attack/enterprise-attack/techniques/T1136.001/index.html: esxcli system account add
+-   attack/enterprise-attack/techniques/T1136.001/index.html: net user, useradd, dscl, esxcli, kubectl
+-   attack/enterprise-attack/techniques/T1136.002/index.html: net user /add /domain
+-   attack/enterprise-attack/techniques/T1137.006/index.html: Visual Studio Tools for Office
+-   attack/enterprise-attack/techniques/T1137.006/index.html: WLL/XLL/VBA/COM/VSTO
+-   attack/enterprise-attack/techniques/T1189/index.html: Windows Defender Exploit Guard
+-   attack/enterprise-attack/techniques/T1189/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1190/index.html: Zoho ManageEngine Desktop Central
+-   attack/enterprise-attack/techniques/T1190/index.html: Microsoft Internet Information Services
+-   attack/enterprise-attack/techniques/T1190/index.html: Telerik UI for ASP.NET AJAX
+-   attack/enterprise-attack/techniques/T1199/index.html: IaaSIdentity ProviderLinuxmacOSOffice SuiteSaaSWindows
+T
+-   attack/enterprise-attack/techniques/T1201/index.html: WindowsLinuxmacOSIaaSNetwork DevicesIdentity ProviderSaaSOffice Suite
+T
+-   attack/enterprise-attack/techniques/T1201/index.html: cat /etc/pam.d/common-password
+-   attack/enterprise-attack/techniques/T1202/index.html: Windows Subsystem for Linux
+-   attack/enterprise-attack/techniques/T1203/index.html: Windows Defender Exploit Guard
+-   attack/enterprise-attack/techniques/T1203/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1205/index.html: Ivanti Connect Secure VPN
+-   attack/enterprise-attack/techniques/T1205.002/index.html: data/runtime/cockpit/wd.fd
+-   attack/enterprise-attack/techniques/T1210/index.html: Windows Defender Exploit Guard
+-   attack/enterprise-attack/techniques/T1210/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1211/index.html: Windows Defender Exploit Guard
+-   attack/enterprise-attack/techniques/T1211/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1212/index.html: Windows Defender Exploit Guard
+-   attack/enterprise-attack/techniques/T1212/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1213/index.html: AWS Relational Database Service
+-   attack/enterprise-attack/techniques/T1213/index.html: Government Public Key Infrastructure
+-   attack/enterprise-attack/techniques/T1213.006/index.html: Amazon Relational Database Service
+-   attack/enterprise-attack/techniques/T1213.006/index.html: P.A.S. Webshell
+-   attack/enterprise-attack/techniques/T1213.006/index.html: Library/Group Containers/group.com.apple.notes/NoteStore.sqlite
+-   attack/enterprise-attack/techniques/T1213.006/index.html: etc/mysql/my.cnf
+-   attack/enterprise-attack/techniques/T1216.001/index.html: Windows Defender Application Control
+-   attack/enterprise-attack/techniques/T1217/index.html: Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist
+-   attack/enterprise-attack/techniques/T1218/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1218.002/index.html: Windows Defender Application Control
+-   attack/enterprise-attack/techniques/T1218.003/index.html: Microsoft Connection Manager Profile Installer
+-   attack/enterprise-attack/techniques/T1218.003/index.html: cmstp.exe /s /ns C
+-   attack/enterprise-attack/techniques/T1218.003/index.html: Microsoft Connection Manager Profile
+-   attack/enterprise-attack/techniques/T1218.005/index.html: mshta vbscript:Close  ))
+URL
+-   attack/enterprise-attack/techniques/T1218.005/index.html: Windows Defender Application Control
+-   attack/enterprise-attack/techniques/T1218.010/index.html: Component Object Model Hijacking
+-   attack/enterprise-attack/techniques/T1218.010/index.html: Windows Defender Application Control
+-   attack/enterprise-attack/techniques/T1218.010/index.html: Run Keys / Startup Folder
+-   attack/enterprise-attack/techniques/T1218.011/index.html: mshtml,RunHTMLApplication  ;document.write();GetObject
+-   attack/enterprise-attack/techniques/T1218.012/index.html: verclsid.exe /S /C
+-   attack/enterprise-attack/techniques/T1218.013/index.html: Microsoft Application Virtualization Injector
+-   attack/enterprise-attack/techniques/T1218.013/index.html: Microsoft Application Virtualization Injector
+-   attack/enterprise-attack/techniques/T1218.014/index.html: mmc wbadmin.msc delete catalog
 - ※ 英語名、参考文献、更新履歴、他の分類の名前など、lang="en" を付けて意図的に原文のまま載せている部分は対象外。
 
 ## 4. 全ページのフッター
-- ✅ 著作権表示が無いページ: 0件 / 714件
-- ✅ ライセンス文（原文）が無いページ: 0件 / 714件
-- ✅ 「AIによる非公式の訳」の注意書きが無いページ: 0件 / 714件
+- ✅ 著作権表示が無いページ: 0件 / 1437件
+- ✅ ライセンス文（原文）が無いページ: 0件 / 1437件
+- ✅ 「AIによる非公式の訳」の注意書きが無いページ: 0件 / 1437件
 
 ## 5. 要確認・伏せた箇所・用語の統一
 - ✅ 「完了」なのに訳が欠けている箇所: 0件

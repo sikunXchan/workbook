@@ -1,0 +1,43 @@
+{
+ "id": "T1003.004",
+ "source_sha": "c50a853f6d1aaccb",
+ "status": "done",
+ "seg": {
+  "name": "LSAシークレット",
+  "description/0": "SYSTEMアクセスを持つ攻撃者は、サービスアカウントの認証情報など、さまざまな種類の認証情報を含みうるLSA（Local Security Authority）シークレットへのアクセスを試みることがある。LSAシークレットはレジストリの`HKEY_LOCAL_MACHINE\\SECURITY\\Policy\\Secrets`に保存されている。LSAシークレットはメモリからダンプすることもできる。",
+  "description/1": "Regはレジストリからの抽出に使える。Mimikatzはメモリからシークレットを抽出するのに使える。",
+  "mitigation/M1017/0": "複数のアカウントで同じパスワードを使わないよう、利用者と管理者を教育することで、アカウント・システム間の認証情報の重複を減らす。",
+  "mitigation/M1026/0": "管理の階層をまたいだ特権アカウントの使用を制限するため、エンタープライズネットワークの設計・管理のベストプラクティスに従うこと。",
+  "mitigation/M1027/0": "ネットワーク上の全システムで、ローカル管理者アカウントが複雑で一意のパスワードを持つようにする。",
+  "procedure/G0004/0": "Ke3changは、gsecdumpの利用を含め、認証情報をダンプしている。",
+  "procedure/G0016/0": "APT29は、`reg save`コマンドを使ってLSAシークレットをオフラインで抽出している。",
+  "procedure/G0027/0": "Threat Group-3390の攻撃者は、gsecdumpを使って認証情報をダンプしている。彼らはドメインコントローラーからも認証情報をダンプした。",
+  "procedure/G0035/0": "Dragonflyは、パスワードハッシュをダンプするためSecretsDumpを投下・実行した。",
+  "procedure/G0045/0": "menuPassは、ペネトレーションテスト用ツールwmiexec.vbsとsecretsdump.pyの改変版を使って認証情報をダンプしている。",
+  "procedure/G0049/0": "OilRigは、侵害したシステムやOutlook Web Accessにログインしたアカウントの認証情報を盗むため、LaZagneなどの認証情報ダンプツールを使っている。",
+  "procedure/G0064/0": "APT33は、LaZagneのような、さまざまな公開ツールを使って認証情報を集めている。",
+  "procedure/G0069/0": "MuddyWaterは、LaZagneを使って認証情報ダンプを行っている。",
+  "procedure/G0077/0": "Leafminerは、ログインとパスワード情報を取得するため、LaZagneを含むいくつかのツールを使った。",
+  "procedure/G1003/0": "Ember Bearは、認証情報を捕捉するため、Impacketのようなフレームワークを使ってLSAシークレットをダンプしている。",
+  "procedure/S0002/0": "Mimikatzは、追加のシステムやエンタープライズネットワークのリソースへのアクセスに役立つアカウントとパスワード情報を得るため、認証情報ダンプを行う。LSAからの取得を含め、多くの方法で認証情報に関する情報を取得する機能を持つ。",
+  "procedure/S0008/0": "gsecdumpは、LSAシークレットをダンプできる。",
+  "procedure/S0050/0": "CosmicDukeは、LSAシークレットを収集する。",
+  "procedure/S0192/0": "Pupyは、認証情報を収集するためLazagneを使える。",
+  "procedure/S0349/0": "LaZagneは、アカウントとパスワード情報を得るため、LSAシークレットからの認証情報ダンプを行える。",
+  "procedure/S0357/0": "Impacket内のSecretsDumpとMimikatzモジュールは、アカウントとパスワード情報を取得する認証情報ダンプを行える。",
+  "procedure/S0488/0": "CrackMapExecは、標的システムのLSAシークレットからハッシュ化されたパスワードをダンプできる。",
+  "procedure/S0677/0": "AADInternalsは、Local Security Authorityからシークレットをダンプできる。",
+  "procedure/S1022/0": "IceAppleのCredential Dumperモジュールは、`HKLM\\SECURITY\\Policy\\PolEKList\\default`、`HKLM\\SECURITY\\Policy\\Secrets\\*\\CurrVal`、`HKLM\\SECURITY\\Policy\\Secrets\\*\\OldVal`といったレジストリキーからLSAシークレットをダンプできる。"
+ },
+ "supplement": {
+  "summary": "レジストリやメモリに保存されたLSAシークレットから、サービスアカウントなどの認証情報を取り出す技術。SYSTEM権限が前提となるため、すでに高い権限を得た攻撃者が、さらに他のアカウントへ展開するための足がかりとして使うことが多い。",
+  "analogy": "建物の管理人室の金庫（SYSTEM権限で守られたレジストリ）の中に、各種サービス用の予備の鍵の控えがまとめて保管されているようなもので、管理人室に入れてしまえば（SYSTEM権限を得れば）その金庫を開けて多くの鍵を一度に手に入れられる。",
+  "learn": [
+   "LSAシークレットがレジストリのHKEY_LOCAL_MACHINE\\SECURITY\\Policy\\Secretsという特定の場所に保存されており、Regのような標準コマンドでも抽出できること",
+   "Mimikatz・gsecdump・LaZagneなど、多数の公開ツールがLSAシークレットのダンプに対応しており、攻撃グループに広く使われていること"
+  ],
+  "interpretation": [
+   "この技術がSYSTEM権限を前提とすることは、この技術単体では初期アクセスの手段にならず、必ず先行する権限昇格の後に使われることを示している。つまりLSAシークレットのダンプは、1つのシステムで得た高い権限を、ネットワーク内の他のアカウント・システムへ横展開するための『増幅装置』として働く技術だと解釈できる。"
+  ]
+ }
+}

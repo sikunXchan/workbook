@@ -1,0 +1,41 @@
+{
+ "id": "T1087.001",
+ "source_sha": "b21c3c446589e218",
+ "status": "done",
+ "seg": {
+  "name": "ローカルアカウント",
+  "description/0": "攻撃者は、ローカルシステムのアカウント一覧を得ようとすることがある。この情報は、攻撃者がシステム上にどのローカルアカウントが存在するかを把握し、その後の行動を助けるのに役立つ。",
+  "description/1": "Netユーティリティの`net user`や`net localgroup`、macOSやLinuxの`id`や`groups`といったコマンドで、ローカルの利用者やグループを一覧表示できる。Linuxでは、`/etc/passwd`ファイルを使ってローカル利用者を列挙することもできる。macOSでは、`dscl . list /Users`コマンドでローカルアカウントを列挙できる。ESXiサーバーでは、`esxcli system account list`コマンドでローカル利用者アカウントを一覧表示できる。",
+  "mitigation/M1028/0": "アプリケーションがUACを通じて権限昇格する際に、管理者アカウントが列挙されないようにする。これはアカウント名の漏洩につながりうる。該当のレジストリキーは`HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\CredUI\\EnumerateAdministrators`にある。GPOで無効化できる：コンピューターの構成 > [ポリシー] > 管理用テンプレート > Windowsの構成要素 > 資格情報のユーザーインターフェース：昇格時に管理者アカウントを列挙する。",
+  "procedure/G0004/0": "Ke3changは、`net localgroup administrators`や`net group \"REDACTED\" /domain`といったコマンドを使い、特定の権限グループに対してアカウント探索を行う。",
+  "procedure/G0006/0": "APT1は、`net localgroup`、`net user`、`net group`コマンドを使ってシステム上のアカウントを探した。",
+  "procedure/G0010/0": "Turlaは、`net user`を使ってシステム上のローカルアカウントを列挙したことがある。",
+  "procedure/G0018/0": "admin@338の攻撃者は、LOWBALLマルウェアで端末を侵害した後、利用者アカウントを列挙するために次のコマンドを使った：`net user >> %temp%\\download` `net user /domain >> %temp%\\download`",
+  "procedure/G0022/0": "APT3は、ローカル・グローバルグループの利用者、パワーユーザー、管理者の情報を取得できるツールを使ったことがある。",
+  "procedure/G0027/0": "Threat Group-3390は、`net user`を使ってシステムの内部探索を行ったことがある。",
+  "procedure/G0030/0": "Lotus Blossomは、`net`などのコマンドを使って、ローカルシステムの利用者を調べたことがある。",
+  "procedure/G0033/0": "Poseidon Groupは、被害端末のローカルとネットワークの両方で管理者アカウントを検索する。",
+  "procedure/G0049/0": "OilRigは、`net user`、`net user /domain`、`net group \"domain admins\" /domain`、`net group \"Exchange Trusted Subsystem\" /domain`を実行し、被害端末のアカウント一覧を取得した。",
+  "procedure/G0050/0": "APT32は、`net localgroup administrators`コマンドを使って管理者利用者を列挙した。",
+  "procedure/G0096/0": "APT41は、組み込みの`net`コマンドを使ってローカル管理者グループを列挙した。",
+  "procedure/G0114/0": "Chimeraは、`net user`をアカウント探索に使ったことがある。",
+  "procedure/G0117/0": "Fox Kittenは、侵害した端末上のntuser.datとUserClass.datにアクセスしたことがある。",
+  "procedure/G1009/0": "Moses Staffは、侵害した端末から管理者の利用者名を収集したことがある。",
+  "procedure/G1017/0": "Volt Typhoonは、`net user`と`quser`を実行してローカルアカウント情報を列挙した。",
+  "procedure/G1039/0": "RedCurlは、ローカルアカウントに関する情報を収集したことがある。",
+  "procedure/G1044/0": "APT42は、PowerShellベースのPOWERPOSTスクリプトを使って被害端末からローカルアカウント名を収集したことがある。",
+  "procedure/G1051/0": "Medusa Groupは、アカウント探索に`net user`を利用した。",
+  "procedure/G1059/0": "NIMBUS MANTICOREは、`quser.exe`と`wmic.exe`を使って被害端末のログイン利用者を特定した。",
+  "procedure/S0038/0": "Duquで使われる探索モジュールは、アカウントと権限に関する情報を収集できる。"
+ },
+ "supplement": {
+  "summary": "侵害したシステムのローカルアカウント（ドメインではなく、その端末だけに存在する利用者）を調べる技術。`net user`や`/etc/passwd`のようなOS標準の手段で簡単に実行でき、管理者アカウントの特定によく使われる。",
+  "analogy": "マンションの一室に侵入した泥棒が、その部屋の住民票や名簿だけを調べる段階。マンション全体（ドメイン）の名簿を調べるのは、次のサブ技術（ドメインアカウント）に相当する。",
+  "learn": [
+   "ローカルアカウントとドメインアカウントという2つのサブ技術が分かれているのは、探索の範囲（1台の端末か、組織全体か）が異なるため"
+  ],
+  "interpretation": [
+   "`net user`コマンドが膠大な数の攻撃グループの実例で繰り返し登場することは、Windows標準のNetユーティリティが、攻撃者にとって極めてコストの低い『偵察道具』になっていることを示している。"
+  ]
+ }
+}

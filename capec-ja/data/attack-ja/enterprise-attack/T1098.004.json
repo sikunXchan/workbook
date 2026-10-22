@@ -1,0 +1,34 @@
+{
+ "id": "T1098.004",
+ "source_sha": "fb31591591514acf",
+ "status": "done",
+ "seg": {
+  "name": "SSHの承認済み鍵",
+  "description/0": "攻撃者は、被害ホスト上で持続性を維持するために、SSHの`authorized_keys`ファイルを変更することがある。Linuxディストリビューション、macOS、ESXiハイパーバイザーは、遠隔管理のためのSSHセッションの認証プロセスを保護するために、一般的に鍵ベースの認証を使う。SSHの`authorized_keys`ファイルは、そのファイルが設定された利用者アカウントへのログインに使用できるSSH鍵を指定する。このファイルは通常、利用者のホームディレクトリの`<user-home>/.ssh/authorized_keys`にある（ESXiでは`/etc/ssh/keys-<username>/authorized_keys`）。利用者は、システムのSSH設定ファイルを編集し、`PubkeyAuthentication`と`RSAAuthentication`の指示子の値を`yes`にして公開鍵認証とRSA認証を確実に有効化したり、`PermitRootLogin`の指示子の値を`yes`にしてSSH経由のroot認証を有効化したりすることがある。SSH設定ファイルは通常`/etc/ssh/sshd_config`にある。",
+  "description/1": "攻撃者は、スクリプトやシェルコマンドを使ってSSHの`authorized_keys`ファイルを直接変更し、自分が提供する公開鍵を追加することがある。クラウド環境では、攻撃者は、コマンドラインインターフェースやREST APIを介して、特定の仮想マシンのSSH `authorized_keys`ファイルを変更できることがある。例えば、Google Cloud CLIの「add-metadata」コマンドを使って、攻撃者は利用者アカウントにSSH鍵を追加することがある。同様に、Azureでは、攻撃者はAPIへのPATCH要求を介して、仮想マシンの`authorized_keys`ファイルを更新することがある。これにより、対応する秘密鍵を持つ攻撃者は、既存の利用者としてSSH経由でログインできるようになる。これは、仮想マシンやインスタンスが要求元の利用者とは異なる権限を持つ場合、権限昇格につながることもある。",
+  "description/2": "`authorized_keys`ファイルがクラウドAPIやコマンドラインインターフェースを介して変更される場合、攻撃者は、より高い権限を持つ利用者に鍵を追加すれば、標的の仮想マシン上で権限昇格を達成できることがある。",
+  "description/3": "SSH鍵は、`ip ssh pubkey-chain`というNetwork Device CLIコマンドのように、ネットワーク機器上のアカウントにも追加できる。",
+  "mitigation/M1018/0": "クラウド環境では、インスタンスのメタデータや設定を更新する権限を明示的に必要とする利用者だけがそれを行えるようにする。",
+  "mitigation/M1022/0": "`authorized_keys`ファイルへのアクセスを制限する。",
+  "mitigation/M1042/0": "ホスト上で不要であればSSHを無効化し、または`/etc/ssh/sshd_config`を使って特定の利用者・グループにSSHアクセスを制限する。`PermitRootLogin`指示子を`no`に設定すると、root利用者がSSH経由でログインできなくなる。",
+  "procedure/G0139/0": "TeamTNTは、`authorized_keys`にRSA鍵を追加したことがある。",
+  "procedure/G1006/0": "Earth Luscaは、SSHで侵害済みサーバーにアクセスするために、`/root/.ssh`フォルダにSSH承認済み鍵をドロップしたことがある。",
+  "procedure/G1045/0": "Salt Typhoonは、侵害したネットワーク機器のLinuxレベルで、rootまたは他の利用者の下にSSH authorized_keysを追加した。",
+  "procedure/S0468/0": "Skidmapは、感染したホスト上で持続性を維持するために、自身の操作者の公開鍵を`authorized_keys`ファイルに追加する機能を持つ。",
+  "procedure/S0482/0": "Bundloreは、`ssh-keygen`で新しい鍵の組を作成し、新しく作成した利用者鍵を`authorized_keys`にドロップして遠隔ログインを可能にする。",
+  "procedure/S0658/0": "XCSSETは、必要であれば`ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -P`コマンドでSSH鍵を作成する。XCSSETは、パスワードなしでホストに遠隔アクセスするために、秘密鍵ファイルをサーバーにアップロードする。"
+ },
+ "supplement": {
+  "summary": "SSHログインを許可する公開鍵の一覧ファイル（`authorized_keys`）に、攻撃者自身の公開鍵を書き加えることで、パスワードを知らなくても対応する秘密鍵だけでログインし続けられるようにする永続化技術。クラウドのAPI経由でも変更できる。",
+  "facts": [
+   { "text": "クラウド環境では、GCPの「add-metadata」コマンドやAzureのPATCH要求を介して、SSHの`authorized_keys`ファイルを変更できる場合があると原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "家の鍵をピッキングして入るのではなく、家主に気づかれないよう、合鍵作成店に行って勝手に合鍵を1本追加で作ってもらうのに似ている。家主がドアの通常の鍵を取り替えても、`authorized_keys`という『合鍵の受け入れリスト』に自分の鍵が残っていれば、入り続けられる。",
+  "learn": [
+   "パスワード認証を無効化した『より安全な』SSH鍵認証の仕組みそのものが、`authorized_keys`ファイルという1つのファイルへの書き込み権限さえあれば、持続化の手段に変わってしまうこと"
+  ],
+  "interpretation": [
+   "対策に挙げられている『`authorized_keys`ファイルへのアクセス制限』は、この技術が結局のところ、ファイルシステム上の1つの平文ファイルの改ざんに帰着するという、見落とされやすいが基本的な対策であることを示している。"
+  ]
+ }
+}

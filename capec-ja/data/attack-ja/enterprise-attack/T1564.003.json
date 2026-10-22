@@ -1,0 +1,56 @@
+{
+ "id": "T1564.003",
+ "source_sha": "cefb700acbc0594c",
+ "status": "done",
+ "seg": {
+  "name": "隠しウィンドウ",
+  "description/0": "攻撃者は、悪意ある活動を利用者の目から隠すために、隠しウィンドウを使うことがある。場合によっては、アプリケーションが処理を実行する際に通常は表示されるウィンドウを隠すことができる。これは、管理タスクを実行する際に利用者の作業環境を妨げないよう、システム管理者が使うこともある。",
+  "description/1": "攻撃者は、システム上の攻撃者の活動を利用者に警告させないよう、通常は見えるはずのウィンドウを利用者から隠すために、これらの機能を悪用することがある。",
+  "description/2": "macOSでは、アプリケーションの実行方法に関する設定が、プロパティリスト（plist）ファイルに記載されている。これらのファイル内のタグの1つに`apple.awt.UIElement`があり、これはJavaアプリケーションが、Dockにそのアプリケーションのアイコンを表示しないようにすることを可能にする。これがよく使われるのは、アプリケーションがシステムトレイで動作し、Dockには表示させたくない場合である。",
+  "description/3": "同様に、Windowsでは、PowerShell・Jscript・Visual Basicのようなスクリプト言語に、ウィンドウを隠すためのさまざまな機能がある。その一例が`powershell.exe -WindowStyle Hidden`である。",
+  "description/4": "Windowsレジストリも、現在の利用者からアプリケーションウィンドウを隠すために編集できる。例えば、`HKEY_CURRENT_USER\\Console\\%SystemRoot%_System32_WindowsPowerShell_v1.0_PowerShell.exe`レジストリキーの`WindowPosition`サブキーを最大値に設定すると、PowerShellのウィンドウは画面外に開かれ、隠される。",
+  "description/5": "さらに、Windowsは、対応する独自の`explorer.exe`プロセスを持つ隠しデスクトップウィンドウを作成できる`CreateDesktop()` APIをサポートしている。隠しVNC（hVNC）セッションのように、この隠しデスクトップウィンドウ上で動くすべてのアプリケーションは、他のデスクトップウィンドウからは見えない。",
+  "description/6": "攻撃者は、cmd.exeを親プロセスとして活用し、その上でDeviceCredentialDeployment.exeのようなLOLBinを使ってウィンドウを隠すこともある。",
+  "mitigation/M1033/0": "hVNCのような、隠しデスクトップの作成に悪用され得るソフトウェアのインストールを、それを必要とする利用者グループに限定する。",
+  "mitigation/M1038/0": "アンチウイルスソフトウェアを使って、プログラムの実行を制限または禁止する。macOSでは、plistタグを持つことが許可されたプログラムを許可リスト化する。それ以外のすべてのプログラムは、疑わしいものとして扱うべきである。",
+  "procedure/G0007/0": "APT28は、PowerShellのウィンドウを隠すために、WindowStyleパラメータを使った。",
+  "procedure/G0009/0": "Deep Pandaは、WindowStyleパラメータをhiddenに設定して、`-w hidden`を使ってPowerShellのウィンドウを隠した。",
+  "procedure/G0022/0": "APT3は、`-WindowStyle Hidden`を使ってPowerShellのウィンドウを隠すことが知られている。",
+  "procedure/G0046/0": "FIN7は、PowerShellコマンドを隠すために.txtファイルを使った。",
+  "procedure/G0047/0": "Gamaredon Groupは、バッチファイルを隠しコンソールウィンドウで実行するために`hidcon`を使った。Gamaredon Groupは、PowerShellを隠しウィンドウで実行することも行った。",
+  "procedure/G0050/0": "APT32は、PowerShellのウィンドウを隠すために、WindowStyleパラメータを使った。",
+  "procedure/G0052/0": "CopyKittensは、PowerShellのウィンドウを隠すために`-w hidden`と`-windowstyle hidden`を使った。",
+  "procedure/G0059/0": "Magic Houndのマルウェアには、新たに配置したファイルを隠しウィンドウで実行することをC2サーバーが望むかどうかを判定する機能がある。",
+  "procedure/G0073/0": "APT19は、WindowStyleパラメータをhiddenに設定して、`-W Hidden`を使ってPowerShellのウィンドウを隠した。",
+  "procedure/G0078/0": "Gorgon Groupは、WindowStyleパラメータをhiddenに設定して、`-W Hidden`を使ってPowerShellのウィンドウを隠した。",
+  "procedure/G0079/0": "DarkHydrusは、PowerShellのウィンドウを隠すために`-WindowStyle Hidden`を使った。",
+  "procedure/G0082/0": "APT38は、悪意あるスクリプトを隠しウィンドウで実行するように設定した。",
+  "procedure/G0094/0": "Kimsukyは、被害者からAVソフトウェアのウィンドウを隠す情報収集モジュールを使った。Kimsukyは、PowerShellのウィンドウを隠すために`-WindowStyle Hidden`を使うことも知られている。",
+  "procedure/G0099/0": "APT-C-36は、PowerShellの実行を隠すため、Win32_ProcessStartupオブジェクトのShowWindowプロパティをゼロに設定した。",
+  "procedure/G0126/0": "Higaisaは、隠しウィンドウを作成するペイロードを使った。",
+  "procedure/G0133/0": "Nomadic Octopusは、PowerShellを隠しウィンドウで実行した。",
+  "procedure/G1022/0": "ToddyCatは、`powershell.exe -windowstyle hidden`を使って悪意あるスクリプトを隠した。",
+  "procedure/G1051/0": "Medusa Groupは、現在のウィンドウを隠すために`ShowWindow` API関数を活用した。",
+  "procedure/G1055/0": "VOID MANTICOREは、`-nop -w hidden- ep bypass -enc`を含む、実行を利用者に通知せずに動くPowerShellスクリプトを活用した。",
+  "procedure/S0013/0": "PlugXは、隠しデスクトップ上でコマンドを実行する能力を持つ。",
+  "procedure/S0037/0": "HAMMERTOSSは、PowerShellのウィンドウを隠すために`-WindowStyle hidden`を使った。",
+  "procedure/S0250/0": "Koadicは、自身のウィンドウを隠すために`Powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden`というコマンドを使った。"
+ },
+ "supplement": {
+  "summary": "PowerShellの`-WindowStyle Hidden`や、Windowsの`CreateDesktop()` APIのような標準機能を使い、悪意あるプロセスの実行ウィンドウを利用者の視界から隠す技術。きわめて多くのマルウェア・攻撃グループがPowerShellの隠しウィンドウ機能を共通して使う。",
+  "terms": [
+   { "term": "隠しVNC（hVNC）", "en": "hidden VNC", "explain": "`CreateDesktop()` APIで作成した、他のデスクトップからは見えない隠しデスクトップ上で、VNC（リモート画面操作）セッションを動かす手口。利用者が通常のデスクトップで作業している間、裏でまったく別の隠し画面上で攻撃者が自由に操作できる。" }
+  ],
+  "facts": [
+   { "text": "対策の1つとして、macOSでは`apple.awt.UIElement`タグを持つことが許可されたプログラムを許可リスト化し、それ以外のすべてのプログラムは疑わしいものとして扱うべきだと原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "オフィスの作業自体はそのまま続けながら、作業内容が映るモニターの電源だけをオフにしてしまうようなもので（隠しウィンドウ）、処理は確かに実行されているのに、利用者の目に入る画面には何も表示されない。",
+  "learn": [
+   "PowerShellの`-WindowStyle Hidden`パラメータが、きわめて多くの攻撃グループ・マルウェアに共通して使われる、代表的な隠しウィンドウの手口であること",
+   "hVNC（隠しVNC）のように、隠しデスクトップ全体を使って、利用者に一切気づかれずに遠隔操作を行う、より高度な手口があること"
+  ],
+  "interpretation": [
+   "`-WindowStyle Hidden`というPowerShellのパラメータが、こうも多数の無関係な攻撃グループ（APT28、APT3、APT19、Gorgon Groupなど）に共通して使われている事実は、この手口が攻撃者の間で広く知られた「定番」になっていることを示している。これは、PowerShellの実行コマンドライン自体を監視し、`-WindowStyle Hidden`のような特定の引数が使われた実行を、それ単体でも要注意の指標として扱う価値が高いことを示している。"
+  ]
+ }
+}

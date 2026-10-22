@@ -1,0 +1,50 @@
+{
+ "id": "T1071.001",
+ "source_sha": "c3d7828216dd835f",
+ "status": "done",
+ "seg": {
+  "name": "Webプロトコル",
+  "description/0": "攻撃者は、既存の通信に紛れ込んで検知・ネットワークフィルタリングを避けるため、Webトラフィックに関連するアプリケーション層プロトコルを使って通信することがある。遠隔のシステムへの命令と、その命令の実行結果は、クライアントとサーバーの間のプロトコル通信の中に埋め込まれることが多い。",
+  "description/1": "HTTP/SやWebSocketのような、Webトラフィックを運ぶプロトコルは、環境の中で非常によく使われていることがある。HTTP/Sのパケットには、データを隠せる多数のフィールドやヘッダーがある。攻撃者は、これらのプロトコルを悪用して、正常な・想定される通信を模倣しながら、被害者のネットワーク内にある自分の制御下のシステムと通信することがある。",
+  "mitigation/M1031/0": "特定の攻撃者のマルウェアに関する通信を識別するためにネットワーク上の署名を使う、ネットワーク侵入検知・防止システムを使うことで、ネットワークレベルでの活動を緩和できる。",
+  "mitigation/M1037/0": "重要なサーバーから発信されるWebトラフィック（HTTP/HTTPS）を、承認済みの宛先のみに制限・監視する。特に公開サーバーからの発信HTTP/HTTPS接続を開始する能力を制限することで、攻撃者がcurlやwgetのようなツールを使って外部のC2サーバーと通信したり、悪意あるペイロードをダウンロードしたりすることを防げる。",
+  "procedure/G0004/0": "RoyalCliやBS2005を含む、Ke3changのマルウェアは、COMインターフェースIWebBrowser2を使ったInternet Explorer（IE）経由で、HTTPでC2サーバーと通信した。",
+  "procedure/G0007/0": "APT28が後に使用したCHOPSTICKなどのインプラントは、モジュールの設定に応じて、HTTP・HTTPS・その他の正規の通信経路を組み合わせてC2に使用する。",
+  "procedure/G0010/0": "Turlaは、C2通信にHTTPとHTTPSを使用した。",
+  "procedure/G0026/0": "APT18は、C2通信にHTTPを使用する。",
+  "procedure/G0027/0": "Threat Group-3390のマルウェアは、C2にHTTPを使用した。",
+  "procedure/G0032/0": "Lazarus Groupは、HTTPとHTTPS上でC2を行った。",
+  "procedure/G0034/0": "Sandworm TeamのBCS-serverツールは、指定されたC2サーバーにHTTP経由で接続する。",
+  "procedure/G0038/0": "Stealth Falconのマルウェアは、HTTPS経由でC2サーバーと通信する。",
+  "procedure/G0047/0": "Gamaredon Groupは、C2通信にHTTPとHTTPSを使用した。",
+  "procedure/G0049/0": "OilRigは、C2にHTTPを使用した。",
+  "procedure/G0050/0": "APT32は、攻撃者が管理するドメインにHTTPまたはHTTPS経由で通信し、追加のフレームワークをダウンロードするJavaScriptを使用した。同グループは、HTTP経由で暗号化されたペイロードをダウンロードしたこともある。",
+  "procedure/G0059/0": "Magic Houndは、C2にHTTPを使用した。",
+  "procedure/G0060/0": "BRONZE BUTLERのマルウェアは、C2にHTTPを使用した。",
+  "procedure/G0061/0": "FIN8は、遠隔操作にHTTPSを使用した。",
+  "procedure/G0064/0": "APT33は、遠隔操作にHTTPを使用した。",
+  "procedure/G0067/0": "APT37は、C2通信を隠すためにHTTPSを使用する。",
+  "procedure/G0069/0": "MuddyWaterは、C2通信にHTTPを使用した。",
+  "procedure/G0070/0": "Dark CaracalのBandookの亜種は、TCPポート上のHTTPペイロード（Base64で符号化され、末尾に「&&&」という文字列が付加される）を使って、自分たちのサーバーと通信する。",
+  "procedure/G0071/0": "Orangewormは、C2にHTTPを使用した。",
+  "procedure/G0073/0": "APT19は、C2通信にHTTPを使用した。APT19はまた、C2通信にHTTPを使う、HTTPマルウェアの亜種を使用した。",
+  "procedure/G0075/0": "Rancorは、C2にHTTPを使用した。",
+  "procedure/G0080/0": "Cobalt Groupは、C2にHTTPSを使用した。"
+ },
+ "supplement": {
+  "summary": "HTTP/HTTPSやWebSocketのような、企業ネットワーク内で最もありふれたWebトラフィックに紛れ込む形でC2通信を行う技術。非常に多くの攻撃グループ・マルウェアに使われているため、原典には400件を超える実例が記録されている。",
+  "facts": [
+   {
+    "text": "原典には全部で410件の実例（procedure examples）が記載されているが、このページではその一部（上位約20件）のみを翻訳している。残りは原文サイト（英語）で確認できる。",
+    "source": "procedures"
+   }
+  ],
+  "analogy": "街中で最も交通量の多い大通り（HTTP/HTTPS）に紛れて移動すれば、どの車が怪しいかを見分けるのは、閑散とした裏道（珍しいプロトコル）を使う場合よりずっと難しい。攻撃者の多くがこの技術を選ぶのは、まさにこの「大通りの交通量の多さ」を利用しているからである。",
+  "learn": [
+   "C2にHTTP/HTTPSが選ばれる理由が、単に便利だからではなく、組織内のほぼすべての端末が日常的に使っている、最も検知されにくいプロトコルだからであること"
+  ],
+  "interpretation": [
+   "この技術に結びつく実例の数（410件）そのものが、1つの強力な事実である。ほぼすべての攻撃グループ・マルウェアファミリーが、何らかの形でHTTPかHTTPSをC2に使っており、これは『WebプロトコルによるC2』を検知できる防御体制が、個々の攻撃グループへの対策ではなく、ほぼすべての侵入に共通して効く、最も投資効率の高い対策の1つであることを示している。"
+  ]
+ }
+}

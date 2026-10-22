@@ -1,0 +1,34 @@
+{
+ "id": "T1087.003",
+ "source_sha": "1e6a9596034bebb3",
+ "status": "done",
+ "seg": {
+  "name": "メールアカウント",
+  "description/0": "攻撃者は、メールアドレスやアカウントの一覧を得ようとすることがある。攻撃者は、全体アドレス一覧（GAL）などのExchangeアドレス一覧を抜き出そうとすることがある。",
+  "description/1": "オンプレミスのExchangeやExchange Onlineでは、`Get-GlobalAddressList`というPowerShellコマンドレットを使い、認証済みのセッションでドメインからメールアドレス・アカウントを取得できる。",
+  "description/2": "Google Workspaceでは、GALはGoogle Workspace Sync for Microsoft Outlook（GWSMO）サービスを通じてMicrosoft Outlookの利用者に共有される。また、Google Workspace ディレクトリを使うと、利用者は組織内の他の利用者の一覧を得ることができる。",
+  "procedure/G0034/0": "Sandworm Teamは、M.E.Docアプリケーションから利用者名・パスワードを含むメール設定を列挙するマルウェアを使った。",
+  "procedure/G0059/0": "Magic Houndは、Powershellを使ってメールアカウントを発見したことがある。",
+  "procedure/G0092/0": "TA505は、EmailStealerというツールを使い、メールアドレスの一覧を盗み出して遠隔のサーバーに送信した。",
+  "procedure/G1039/0": "RedCurlは、メールアカウントに関する情報を収集したことがある。",
+  "procedure/S0093/0": "Backdoor.Oldreaは、Outlookからアドレス帳の情報を収集する。",
+  "procedure/S0266/0": "TrickBotは、Outlookからメールアドレスを収集する。",
+  "procedure/S0358/0": "Rulerは、Exchangeの利用者を列挙し、GALを抜き出すために使われうる。",
+  "procedure/S0367/0": "Emotetは、Outlookからメールアドレスを収集できるモジュールを使う様子が観測されている。",
+  "procedure/S0413/0": "MailSniperは、`Get-GlobalAddressList`コマンドレットを使って、ExchangeやOffice 365からアカウント名を取得するために使われうる。",
+  "procedure/S0531/0": "Grandoreiroは、Outlookの.pstファイルを解析してメールアドレスを抽出できる。",
+  "procedure/S0635/0": "BoomBoxは、LDAP問い合わせを実行し、ドメイン利用者のメールアカウントを発見できる。",
+  "procedure/S0681/0": "Lizarは、Microsoft OutlookとMozilla Thunderbirdからメールアカウントを収集できる。",
+  "procedure/S9044/0": "Kali365は、Graphを利用するExchange Adminモジュールを使い、被害環境内のメールボックスを列挙した。"
+ },
+ "supplement": {
+  "summary": "ExchangeやGoogle Workspaceが持つ、組織全体のメールアドレス・アカウント一覧（GAL）を抜き出す技術。`Get-GlobalAddressList`のような認証済みの標準コマンドレットだけで実行でき、収集したアドレスはフィッシングの標的選定にそのまま使われる。",
+  "analogy": "会社の電話交換機にある社内電話帳の全件を、受付の内線からそのまま丸ごと持ち出すようなもので、これさえ手に入れば、以降は誰を装って誰に電話をかけるかを自由に選べるようになる。",
+  "learn": [
+   "GAL（全体アドレス一覧）という、社内の全メールアカウントを一覧にした仕組みが、フィッシングの標的リストとして丸ごと悪用されうること"
+  ],
+  "interpretation": [
+   "この技術で得られる情報は、ドメインアカウント探索（T1087.002）で得られる利用者名と重なる部分が多いが、メールアドレスという、フィッシング攻撃（初期アクセス戦術）にそのまま使える形で手に入る点が特徴的である。"
+  ]
+ }
+}

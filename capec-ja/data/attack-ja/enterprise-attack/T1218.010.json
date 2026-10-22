@@ -1,0 +1,53 @@
+{
+ "id": "T1218.010",
+ "source_sha": "e73abd2383cc77e6",
+ "status": "done",
+ "seg": {
+  "name": "Regsvr32",
+  "description/0": "攻撃者は、Regsvr32.exeを悪用して悪意あるコードの実行を代理させることがある。Regsvr32.exeは、Windowsシステム上でダイナミックリンクライブラリ（DLL）を含むオブジェクトのリンクと埋め込み（OLE）コントロールを登録・登録解除するためのコマンドラインプログラムである。Regsvr32.exeバイナリは、Microsoftによって署名されている場合もある。",
+  "description/1": "Regsvr32.exeの悪意ある使用は、許可リストやWindowsが通常の操作でregsvr32.exeを使用することによる誤検知のため、regsvr32.exeプロセスの実行やそれが読み込むモジュールを監視していないセキュリティツールの検知を回避できることがある。Regsvr32.exeは、COMスクリプトレットを読み込んでユーザー権限でDLLを実行する機能を使い、アプリケーション制御を特に回避するためにも使われる。Regsvr32.exeはネットワークやプロキシを認識するため、呼び出し時の引数として外部Webサーバー上のファイルへのURL（Uniform Resource Locator）を渡すことで、スクリプトを読み込ませることができる。この方法は、COMオブジェクトが実際には登録されず実行されるだけなので、レジストリに変更を加えない。この技術のこの変化形は、しばしば「Squiblydoo」と呼ばれ、政府機関を標的にした攻撃活動で使われたことがある。",
+  "description/2": "Regsvr32.exeは、Component Object Model Hijacking（コンポーネントオブジェクトモデルの乗っ取り）を介した永続化の確立に使われるCOMオブジェクトを登録するためにも利用できる。",
+  "mitigation/M1050/0": "Microsoftの拡張緩和策エクスペリエンスツールキット（EMET）の攻撃対象領域削減（ASR）機能を使って、regsvr32.exeがアプリケーション制御を回避するために使われることを遮断できる。適切な場合は、Windows Defender Application Control、AppLocker、Software Restriction Policiesのようなアプリケーション制御ツールを使って、regsvr32の機能を通じて実行される、潜在的に悪意あるソフトウェアを特定・遮断する。",
+  "procedure/G0009/0": "Deep Pandaは、被害ネットワーク内でDerusbiのサーバー版を実行するためにregsvr32.exeを使用した。",
+  "procedure/G0050/0": "APT32は、regsvr32.exeを使ってCOMスクリプトレットを実行するスケジュールされたタスクを作成し、バックドアを動的にダウンロードしてメモリに注入した。このグループは、自分たちのバックドアを実行するためにもregsvr32を使用した。",
+  "procedure/G0065/0": "Leviathanは、実行のためにregsvr32を使用した。",
+  "procedure/G0073/0": "APT19は、アプリケーション制御の手法を回避するためにRegsvr32を使用した。",
+  "procedure/G0080/0": "Cobalt Groupは、スクリプトを実行するためにregsvr32.exeを使用した。",
+  "procedure/G0090/0": "WIRTEは、悪意あるスクリプトの実行を引き起こすために`regsvr32.exe`を使用した。",
+  "procedure/G0094/0": "Kimsukyは、`regsvr32s`を使ってマルウェアを実行した。",
+  "procedure/G0100/0": "Inceptionは、`regsvr32 %path%\\ctfmonrn.dll /s`という値を設定することで、システム起動時の永続化を確立した。",
+  "procedure/G0108/0": "Blue Mockingbirdは、regsvr32.exeを使ってカスタムコンパイルされたXMRIGマイナーDLLを実行した。",
+  "procedure/G0127/0": "TA551は、悪意あるDLLを読み込むためにregsvr32.exeを使用した。",
+  "procedure/G1053/0": "Storm-0501は、regsvr32.exeを使ってCobalt Strike Beaconファイルを起動した。",
+  "procedure/S0021/0": "Derusbiの変種には、レジストリの永続化を使ってregsvr32.exeを経由して実行を代理させるものが見られる。",
+  "procedure/S0087/0": "Hi-Zorは、レジストリのRun Keys / Startup Folderの永続化機構から呼び出されるregsvr32.exeを使って実行する。",
+  "procedure/S0229/0": "Orzの一部のバージョンには、MockDllとして知られる埋め込みDLLがあり、プロセスの空洞化とregsvr32を使って別のペイロードを実行する。",
+  "procedure/S0250/0": "Koadicは、追加のペイロードを実行するためにRegsvr32を使用できる。",
+  "procedure/S0270/0": "RogueRobinは、実行のために.sctファイルを動かすためにregsvr32.exeを使用する。",
+  "procedure/S0284/0": "More_eggsは、悪意あるDLLを実行するためにregsvr32.exeを使用した。",
+  "procedure/S0341/0": "Xbashは、スクリプトの実行にregsvr32を使用できる。",
+  "procedure/S0367/0": "Emotetは、DLLペイロードを実行するためにRegSvr32を使用する。",
+  "procedure/S0373/0": "Astarothは、regsvr32.exeを経由して読み込まれることがある。",
+  "procedure/S0384/0": "Dridexは、悪意あるコードを起動するために`regsvr32.exe`を使用できる。",
+  "procedure/S0476/0": "Valakは、悪意あるDLLを起動するために`regsvr32.exe`を使用した。",
+  "procedure/S0481/0": "Ragnar Lockerは、VirtualBoxの構成要素を実行するためにregsvr32.exeを使用した。"
+ },
+ "supplement": {
+  "summary": "DLLなどのOLEコントロールを登録・登録解除する正規ユーティリティRegsvr32.exeを悪用し、「Squiblydoo」と呼ばれる手口でレジストリに変更を加えずリモートのCOMスクリプトレットを実行する、特に有名なサブ技術。",
+  "terms": [
+   {
+    "term": "Squiblydoo",
+    "en": "Squiblydoo",
+    "explain": "Regsvr32.exeに外部サーバー上のスクリプトレットのURLを渡すことで、レジストリへの変更を一切残さずにコードを実行する手口の通称。政府機関を標的にした攻撃活動での使用が報告されている。"
+   }
+  ],
+  "analogy": "図書館の登録窓口（Regsvr32.exe）が、本の現物を登録台帳（レジストリ）に記録しなくても、インターネット越しの本の内容（スクリプトレット）をその場で読み上げて（実行して）しまえる、という特殊な仕様を持っているようなもの。台帳には何も残らないため、後から調べても形跡が見つからない。",
+  "learn": [
+   "「Squiblydoo」という手口が、レジストリに変更を残さずコードを実行できる点で、通常のフォレンジック調査を特に難しくすること",
+   "正規ユーティリティへの通常業務での依存（許可リストや誤検知防止）が、悪用時の検知回避にもつながるという構造的な問題"
+  ],
+  "interpretation": [
+   "本技術がCOMハイジャッキングによる永続化の確立にも使われると説明されている点は、この技術が単発のコード実行（Defense Evasion）だけでなく、持続化（Persistence）の手段としても機能する、複数戦術にまたがる多目的なツールであることを示している。"
+  ]
+ }
+}

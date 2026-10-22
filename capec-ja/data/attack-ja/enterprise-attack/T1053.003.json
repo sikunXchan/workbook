@@ -1,0 +1,33 @@
+{
+ "id": "T1053.003",
+ "source_sha": "f78e1f406a6095de",
+ "status": "done",
+ "seg": {
+  "name": "Cron",
+  "description/0": "攻撃者は、悪意あるコードの初回または繰り返しの実行のために、タスクスケジューリングを行うcronユーティリティを悪用することがある。cronユーティリティは、Unix系OS向けの時刻ベースのジョブスケジューラである。crontabファイルには、実行されるcronエントリのスケジュールと、実行の指定時刻が収められている。crontabファイルは、OSごとに決まったファイルパスに保存される。",
+  "description/1": "攻撃者は、永続化のために、LinuxやUnix環境でシステム起動時またはスケジュールに基づいてプログラムを実行するためにcronを使うことがある。ESXi環境では、cronジョブはcrontabファイル（例：`/var/spool/cron/crontabs/root`）を介して直接作成する必要がある。",
+  "mitigation/M1018/0": "cronの権限は`/etc/cron.allow`と`/etc/cron.deny`で制御される。`cron.allow`ファイルが存在する場合、cronを使う必要がある利用者はこのファイルに記載されている必要がある。`cron.deny`は、利用者がcronを使うことを明示的に禁止するために使われる。どちらのファイルも存在しない場合は、スーパーユーザーのみがcronを実行できる。",
+  "mitigation/M1047/0": "cronのスケジュールへの変更を確認する。cronの実行は`/var/log`ディレクトリ内で確認できる。cronのログファイルの場所を確認するには、`/etc/rsyslog.conf`または`/etc/syslog.conf`のsyslog設定を確認する。",
+  "procedure/G0082/0": "APT38は、Linuxシステム上であらかじめスケジュールされた定期的なバックグラウンドジョブを作成するために、cronを使ったことがある。",
+  "procedure/G0106/0": "Rockeは、C2からファイルをダウンロードして実行するcronジョブをインストールしたことがある。",
+  "procedure/G1023/0": "APT5は、`/var/cron/tabs/`内などのcrontabファイルを改変したことがある。",
+  "procedure/S0163/0": "Janicabは、Mac機器上での永続化のためにcronジョブを使ったことがある。",
+  "procedure/S0198/0": "NETWIREは、永続化を確立するためにcrontabを使うことができる。",
+  "procedure/S0341/0": "Xbashは、自身がLinuxシステム上にあると判断すると、永続化のためのcronjobを作成できる。",
+  "procedure/S0374/0": "SpeakUpは、永続化を確実にするためにcronタスクを使う。",
+  "procedure/S0401/0": "Exaramel for Linuxは、root権限を持たない場合、永続化のためにcrontabを使う。",
+  "procedure/S0468/0": "Skidmapは、crontab経由で自身をインストールしたことがある。",
+  "procedure/S0504/0": "Anchorは、自身をcronジョブとしてインストールできる。",
+  "procedure/S0587/0": "Penquinは、Cronを使って定期的・あらかじめスケジュールされたバックグラウンドジョブを作成できる。",
+  "procedure/S0588/0": "GoldMaxのLinux版は、永続化を得るために`@reboot`行を持つcrontabエントリを使ったことがある。",
+  "procedure/S0599/0": "Kinsingは、永続化を確実にするために、crontabを使って毎分シェルスクリプトをダウンロード・実行したことがある。",
+  "procedure/S1107/0": "NKAbuseは、Linuxホストへの感染時に永続化を確立するためにCronジョブを使う。",
+  "procedure/S1198/0": "Gomirは、group 0権限で最初から動作していない場合、バックドアを再起動時に起動させるため、プロセス実行用のcrontabを設定する。"
+ },
+ "supplement": {
+  "summary": "LinuxやUnix系OSの標準的な時刻ベースジョブスケジューラ「cron」を悪用し、再起動後も含めて悪意あるコードを繰り返し実行させることで永続化を得る技術。マルウェアの永続化手段としてごく一般的に使われる。",
+  "analogy": "家の掃除を毎週決まった曜日・時間に自動で行うロボット掃除機のスケジュール設定（crontab）に、こっそり「毎週その時間に、裏口の鍵を解除する」という予定を書き加えておくようなもの。表向きは普段どおりの自動処理に見えるため、気づかれにくい。",
+  "learn": ["`cron.allow`・`cron.deny`という2つのファイルによる利用制限の仕組みと、両方が存在しない場合はスーパーユーザーのみが使えるという初期設定の挙動"],
+  "interpretation": ["Windowsのスケジュールされたタスク（T1053.005）が極めて多数の実例を持つのに対し、cronの実例はマルウェア（S0から始まるID）が多く、既知の攻撃グループによる直接の実例がやや少ない。これは、Linux/Unix環境を標的にする攻撃がWindows環境よりも相対的に少ないという、脅威情報の報告量の偏りを反映している可能性がある。"]
+ }
+}

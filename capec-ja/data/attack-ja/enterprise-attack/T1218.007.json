@@ -1,0 +1,44 @@
+{
+ "id": "T1218.007",
+ "source_sha": "f5e4e62f82910582",
+ "status": "done",
+ "seg": {
+  "name": "Msiexec",
+  "description/0": "攻撃者は、msiexec.exeを悪用して悪意あるペイロードの実行を代理させることがある。Msiexec.exeはWindows Installerのコマンドラインユーティリティであり、そのため通常はインストールパッケージ（.msi）の実行に関連付けられている。Msiexec.exeバイナリは、Microsoftによってデジタル署名されている場合もある。",
+  "description/1": "攻撃者は、msiexec.exeを悪用して、ローカルまたはネットワーク経由でアクセス可能なMSIファイルを起動することがある。Msiexec.exeはDLLを実行することもできる。Windowsシステム上で署名され、かつ標準搭載されていることがあるため、msiexec.exeはその潜在的な悪用を想定していないアプリケーション制御のしくみを回避するために使われることがある。また、`AlwaysInstallElevated`ポリシーが有効な場合、msiexec.exeの実行はSYSTEM権限に昇格することもある。",
+  "mitigation/M1026/0": "Msiexec.exeの実行を、それを使う必要がある特権アカウントやグループに限定することで、悪意ある利用の機会を減らす。",
+  "mitigation/M1042/0": "Windows Installerパッケージの昇格実行を防ぐため、`AlwaysInstallElevated`ポリシーの無効化を検討する。",
+  "procedure/G0021/0": "Molerats（モレラッツ）は、MSIペイロードを実行するためにmsiexec.exeを使用した。",
+  "procedure/G0075/0": "Rancorは、HTTP経由で悪意あるインストーラーファイルをダウンロード・実行するために`msiexec`を使用した。",
+  "procedure/G0082/0": "APT38は、悪意あるファイルを実行するために`msiexec.exe`を使用した。",
+  "procedure/G0092/0": "TA505は、悪意あるWindows Installerファイルをダウンロード・実行するために`msiexec`を使用した。",
+  "procedure/G0095/0": "Macheteは、Macheteマルウェアをインストールするためにmsiexecを使用した。",
+  "procedure/G0128/0": "ZIRCONIUMは、悪意あるMSIファイルをダウンロード・実行するためにmsiexec.exeコマンドラインユーティリティを使用した。",
+  "procedure/S0038/0": "Duquは、悪意あるWindows Installerパッケージを実行するために`msiexec`を使用した。さらに、56ビットの暗号化キーを含むPROPERTY=VALUEのペアが、インストーラーパッケージから主要なペイロードを復号するために使われた。",
+  "procedure/S0381/0": "FlawedAmmyyは、`msiexec.exe`を経由してインストールされた。",
+  "procedure/S0449/0": "Mazeは、ランサムウェア攻撃用の構成要素をMSIファイルとして配布し、その一部は`msiexec`を使ってコマンドラインから実行された。",
+  "procedure/S0451/0": "LoudMinerは、仮想化ソフトウェアをインストールするためにMSIインストーラーを使用した。",
+  "procedure/S0455/0": "Metamorfoは、ファイルを自動的に実行するためにMsiExec.exeを使用した。",
+  "procedure/S0481/0": "Ragnar Lockerは、署名されていないMSIパッケージとして配布され、`msiexec.exe`で実行された。",
+  "procedure/S0483/0": "IcedIDは、停止状態のmsiexec.exeプロセスに自身を注入し、通常のmsiアプリケーションに見せかけながらC2にビーコンを送ることができる。IcedIDは、IcedIDローダーを展開するためにもmsiexec.exeを使用した。",
+  "procedure/S0528/0": "Javaliは、悪意あるペイロードをダウンロード・実行するためにMSIインストーラーを使用した。",
+  "procedure/S0530/0": "Melcozは、実行のためにVBScriptが埋め込まれたMSIファイルを使用できる。",
+  "procedure/S0531/0": "Grandoreiroは、DLLを実行するためにMSIファイルを使用できる。",
+  "procedure/S0584/0": "AppleJeusは、MSIインストーラーを経由してインストールされた。",
+  "procedure/S0592/0": "RemoteUtilitiesは、サービスをインストールするためにMsiexecを使用できる。",
+  "procedure/S0611/0": "Clopは、システム上のセキュリティツールを無効化するためにmsiexec.exeを使用できる。",
+  "procedure/S0631/0": "Chaesは、感染チェーンを開始する最初の手段として.MSIファイルを使用した。",
+  "procedure/S0650/0": "QakBotは、複数のcmd.exeプロセスを立ち上げるためにMSIExecを使用できる。"
+ },
+ "supplement": {
+  "summary": "Windows Installerの正規コマンドラインユーティリティmsiexec.exeを悪用し、署名済みの.msiパッケージ実行という体裁で悪意あるコードを動かすサブ技術。AlwaysInstallElevated設定が有効だと、権限昇格にもつながる二重のリスクを持つ。",
+  "analogy": "正規の配送業者（msiexec.exe）が荷物（MSIファイル）を届ける体裁をとっていれば、受付（アプリケーション制御）はいつも素通りさせてしまう。さらに、配送業者が「特別便」の権限（AlwaysInstallElevated）を持っていると、荷物の内容確認なしに建物の最上階（SYSTEM権限）まで直接運び込めてしまう。",
+  "learn": [
+   "msiexec.exeの悪用が、単なるコード実行の代理だけでなく、AlwaysInstallElevatedの設定次第で権限昇格にもつながり得ること",
+   "DLLの実行にもmsiexec.exeが使えるため、インストールパッケージに限らない悪用の幅があること"
+  ],
+  "interpretation": [
+   "対策の一つがAlwaysInstallElevatedポリシーの無効化を挙げている点は、この技術が単なる「実行の代理」（Defense Evasion寄りの脅威）にとどまらず、環境設定次第で権限昇格（Privilege Escalation）の手段にも転じるという、複数の戦術にまたがる性質を持つことを示している。"
+  ]
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "id": "T1047",
+ "source_sha": "88713053a5f9ba34",
+ "status": "done",
+ "seg": {
+  "name": "Windows管理基盤（WMI）",
+  "description/0": "攻撃者は、悪意あるコマンドやペイロードを実行するために、Windows管理基盤（WMI）を悪用することがある。WMIはプログラマー向けに設計された、Windowsシステム上の管理データと操作のための基盤であり、Windowsのシステム構成要素へ一元的にアクセスできる環境を提供する管理機能である。",
+  "description/1": "WMIサービスはローカルからも遠隔からもアクセスできるが、遠隔からのアクセスは分散コンポーネントオブジェクトモデル（DCOM）やWindows Remote Managementのような遠隔サービスによって行われる。DCOM経由の遠隔WMIはポート135を使い、WinRM経由のWMIはHTTP利用時はポート5985、HTTPS利用時はポート5986を使う。",
+  "description/2": "攻撃者はWMIを使って、ローカル・遠隔のシステムとやり取りし、探索のための情報収集や、コマンド・ペイロードの実行といった、さまざまな挙動を行う手段として利用できる。例えば、`wmic.exe`は、`wmic.exe Shadowcopy Delete`というコマンドでシャドウコピーを削除するために攻撃者に悪用されることがある（システム復旧の阻害）。",
+  "description/3": "注：`wmic.exe`は2024年1月の時点で非推奨とされ、WMICの機能はWindows 11以降では既定で無効化されている。WMICは今後のWindowsのリリースで削除され、WMIの主要なインターフェースとしてPowerShellに置き換えられる予定である。PowerShellや`wbemtool.exe`のようなツールに加え、COM APIを使ってC++・.NET・VBScriptなどからプログラム的にWMIとやり取りすることもできる。",
+  "mitigation/M1018/0": "既定では、WMIを使った遠隔接続が許可されているのは管理者のみである。接続を許可する他の利用者を制限するか、WMIへのすべての利用者の遠隔接続を禁止する。",
+  "mitigation/M1026/0": "管理者権限および特権を持つアカウントについて、システム間での認証情報の重複を防ぐ。",
+  "mitigation/M1038/0": "`wmic.exe`が、あるシステムやネットワークにおいて不要であれば、攻撃者による潜在的な悪用を防ぐために、その実行をブロックするように構成されたアプリケーション制御を使用する。例えば、Windows 10およびWindows Server 2016以降では、Windows Defender Application Control（WDAC）のポリシー規則を適用して`wmic.exe`アプリケーションをブロックし、悪用を防ぐことができる。",
+  "mitigation/M1040/0": "Windows 10では、Attack Surface Reduction（ASR）規則を有効にして、WMIコマンドによって作成されるプロセスの実行をブロックする。注：多くの正規のツールやアプリケーションがコマンド実行にWMIを利用している。",
+  "procedure/G0009/0": "Deep Pandaグループは、横展開にWMIを利用することが知られている。",
+  "procedure/G0016/0": "APT29は、認証情報を盗み、後の時点でバックドアを実行するためにWMIを使用した。",
+  "procedure/G0019/0": "Naikonは、横展開にWMIC.exeを使用した。",
+  "procedure/G0030/0": "Lotus Blossomは、横展開を可能にするためにWMIを使用した。",
+  "procedure/G0032/0": "Lazarus Groupは、探索のため、また持続化と横展開のためのペイロード実行のために、WMICを使用した。",
+  "procedure/G0034/0": "Sandworm Teamは、遠隔コード実行にImpacketのWMIexecモジュールを使用し、WMIクエリを実行するためにVBScriptを使用した。",
+  "procedure/G0037/0": "FIN6は、PowerShellスクリプトの遠隔実行を自動化するためにWMIを使用した。",
+  "procedure/G0038/0": "Stealth Falconのマルウェアは、Windows管理基盤（WMI）を介してシステム情報を収集する。",
+  "procedure/G0045/0": "menuPassは、WMIを使って遠隔マシンにログインする、改変されたペネトレーションテスト用スクリプトwmiexec.vbsを使用した。",
+  "procedure/G0046/0": "FIN7は、標的のシステムにマルウェアをインストールするためにWMIを使用した。",
+  "procedure/G0047/0": "Gamaredon Groupは、探索やC2のIPアドレスを特定するために使うスクリプトを実行するためにWMIを使用した。Gamaredon Groupは、pingの記録を調べるために次のWMIクエリを使用した：`Select * From Win32_PingStatus where Address = 'mil.gov.ua'`。",
+  "procedure/G0050/0": "APT32は、遠隔マシンにツールを展開し、Outlookプロセスについての情報を収集するためにWMIを使用した。",
+  "procedure/G0059/0": "Magic Houndは、探索のために`cmd /c wmic computersystem get domain`を実行するツールを使用した。",
+  "procedure/G0061/0": "FIN8の悪意あるスピアフィッシングのペイロードは、マルウェアを起動し`cmd.exe`の実行を生成するためにWMIを使用する。FIN8は、横展開や、侵害中・侵害後の痕跡消去にも、WMICとImpacketスイートを使用した。"
+ },
+ "supplement": {
+  "summary": "Windows標準の管理基盤であるWMIを、正規の管理作業ではなく攻撃者のコマンド実行・情報収集・横展開に悪用する技術。マルウェアを新たに持ち込まず、OS標準の機能だけで動く点が特徴。",
+  "terms": [
+   { "term": "環境寄生型（LOLBins）", "en": "living off the land", "explain": "WMIのように、OSに標準搭載された正規のツール・機能を悪用する手法。マルウェアそのものを検知する対策では見つけにくい。" }
+  ],
+  "analogy": "建物の設備管理用の共通カードキー（WMI）を使えば、どの部屋にも入れて照明やエアコンを操作できてしまうのと同じで、本来は管理人向けの便利な仕組みが、カードキーを手に入れた侵入者にとっても強力な『何でもできる道具』になってしまう。",
+  "learn": [
+   "`wmic.exe`が2024年以降非推奨化され、Windows 11以降では既定で無効になっているという、原典に明記された最新の背景事情",
+   "WMIが遠隔からも使えるため、ローカルの1台だけでなく、横展開の手段としても広く悪用されていること"
+  ],
+  "interpretation": [
+   "対策としてM1040（Attack Surface Reduction規則）の注記に『多くの正規のツールやアプリケーションがコマンド実行にWMIを利用している』とあることは、この技術への対策の難しさを端的に示している。WMIの使用そのものを禁止すると正規業務に影響が出るため、WMICの無効化やASR規則といった、使用範囲を絞る形の対策が中心になっている。"
+  ]
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "id": "T1070.003",
+ "source_sha": "fa30889ced79ea7e",
+ "status": "done",
+ "seg": {
+  "name": "コマンド履歴の消去",
+  "description/0": "システムログの消去に加えて、攻撃者は、侵入中に行った行動を隠すために、侵害したアカウントのコマンド履歴を消去することがある。さまざまなコマンドインタプリタは、利用者が端末に入力したコマンドを記録しており、利用者が自分の行った操作をあとで追えるようにしている。",
+  "description/1": "LinuxとmacOSでは、これらのコマンド履歴はいくつかの方法でアクセスできる。ログイン中は、このコマンド履歴は環境変数`HISTFILE`が指す先のファイルに記録される。利用者がシステムからログオフすると、この情報は利用者のホームディレクトリ内の`~/.bash_history`というファイルに書き出される。この仕組みの利点は、利用者が異なるセッションで以前使ったコマンドに戻れることである。攻撃者は、履歴を手動で消去する（`history -c`）、あるいはbash履歴ファイルを削除する（`rm ~/.bash_history`）ことで、これらのログから自分のコマンドを削除することがある。",
+  "description/2": "攻撃者は、ネットワーク機器上でNetwork Device CLIを利用して、コマンド履歴データを消去することもある（`clear logging`や`clear history`）。ESXiサーバーでは、コマンド履歴を`/var/log/shell.log`ファイルから手動で削除できる。",
+  "description/3": "Windowsホストでは、PowerShellには2種類の異なるコマンド履歴プロバイダーがある。組み込みの履歴と、`PSReadLine`モジュールが管理するコマンド履歴である。組み込みの履歴は、現在のセッションで使われたコマンドのみを追跡する。このコマンド履歴は他のセッションからは利用できず、セッションが終了すると削除される。",
+  "description/4": "`PSReadLine`のコマンド履歴は、すべてのPowerShellセッションで使われたコマンドを追跡し、それをファイルに書き込む（既定では`$env:APPDATA\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt`）。この履歴ファイルはすべてのセッションから利用可能で、セッション終了時にファイルが削除されないため、過去のすべての履歴が含まれる。",
+  "description/5": "攻撃者は、現在のPowerShellセッションからコマンド履歴全体を消去するために、PowerShellコマンド`Clear-History`を実行することがある。しかし、これは`ConsoleHost_history.txt`ファイルを削除・消去するものではない。攻撃者は、実行したPowerShellコマンドを隠すために、`ConsoleHost_history.txt`ファイルを削除したり、その内容を編集したりすることもある。",
+  "mitigation/M1022/0": "利用者が特定のファイルを削除・書き込みできないようにすることで、攻撃者が`~/.bash_history`や`ConsoleHost_history.txt`ファイルを悪意を持って改変するのを防ぐことができる。",
+  "mitigation/M1029/0": "履歴データのログ記録を遠隔のデータストアと一元化されたログ記録のしくみに転送し、コマンドラインの履歴データを保存しておく。",
+  "mitigation/M1039/0": "コマンド履歴に関連する環境変数を読み取り専用にすることで、履歴が保持されることを確実にできる。",
+  "procedure/G0032/0": "Lazarus Groupは、侵害したルーター上のログファイルを常習的に削除しており、logrotateユーティリティを利用した自動的なログ削除も含まれる。",
+  "procedure/G0045/0": "menuPassは、PowerShellの実行ログを削除するためにWevtutilを使用している。",
+  "procedure/G0059/0": "Magic Houndは、侵害したExchangeサーバーからメールボックスのエクスポート要求を削除している。",
+  "procedure/G0082/0": "APT38は、PowerShellのコマンド履歴ファイルを削除するためのスクリプトを実行している。",
+  "procedure/G0096/0": "APT41は、Bashの履歴を削除することで、自身の活動の一部の証拠を取り除こうとしている。",
+  "procedure/G0139/0": "TeamTNTは、`history -c`でコマンド履歴を消去している。",
+  "procedure/G0143/0": "Aquatic Pandaは、活動後の痕跡を取り除くために、Linux環境でコマンド履歴を消去している。",
+  "procedure/G1023/0": "APT5は、標的のESXiサーバー上でコマンド履歴を消去している。",
+  "procedure/G1045/0": "Salt Typhoonは、検知を避けるためにログを削除・消去している。",
+  "procedure/G1051/0": "Medusa Groupは、PowerShellコマンド`Remove-Item (Get-PSReadlineOption).HistorySavePath`を実行することでコマンド履歴を消去している。",
+  "procedure/S0601/0": "Hildegardは、スクリプトシェルのログを消去するためにhistory -cを使用している。",
+  "procedure/S0641/0": "Kobalosは、侵害したホスト上のコマンド履歴をすべて削除できる。",
+  "procedure/S1203/0": "J-magicは、過去に実行されたコマンドライン引数を上書きできる。",
+  "procedure/S9051/0": "The Gentlemen Ransomwareは、`C:/Users/*/AppData/Roaming/Microsoft/Windows/PowerShell/PSReadline/ConsoleHost_History.txt`に配置されたコマンド履歴ファイルを対象とすることで、すべての利用者のPowerShellコマンド履歴を削除している。"
+ },
+ "supplement": {
+  "summary": "侵害したアカウントが端末に入力したコマンドの履歴（bashのhistoryファイルやPowerShellのPSReadLine履歴など）を消去し、侵入中に行った操作の記録を隠す技術。OSごとに履歴の保存場所・仕組みが異なる点が特徴。",
+  "facts": [
+   {
+    "text": "PowerShellには組み込みの履歴とPSReadLineモジュールが管理する履歴の2種類があり、`Clear-History`コマンドは前者しか消去できず、`ConsoleHost_history.txt`に保存される後者は別途削除する必要があると原典に書かれている。",
+    "source": "description"
+   }
+  ],
+  "analogy": "図書館の利用者が、自分が借りた本の記録を消すために、受付の帳簿から自分の名前を消そうとするものの、実は別の部屋にバックアップの台帳が保管されていることに気づかず、そちらは消し忘れてしまう状況に近い。PowerShellの「組み込み履歴」と「PSReadLine履歴」という二重の記録のしくみが、まさにこの構造を作っている。",
+  "learn": [
+   "`history -c`や`rm ~/.bash_history`のような単純なコマンドで、Linux/macOSのコマンド履歴は簡単に消去できること",
+   "Windows PowerShellでは履歴の記録場所が2系統あるため、片方だけを消去しても証拠が残ってしまう可能性があること"
+  ],
+  "interpretation": [
+   "この技術の原典が、PowerShellの履歴管理の二重構造（組み込み履歴とPSReadLine履歴）を詳しく説明しているのは、攻撃者が片方だけを消して安心してしまう典型的な『消し忘れ』が起こりやすいことを示唆している。防御側にとっては、`ConsoleHost_history.txt`のような、攻撃者が見落としがちな第二の記録場所こそが、フォレンジック調査で有効な手がかりになり得る。"
+  ]
+ }
+}
