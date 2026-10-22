@@ -1,0 +1,49 @@
+{
+ "id": "T1559.002",
+ "source_sha": "3d80c105ef94efcb",
+ "status": "done",
+ "seg": {
+  "name": "DDE（Dynamic Data Exchange）",
+  "description/0": "攻撃者は、任意のコマンドを実行するために、WindowsのDynamic Data Exchange（DDE）を使うことがある。DDEは、アプリケーション間での一度限りの、または継続的なプロセス間通信（IPC）のためのクライアント・サーバープロトコルである。一度リンクが確立されると、アプリケーションは、文字列・ウォームデータリンク（データ項目が変化した際の通知）・ホットデータリンク（データ項目の変化の複製）・コマンド実行の要求から成るトランザクションを、自律的に交換できるようになる。",
+  "description/1": "オブジェクトのリンクと埋め込み（OLE）、つまり文書間でデータをリンクする機能は、もともとDDEを通じて実装されていた。Component Object Modelに取って代わられたにもかかわらず、DDEはWindows 10とMicrosoft Office 2016の大部分で、レジストリキーを通じて有効化できる状態にある。",
+  "description/2": "Microsoft Officeの文書は、直接、あるいは埋め込みファイルを通じて、DDEコマンドで汚染されることがあり、Visual Basic for Applications（VBA）マクロの使用を避けつつ、フィッシングキャンペーンやホストされたWebコンテンツを通じて実行を届けるために使われることがある。同様に、攻撃者は、Windowsの表計算プログラムで開かれることを意図したCSVファイル内にDDE数式を埋め込むことで、被害者の機器上でアプリケーションやコマンドを実行するペイロードを感染させることがある。",
+  "description/3": "DDEはまた、コマンド・スクリプトインタープリタへの直接アクセスを持たない、侵害済みのマシン上で活動する攻撃者によって活用されることもある。DDEの実行は、Distributed Component Object Model（DCOM）のようなリモートサービスを通じて、遠隔から呼び出すこともできる。",
+  "mitigation/M1040/0": "Windows 10では、DDE攻撃やOfficeプログラムからの子プロセスの生成を防ぐために、攻撃対象領域の減少（ASR）ルールを有効にする。",
+  "mitigation/M1042/0": "Microsoft Officeの機能制御セキュリティに固有のレジストリキーを設定して、DDE/OLEの自動実行を無効化できる。Microsoftは、WordとExcelでDDE実行を完全に無効化するレジストリキーも作成し、既定で有効にしている。",
+  "mitigation/M1048/0": "保護されたビューが有効になっていることを確認する。",
+  "mitigation/M1054/0": "OneNoteのような、保護されたビューに対応していないOfficeプログラムでの埋め込みファイルを無効化することを検討する。",
+  "procedure/G0007/0": "APT28は、Word文書内のDDEを通じてPowerShellコマンドを実行することで、JHUHUGITとKoadicを配布してきた。",
+  "procedure/G0040/0": "Patchworkは、マルウェアを配布するためにDDEプロトコルを利用した。",
+  "procedure/G0046/0": "FIN7の標的型フィッシングキャンペーンには、DDE実行を含む悪意あるWord文書が含まれていた。",
+  "procedure/G0065/0": "Leviathanは、さまざまなフィッシング文書に悪意あるコンテンツを挿入する手法としてOLEを利用してきた。",
+  "procedure/G0067/0": "APT37は、コマンドの実行と悪意あるVBSのために、WindowsのDDEを使用してきた。",
+  "procedure/G0069/0": "MuddyWaterは、DDEを介してPowerShellスクリプトを実行できるマルウェアを使用してきた。",
+  "procedure/G0080/0": "Cobalt Groupは、悪意あるWordのOLE複合文書を被害者に送信してきた。",
+  "procedure/G0084/0": "Gallmakerは、被害者のマシンへのアクセスと実行を得るために、MicrosoftのDDEプロトコルの悪用を試みた。",
+  "procedure/G0092/0": "TA505は、DDEを悪用する悪意あるWord文書を利用してきた。",
+  "procedure/G0121/0": "Sidewinderは、Internet Explorer経由での実行を得るために、ActiveXObjectユーティリティを使ってOLEオブジェクトを作成してきた。",
+  "procedure/G1002/0": "BITTERは、悪意あるペイロードをダウンロード・実行するために、Microsoft Equation Editorを使ってOLEオブジェクトを実行してきた。",
+  "procedure/S0148/0": "RTMは、Dynamic Data Exchangeのしくみを使って、ブラウザタブ内の特定の文字列を検索できる。",
+  "procedure/S0223/0": "POWERSTATSは、侵害したホスト上で追加のペイロードを実行するためにDDEを使用できる。",
+  "procedure/S0237/0": "GravityRATは、実行のためにDDEを使うWord文書を通じて配布されてきた。",
+  "procedure/S0387/0": "KeyBoyは、遠隔のペイロードをダウンロードするためにDynamic Data Exchange（DDE）プロトコルを使用する。",
+  "procedure/S0391/0": "HAWKBALLは、埋め込まれたシェルコードを投下するためにEquation Editorを使うOLEオブジェクトを使用してきた。",
+  "procedure/S0428/0": "PoetRATは、悪意あるコードを実行するためにDDEを使う文書を通じて配布された。",
+  "procedure/S0458/0": "Ramsayは、悪意ある文書内のOLEオブジェクトを使って配布されてきた。",
+  "procedure/S0476/0": "Valakは、OLEを介してタスクを実行できる。"
+ },
+ "supplement": {
+  "summary": "Office文書間でデータをリンクするための古い機能であるDDE（Dynamic Data Exchange）を悪用し、VBAマクロを使わずにコマンドを実行させる手口。マクロ対策を回避するための手段として、多数のフィッシングキャンペーンで実際に使われてきた。",
+  "facts": [
+   { "text": "DDEはComponent Object Modelに取って代わられたにもかかわらず、Windows 10とMicrosoft Office 2016の大部分で、レジストリキーを通じて有効化できる状態にあると原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "新しい連絡手段（COM）が導入された後も、昔からある古い連絡手段（DDE）の受付窓口が、使われなくなったにもかかわらず閉鎖されずに残っている状態に近い。多くの人はもう使わないその窓口を、攻撃者だけがこっそり利用して、正面玄関のチェック（マクロのブロック）をすり抜けてしまう。",
+  "learn": [
+   "VBAマクロへの警戒が浸透した結果、攻撃者がマクロを使わずに文書からコードを実行する代替手段として、古い機能であるDDEに目を向けたという、対策と手口の移り変わりの実例",
+   "DDEがComponent Object Modelという後継技術に取って代わられていながら、互換性のために既定で有効なまま残っていること"
+  ],
+  "interpretation": [
+   "この技術は、『もう使われていない古い機能だから安全だろう』という思い込みが、実際には逆に危険であることを示す好例である。レガシー機能は、利用者の意識から外れている分、監視や対策も手薄になりがちであり、攻撃者はまさにそうした『死角』を狙う。この技術への対策（DDE実行を無効化するレジストリキーの設定）は、機能そのものを積極的に無効化するという、他の多くの技術とは異なる、明確で実行しやすい対応策を持っている点も特徴である。"
+  ]
+ }
+}
