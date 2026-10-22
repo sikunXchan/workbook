@@ -1,6 +1,6 @@
 # 品質チェックの結果
 
-実行日時: 2026-10-22T00:00:58.228Z
+実行日時: 2026-10-22T06:36:48.872Z
 
 ## 1. ページ数と公式データの項目数
 - ✅ Attack_Pattern: 公式XML 615件 / ページ 615件
@@ -8,12 +8,12 @@
 - ✅ View: 公式XML 13件 / ページ 13件
 
 ## 2. 内部リンク切れ
-- ✅ 内部リンク切れ 0件（全38603件を確認）
+- ✅ 内部リンク切れ 0件（全38613件を確認）
 
 ## 3. 英語のまま残っている本文
-- ❌ 未翻訳の箇所: 14836件
+- ❌ 未翻訳の箇所: 14692件
 - ✅ 訳語表に無い決まった値: 0件
-- ❌ 本文に残る英語（4語以上連続）: 303件
+- ❌ 本文に残る英語（4語以上連続）: 306件
 -   attack/enterprise-attack/index.html: ATT CK 
 MITRE ATT CK
 -   attack/enterprise-attack/tactics/TA0112/index.html: File and Directory Permissions Modification
@@ -168,6 +168,8 @@ T
 -   attack/enterprise-attack/techniques/T1127.001/index.html: Windows Defender Application Control
 -   attack/enterprise-attack/techniques/T1127.002/index.html: exe dfshim.dll,ShOpenVerbApplication
 -   attack/enterprise-attack/techniques/T1127.002/index.html: exe dfshim.dll,ShOpenVerbApplication
+-   attack/enterprise-attack/techniques/T1134.002/index.html: AdvancedRun.exe  /EXEFilename  C
+-   attack/enterprise-attack/techniques/T1134.002/index.html: CommandLine  stop WinDefend  /StartDirectory    /RunAs
 -   attack/enterprise-attack/techniques/T1135/index.html: net view/net share
 -   attack/enterprise-attack/techniques/T1135/index.html: net view / net share
 -   attack/enterprise-attack/techniques/T1136/index.html: WindowsIaaSLinuxmacOSNetwork DevicesContainersSaaSOffice SuiteIdentity ProviderE
@@ -189,6 +191,7 @@ T
 -   attack/enterprise-attack/techniques/T1202/index.html: Windows Subsystem for Linux
 -   attack/enterprise-attack/techniques/T1203/index.html: Windows Defender Exploit Guard
 -   attack/enterprise-attack/techniques/T1203/index.html: Enhanced Mitigation Experience Toolkit
+-   attack/enterprise-attack/techniques/T1205/index.html: Ivanti Connect Secure VPN
 -   attack/enterprise-attack/techniques/T1205.002/index.html: data/runtime/cockpit/wd.fd
 -   attack/enterprise-attack/techniques/T1210/index.html: Windows Defender Exploit Guard
 -   attack/enterprise-attack/techniques/T1210/index.html: Enhanced Mitigation Experience Toolkit
@@ -220,11 +223,6 @@ URL
 -   attack/enterprise-attack/techniques/T1218.013/index.html: Microsoft Application Virtualization Injector
 -   attack/enterprise-attack/techniques/T1218.013/index.html: Microsoft Application Virtualization Injector
 -   attack/enterprise-attack/techniques/T1218.014/index.html: mmc wbadmin.msc delete catalog
--   attack/enterprise-attack/techniques/T1218.014/index.html: mmc.exe compmgmt.msc /computer
--   attack/enterprise-attack/techniques/T1219/index.html: Remote Access Hardware
-
-Mitigations
--   attack/enterprise-attack/techniques/T1219/index.html: DameWare Mini Remote Control
 - ※ 英語名、参考文献、更新履歴、他の分類の名前など、lang="en" を付けて意図的に原文のまま載せている部分は対象外。
 
 ## 4. 全ページのフッター
