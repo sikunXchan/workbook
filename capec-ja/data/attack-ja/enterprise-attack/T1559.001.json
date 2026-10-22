@@ -1,0 +1,52 @@
+{
+ "id": "T1559.001",
+ "source_sha": "f57158bfbd20857b",
+ "status": "done",
+ "seg": {
+  "name": "COM（Component Object Model）",
+  "description/0": "攻撃者は、ローカルでのコード実行のために、WindowsのComponent Object Model（COM）を使うことがある。COMは、ネイティブのWindowsアプリケーションプログラミングインターフェース（API）のプロセス間通信（IPC）構成要素であり、ソフトウェアオブジェクト、すなわち1つ以上のインターフェースを実装する実行コード同士のやり取りを可能にする。COMを通じて、クライアントオブジェクトは、通常はバイナリのダイナミックリンクライブラリ（DLL）や実行ファイル（EXE）であるサーバーオブジェクトのメソッドを呼び出すことができる。遠隔のCOM実行は、Distributed Component Object Model（DCOM）のようなリモートサービスによって可能になる。",
+  "description/1": "さまざまなCOMインターフェースが公開されており、C・C++・Java・Visual Basicといった、さまざまなプログラミング言語を通じて任意の実行を呼び出すために悪用されうる。特定のCOMオブジェクトは、コード実行以外の機能を直接実行するためにも存在し、例えばスケジュールされたタスクの作成、ファイルレスなダウンロード・実行、権限昇格や永続化に関連するその他の攻撃者の振る舞いなどがある。",
+  "mitigation/M1026/0": "個々のCOMアプリケーションのプロセス全体のセキュリティに関連する、`HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\AppID\\{AppID_GUID}`内のレジストリ設定を（直接、またはDcomcnfg.exeを使って）変更する。",
+  "mitigation/M1026/1": "自身のプロセス全体のセキュリティを設定していないすべてのCOMアプリケーション向けのシステム全体の既定セキュリティに関連する、`HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Ole`内のレジストリ設定を（直接、またはDcomcnfg.exeを使って）変更する。",
+  "mitigation/M1048/0": "すべてのCOMアラートと保護されたビューが有効になっていることを確認する。",
+  "procedure/G0047/0": "Gamaredon Groupのマルウェアは、`Microsoft.Office.Interop`オブジェクトを使って、文書に悪意あるマクロを挿入できる。",
+  "procedure/G0069/0": "MuddyWaterは、COM・DCOM・Outlookを介して悪意あるコードを実行する機能を持つマルウェアを使用してきた。",
+  "procedure/G0094/0": "Kimsukyは、正規のアプリケーションを模した命名規則を使うことを含め、スケジュールされたタスクを作成するためにComponent Object Model（COM）を利用してきた。Kimsukyは、難読化されたVBScriptを利用して、`WScript.Shell`内に文字列を形成し、被害者の環境に悪意あるペイロードをダウンロードしてきた。",
+  "procedure/G1051/0": "Medusa Groupは、UACを回避するためにComponent Object Model（COM）を利用してきた。",
+  "procedure/S0223/0": "POWERSTATSは、侵害したホスト上で追加のペイロードを実行するために、DCOM（127.0.0.1のループバックアドレスを標的とする）を使用できる。",
+  "procedure/S0260/0": "InvisiMoleは、タスクをスケジュールするために、`ITaskService`・`ITaskDefinition`・`ITaskSettings`のCOMインターフェースを使用できる。",
+  "procedure/S0266/0": "TrickBotは、永続化のためのスケジュールされたタスクを設定するためにCOMを使用した。",
+  "procedure/S0386/0": "Ursnifのドロッパーは、マルウェアの完全な実行ファイルペイロードを実行するためにCOMオブジェクトを使用してきた。",
+  "procedure/S0458/0": "Ramsayは、タスクをスケジュールし永続化を維持するために、Windows COM APIを使用できる。",
+  "procedure/S0666/0": "Gelsemiumは、UAC回避処理の一部として`IARPUinstallerStringLauncher` COMインターフェースを使用できる。",
+  "procedure/S0691/0": "Neoichorは、C2から接続して命令を受け取るために、Internet Explorer（IE）のCOMインターフェースを使用できる。",
+  "procedure/S0692/0": "SILENTTRINITYは、`Microsoft.Office.Interop`オブジェクトを使って、Excel.exeに悪意あるシェルコードを挿入できる。",
+  "procedure/S0698/0": "HermeticWizardは、DCOMを使って遠隔のマシン上でファイルを実行できる。",
+  "procedure/S1015/0": "Milanは、スケジュールされたタスクを生成するためにCOM構成要素を使用できる。",
+  "procedure/S1039/0": "Bumblebeeは、システム情報を収集するクエリを実行するためにCOMオブジェクトを使用できる。",
+  "procedure/S1044/0": "FunnyDreamは、永続化のしくみを可能にするために、`CLSID_ShellLink`（`IShellLink`と`IPersistFile`）および`WScript.Shell`（`RegWrite`メソッド）で識別されるCOMオブジェクトを使用できる。",
+  "procedure/S1066/0": "DarkTortillaは、Windowsのスタートアップフォルダに.lnkショートカットファイルを作成するために、`WshShortcut` COMオブジェクトを使用してきた。",
+  "procedure/S1130/0": "Raspberry Robinは、`CMLuaUtil`向けの昇格されたCOMオブジェクトを作成し、実行中に悪意あるLNKファイルを指すレジストリ値を設定するためにこれを使用する。",
+  "procedure/S1160/0": "Latrodectusは、スケジュールされたタスクを設定するためにWindowsのComponent Object Model（COM）を使用できる。",
+  "procedure/S1236/0": "CLAIMLOADERは、`ITaskService`インターフェースを使ってスケジュールされたタスクを作成するために、Component Object Model（COM）オブジェクトを利用してきた。",
+  "procedure/S1238/0": "STATICPLUGINは、BMPファイルに偽装されたファイルを含むMSIパッケージをダウンロードするために、Windows COM Installerオブジェクトを利用してきた。",
+  "procedure/S9037/0": "RustyWaterは、CertificationKit.iniファイルを実行するために、WScript.Shell COMオブジェクトを使用してきた。"
+ },
+ "supplement": {
+  "summary": "Windowsの標準機能であるCOM（Component Object Model）を悪用し、タスクのスケジュール設定、UACの回避、任意のコード実行など、さまざまな攻撃目的を正規のAPI呼び出しの形で実行する手口。実例が極めて多く、ほぼすべての主要な攻撃グループ・マルウェアが活用している。",
+  "terms": [
+   { "term": "DCOM", "en": "Distributed Component Object Model", "explain": "COMの機能を、同じコンピューター内だけでなく、ネットワーク上の別のコンピューターに対しても使えるようにする拡張。遠隔のマシンでコードを実行させる手段として悪用されることがある。" }
+  ],
+  "facts": [
+   { "text": "特定のCOMオブジェクトは、スケジュールされたタスクの作成やファイルレスなダウンロード・実行など、コード実行以外の機能を直接実行するためにも存在すると原典に書かれている。", "source": "description" }
+  ],
+  "analogy": "会社の中にある、さまざまな部署（ソフトウェアオブジェクト）に業務を依頼できる社内システム（COM）があり、正規の社員であれば誰でもこのシステムを通じて「このタスクを設定してほしい」「このファイルを実行してほしい」と頼める。攻撃者は、この社内システムの「誰でも頼める」という性質を利用して、本来は自分の権限では直接できないはずの操作を、部署の名前を借りて実行させてしまう。",
+  "learn": [
+   "COMが単なるコード実行の手段ではなく、スケジュールされたタスクの作成やUACの回避など、多様な攻撃目的のための「汎用の道具箱」として使われていること",
+   "COM/DCOMの悪用が、C、C++、Java、Visual Basicなど多様な言語から可能であり、特定の言語やツールに依存しない、プラットフォーム共通の手口であること"
+  ],
+  "interpretation": [
+   "この技術に紐づく実例の数が非常に多いという事実は、COMがWindowsのほぼすべてのソフトウェアの基盤となっている、極めて汎用的な仕組みであることの裏返しである。COMそのものを無効化することは現実的ではないため、防御側は、個々のCOMオブジェクトの呼び出し（特にスケジュールされたタスクの作成やUAC回避に関連するCLSID）を監視し、通常のアプリケーションの振る舞いから外れた、異常な呼び出しパターンを検知する必要がある。"
+  ]
+ }
+}
