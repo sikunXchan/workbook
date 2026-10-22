@@ -105,13 +105,22 @@
   function setRead(list) {
     try { localStorage.setItem(READ_KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
   }
-  var thisPageReadId = document.body.getAttribute("data-read-id");
-  if (thisPageReadId) {
+  // ChromeなどはリンクのホバーやURL予測で、ページを開く前に裏側で先読み(プリレンダリング)
+  // することがある。そのタイミングでこのスクリプトが走ると、実際には開いていないのに
+  // 既読になってしまうため、先読み中は記録せず、本当に表示されてから記録する。
+  function markThisPageRead() {
+    var thisPageReadId = document.body.getAttribute("data-read-id");
+    if (!thisPageReadId) return;
     var readList = getRead();
     if (readList.indexOf(thisPageReadId) < 0) {
       readList.push(thisPageReadId);
       setRead(readList);
     }
+  }
+  if (document.prerendering) {
+    document.addEventListener("prerenderingchange", markThisPageRead, { once: true });
+  } else {
+    markThisPageRead();
   }
   var readSet = getRead();
   if (readSet.length) {
