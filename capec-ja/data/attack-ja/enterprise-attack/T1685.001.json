@@ -1,0 +1,31 @@
+{
+ "id": "T1685.001",
+ "source_sha": "82caa1d06b4fa61c",
+ "status": "done",
+ "seg": {
+  "name": "Windowsイベントログの無効化・改変",
+  "description/0": "攻撃者は、検知や監査に使える情報を制限するため、Windowsイベントログを無効化したり改変したりすることがある。Windowsイベントログは、ログイン試行やプロセスの作成といった、利用者やシステムの活動を記録する。このデータは、セキュリティツールやアナリストが検知を生成するために使われる。",
+  "description/1": "EventLogサービスは、さまざまなシステム構成要素やアプリケーションからのイベントログを保持する。既定では、このサービスはシステムの起動時に自動的に開始される。ローカルセキュリティポリシー（secpol.msc）によって管理される監査ポリシーが、EventLogサービスがどのシステムイベントを記録するかを定義する。セキュリティの監査ポリシー設定は、secpol.mscを実行し、基本的な監査ポリシー設定であれば`セキュリティの設定\\ローカルポリシー\\監査ポリシー`、高度な監査ポリシー設定であれば`セキュリティの設定\\高度な監査ポリシーの構成`に移動することで変更できる。`auditpol.exe`を使って監査ポリシーを設定することもできる。",
+  "description/2": "攻撃者は、システム全体のログ記録、あるいは特定のアプリケーションのログ記録だけを対象にすることがある。例えば、`Set-Service -Name EventLog -Status Stopped`コマンドや`sc config eventlog start=disabled`コマンド（続けて`Stop-Service -Name EventLog`で手動でサービスを停止する）を使って、WindowsのEventLogサービスを無効化できる。さらに、`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\EventLog`内の「Start」の値を変更し、変更を有効にするためにシステムを再起動することでも、このサービスを無効化できる。",
+  "description/3": "レジストリキーの変更によってEventLogサービスを無効化する方法はいくつかある。管理者権限がなくても、攻撃者はキー`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\WMI\\Autologger\\EventLog-Security`内の「Start」の値を変更し、システムを再起動することで、セキュリティのEventLogを無効化できることがある。管理者権限があれば、攻撃者は`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\WMI\\Autologger\\EventLog-System`と`HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\WMI\\Autologger\\EventLog-Application`内の同じ値を変更し、EventLog全体を無効化できることがある。",
+  "description/4": "さらに、攻撃者はコマンドプロンプトで`auditpol`とそのサブコマンドを使って、監査を無効化したり監査ポリシーを消去したりすることがある。指定した設定や監査カテゴリを有効化・無効化するには、`/success`または`/failure`パラメータを使うことがある。例えば、`auditpol /set /category:\"Account Logon\" /success:disable /failure:disable`は、Account Logonカテゴリの監査を無効化する。監査ポリシーを消去するには、`auditpol /clear /y`や`auditpol /remove /allusers`といったコマンドを実行することがある。",
+  "mitigation/M1018/0": "攻撃者がログ記録を無効化したり妨害したりできないよう、適切な利用者権限が設定されていることを確認する。",
+  "mitigation/M1022/0": "攻撃者がログ記録を無効化・妨害したり、`.evtx`ログファイルを削除・改変したりできないよう、適切なプロセスおよびファイルの権限が設定されていることを確認する。`C:\\Windows\\system32\\Winevt\\Logs`にある`.evtx`ファイルに、限定された正規のアクセスのための適切なファイル権限と、検知のための監査ポリシーが設定されていることを確認する。",
+  "mitigation/M1024/0": "攻撃者がログ記録を無効化・妨害できないよう、適切なレジストリ権限が設定されていることを確認する。MiniNTレジストリキーの追加は、イベントビューアーを無効化する。",
+  "mitigation/M1047/0": "管理者アカウントの`auditpol`の設定を定期的に見直し、SIEM上で動的なベースラインを設定して、悪意ある活動の可能性を調査することを検討する。また、EventLogサービスとそのスレッドが適切に動作していることも確認する。",
+  "procedure/G0027/0": "Threat Group-3390は、被害者のサーバー上でログ記録を無効化するために`appcmd.exe`を使用した。",
+  "procedure/G0059/0": "Magic Houndは、イベントログサービスを無効化するスクリプトを実行した。",
+  "procedure/S0645/0": "Wevtutilは、システム上の特定のイベントログを無効化するために使用できる。"
+ },
+ "supplement": {
+  "summary": "Windows標準の監査・ログ記録機能（EventLogサービス）そのものを無効化・改変し、侵害の証拠が残らないようにする技術。サービスの停止、レジストリの改変、`auditpol`コマンドなど、複数の方法でEventLogを狙える。",
+  "analogy": "銀行強盗が、犯行前に監視カメラの録画装置の電源そのものを切ってしまうのに似ている。防犯カメラ（EventLog）が物理的には設置されていても、録画されていなければ、後から誰も何が起きたかを確認できない。",
+  "learn": [
+   "EventLogの無効化には管理者権限が無くてもできる方法（Securityログのみ）と、管理者権限が必要な方法（全体の無効化）の2段階があること",
+   "`auditpol`コマンドが、サービスの停止とは別に、監査ポリシーそのものを無効化・消去する手段になること"
+  ],
+  "interpretation": [
+   "この技術はステルス（気配を消す）ではなく防御機構の無効化の戦術に分類されるべき典型例である。EventLogサービスの停止や監査ポリシーの消去は、攻撃者の振る舞いを隠すのではなく、監視・記録のしくみ自体を直接機能不全にする行為だからである。防御側にとっては、EventLogサービス自体の稼働状況（停止していないか）を、別の経路（SIEMへの転送状況など）から監視する多層的な構成が重要になる。"
+  ]
+ }
+}
