@@ -1,0 +1,17 @@
+{
+ "id": "T0846",
+ "source_sha": "80b980e4320dd584",
+ "status": "done",
+ "seg": {
+  "name": "リモートシステムの探索",
+  "description/0": "攻撃者は、後続の横展開や探索の技術に使えるような、ネットワーク上の他のシステムのIPアドレス・ホスト名・その他の論理識別子による一覧を得ようとすることがある。こうした機能を実現する仕組みが攻撃者のツール内に存在する場合もあるが、OSやベンダーソフトウェアで利用できるユーティリティが使われることもある。",
+  "mitigation/M0814/0": "ICS環境では、機器がより静的に定義されていることが一般的であるため、IT向けの探索プロトコル（例えばDHCP、LLDP）や、オートメーションプロトコルに備わる探索機能の利用を最小限にする。探索機能を持つオートメーションプロトコルの例としては、OPC UAデバイス探索、BACnet、Ethernet/IPがある。",
+  "procedure/S0093/0": "ICSマルウェアのプラグインであるBackdoor.Oldreaは、Windowsネットワーキング（WNet）に依存して、侵害済みの機器からネットワーク越しに到達可能な、OPCサーバーを含むすべてのサーバーを発見する。",
+  "procedure/S0604/0": "Industroyerには、`CATID_OPCDAServer20` カテゴリ識別子を使った `ICatInformation::EnumClassesOfCategories` メソッドと `IOPCServer::GetStatus` によって、稼働中のOPCサーバーをすべて列挙するOPC DAモジュールが含まれている。",
+  "procedure/S1045/0": "INCONTROLLERは、FINS（Factory Interface Network Service）プロトコルを使って、Omron製機器に関連付けられたMACアドレスを探索・取得することができる。"
+ },
+ "supplement": {
+  "summary": "ネットワーク上に他にどのような機器が存在するかを調べる探索技術。横展開や、さらなる探索の準備として使われる。",
+  "learn": ["ICS環境特有の探索対象として、OPCサーバーのような産業用の通信サーバーが列挙の対象になり得ること"]
+ }
+}
