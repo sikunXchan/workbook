@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-23T03:30:52.141Z",
+ "updated": "2026-10-23T03:31:24.925Z",
  "tactic": {
   "total": 12,
   "done": 12
  },
  "technique": {
   "total": 104,
-  "done": 95
+  "done": 99
  },
  "stale_tactics": [],
  "stale_techniques": []
