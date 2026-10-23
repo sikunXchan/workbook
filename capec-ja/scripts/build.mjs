@@ -282,7 +282,7 @@ function writePage(rp, html) {
   fs.writeFileSync(p, html);
 }
 
-const crumbs = (items) => `<nav class="crumbs" aria-label="現在位置"><ol>${items.map(([href, label]) => (href ? `<li><a href="${href}">${label}</a></li>` : `<li aria-current="page">${label}</li>`)).join("")}</ol></nav>`;
+const crumbs = (items) => `<div class="crumbs-row"><button type="button" class="back-btn" data-back>← 戻る</button><nav class="crumbs" aria-label="現在位置"><ol>${items.map(([href, label]) => (href ? `<li><a href="${href}">${label}</a></li>` : `<li aria-current="page">${label}</li>`)).join("")}</ol></nav></div>`;
 
 // CAPEC → CWE → CVE の関係図(いま読んでいる位置を強調)
 function chain(depth, cweCount) {
