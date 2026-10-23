@@ -266,10 +266,12 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 </nav>
 </div>
 </header>
+<div class="back-row"><div class="wrap"><button type="button" class="back-btn" data-back>← 戻る</button></div></div>
 <div class="notice" data-disclaimer-top><div class="wrap notice-row"><b>ご注意</b><span>AIによる非公式の日本語訳です。<a href="#disclaimer-full">詳しくはページ下部</a>をご覧ください。</span></div></div>
 <div class="wrap">
 ${body}
 </div>
+<div class="back-row back-row-bottom"><div class="wrap"><button type="button" class="back-btn" data-back>← 戻る</button></div></div>
 ${footer()}
 </body>
 </html>

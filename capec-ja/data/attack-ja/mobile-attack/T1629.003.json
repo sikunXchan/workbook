@@ -1,0 +1,29 @@
+{
+ "id": "T1629.003",
+ "source_sha": "e4b29479b8e71e6d",
+ "status": "done",
+ "seg": {
+  "name": "ツールの無効化・改変",
+  "description/0": "攻撃者は、自分のツールや活動が検知される可能性を避けるために、セキュリティツールを無効化することがある。これは、セキュリティソフトウェアの無効化、SELinuxの設定の改変、その他セキュリティツールによるスキャンや情報の報告を妨害する方法といった形を取りうる。これは通常、デバイス管理者権限を悪用すること、またはシステムの脆弱性を利用して端末のroot権限を取得し、保護されたシステムファイルを改変することによって行われる。",
+  "mitigation/M1001/0": "セキュリティ更新には、root権限の取得に悪用されうる脆弱性に対する修正がしばしば含まれる。",
+  "mitigation/M1004/0": "Verified Bootのようなシステムパーティションの整合性のしくみは、システムファイルへの不正な改変を検知できる。",
+  "mitigation/M1010/0": "モバイル向けセキュリティソフトウェアは、端末がルート化またはジェイルブレイクされたかどうかを通常検知でき、利用者に知らせることで適切な対応を取れるようにできる。",
+  "mitigation/M1011/0": "利用者は、端末をルート化・ジェイルブレイクすることの危険性について教えられるべきである。",
+  "procedure/S0420/0": "Dvmapは`VerifyApps`を無効化でき、UIを使う代わりにコマンドのみでデバイス管理者権限を与えることができる。",
+  "procedure/S0422/0": "Anubisは管理者設定を改変し、Play Protectを無効化できる。",
+  "procedure/S0480/0": "Cerberusは、将来の発見・削除を防ぐためにGoogle Play Protectを無効化する。",
+  "procedure/S0485/0": "MandrakeはPlay Protectを無効化できる。",
+  "procedure/S0494/0": "ZenはSELinuxの強制モードを改変できる。",
+  "procedure/S1054/0": "Drinikは、アクセシビリティサービスを使ってGoogle Play Protectを無効化できる。",
+  "procedure/S1061/0": "AbstractEmuはPlay Protectを無効化できる。",
+  "procedure/S1067/0": "FluBotは、検知を防ぐためにGoogle Play Protectを無効化できる。",
+  "procedure/S1083/0": "Chameleonは、Google Play Protectを無効化する機能を持つ。",
+  "procedure/S1094/0": "BRATAは、インストール済みのウイルス対策アプリを削除できるほか、Google Play Protectを無効化できる。",
+  "procedure/S1195/0": "SpyC23は、Play Protectを無効化していた。",
+  "procedure/S1214/0": "Android/SpyAgentは、迷惑電話対策アプリの検知を試みていた。"
+ },
+ "supplement": {
+  "summary": "Google Play ProtectのようなOS標準のセキュリティ機能やSELinuxの設定、インストール済みのウイルス対策アプリを無効化・改変し、自分の存在や活動が検知されないようにする技術。",
+  "learn": ["Google Play ProtectというAndroid標準のセキュリティ機能が、多くのマルウェアによって無効化の標的にされていること"]
+ }
+}

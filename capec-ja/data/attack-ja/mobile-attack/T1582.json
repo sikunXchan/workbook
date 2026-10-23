@@ -1,0 +1,43 @@
+{
+ "id": "T1582",
+ "source_sha": "d824dc201df8caf5",
+ "status": "done",
+ "seg": {
+  "name": "SMSの制御",
+  "description/0": "攻撃者は、利用者の許可なくSMSメッセージを削除・改変・送信することがある。これは、C2用のSMSメッセージを隠したり、マルウェアを広めたり、さまざまな外部への影響を及ぼしたりするために使われることがある。",
+  "description/1": "これは、マルウェアが何をしようとしているかに応じて、`RECEIVE_SMS`または`SEND_SMS`権限を要求することで達成できる。アプリが端末の既定のSMSハンドラーとして設定されている場合、`SMS_DELIVER`というブロードキャストインテントを登録することができ、これによりアプリはSMSのコンテンツプロバイダへ書き込めるようになる。このコンテンツプロバイダは、端末上のメッセージのデータベースを直接改変するため、この権限を持つ悪意あるアプリケーションは、端末上の任意のメッセージを挿入・改変・削除できるようになる場合がある。",
+  "mitigation/M1011/0": "利用者は、どのアプリケーションにSMSへのアクセスを許可するかについて、十分に注意するよう促されるべきである。さらに、利用者は見覚えのないアプリケーションへ既定のSMSハンドラーを変更すべきではない。",
+  "procedure/S0292/0": "AndroRATは、SMSメッセージを送信できる。",
+  "procedure/S0328/0": "Stealth Mangoは、特定の番号からの、特定の文字列を含むものを含め、受信したSMSメッセージを削除する。",
+  "procedure/S0411/0": "Rotexyは、SMSメッセージへ自動で返信でき、任意で削除もできる。",
+  "procedure/S0422/0": "Anubisは、SMSメッセージを送信・受信・削除できる。",
+  "procedure/S0423/0": "Ginpは、SMSメッセージを送信できる。",
+  "procedure/S0427/0": "TrickMoは、SMSメッセージを削除できる。",
+  "procedure/S0480/0": "Cerberusは、端末からSMSメッセージを送信できる。",
+  "procedure/S0485/0": "Mandrakeは、SMSメッセージをブロック・転送・隠蔽・送信できる。",
+  "procedure/S0489/0": "WolfRATは、SMSメッセージを削除・送信できる。",
+  "procedure/S0509/0": "FakeSpyは、SMSメッセージを送信できる。",
+  "procedure/S0522/0": "Exobotは、SMSメッセージを転送できる。",
+  "procedure/S0540/0": "Asacubは、侵害した端末からSMSメッセージを送信できる。",
+  "procedure/S0545/0": "TERRACOTTAは、SMSメッセージを送信できる。",
+  "procedure/S0549/0": "SilkBeanは、SMSメッセージを送信できる。",
+  "procedure/S0551/0": "GoldenEagleは、攻撃者が管理する番号へメッセージを送信してきた。",
+  "procedure/S0558/0": "Tiktok Proは、SMSメッセージを送信できる。",
+  "procedure/S1054/0": "Drinikは、受信したSMSメッセージを盗み出し、侵害した端末からSMSメッセージを送信できる。",
+  "procedure/S1055/0": "SharkBotは、SMSメッセージを隠し・送信できる。SharkBotはまた、端末の既定のSMSハンドラーを変更できる。",
+  "procedure/S1067/0": "FluBotは、感染した端末上の他の連絡先へ、SMSフィッシングメッセージを送信できる。",
+  "procedure/S1069/0": "TangleBotは、テキストメッセージを送信できる。",
+  "procedure/S1092/0": "Escobarは、SMSメッセージを改変・送信・削除できる。",
+  "procedure/S1185/0": "LightSpyは、SMSメッセージを送信・削除してきた。",
+  "procedure/S1195/0": "SpyC23は、SMSメッセージを送信できる。",
+  "procedure/S1231/0": "GodFatherは、SMSメッセージを送信するために`SEND_SMS`権限を要求してきた。",
+  "procedure/S9004/0": "Crocodilusは、指定した番号や番号のリスト、またはすべての連絡先へSMSメッセージを送信する機能を持つ。さらにCrocodilusは、USSD（Unstructured Supplementary Service Data）リクエストを実行する機能も持つ。"
+ },
+ "supplement": {
+  "summary": "利用者に気づかれずにSMSメッセージを送信・削除・改ざんする技術。C2通信を隠す、他の端末へマルウェアを拡散する、ワンタイムパスワードを盗み取るなど、モバイル端末を狙うマルウェアで非常に広く使われている。",
+  "learn": [
+   "端末の既定のSMSハンドラーに設定されることで、SMSのデータベースを直接操作できてしまうこと",
+   "SMSは二要素認証のワンタイムパスワードの送受信にも使われるため、この技術が金銭的な被害に直結しやすいこと"
+  ]
+ }
+}

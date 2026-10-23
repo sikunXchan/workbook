@@ -1,7 +1,18 @@
-// 番号での移動、一覧の絞り込み、お気に入り
+// 番号での移動、一覧の絞り込み、お気に入り、戻る
 (function () {
   "use strict";
   var root = document.body.getAttribute("data-root") || "./";
+
+  // ---- 戻る(このブラウザの、1つ前の履歴に戻る。無ければトップページへ) ----
+  // 新しいタブで直接開いた場合などは、historyの中身が空の最初の1件だけのことがあり、
+  // history.length だけで判断すると「戻る」が空白ページへ飛んでしまう。そのため、
+  // 他のページからリンクで来たことを示す document.referrer もあわせて確認する。
+  Array.prototype.forEach.call(document.querySelectorAll("[data-back]"), function (btn) {
+    btn.addEventListener("click", function () {
+      if (document.referrer && history.length > 1) { history.back(); return; }
+      location.href = root;
+    });
+  });
   var idsPromise = null;
   function loadIds() {
     if (!idsPromise) {

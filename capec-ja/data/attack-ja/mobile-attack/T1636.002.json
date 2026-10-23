@@ -1,0 +1,39 @@
+{
+ "id": "T1636.002",
+ "source_sha": "d9f399204cb1d899",
+ "status": "done",
+ "seg": {
+  "name": "通話履歴",
+  "description/0": "攻撃者は、通話履歴データを収集するために、標準的なオペレーティングシステムのAPIを利用することがある。Androidでは、これはCall Log Content Providerを使って実現できる。iOSには、通話履歴にアクセスするための標準APIは用意されていない。",
+  "description/1": "端末がジェイルブレイクまたはroot化されている場合、攻撃者は利用者の認知や承認なしに通話履歴へアクセスできる可能性がある。",
+  "mitigation/M1011/0": "通話履歴へのアクセスは、普段必要とされることの少ない権限であるため、利用者は通話履歴へのアクセスを許可する際に、特に注意深く確認するよう指示されるべきである。",
+  "procedure/S0182/0": "FinFisherは、通話履歴にアクセスし、持ち出す。",
+  "procedure/S0289/0": "Pegasus for iOSは、通話履歴を取得する。",
+  "procedure/S0292/0": "AndroRATは、通話履歴を収集する。",
+  "procedure/S0316/0": "Pegasus for Androidは、通話履歴にアクセスする。",
+  "procedure/S0320/0": "DroidJackは、通話データを取得する。",
+  "procedure/S0324/0": "SpyDealerは、被害者の通話履歴を収集する。",
+  "procedure/S0328/0": "Stealth Mangoは、通話履歴をアップロードする。",
+  "procedure/S0399/0": "Pallasは、通話履歴にアクセスし、持ち出す。",
+  "procedure/S0405/0": "Exodus Twoは、通話履歴を持ち出すことができる。",
+  "procedure/S0407/0": "Monokleは、通話履歴を取得できる。",
+  "procedure/S0418/0": "ViceLeakerは、端末の通話履歴を収集できる。",
+  "procedure/S0421/0": "GolfSpyは、端末の通話履歴を取得できる。",
+  "procedure/S0489/0": "WolfRATは、端末の通話履歴を収集できる。",
+  "procedure/S0506/0": "ViperRATは、端末の通話履歴を収集できる。",
+  "procedure/S0544/0": "HenBoxは、「86」で始まる発信番号をすべて収集していた。",
+  "procedure/S0549/0": "SilkBeanは、通話履歴にアクセスできる。",
+  "procedure/S0550/0": "DoubleAgentは、通話履歴にアクセスしていた。",
+  "procedure/S1054/0": "Drinikは、`READ_CALL_LOG`権限を要求できる。",
+  "procedure/S1069/0": "TangleBotは、通話履歴を見る権限を要求できる。",
+  "procedure/S1077/0": "Hornbillは、端末の通話履歴を収集できる。",
+  "procedure/S1092/0": "Escobarは、端末の通話履歴にアクセスできる。",
+  "procedure/S1241/0": "RatMiladは、端末の通話履歴にアクセスしていた。",
+  "procedure/S1243/0": "DCHSpyは、端末の通話履歴にアクセスしていた。",
+  "procedure/S9006/0": "VajraSpyは、通話履歴を収集し持ち出していた。"
+ },
+ "supplement": {
+  "summary": "発着信の記録である通話履歴を、標準APIやroot権限の悪用によって収集する技術。多くのモバイルスパイウェアが備える基本的な情報収集機能の一つ。",
+  "learn": ["iOSには通話履歴にアクセスする標準APIが存在せず、Androidに比べてこの種の情報収集がしにくい設計になっていること"]
+ }
+}

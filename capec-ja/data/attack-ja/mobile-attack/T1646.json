@@ -1,0 +1,42 @@
+{
+ "id": "T1646",
+ "source_sha": "8a32a427a793e53e",
+ "status": "done",
+ "seg": {
+  "name": "C2経路での持ち出し",
+  "description/0": "攻撃者は、既存の遠隔操作（C2）経路を使ってデータを持ち出すことで、データを盗み出すことがある。盗まれたデータは、C2通信と同じプロトコルを使って、通常の通信チャネルの中に符号化される。",
+  "procedure/S0326/0": "RedDropは、持ち出しに標準的なHTTPを使用する。",
+  "procedure/S0399/0": "Pallasは、HTTPを使ってデータを持ち出す。",
+  "procedure/S0418/0": "ViceLeakerは、HTTPによるデータ持ち出しを使用する。",
+  "procedure/S0421/0": "GolfSpyは、HTTP POSTリクエストを使ってデータを持ち出す。",
+  "procedure/S0424/0": "Triadaは、遠隔操作（C2）サーバーへのPOSTリクエストを通じてデータを持ち出すためにHTTPを利用した。",
+  "procedure/S0490/0": "XLoader for iOSは、HTTPリクエストを使ってデータを持ち出した。",
+  "procedure/S0507/0": "eSurvは、HTTP PUTリクエストを使ってデータを持ち出した。",
+  "procedure/S0551/0": "GoldenEagleは、SMTPとHTTPの両方を使ってデータを持ち出した。",
+  "procedure/S1054/0": "Drinikは、盗んだデータをC2サーバーへ送り返すことができる。",
+  "procedure/S1055/0": "SharkBotは、捕捉した利用者の認証情報やイベントログをC2サーバーへ持ち出すことができる。",
+  "procedure/S1061/0": "AbstractEmuは、端末の製造元・モデル・バージョン・シリアル番号、電話番号、IPアドレスを含む大量の端末データをC2チャネル経由で送信できる。",
+  "procedure/S1067/0": "FluBotは、連絡先一覧をC2サーバーに送信できる。",
+  "procedure/S1077/0": "Hornbillは、HTTPを使ってC2サーバーへデータを持ち出すことができる。",
+  "procedure/S1080/0": "Fakecallsは、持ち出したデータをC2サーバーへ送り返すことができる。",
+  "procedure/S1082/0": "Sunbirdは、収集した情報を含む圧縮ZIPファイルをC2インフラへ持ち出すことができる。",
+  "procedure/S1083/0": "Chameleonは、盗んだデータをHTTP経由で送信した。",
+  "procedure/S1093/0": "FlyTrapは、HTTPを使ってデータをC2サーバーへ持ち出すことができる。",
+  "procedure/S1094/0": "BRATAは、HTTPリクエストを使ってC2サーバーへデータを持ち出した。",
+  "procedure/S1095/0": "AhRatは、音声の録音やファイルなど、収集したデータをC2へ持ち出すことができる。",
+  "procedure/S1185/0": "LightSpyは、収集したデータをC2へ持ち出した。",
+  "procedure/S1225/0": "CherryBlosは、画像を光学文字認識（OCR）で解析して収集した認証情報を持ち出した。",
+  "procedure/S1231/0": "GodFatherは、機密情報をC2経由で持ち出した。",
+  "procedure/S1241/0": "RatMiladは、収集したデータをC2へ持ち出した。",
+  "procedure/S9004/0": "Crocodilusは、盗んだデータをC2へ送信する機能を持つ。",
+  "procedure/S9006/0": "VajraSpyは、捕捉したデータをPOSTリクエスト経由でC2へ持ち出した。",
+  "procedure/S9040/0": "NGateは、被害者の決済カードのPINをHTTP経由でC2サーバーへ持ち出した。"
+ },
+ "supplement": {
+  "summary": "新たに別経路を用意せず、既存のC2通信チャネルにそのまま盗んだデータを乗せて送り出す、最も一般的な持ち出し方法。多くのモバイル型マルウェアがHTTP通信をC2と持ち出しの両方に使っている。",
+  "learn": [
+   "C2通信と持ち出し通信が同一チャネルであるため、C2通信を監視・遮断する防御がそのまま持ち出しの抑止にもつながること",
+   "HTTP(S)が、C2と持ち出しの両方に使われる最も一般的なプロトコルであること"
+  ]
+ }
+}

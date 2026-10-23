@@ -1,0 +1,47 @@
+{
+ "id": "T1429",
+ "source_sha": "b9d8840deffb8b35",
+ "status": "done",
+ "seg": {
+  "name": "音声キャプチャ",
+  "description/0": "攻撃者は、モバイル端末の標準的なOS APIを利用して、音声を録音し情報を収集することがある。攻撃者が狙う音声情報の例には、利用者の会話、周囲の音、電話の通話、その他の機密性のある情報が含まれる。",
+  "description/1": "AndroidとiOSは、既定では、アプリケーションが端末のマイクへのアクセスを利用者に要求することを求めている。",
+  "description/2": "Android端末では、アプリケーションがマイクにアクセスするには`RECORD_AUDIO`権限を、音声出力にアクセスするには`CAPTURE_AUDIO_OUTPUT`権限を保持する必要がある。Androidは既定でサードパーティのアプリケーションに`CAPTURE_AUDIO_OUTPUT`権限を保持させないため、Googleや端末ベンダーが配布するアプリケーションなどの特権的なアプリケーションのみが音声出力にアクセスできる。しかし、攻撃者は権限昇格に成功した後、このアクセスを得られる場合がある。`CAPTURE_AUDIO_OUTPUT`権限があれば、攻撃者は`MediaRecorder.AudioSource.VOICE_CALL`定数を`MediaRecorder.setAudioOutput`に渡すことで、通話の送話・受話の両方を録音できる場合がある。",
+  "description/3": "iOS端末では、アプリケーションがマイクにアクセスするには、`Info.plist`ファイルに`NSMicrophoneUsageDescription`キーを含める必要がある。",
+  "mitigation/M1006/0": "Android 9以上では、バックグラウンドで動くアプリケーションからマイク・カメラ・その他のセンサーへのアクセスが制限される。",
+  "mitigation/M1011/0": "利用者は、マイクや音声出力へのアクセスのような、危険性やプライバシー侵害性の高い権限をアプリケーションに許可することに注意すべきである。",
+  "procedure/G0112/0": "Windshiftは、Operation BULLおよびOperation ROCKの一環として配布した悪意あるアプリに、通話録音・音声録音の機能を含めていた。",
+  "procedure/S0182/0": "FinFisherは、端末のマイクを使って通話を録音する。",
+  "procedure/S0289/0": "Pegasus for iOSは、音声を録音する能力を持つ。",
+  "procedure/S0292/0": "AndroRATは、マイクから音声を収集する。",
+  "procedure/S0295/0": "RCSAndroidは、端末のマイクを使って音声を録音できる。",
+  "procedure/S0305/0": "SpyNote RATは、被害者のマイクを起動できる。",
+  "procedure/S0316/0": "Pegasus for Androidは、端末の音声を録音する能力を持つ。",
+  "procedure/S0318/0": "XLoader for Androidは、電話の通話をひそかに録音する。",
+  "procedure/S0320/0": "DroidJackは、端末の通話を録音できる。",
+  "procedure/S0324/0": "SpyDealerは、通話と周囲の音を録音できる。",
+  "procedure/S0327/0": "Skygofreeは、感染した端末が特定の場所にあるとき、マイクを使って音声を録音できる。",
+  "procedure/S0408/0": "FlexiSpyは、着信・発信の両方の通話に加えて、マイクの音声も録音できる。",
+  "procedure/S0422/0": "Anubisは、通話と音声を録音できる。",
+  "procedure/S0506/0": "ViperRATは、音声の内容を収集・録音できる。",
+  "procedure/S0529/0": "CarbonStealは、端末の音声を遠隔から録音できる。",
+  "procedure/S0551/0": "GoldenEagleは、.amr形式で通話や周囲の音声を録音した。",
+  "procedure/S1069/0": "TangleBotは、端末のマイクを使って音声を録音できる。",
+  "procedure/S1077/0": "Hornbillは、周囲の音声と通話音声を録音できる。",
+  "procedure/S1079/0": "BOULDSPYは、端末のマイクにアクセスして音声を録音できるほか、携帯電話やVoIPアプリケーションの通話も録音できる。",
+  "procedure/S1185/0": "LightSpyは、周囲の音声・電話の通話・VoIP（インターネット回線を使った音声通話）の通話を収集した。",
+  "procedure/S1231/0": "GodFatherは、マイクで音声を録音するために`RECORD_AUDIO`権限を要求した。",
+  "procedure/S1241/0": "RatMiladは、端末の音声を収集した。",
+  "procedure/S1243/0": "DCHSpyは、マイクを制御して端末の音声を収集した。",
+  "procedure/S9006/0": "VajraSpyは、`android.permission.RECORD_AUDIO`を要求することで、WhatsApp・WhatsApp Business・Signal・Telegramの周囲の音声や通話を録音した。"
+ },
+ "supplement": {
+  "summary": "モバイル端末の標準的なOS機能を使って、利用者の会話・周囲の音・電話の通話などをひそかに録音する技術。多くのスパイウェア・RATが持つ基本的な機能の一つ。",
+  "terms": [
+   { "term": "RAT（遠隔操作型トロイの木馬）", "en": "Remote Access Trojan", "explain": "攻撃者が端末を遠隔から操作できるようにする不正プログラムの総称。" }
+  ],
+  "learn": [
+   "AndroidとiOSはいずれも、マイクへのアクセスに利用者の許可（権限）を必要とする設計になっているが、権限昇格や利用者をだます手口によってこれが突破されうること"
+  ]
+ }
+}

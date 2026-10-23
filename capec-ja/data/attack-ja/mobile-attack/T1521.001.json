@@ -1,0 +1,21 @@
+{
+ "id": "T1521.001",
+ "source_sha": "759d03e04be80f50",
+ "status": "done",
+ "seg": {
+  "name": "対称暗号",
+  "description/0": "攻撃者は、通信プロトコルが本来備えている保護機能に頼る代わりに、遠隔操作（C2）の通信を隠すために、既知の対称暗号アルゴリズムを用いることがある。対称暗号アルゴリズムは、平文の暗号化と暗号文の復号に同じ鍵を使う。代表的な対称暗号アルゴリズムには、AES、Blowfish、RC4がある。",
+  "procedure/G0112/0": "Windshiftは、Operation BULLおよびOperation ROCKの期間、CBCモードのAESを使ってC2通信を暗号化した。",
+  "procedure/S0411/0": "Rotexyは、JSON形式のHTTPペイロードをAESで暗号化する。",
+  "procedure/S0478/0": "EventBotは、RC4とCurve25519を使って、base64符号化されたペイロードデータを暗号化した。",
+  "procedure/S1055/0": "SharkBotは、C2ペイロードの暗号化にRC4を使用できる。",
+  "procedure/S1216/0": "TriangleDBは、3DESを使ってデータを暗号化した。"
+ },
+ "supplement": {
+  "summary": "暗号化と復号に同じ鍵を使う対称暗号（AES、RC4など）を使ってC2通信を隠す手口。",
+  "terms": [
+   { "term": "対称暗号", "en": "symmetric cryptography", "explain": "暗号化と復号の両方に同じ鍵を使う暗号方式。処理が速いが、鍵そのものの管理・秘匿が課題になる。" }
+  ],
+  "learn": ["鍵がマルウェアの中に埋め込まれている場合、解析者がそれを見つけ出すことで通信内容を復号できてしまう場合があること"]
+ }
+}

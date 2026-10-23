@@ -1,0 +1,19 @@
+{
+ "id": "T1603",
+ "source_sha": "69a237ec6b8196fc",
+ "status": "done",
+ "seg": {
+  "name": "スケジュールされたタスク／ジョブ",
+  "description/0": "攻撃者は、悪意あるコードの初回実行や繰り返しの実行を促すために、タスクのスケジュール機能を悪用することがある。AndroidとiOSには、指定した日付・時刻・間隔でタスクを実行するようスケジュールするためのAPIやライブラリが存在する。",
+  "description/1": "Androidでは、`WorkManager`というAPIを使って、非同期のタスクをシステムへスケジュールできる。`WorkManager`は、内部で`JobScheduler`、`GcmNetworkManager`、`AlarmManager`を使い、Android上のタスクスケジュールを一本化するために導入された。`WorkManager`は、定期的な実行、1回限りの実行、条件に基づく実行（例：端末が充電中のときのみ）など、スケジュールについて多くの柔軟性を提供する。",
+  "description/2": "iOSでは、`NSBackgroundActivityScheduler`というAPIを使って、非同期のタスクをシステムへスケジュールできる。タスクは繰り返し実行、または1回限りの実行としてスケジュールできるが、タスクがいつ実行されるかはシステムが選ぶ。アプリは、繰り返しタスクの間隔や、1回限りのタスクのスケジュールから実行までの遅延時間を選ぶことができる。",
+  "procedure/S0536/0": "GPlayedは、Wi-Fiを有効にする、C2サーバーへpingを送る、端末をC2へ登録する、システムへのウェイクロックを登録するために、タイマーを使ってきた。",
+  "procedure/S0545/0": "TERRACOTTAは、フォアグラウンドサービスを開始するために、React Native内のタイマーイベントを使ってきた。",
+  "procedure/S0558/0": "Tiktok Proは、3分ごとに発動するアラームと、C2との通信用のタイマーを含んできた。",
+  "procedure/S1083/0": "Chameleonは、タスクをスケジュールするためにAlarmManager APIを使ってきた。",
+  "procedure/S1231/0": "GodFatherは、WebSocket接続を開始するためにタイマーを利用してきた。"
+ },
+ "supplement": {
+  "summary": "AndroidやiOSのタスクスケジュール機能（WorkManager、AlarmManager、NSBackgroundActivitySchedulerなど）を悪用し、悪意あるコードを指定した時刻・間隔で実行させる技術。C2との定期通信や、端末の状態に応じた動作の開始によく使われる。"
+ }
+}

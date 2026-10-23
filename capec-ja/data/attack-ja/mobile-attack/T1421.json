@@ -1,0 +1,26 @@
+{
+ "id": "T1421",
+ "source_sha": "a4564efe5eed4c08",
+ "status": "done",
+ "seg": {
+  "name": "システムネットワーク接続の探索",
+  "description/0": "攻撃者は、現在アクセスしている侵害済みデバイスへの、またはそこからのネットワーク接続の一覧を取得しようとしたり、ネットワーク越しに情報を照会することで遠隔のシステムについての一覧を取得しようとしたりすることがある。",
+  "description/1": "これは通常、Wi-Fi・Bluetooth・携帯電話の基地局への接続といった、近隣のネットワークに関する情報を収集するために、デバイスのAPIを利用して行われる。Androidでは、次のようにそれぞれのAPIを照会することで行える。",
+  "description/2": "* `WifiInfo`：現在のWi-Fi接続および近隣のWi-Fiネットワークに関する情報を取得する。`WiFiInfo`APIを照会するには、アプリケーションが`ACCESS_FINE_LOCATION`権限を保持している必要がある。",
+  "description/3": "* `BluetoothAdapter`：Bluetoothデバイスに関する情報を取得する。これも、利用者が実行時に許可する複数の権限をアプリケーションが保持している必要がある。",
+  "description/4": "* Qより前のAndroidバージョンでは、アプリケーションは`TelephonyManager.getNeighboringCellInfo()`メソッドを使用できる。Q以降では、アプリケーションは`TelephonyManager.getAllCellInfo()`メソッドを使用できる。いずれのメソッドも、アプリケーションが`ACCESS_FINE_LOCATION`権限を保持している必要がある。",
+  "procedure/S0289/0": "iOS版Pegasusは、接続状態を監視し、電話がどの種類のネットワークに接続されているかを追跡する。これは、ネットワーク越しにデータをすべて送信できる帯域幅や能力を判断するためと考えられる。",
+  "procedure/S0399/0": "Pallasは、近隣のWi-Fiアクセスポイントについてのデータを収集し、持ち出す。",
+  "procedure/S0405/0": "Exodus Twoは、近隣の基地局の一覧を収集する。",
+  "procedure/S0407/0": "Monokleは、近隣の基地局・Wi-Fiネットワークの情報を取得できる。",
+  "procedure/S0408/0": "FlexiSpyは、既知のWi-Fiアクセスポイントの一覧を収集できる。",
+  "procedure/S0506/0": "ViperRATは、デバイスの基地局情報を収集できる。",
+  "procedure/S0509/0": "FakeSpyは、デバイスのネットワーク情報を収集できる。",
+  "procedure/S1185/0": "LightSpyは、MMLanScanを基にしたLANスキャナーを使って、携帯電話網の一覧と接続済みWi-Fiの履歴を収集していた。",
+  "procedure/S9040/0": "NGateは、`ACCESS_NETWORK_STATE`権限を要求していた。"
+ },
+ "supplement": {
+  "summary": "Wi-Fi・Bluetooth・携帯電話の基地局といった、デバイスの近隣のネットワーク接続に関する情報を収集する技術。位置情報の推定や、ネットワーク状況に応じた挙動の切り替えに使われる。",
+  "learn": ["Wi-Fiアクセスポイントや基地局の情報が、位置情報そのものではないにもかかわらず、組み合わせることで利用者のおおよその位置を推定する手がかりになり得ること"]
+ }
+}

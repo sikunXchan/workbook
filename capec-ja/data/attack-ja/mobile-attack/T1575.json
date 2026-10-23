@@ -1,0 +1,24 @@
+{
+ "id": "T1575",
+ "source_sha": "d6f975f76872dda9",
+ "status": "done",
+ "seg": {
+  "name": "ネイティブAPI",
+  "description/0": "攻撃者は、バイナリや関数の実行を達成するために、AndroidのNative Development Kit（NDK）を使ってネイティブな関数を書くことがある。従来のデスクトップOSにおけるシステムコールと同様に、ネイティブコードは通常のAndroid SDKの呼び出しよりも低いレベルで実行を達成する。",
+  "description/1": "NDKを使うと、開発者はC言語やC++でネイティブコードを書くことができ、それは機械語へ直接コンパイルされるため、Javaのような高水準言語で通常必要となる中間言語やコンパイルの手順をすべて回避できる。Java Native Interface（JNI）は、Androidアプリ内のJavaの関数が、ネイティブライブラリ内の関数を呼び出せるようにするコンポーネントである。",
+  "description/2": "ネイティブな動作は、標準的な非ネイティブな動作に比べて解析がはるかに難しいことが多いため、攻撃者は悪意あるコードを実行するためにネイティブな関数を使うことを選ぶこともある。",
+  "procedure/S0432/0": "Breadは、悪意ある機能を隠そうとしてネイティブコードを使ってきた。",
+  "procedure/S0529/0": "CarbonStealは、報告されているいくつかの検体でネイティブライブラリが使われているのが確認されている。",
+  "procedure/S0540/0": "Asacubは、ネイティブコードで関数を実装してきた。",
+  "procedure/S0544/0": "HenBoxは、ネイティブライブラリを含んできた。",
+  "procedure/S0545/0": "TERRACOTTAは、ネイティブモジュールを含んできた。",
+  "procedure/S0555/0": "CHEMISTGAMESは、悪意あるペイロードを復号するためにネイティブコードを利用してきた。",
+  "procedure/S1083/0": "Chameleonは、端末のロック機構を調べるためにKeyguardManager APIを、タスクをスケジュールするためにAlarmManager APIを使ってきた。",
+  "procedure/S1185/0": "LightSpyの主要な実行ファイルとモジュールは、対象の機能を実行するためにネイティブライブラリを使っている。",
+  "procedure/S1231/0": "GodFatherは、`getEnabledAccessibilityServiceList`というAPIにフックし、有効なサービスの一覧を空にして返すことで、GodFather自身や他の有効なサービスを隠してきた。",
+  "procedure/S9005/0": "DocSwapは、`native-lib`ライブラリ内の`decryptFile`という関数を使って、暗号化されたAPKファイルsecurity.datを復号してきた。"
+ },
+ "supplement": {
+  "summary": "AndroidのNDK（Native Development Kit）を使い、C/C++で書いたネイティブコードを実行する技術。通常のAndroid SDK呼び出しより低レベルで動作し、解析が難しくなるため、悪意ある機能を隠す目的でも使われる。"
+ }
+}
