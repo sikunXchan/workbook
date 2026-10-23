@@ -271,6 +271,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <div class="wrap">
 ${body}
 </div>
+<div class="back-row back-row-bottom"><div class="wrap"><button type="button" class="back-btn" data-back>← 戻る</button></div></div>
 ${footer()}
 </body>
 </html>
