@@ -1,0 +1,39 @@
+{
+ "id": "T1533",
+ "source_sha": "7bdcbd69c63d7121",
+ "status": "done",
+ "seg": {
+  "name": "ローカルシステムからのデータ",
+  "description/0": "攻撃者は、持ち出しの前に関心のあるファイルや機密データを見つけるため、ファイルシステムやローカルデータベースといったローカルシステム上の情報源を調べることがある。",
+  "description/1": "OSによって保存される情報を含む、ローカルシステムのデータへのアクセスには、多くの場合、昇格した権限が必要となる。ローカルシステムデータの例としては、認証トークン、デバイスのキーボードキャッシュ、Wi-Fiのパスワード、写真などが挙げられる。Androidでは、攻撃者は外部ストレージ上のファイルへのアクセスを試みることもあり、その場合には追加のストレージ関連の権限が必要になることがある。",
+  "procedure/G0112/0": "Windshiftは、Operation ROCKの一環として、ローカルのアカウントデータとカレンダー情報を持ち出した。",
+  "procedure/S0290/0": "Gooliganは、複数のGoogleアプリケーションからデータへアクセスするために使える認証トークンを盗み出す。",
+  "procedure/S0295/0": "RCSAndroidは、Skype、Facebook、Twitter、Google、WhatsApp、メール、LinkedInを含む、Wi-Fiネットワークやオンラインアカウントのパスワードを収集できる。",
+  "procedure/S0301/0": "Dendroidは、デバイスの写真、ブラウザの履歴、ブックマーク、デバイスに保存されたアカウントを収集できる。",
+  "procedure/S0407/0": "Monokleは、ユーザーのパスワード保存時に使われるソルトを取得でき、これにより攻撃者は保存済みパスワードのハッシュ値からユーザーの平文パスワード/PINを計算する手がかりを得られる。Monokleは、ユーザーの辞書、ユーザー定義のショートカット、ブラウザ履歴も取得でき、ユーザーとその行動のプロファイリングを可能にする。",
+  "procedure/S0408/0": "FlexiSpyは、デバイスの写真を監視でき、ブラウザの履歴やブックマークにもアクセスできる。",
+  "procedure/S0418/0": "ViceLeakerは、デバイスから任意のファイルをC2サーバーへコピーでき、ブラウザの履歴やSDカードの構造を持ち出すことができ、ユーザーが写真を撮影した際にその写真を持ち出すこともできる。",
+  "procedure/S0421/0": "GolfSpyは、デバイス上のローカルアカウント、写真、既定のブラウザのブックマークや履歴、SDカードに保存されたファイルを収集できる。GolfSpyは、デバイスに保存されている画像・音声・動画・その他のファイルを一覧表示できる。GolfSpyは、デバイスから任意のファイルをコピーできる。",
+  "procedure/S0422/0": "Anubisは、そのランサムウェア・モジュールで暗号化したファイルをデバイスから持ち出すことができ、外部ストレージを変更できる。",
+  "procedure/S0463/0": "INSOMNIAは、Gmail、Hangouts、デバイスの写真、サードパーティ製アプリのコンテナディレクトリを含む、アプリケーションのデータベースファイルを収集できる。",
+  "procedure/S0489/0": "WolfRATは、ユーザーアカウント、写真、ブラウザ履歴、任意のファイルを収集できる。",
+  "procedure/S0506/0": "ViperRATは、デバイスの写真、PDF文書、Officeの文書、ブラウザの履歴とブックマークを収集できる。",
+  "procedure/S0536/0": "GPlayedは、ユーザーのブラウザのクッキーを収集できる。",
+  "procedure/S0551/0": "GoldenEagleは、外部ストレージから.doc、.txt、.gif、.apk、.jpg、.png、.mp3、.dbファイルを取得した。",
+  "procedure/S0577/0": "FrozenCellは、持ち出しのためにデバイスの画像を取得した。",
+  "procedure/S0655/0": "BusyGasperは、デバイスに保存された画像やブラウザの履歴を収集できる。",
+  "procedure/S1054/0": "Drinikは、Androidの`READ_EXTERNAL_STORAGE`および`WRITE_EXTERNAL_STORAGE`権限を要求できる。",
+  "procedure/S1077/0": "Hornbillは、外部ストレージに保存された画像にアクセスできる。",
+  "procedure/S1079/0": "BOULDSPYは、ブラウザの履歴やブックマークにアクセスでき、デバイス上のすべてのファイルとフォルダを一覧表示できる。",
+  "procedure/S1094/0": "BRATAは、侵害したデバイスからアカウント情報を収集した。",
+  "procedure/S1185/0": "LightSpyは、Telegram、QQ、WeChat、Whatsappなどのメッセージングアプリケーションからファイルを収集・持ち出し、ChromeやSafariからブラウザの履歴を収集・持ち出した。",
+  "procedure/S1215/0": "Binary Validatorは、初期アクセスの段階で使われた悪意あるiMessageの添付ファイルを、各種データベース内で検索し削除した。",
+  "procedure/S1216/0": "TriangleDBは、ファイルを収集し持ち出した。",
+  "procedure/S1241/0": "RatMiladは、`/mnt/sdcard/`を起点として、デバイス上のファイルや写真を一覧表示した。",
+  "procedure/S9006/0": "VajraSpyは、持ち出しの前に、.txt、.jpg、.Om4a、.aac、.opusといった特定の拡張子を持つファイルを収集した。VajraSpyは、`android.permission.WRITE_EXTERNAL_STORAGE`と`android.permission.READ_EXTERNAL_STORAGE`も要求した。"
+ },
+ "supplement": {
+  "summary": "端末内のファイルシステムやローカルデータベースを探し、写真・認証トークン・Wi-Fiパスワードなど関心のあるデータを見つけ出す、持ち出しの前段階となる技術。",
+  "learn": ["外部ストレージへのアクセスには追加の権限が必要になるなど、Androidの権限制度がこの技術の実行しやすさに影響すること"]
+ }
+}
