@@ -214,7 +214,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -331,7 +333,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -411,7 +415,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -489,7 +495,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -591,7 +599,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -705,7 +715,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -820,7 +832,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -909,7 +923,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -1022,7 +1038,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -1106,7 +1124,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -1241,7 +1261,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Windows",
     "Linux"
@@ -1374,7 +1396,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -1475,7 +1499,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "evasion"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -1556,7 +1582,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -1666,7 +1694,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -1792,7 +1822,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -1831,7 +1863,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -1935,7 +1969,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -2046,7 +2082,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -2184,7 +2222,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -2308,7 +2348,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -2440,7 +2482,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -2543,7 +2587,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -2638,7 +2684,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -2717,7 +2765,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -2787,7 +2837,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -2900,7 +2952,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -2941,7 +2995,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -3062,7 +3118,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -3131,7 +3189,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -3258,7 +3318,9 @@
     "T0843.002",
     "T0843.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -3448,7 +3510,9 @@
    "is_subtechnique": true,
    "parent_id": "T0843",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -3586,7 +3650,9 @@
    "is_subtechnique": true,
    "parent_id": "T0843",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -3712,7 +3778,9 @@
    "is_subtechnique": true,
    "parent_id": "T0843",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -3838,7 +3906,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -3982,7 +4052,9 @@
     "T0846.002",
     "T0846.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4057,7 +4129,9 @@
    "is_subtechnique": true,
    "parent_id": "T0846",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4167,7 +4241,9 @@
    "is_subtechnique": true,
    "parent_id": "T0846",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4239,7 +4315,9 @@
    "is_subtechnique": true,
    "parent_id": "T0846",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4306,7 +4384,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4439,7 +4519,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4529,7 +4611,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "evasion"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4637,7 +4721,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "evasion",
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4704,7 +4791,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -4767,7 +4856,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution",
+    "evasion"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -4918,7 +5010,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence",
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -5106,7 +5201,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -5200,7 +5297,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -5338,7 +5437,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -5474,7 +5575,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -5627,7 +5730,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Windows",
     "Linux"
@@ -5714,7 +5819,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -5860,7 +5967,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access",
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -6025,7 +6135,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -6125,7 +6237,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -6271,7 +6385,9 @@
     "T0869.001",
     "T0869.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -6404,7 +6520,9 @@
    "is_subtechnique": true,
    "parent_id": "T0869",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [],
    "description": [
     {
@@ -6485,7 +6603,9 @@
    "is_subtechnique": true,
    "parent_id": "T0869",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [],
    "description": [
     {
@@ -6541,7 +6661,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -6629,7 +6751,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "evasion"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -6689,7 +6813,9 @@
    "sub_technique_ids": [
     "T0873.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Windows",
     "Linux"
@@ -6772,7 +6898,9 @@
    "is_subtechnique": true,
    "parent_id": "T0873",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Windows",
     "Linux"
@@ -6857,7 +6985,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution",
+    "privilege-escalation"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -6940,7 +7071,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -7003,7 +7136,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -7086,7 +7221,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -7179,7 +7316,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -7252,7 +7391,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -7379,7 +7520,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "None"
    ],
@@ -7497,7 +7640,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -7588,7 +7733,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -7701,7 +7848,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -7815,7 +7964,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access",
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8012,7 +8164,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery",
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8080,7 +8235,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8187,7 +8344,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -8297,7 +8456,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "privilege-escalation"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8395,7 +8556,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8480,7 +8643,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8583,7 +8748,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "evasion"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8641,7 +8808,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8682,7 +8851,9 @@
     "T1691.001",
     "T1691.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8751,7 +8922,9 @@
    "is_subtechnique": true,
    "parent_id": "T1691",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8828,7 +9001,9 @@
    "is_subtechnique": true,
    "parent_id": "T1691",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8913,7 +9088,10 @@
     "T1692.001",
     "T1692.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "evasion",
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -8997,7 +9175,10 @@
    "is_subtechnique": true,
    "parent_id": "T1692",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "evasion",
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -9150,7 +9331,10 @@
    "is_subtechnique": true,
    "parent_id": "T1692",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "evasion",
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -9238,7 +9422,11 @@
     "T1693.001",
     "T1693.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "persistence",
+    "inhibit-response-function",
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -9390,7 +9578,11 @@
    "is_subtechnique": true,
    "parent_id": "T1693",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence",
+    "inhibit-response-function",
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -9567,7 +9759,11 @@
    "is_subtechnique": true,
    "parent_id": "T1693",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence",
+    "inhibit-response-function",
+    "impair-process-control"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -9730,7 +9926,10 @@
     "T1694.001",
     "T1694.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "persistence",
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -9781,7 +9980,10 @@
    "is_subtechnique": true,
    "parent_id": "T1694",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence",
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -9848,7 +10050,10 @@
    "is_subtechnique": true,
    "parent_id": "T1694",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence",
+    "lateral-movement"
+   ],
    "platforms": [
     "Embedded"
    ],
@@ -9930,7 +10135,9 @@
     "T1695.002",
     "T1695.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -10007,7 +10214,9 @@
    "is_subtechnique": true,
    "parent_id": "T1695",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -10078,7 +10287,9 @@
    "is_subtechnique": true,
    "parent_id": "T1695",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -10155,7 +10366,9 @@
    "is_subtechnique": true,
    "parent_id": "T1695",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "inhibit-response-function"
+   ],
    "platforms": [
     "Embedded",
     "Windows",
@@ -10239,7 +10452,9 @@
     "T1701.005",
     "T1701.006"
    ],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [],
    "description": [
     {
@@ -10321,7 +10536,9 @@
    "is_subtechnique": true,
    "parent_id": "T1701",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [],
    "description": [
     {
@@ -10469,7 +10686,9 @@
    "is_subtechnique": true,
    "parent_id": "T1701",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [],
    "description": [
     {
@@ -10545,7 +10764,9 @@
    "is_subtechnique": true,
    "parent_id": "T1701",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [],
    "description": [
     {
@@ -10610,7 +10831,9 @@
    "is_subtechnique": true,
    "parent_id": "T1701",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [],
    "description": [
     {
@@ -10730,7 +10953,9 @@
    "is_subtechnique": true,
    "parent_id": "T1701",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [],
    "description": [
     {
@@ -10812,7 +11037,9 @@
    "is_subtechnique": true,
    "parent_id": "T1701",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [],
    "description": [
     {
