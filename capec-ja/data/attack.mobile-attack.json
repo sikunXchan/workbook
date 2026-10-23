@@ -222,7 +222,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -346,7 +348,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "privilege-escalation"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -611,7 +615,9 @@
     "T1406.001",
     "T1406.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -1177,7 +1183,9 @@
    "is_subtechnique": true,
    "parent_id": "T1406",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -1210,7 +1218,9 @@
    "is_subtechnique": true,
    "parent_id": "T1406",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -1303,7 +1313,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -1796,7 +1808,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -2190,7 +2204,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "credential-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -2316,7 +2333,10 @@
     "T1417.001",
     "T1417.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "credential-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -2414,7 +2434,10 @@
    "is_subtechnique": true,
    "parent_id": "T1417",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "credential-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -2697,7 +2720,10 @@
    "is_subtechnique": true,
    "parent_id": "T1417",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "credential-access",
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -3141,7 +3167,9 @@
    "sub_technique_ids": [
     "T1418.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -3745,7 +3773,9 @@
    "is_subtechnique": true,
    "parent_id": "T1418",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -3828,7 +3858,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -4070,7 +4102,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android"
    ],
@@ -4210,7 +4244,9 @@
     "T1422.001",
     "T1422.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -4788,7 +4824,9 @@
    "is_subtechnique": true,
    "parent_id": "T1422",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -5041,7 +5079,9 @@
    "is_subtechnique": true,
    "parent_id": "T1422",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -5207,7 +5247,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -5241,7 +5283,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -5431,7 +5475,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -6085,7 +6131,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "lateral-movement"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -6155,7 +6203,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -6817,7 +6867,10 @@
     "T1430.001",
     "T1430.002"
    ],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -7558,7 +7611,10 @@
    "is_subtechnique": true,
    "parent_id": "T1430",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -7617,7 +7673,10 @@
    "is_subtechnique": true,
    "parent_id": "T1430",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "discovery"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -7704,7 +7763,9 @@
    "sub_technique_ids": [
     "T1437.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -7792,7 +7853,9 @@
    "is_subtechnique": true,
    "parent_id": "T1437",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -8375,7 +8438,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -8469,7 +8534,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "credential-access"
+   ],
    "platforms": [
     "Android"
    ],
@@ -8609,7 +8677,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -8729,7 +8799,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access",
+    "lateral-movement"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -8870,7 +8943,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -8983,7 +9058,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -9071,7 +9148,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android"
    ],
@@ -9136,7 +9215,9 @@
     "T1474.002",
     "T1474.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -9317,7 +9398,9 @@
    "is_subtechnique": true,
    "parent_id": "T1474",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -9398,7 +9481,9 @@
    "is_subtechnique": true,
    "parent_id": "T1474",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -9487,7 +9572,9 @@
    "is_subtechnique": true,
    "parent_id": "T1474",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -9612,7 +9699,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -10061,7 +10150,9 @@
     "T1481.002",
     "T1481.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -10099,7 +10190,9 @@
    "is_subtechnique": true,
    "parent_id": "T1481",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -10185,7 +10278,9 @@
    "is_subtechnique": true,
    "parent_id": "T1481",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -10256,7 +10351,9 @@
    "is_subtechnique": true,
    "parent_id": "T1481",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -10294,7 +10391,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -10405,7 +10504,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -10915,7 +11016,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android"
    ],
@@ -11296,7 +11399,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion",
+    "impact"
+   ],
    "platforms": [
     "Android"
    ],
@@ -11517,7 +11623,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "credential-access"
+   ],
    "platforms": [
     "Android"
    ],
@@ -11734,7 +11843,9 @@
     "T1521.002",
     "T1521.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -11779,7 +11890,9 @@
    "is_subtechnique": true,
    "parent_id": "T1521",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -11857,7 +11970,9 @@
    "is_subtechnique": true,
    "parent_id": "T1521",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -11961,7 +12076,9 @@
    "is_subtechnique": true,
    "parent_id": "T1521",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -12036,7 +12153,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -12206,7 +12325,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -12822,7 +12943,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion",
+    "persistence"
+   ],
    "platforms": [
     "Android"
    ],
@@ -12955,7 +13079,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -13143,7 +13269,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion",
+    "execution"
+   ],
    "platforms": [
     "Android"
    ],
@@ -13294,7 +13423,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Android"
    ],
@@ -13393,7 +13524,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android"
    ],
@@ -13814,7 +13947,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution",
+    "persistence"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -13911,7 +14047,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -13965,7 +14103,11 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "impact",
+    "command-and-control"
+   ],
    "platforms": [
     "Android"
    ],
@@ -14223,7 +14365,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -14301,7 +14445,9 @@
    "sub_technique_ids": [
     "T1623.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -14388,7 +14534,9 @@
    "is_subtechnique": true,
    "parent_id": "T1623",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -14529,7 +14677,9 @@
    "sub_technique_ids": [
     "T1624.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Android"
    ],
@@ -14588,7 +14738,9 @@
    "is_subtechnique": true,
    "parent_id": "T1624",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Android"
    ],
@@ -14872,7 +15024,9 @@
    "sub_technique_ids": [
     "T1625.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Android"
    ],
@@ -14936,7 +15090,9 @@
    "is_subtechnique": true,
    "parent_id": "T1625",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15024,7 +15180,9 @@
    "sub_technique_ids": [
     "T1626.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "privilege-escalation"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15062,7 +15220,9 @@
    "is_subtechnique": true,
    "parent_id": "T1626",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "privilege-escalation"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15216,7 +15376,9 @@
    "sub_technique_ids": [
     "T1627.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -15292,7 +15454,9 @@
    "is_subtechnique": true,
    "parent_id": "T1627",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -15395,7 +15559,9 @@
     "T1628.002",
     "T1628.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15416,7 +15582,9 @@
    "is_subtechnique": true,
    "parent_id": "T1628",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15724,7 +15892,9 @@
    "is_subtechnique": true,
    "parent_id": "T1628",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15827,7 +15997,9 @@
    "is_subtechnique": true,
    "parent_id": "T1628",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15883,7 +16055,9 @@
     "T1629.002",
     "T1629.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -15989,7 +16163,9 @@
    "is_subtechnique": true,
    "parent_id": "T1629",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -16159,7 +16335,9 @@
    "is_subtechnique": true,
    "parent_id": "T1629",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -16255,7 +16433,9 @@
    "is_subtechnique": true,
    "parent_id": "T1629",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -16454,7 +16634,9 @@
     "T1630.002",
     "T1630.003"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "iOS",
     "Android"
@@ -16536,7 +16718,9 @@
    "is_subtechnique": true,
    "parent_id": "T1630",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -16676,7 +16860,9 @@
    "is_subtechnique": true,
    "parent_id": "T1630",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -16928,7 +17114,9 @@
    "is_subtechnique": true,
    "parent_id": "T1630",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -16973,7 +17161,10 @@
    "sub_technique_ids": [
     "T1631.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion",
+    "privilege-escalation"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17022,7 +17213,10 @@
    "is_subtechnique": true,
    "parent_id": "T1631",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion",
+    "privilege-escalation"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17108,7 +17302,9 @@
    "sub_technique_ids": [
     "T1632.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17167,7 +17363,9 @@
    "is_subtechnique": true,
    "parent_id": "T1632",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17332,7 +17530,9 @@
    "sub_technique_ids": [
     "T1633.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17381,7 +17581,9 @@
    "is_subtechnique": true,
    "parent_id": "T1633",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17590,7 +17792,9 @@
    "sub_technique_ids": [
     "T1634.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "credential-access"
+   ],
    "platforms": [
     "iOS"
    ],
@@ -17648,7 +17852,9 @@
    "is_subtechnique": true,
    "parent_id": "T1634",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "credential-access"
+   ],
    "platforms": [
     "iOS"
    ],
@@ -17756,7 +17962,9 @@
    "sub_technique_ids": [
     "T1635.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "credential-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17839,7 +18047,9 @@
    "is_subtechnique": true,
    "parent_id": "T1635",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "credential-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17923,7 +18133,9 @@
     "T1636.004",
     "T1636.005"
    ],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -17980,7 +18192,9 @@
    "is_subtechnique": true,
    "parent_id": "T1636",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -18090,7 +18304,9 @@
    "is_subtechnique": true,
    "parent_id": "T1636",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -18574,7 +18790,9 @@
    "is_subtechnique": true,
    "parent_id": "T1636",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -19245,7 +19463,9 @@
    "is_subtechnique": true,
    "parent_id": "T1636",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20081,7 +20301,9 @@
    "is_subtechnique": true,
    "parent_id": "T1636",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20181,7 +20403,9 @@
    "sub_technique_ids": [
     "T1637.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20209,7 +20433,9 @@
    "is_subtechnique": true,
    "parent_id": "T1637",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20291,7 +20517,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20432,7 +20660,9 @@
    "sub_technique_ids": [
     "T1639.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "exfiltration"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20476,7 +20706,9 @@
    "is_subtechnique": true,
    "parent_id": "T1639",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "exfiltration"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20542,7 +20774,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android"
    ],
@@ -20588,7 +20822,9 @@
    "sub_technique_ids": [
     "T1641.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android"
    ],
@@ -20624,7 +20860,9 @@
    "is_subtechnique": true,
    "parent_id": "T1641",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android"
    ],
@@ -20701,7 +20939,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -20819,7 +21059,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -21039,7 +21281,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -21290,7 +21534,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "persistence"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -21457,7 +21703,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "exfiltration"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -21807,7 +22055,9 @@
    "sub_technique_ids": [
     "T1655.001"
    ],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -21911,7 +22161,9 @@
    "is_subtechnique": true,
    "parent_id": "T1655",
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -22455,7 +22707,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "execution"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -22541,7 +22795,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -22801,7 +23057,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access",
+    "defense-evasion"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -22871,7 +23130,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "impact"
+   ],
    "platforms": [
     "Android"
    ],
@@ -22963,7 +23224,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "command-and-control"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -23033,7 +23296,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "initial-access"
+   ],
    "platforms": [
     "Android",
     "iOS"
@@ -23103,7 +23368,9 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "defense-evasion"
+   ],
    "platforms": [
     "Android"
    ],
@@ -23173,7 +23440,10 @@
    "is_subtechnique": false,
    "parent_id": null,
    "sub_technique_ids": [],
-   "tactics": [],
+   "tactics": [
+    "collection",
+    "persistence"
+   ],
    "platforms": [
     "Android",
     "iOS"

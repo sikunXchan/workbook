@@ -1,0 +1,20 @@
+{
+ "id": "T1701.006",
+ "source_sha": "64784ca3fc481930",
+ "status": "done",
+ "seg": {
+  "name": "JavaScript",
+  "description/0": "攻撃者は、JavaScriptのさまざまな実装を実行に悪用することがある。JavaScript（JS）は、Webページ内のスクリプトとしてよく使われる、プラットフォームに依存しないスクリプト言語（実行時にジャストインタイムでコンパイルされる）だが、ブラウザ以外の実行環境でも実行できる。",
+  "description/1": "JScriptは、同じスクリプト標準に対するMicrosoftの実装である。JScriptはWindows Scriptエンジンを介して解釈されるため、Component Object ModelやInternet ExplorerのHTMLアプリケーション（HTA）ページなど、多くのWindowsのコンポーネントと統合されている。",
+  "description/2": "攻撃者は、さまざまな動作を実行するために、JavaScriptのさまざまな実装を悪用することがある。よくある使われ方としては、ドライブバイ・コンプロマイズの一部として悪意あるスクリプトをWebサイト上に置く方法や、こうしたスクリプトファイルを二次ペイロードとしてダウンロード・実行する方法がある。これらのペイロードはテキストベースであるため、攻撃者がその内容を難読化する（難読化されたファイルや情報の一部として扱う）ことも非常によく見られる。",
+  "description/3": "ICSのネットワーク内では、攻撃者は、Enterprise側の機器と同様のOSプラットフォーム上で動作する、IT・OTの両方にまたがる資産において、JavaScriptの利用を悪用することが最も多い。",
+  "mitigation/M0921/0": "ICSのワークステーション、ジャンプホスト、その他のIT・OT両方にまたがる資産上で、信頼できないWebコンテンツやアクティブスクリプトの実行を制限する。特に、運転上ブラウザへのアクセスが不要な場合は注意する。",
+  "mitigation/M0938/0": "アプリケーション制御を使って、wscript.exe、cscript.exe、mshta.exe、Node.js、その他のJavaScript実行環境を、承認されたパス・親プロセス・スクリプト・ユーザーに限定する。",
+  "mitigation/M0942/0": "ICS資産の文書化された役割に不要なJavaScript/JScriptの実行手段を無効化または削除する。ただし、検証済みのHMI、ベンダー、エンジニアリング上の依存関係は保持する。",
+  "mitigation/M0950/0": "ICSのIT・OT両方にまたがる資産上で、JavaScript/JScriptを実行できるブラウザ、HTMLアプリケーション、Windowsスクリプトホストを堅牢化する。",
+  "procedure/S0496/0": "REvilは、実行のためにJavaScript、WScript、PowerShellスクリプトを利用する。悪意あるJavaScriptの添付ファイルには、このマルウェアを実行する、難読化されたPowerShellスクリプトが含まれている。"
+ },
+ "supplement": {
+  "summary": "Webページで使われるJavaScriptや、そのMicrosoft版実装であるJScriptを悪用して、悪意あるスクリプトを実行する技術。ICS環境では、Enterprise側の機器と似たOS環境で動く資産（ワークステーションなど）での悪用が中心となる。"
+ }
+}

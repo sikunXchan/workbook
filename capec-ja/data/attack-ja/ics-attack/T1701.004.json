@@ -1,0 +1,24 @@
+{
+ "id": "T1701.004",
+ "source_sha": "07207185d7f28e2e",
+ "status": "done",
+ "seg": {
+  "name": "Visual Basic",
+  "description/0": "攻撃者は、実行のためにVisual Basic（VB）を悪用することがある。VBはMicrosoftが開発したプログラミング言語で、Component Object ModelやWindows API経由のネイティブAPIなど、多くのWindows技術と相互運用性を持つ。レガシーと位置づけられ今後の新機能追加は予定されていないものの、VBは.NET Frameworkやクロスプラットフォームの.NET Coreにも統合・サポートされている。",
+  "description/1": "VBをもとにした派生言語も作られており、Visual Basic for Applications（VBA）やVBScriptなどがある。VBAは、Microsoft Officeや複数のサードパーティ製アプリケーションに組み込まれた、イベント駆動型のプログラミング言語である。VBAにより、文書内にマクロを持たせて、ホスト上でのタスクの実行やその他の機能を自動化することができる。VBScriptはWindowsホストの既定のスクリプト言語であり、Internet Explorerに提供されるHTMLアプリケーション（HTA）のWebページ上で、JavaScriptの代わりに使うこともできる（ただし、最近のほとんどのブラウザはVBScriptに対応していない）。",
+  "description/2": "攻撃者は、悪意あるコマンドを実行するためにVBのペイロードを使うことがある。よくある悪用例としては、VBScriptによる挙動の自動実行や、標的型フィッシングの添付ファイルのペイロードにVBAのコンテンツを埋め込むこと（実行を可能にするためMark-of-the-Webの回避を伴う場合もある）が挙げられる。",
+  "description/3": "ICSのネットワーク内では、攻撃者は、Microsoft Windows OS上で動作する、IT・OTの両方にまたがる資産（ワークステーション、データヒストリアン、HMI、アプリケーションサーバー、ジャンプホストなど）において、特に運用上レガシーなバージョンがいまだに使われている場合に、VBやVBScriptの利用を悪用することがある。",
+  "mitigation/M0921/0": "ICSのワークステーションやジャンプホスト上で、信頼できないWebコンテンツや文書ベースのアクティブコンテンツの取得・実行を制限する。特に、これらのシステムが制御資産に到達できる場合は注意する。",
+  "mitigation/M0938/0": "アプリケーション制御とマクロ・スクリプトの制限を使って、承認されていないVBS/VBA/VBScriptの実行を防ぎつつ、必要なベンダー製マクロやエンジニアリング用の自動化処理は明示的に許可リストに加える。",
+  "mitigation/M0942/0": "検証済みのベンダーやエンジニアリングのワークフローで必要とされていないICS資産に限り、Windows Script Host、Officeのマクロ機能、その他のVB実行手段を無効化する。",
+  "mitigation/M0949/0": "VBA/VBScriptを呼び出せるWindowsアプリケーション、特にICSのIT・OT両方にまたがる資産上に存在するOfficeやレガシーなアプリケーションに対して、互換性テストを行った上で、悪用対策（エクスプロイト対策）の仕組みを適用する。",
+  "mitigation/M0950/0": "VB/VBA/VBScriptのコンテンツを保持・起動できるアプリケーションを堅牢化し、運用上可能な範囲で、公開されているスクリプトホストの実行経路を減らす。",
+  "procedure/G0049/0": "OilRigは、標的型フィッシングの添付ファイルの中に、VBScriptとPowerShellスクリプトの両方で構成されたマクロを埋め込んだことがある。"
+ },
+ "supplement": {
+  "summary": "Microsoft純正のプログラミング言語Visual Basic、およびその派生であるVBA（Officeマクロ）・VBScriptを悪用して、悪意あるコマンドを実行する技術。ICS環境では、レガシーなWindowsシステムが今も運用で使われている場面での悪用が想定される。",
+  "terms": [
+   { "term": "VBA", "en": "Visual Basic for Applications", "explain": "Microsoft Officeの文書に埋め込める、マクロ用のプログラミング言語。文書を開くと自動的にマクロが動くよう仕込まれることがある。" }
+  ]
+ }
+}

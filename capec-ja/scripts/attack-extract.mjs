@@ -95,7 +95,10 @@ const techniquesRaw = objects.filter((o) => o.type === "attack-pattern" && activ
 const techniques = techniquesRaw.map((o) => {
   const id = extId(o);
   const description = toParagraphs(o.description, "description");
-  const tacticShortnames = (o.kill_chain_phases || []).filter((p) => p.kill_chain_name === "mitre-attack").map((p) => p.phase_name);
+  // kill_chain_name はドメインごとに異なる(Enterprise: mitre-attack、Mobile: mitre-mobile-attack、
+  // ICS: mitre-ics-attack)。"mitre-attack"固定だとEnterprise以外で戦術との対応が空になるため、
+  // "mitre-"で始まるものすべてを対象にする。
+  const tacticShortnames = (o.kill_chain_phases || []).filter((p) => p.kill_chain_name?.startsWith("mitre-")).map((p) => p.phase_name);
   const parentStix = subOf.get(o.id);
   const parent = parentStix ? byStixId.get(parentStix) : null;
 
