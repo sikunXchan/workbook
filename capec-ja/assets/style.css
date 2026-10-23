@@ -66,14 +66,17 @@ h2 small { font-family: var(--f-body); font-weight: 400; font-size: .8rem; color
 .notice-row span { max-inline-size: none; }
 .notice b { flex: none; font-family: var(--f-head); font-weight: 900; background: var(--shu); color: var(--paper); border-radius: 999px; padding: 0 10px; font-size: .8rem; }
 
-/* パンくず、戻る */
-.crumbs-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 26px 0 0; }
-.crumbs ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; font-size: .82rem; color: var(--sub); }
+/* 戻る(ヘッダーの下、ご注意の上) */
+.back-row { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.back-row .wrap { padding-block: 8px; }
+.back-btn { font-family: var(--f-head); font-weight: 700; font-size: .85rem; color: var(--ink); background: none; border: none; padding: 0; margin: 0; cursor: pointer; }
+.back-btn:hover { text-decoration: underline; }
+
+/* パンくず */
+.crumbs ol { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-wrap: wrap; font-size: .82rem; color: var(--sub); }
 .crumbs li { max-inline-size: none; }
 .crumbs li + li::before { content: "／" / ""; margin: 0 .4em; }
 .crumbs a { color: var(--sub); }
-.back-btn { font-family: var(--f-body); font-size: .82rem; color: var(--link); background: none; border: none; padding: 0; margin: 0; cursor: pointer; }
-.back-btn:hover { text-decoration: underline; }
 
 /* 項目ページの組み方：本文と、余白のAIの書き込み */
 .entry { padding-bottom: 40px; }

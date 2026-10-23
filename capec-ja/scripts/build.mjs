@@ -266,6 +266,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 </nav>
 </div>
 </header>
+<div class="back-row"><div class="wrap"><button type="button" class="back-btn" data-back>← 戻る</button></div></div>
 <div class="notice" data-disclaimer-top><div class="wrap notice-row"><b>ご注意</b><span>AIによる非公式の日本語訳です。<a href="#disclaimer-full">詳しくはページ下部</a>をご覧ください。</span></div></div>
 <div class="wrap">
 ${body}
@@ -282,7 +283,7 @@ function writePage(rp, html) {
   fs.writeFileSync(p, html);
 }
 
-const crumbs = (items) => `<div class="crumbs-row"><button type="button" class="back-btn" data-back>← 戻る</button><nav class="crumbs" aria-label="現在位置"><ol>${items.map(([href, label]) => (href ? `<li><a href="${href}">${label}</a></li>` : `<li aria-current="page">${label}</li>`)).join("")}</ol></nav></div>`;
+const crumbs = (items) => `<nav class="crumbs" aria-label="現在位置"><ol>${items.map(([href, label]) => (href ? `<li><a href="${href}">${label}</a></li>` : `<li aria-current="page">${label}</li>`)).join("")}</ol></nav>`;
 
 // CAPEC → CWE → CVE の関係図(いま読んでいる位置を強調)
 function chain(depth, cweCount) {
